@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
@@ -15,7 +16,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  formGroup: FormGroup;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+    this.init();
+  }
+
+  init() {
+    this.formGroup = this.formBuilder.group({
+      email: [ '', Validators.required ],
+      password: [ '', Validators.required ]
+    });
   }
 
   ionViewDidLoad() {
@@ -33,4 +44,8 @@ export class LoginPage {
     });
   }
 
+  onSubmit(form) {
+    console.log(form);
+    this.gotoHome();
+  }
 }

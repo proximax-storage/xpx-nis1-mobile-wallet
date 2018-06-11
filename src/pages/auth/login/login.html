@@ -18,23 +18,25 @@
         </ion-col>
 
         <ion-col buttons padding col-12 text-center>
-          <ion-item transparent padding>
-            <ion-label stacked>Email</ion-label>
-            <ion-input placeholder="Your email. e.g. jimdoe@gmail.com"></ion-input>
-          </ion-item>
+          <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+            <ion-item transparent padding>
+              <ion-label stacked>Email</ion-label>
+              <ion-input formControlName="email" placeholder="Your email. e.g. jimdoe@gmail.com"></ion-input>
+            </ion-item>
 
-          <ion-item transparent padding>
-            <ion-label stacked>Password</ion-label>
-            <ion-input type="password" placeholder="Your password..."></ion-input>
-          </ion-item>
+            <ion-item transparent padding>
+              <ion-label stacked>Password</ion-label>
+              <ion-input formControlName="password" type="password" placeholder="Your password..."></ion-input>
+            </ion-item>
 
-          <section text-right padding-bottom>
-            <button small ion-button clear (click)="gotoForgotPassword()">Forgot Password?</button>
-          </section>
+            <section text-right padding-bottom>
+              <button small ion-button clear (click)="gotoForgotPassword()">Forgot Password?</button>
+            </section>
 
-          <button ion-button round block color="light">
-            <span ion-text color="dark" (click)="gotoHome()">Login</span>
-          </button>
+            <button ion-button round block type="submit" color="light">
+              <span ion-text color="dark">Login</span>
+            </button>
+          </form>
         </ion-col>
 
         <ion-col col-12></ion-col>
