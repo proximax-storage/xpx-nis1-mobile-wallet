@@ -1,0 +1,37 @@
+page-onboarding {
+  ion-content {
+    h2 { margin-top: 0; }
+    p {
+      padding: 0 40px;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #60646b;
+    }
+
+    [slide-content] p {
+      padding-bottom: 4rem;
+    }
+
+    [content-center] {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+
+    button.swiper-pagination-bullet {
+      background: linear-gradient(to right, #ab76f5, #ac71ff);
+      box-shadow: 0 4px 15px 0 rgba(160, 113, 226, 0.75);
+    }
+
+    .slide-zoom {
+      height: 100%;
+    }
+
+    .slide-image {
+      max-height: 50%;
+      max-width: 100%;
+    }
+  }
+}

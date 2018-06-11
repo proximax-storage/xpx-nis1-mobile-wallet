@@ -10,10 +10,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class App {
 
-  private static BASE_URL = 'assets/imgs/stickers';
+  private static BASE_URL = 'assets/imgs/';
   public static STICKERS = {
-    'SORRY': `${App.BASE_URL}/ninja-cry.png`,
-    'HAPPY': `${App.BASE_URL}/ninja-happy.png`,
+    'SORRY': `${App.BASE_URL}/stickers/ninja-cry.png`,
+    'HAPPY': `${App.BASE_URL}/stickers/ninja-happy.png`,
+  };
+  public static SLIDES = {
+    'SLIDE1': `${App.BASE_URL}/slides/nem-slide-1.png`,
+    'SLIDE2': `${App.BASE_URL}/slides/nem-slide-2.gif`,
+    'SLIDE3': `${App.BASE_URL}/slides/nem-slide-3.png`,
   };
 
   constructor(public http: HttpClient) {
