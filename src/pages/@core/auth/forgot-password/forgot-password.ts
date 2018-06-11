@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { App } from '../../../../providers/app/app';
 /**
  * Generated class for the ForgotPasswordPage page.
  *
@@ -16,6 +17,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ForgotPasswordPage {
 
+  App = App;
+
   formGroup: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
@@ -24,7 +27,7 @@ export class ForgotPasswordPage {
 
   init() {
     this.formGroup = this.formBuilder.group({
-      email: [ '', Validators.required ],
+      email: [ '', [ Validators.email, Validators.required ] ],
     });
   }
 
@@ -33,7 +36,7 @@ export class ForgotPasswordPage {
   }
 
   gotoHome() {
-    this.navCtrl.setRoot('TabsPage', {}, {
+    this.navCtrl.setRoot('WalletListPage', {}, {
       animate: true,
       direction: 'forward'
     });

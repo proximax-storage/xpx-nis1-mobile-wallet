@@ -12,7 +12,7 @@
     <ion-row>
       <ion-col col-12 text-center>
         <img logo src="assets/imgs/nem-logo.png">
-        <h3 ion-text color="light">Register</h3>
+        <h3 ion-text color="light">Signup</h3>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
@@ -29,11 +29,11 @@
 
           <ion-item transparent padding>
             <ion-label stacked>Confirm Password</ion-label>
-            <ion-input formControlName="confirmPassword" type="password"  placeholder="Confirm password..."></ion-input>
+            <ion-input formControlName="confirmPassword" type="password" placeholder="Confirm password..."></ion-input>
           </ion-item>
 
-          <button [disabled]="formGroup.invalid" ion-button round block color="light">
-            <span ion-text color="dark">Register</span>
+          <button gradient-button color-5 [disabled]="formGroup.invalid">
+            <ion-icon name="ios-arrow-forward"></ion-icon>
           </button>
         </form>
       </ion-col>

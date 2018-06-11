@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ForgotPasswordPage page.
+  Generated template for the LoginPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -14,18 +14,31 @@
 
       <ion-col col-12 text-center>
         <img logo src="assets/imgs/nem-logo.png">
-        <h3 ion-text color="light">Forgot Password</h3>
+        <h3 ion-text color="light">Login</h3>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Email</ion-label>
-            <ion-input formControlName="email" type="email" placeholder="Your email or username"></ion-input>
+            <ion-input formControlName="email" placeholder="Your email. e.g. jimdoe@gmail.com"></ion-input>
           </ion-item>
 
-          <button ion-button round block [disabled]="formGroup.invalid" type="submit" color="light">
-            <span ion-text color="dark">Reset Password</span>
+          <ion-item transparent padding>
+            <ion-label stacked>Password</ion-label>
+            <ion-input formControlName="password" type="password" placeholder="Your password..."></ion-input>
+          </ion-item>
+
+          <section text-right padding-bottom>
+            <button small ion-button clear type="button" (click)="gotoForgotPassword()">
+              <span ion-text color="light">
+                Forgot Password?
+              </span>
+            </button>
+          </section>
+
+          <button gradient-button color-1 type="submit" color="light">
+            Login
           </button>
         </form>
       </ion-col>
