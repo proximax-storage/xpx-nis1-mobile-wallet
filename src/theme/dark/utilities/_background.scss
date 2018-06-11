@@ -1,0 +1,21 @@
+[background] {
+  background: linear-gradient(
+      color($colors, dark),
+      transparentize(color($colors, secondary), 0.3)
+    ),
+    url('https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')
+      center;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+
+  ion-grid,
+  ion-row {
+    height: 100%;
+    width: 100%;
+  }
+
+  ion-row {
+    align-items: center;
+  }
+}

@@ -1,27 +1,2 @@
 page-welcome {
-  [background] {
-    background: linear-gradient(
-        color($colors, dark),
-        transparentize(color($colors, secondary), 0.3)
-      ),
-      url('../assets/imgs/background.jpg') center;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-
-    ion-grid,
-    ion-row {
-      height: 100%;
-      width: 100%;
-    }
-
-    ion-row {
-      align-items: center;
-    }
-
-    ion-icon {
-      color: color($colors, light);
-      font-size: 300%;
-    }
-  }
 }
