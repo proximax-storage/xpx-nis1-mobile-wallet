@@ -47,7 +47,7 @@
 
 <ion-footer no-border *ngIf="wallets && wallets.length">
   <ion-toolbar transparent text-center>
-    <button gradient-button circle color-1>
+    <button gradient-button circle color-1 (click)="gotoAddWallet()">
       <ion-icon name="md-add"></ion-icon>
     </button>
   </ion-toolbar>

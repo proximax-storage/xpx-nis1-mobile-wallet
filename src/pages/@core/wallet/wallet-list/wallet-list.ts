@@ -60,4 +60,8 @@ export class WalletListPage {
     this.selectedWallet = wallet;
   }
 
+  gotoAddWallet() {
+    this.navCtrl.push('AddWalletPage');
+  }
+
 }
