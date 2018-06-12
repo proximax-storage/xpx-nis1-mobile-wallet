@@ -19,6 +19,13 @@
   transition: all 0.4s ease-in-out;
 }
 
+[gradient-button][pill] {
+  width: 32px;
+  height: 20px;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
 [gradient-button][small] {
   width: 64px;
   height: 48px;

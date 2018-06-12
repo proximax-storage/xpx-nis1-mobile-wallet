@@ -1,17 +1,151 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
+<ion-header no-border>
+  <ion-navbar transparent>
+    <ion-buttons right>
+      <button ion-button icon-only ion-text color="light" (click)="gotoWalletList()">
+        <ion-icon name="swap"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content fullscreen background>
+  <section text-center>
+    <p no-margin ion-text color="light">
+      <small>Your Total Balance</small>
+    </p>
+    <h1 ion-text color="light">
+      <span symbol>$</span>
+      <span>1,632.95</span>
+    </h1>
+  </section>
+
+  <h6 margin-left ion-text color="light">Mosaics</h6>
+
+  <ion-list>
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-item>
+          <img logo item-left src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/NEM_logo.svg/2000px-NEM_logo.svg.png">
+          <h2 ion-text color="light">XEM</h2>
+          <p ion-text color="light">
+            <small>
+              NEM
+            </small>
+          </p>
+
+          <section item-right>
+            <h2 ion-text color="light">{{ 85467586865 | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="light">
+              <small>
+                {{ 2583472 | currency }}
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content line no-padding>
+        <ion-item>
+          <h3 ion-text color="light">$6,762.33</h3>
+          <p ion-text color="light">
+            <small>
+              Price
+            </small>
+          </p>
+
+          <section item-right>
+            <h3 text-right ion-text color="trinary">+ 2.75%</h3>
+            <p text-right text-left ion-text color="light">
+              <small>
+                Profit / Loss
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-item>
+          <img logo item-left src="https://discourse-cdn-sjc1.com/business5/uploads/safenetwork/original/2X/3/32b90ee44d17ddf9dc89c661b00effdb46302a6e.png">
+          <h2 ion-text color="light">XPX</h2>
+          <p ion-text color="light">
+            <small>
+              ProximaX
+            </small>
+          </p>
+
+          <section item-right>
+            <h2 ion-text color="light">{{ 2453445 | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="light">
+              <small>
+                {{ 43356 | currency }}
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content line no-padding>
+        <ion-item>
+          <h3 ion-text color="light">$7,764.33</h3>
+          <p ion-text color="light">
+            <small>
+              Price
+            </small>
+          </p>
+
+          <section item-right>
+            <h3 text-right ion-text color="trinary">+ 3.55%</h3>
+            <p text-right text-left ion-text color="light">
+              <small>
+                Profit / Loss
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header no-padding>
+        <ion-item>
+          <img logo item-left src="https://s2.coinmarketcap.com/static/img/coins/200x200/2841.png">
+          <h2 ion-text color="light">LYL</h2>
+          <p ion-text color="light">
+            <small>
+              APPSOLUTELY
+            </small>
+          </p>
+
+          <section item-right>
+            <h2 ion-text color="light">{{ 4137564 | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="light">
+              <small>
+                {{ 245672 | currency }}
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content line no-padding>
+        <ion-item>
+          <h3 ion-text color="light">$6,762.33</h3>
+          <p ion-text color="light">
+            <small>
+              Price
+            </small>
+          </p>
+
+          <section item-right>
+            <h3 text-right ion-text color="trinary">+ 2.75%</h3>
+            <p text-right text-left ion-text color="light">
+              <small>
+                Profit / Loss
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>

@@ -11,4 +11,10 @@ export class HomePage {
 
   }
 
+  gotoWalletList() {
+    this.navCtrl.setRoot('WalletListPage', {}, {
+      animate: true,
+      direction: 'forward'
+    });
+  }
 }
