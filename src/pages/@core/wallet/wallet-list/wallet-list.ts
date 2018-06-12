@@ -19,30 +19,45 @@ export class WalletListPage {
 
   App = App;
 
+  selectedWallet: any;
   wallets: Array<{
     id: string,
-    name: string
+    name: string,
+    type: string,
+    balance: number,
+    selected: boolean
   }> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // this.init();
+    this.init();
   }
 
   init() {
     this.wallets = [
       {
         id: 'ID1234',
-        name: 'Savings'
+        name: 'Savings',
+        type: 'Normal',
+        balance: 100,
+        selected: true
       },
       {
         id: 'ID4321',
-        name: 'Personal'
+        name: 'Personal',
+        type: 'Multisig',
+        balance: 200,
+        selected: false
       }
     ];
+    this.selectedWallet = this.wallets[0];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletListPage');
+  }
+
+  onWalletSelect(wallet) {
+    this.selectedWallet = wallet;
   }
 
 }

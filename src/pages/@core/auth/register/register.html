@@ -12,27 +12,31 @@
     <ion-row>
       <ion-col col-12 text-center>
         <img logo src="assets/imgs/nem-logo.png">
-        <h3 ion-text color="light">Signup</h3>
+        <h3 ion-text color="light">Sign up</h3>
+        <p ion-text color="light">
+          Create an account to access the
+          <br> full features of the wallet.
+        </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Email</ion-label>
-            <ion-input formControlName="email" type="email" placeholder="Your email. e.g. jimdoe@gmail.com"></ion-input>
+            <ion-input formControlName="email" type="email" placeholder="ninja@nem.io"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>Password</ion-label>
-            <ion-input formControlName="password" type="password" placeholder="Your password..."></ion-input>
+            <ion-input formControlName="password" type="password" placeholder="Enter your password"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
-            <ion-label stacked>Confirm Password</ion-label>
-            <ion-input formControlName="confirmPassword" type="password" placeholder="Confirm password..."></ion-input>
+            <ion-label stacked>Confirm password</ion-label>
+            <ion-input formControlName="confirmPassword" type="password" placeholder="Confirm your password"></ion-input>
           </ion-item>
 
-          <button gradient-button color-5 [disabled]="formGroup.invalid">
+          <button gradient-button small color-1 [disabled]="formGroup.invalid">
             <ion-icon name="ios-arrow-forward"></ion-icon>
           </button>
         </form>

@@ -19,6 +19,20 @@
   transition: all 0.4s ease-in-out;
 }
 
+[gradient-button][small] {
+  width: 64px;
+  height: 48px;
+}
+
+[gradient-button][circle] {
+  width: 48px;
+  height: 48px;
+}
+
+[gradient-button][inline-block] {
+  display: inline-block;
+}
+
 [gradient-button]:hover {
   background-position: 100% 0;
   transition: all 0.4s ease-in-out;

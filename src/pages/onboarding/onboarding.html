@@ -10,20 +10,22 @@
     <ion-slide *ngFor="let slide of slides">
       <ion-toolbar transparent>
         <ion-buttons end>
-          <button ion-button color="light" (click)="ionSlide.slideTo(3, 1000)">Skip</button>
+          <button ion-button color="light" (click)="ionSlide.slideTo(6, 1000)">Skip</button>
         </ion-buttons>
       </ion-toolbar>
       <ion-grid>
         <ion-row>
-          <ion-col align-self-end>
-            <img [src]="slide.image" class="slide-image" />
+          <ion-col col-12 align-self-center>
+            <img [ngClass]="{ 'small-image': slide.isSmall }" [src]="slide.image" class="slide-image" />
           </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col align-self-start>
+          <ion-col col-12 align-self-start>
             <h2 ion-text color="light" class="slide-title" [innerHTML]="slide.title"></h2>
             <p text-justify ion-text color="light" [innerHTML]="slide.description"></p>
           </ion-col>
+
+          <ion-col col-12></ion-col>
+          <ion-col col-12></ion-col>
+          <ion-col col-12></ion-col>
         </ion-row>
       </ion-grid>
     </ion-slide>
@@ -32,8 +34,7 @@
       <section content-center>
         <img [src]="App.STICKERS.HAPPY" class="slide-image" />
         <button gradient-button color-1 color="primary" (click)="gotoWelcome()">
-          Get Started
-          <ion-icon name="arrow-forward"></ion-icon>
+          Let's get started
         </button>
       </section>
     </ion-slide>

@@ -15,18 +15,19 @@
       <ion-col col-12 text-center>
         <img logo src="assets/imgs/nem-logo.png">
         <h3 ion-text color="light">Login</h3>
+        <p ion-text color="light">Login to your account to access your wallet.</p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Email</ion-label>
-            <ion-input formControlName="email" placeholder="Your email. e.g. jimdoe@gmail.com"></ion-input>
+            <ion-input formControlName="email" placeholder="ninja@nem.io"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>Password</ion-label>
-            <ion-input formControlName="password" type="password" placeholder="Your password..."></ion-input>
+            <ion-input formControlName="password" type="password" placeholder="Enter your password"></ion-input>
           </ion-item>
 
           <section text-right padding-bottom>
@@ -37,8 +38,8 @@
             </button>
           </section>
 
-          <button gradient-button color-1 type="submit" color="light">
-            Login
+          <button gradient-button small color-1 type="submit" color="light">
+              <ion-icon name="ios-arrow-forward"></ion-icon>
           </button>
         </form>
       </ion-col>
