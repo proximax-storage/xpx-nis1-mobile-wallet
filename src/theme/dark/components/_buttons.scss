@@ -26,6 +26,14 @@
   margin: 0;
 }
 
+[gradient-button][no-margin] {
+  margin: 0;
+}
+
+[gradient-button][small-margin] {
+  margin: 8px;
+}
+
 [gradient-button][small] {
   width: 64px;
   height: 48px;

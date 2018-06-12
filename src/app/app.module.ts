@@ -20,7 +20,10 @@ import { App } from '../providers/app/app';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      scrollAssist: false,
+      tabsHideOnSubPages: true
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

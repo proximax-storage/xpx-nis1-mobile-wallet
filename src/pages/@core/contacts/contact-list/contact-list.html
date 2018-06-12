@@ -1,0 +1,63 @@
+<!--
+  Generated template for the ContactListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar transparent>
+    <ion-title>
+      <span ion-text color="light">Contacts</span>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content fullscreen background>
+  <ion-grid empty *ngIf="contacts && !contacts.length">
+    <ion-row>
+      <ion-col>
+        <img half-width [src]="App.STICKERS.SORRY">
+
+        <p text-wrap>
+          It looks like you don't have any contacts yet.
+          <br> Try adding one or two.
+        </p>
+
+        <button gradient-button color-1>
+          Create New Wallet
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list transparent-items *ngIf="contacts && contacts.length">
+    <ion-card *ngFor="let contact of contacts" (click)="onContactSelect(contact)">
+      <ion-item-sliding>
+        <ion-item>
+          <h2 ion-text color="light">{{ contact.name }}</h2>
+          <p ion-text text-wrap color="light">{{ contact.address }}</p>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="update(contact)">
+            <ion-icon name="contacts"></ion-icon>
+            Update
+          </button>
+          <button ion-button color="danger" (click)="delete(contact)">
+            <ion-icon name="trash"></ion-icon>
+            Remove
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-card>
+
+    <section margin-top text-center>
+      <button no-margin gradient-button circle color-1 (click)="gotoAddContact()">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+      <p text-wrap ion-text color="light">Add contact</p>
+    </section>
+  </ion-list>
+</ion-content>

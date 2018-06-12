@@ -2,9 +2,12 @@ ion-list[transparent-items] {
   ion-card,
   ion-item {
     background: transparentize(color($colors, light), 0.95);
-    box-shadow: 0 1px 8px 0 transparentize(color($colors, dark), 0.9);
     border-radius: 0.5rem;
     color: color($colors, light);
+  }
+
+  ion-item-sliding {
+    background: transparentize(color($colors, light), 0.95);
   }
 
   [selected] {

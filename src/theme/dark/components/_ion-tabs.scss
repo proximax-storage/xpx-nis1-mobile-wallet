@@ -1,7 +1,7 @@
 ion-tabs .tabbar {
   background: transparentize(color($colors, primary), 0.03);
 
-  .tab-button[aria-selected="true"] {
+  .tab-button[aria-selected='true'] {
     &,
     .tab-button-icon {
       color: color($colors, light);
@@ -14,7 +14,6 @@ ion-tabs .tabbar {
       color: lighten(color($colors, primary), 15%);
     }
   }
-
 }
 
 ion-fab[fab-button-center] {
@@ -24,4 +23,6 @@ ion-fab[fab-button-center] {
     width: 6rem;
     margin: 0;
   }
+  z-index: 999 !important;
 }
+.ion-page { z-index: 1000 !important; }
