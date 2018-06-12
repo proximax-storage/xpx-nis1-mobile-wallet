@@ -69,6 +69,6 @@ export class WalletListPage {
   }
 
   gotoAddWallet() {
-    this.navCtrl.push('AddWalletPage');
+    this.navCtrl.push('WalletAddPage');
   }
 }

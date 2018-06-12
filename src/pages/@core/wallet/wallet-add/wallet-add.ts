@@ -5,7 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
 
 /**
- * Generated class for the AddWalletPage page.
+ * Generated class for the WalletAddPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,10 +13,10 @@ import { App } from '../../../../providers/app/app';
 
 @IonicPage()
 @Component({
-  selector: 'page-add-wallet',
-  templateUrl: 'add-wallet.html'
+  selector: 'page-wallet-add',
+  templateUrl: 'wallet-add.html'
 })
-export class AddWalletPage {
+export class WalletAddPage {
   App = App;
 
   formGroup: FormGroup;
@@ -30,7 +30,7 @@ export class AddWalletPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddWalletPage');
+    console.log('ionViewDidLoad WalletAddPage');
   }
 
   init() {
