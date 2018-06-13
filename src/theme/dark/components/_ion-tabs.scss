@@ -1,27 +1,32 @@
-ion-tabs .tabbar {
-  background: transparentize(color($colors, primary), 0.03);
-
-  .tab-button[aria-selected='true'] {
-    &,
-    .tab-button-icon {
-      color: color($colors, light);
-    }
+ion-tabs {
+  &,
+  .tabbar {
+    background: transparentize(color($colors, primary), 0.03);
   }
 
-  .tab-button {
-    &,
-    .tab-button-icon {
-      color: lighten(color($colors, primary), 15%);
+  .tabbar {
+    .tab-button[aria-selected='true'] {
+      &,
+      .tab-button-icon {
+        color: color($colors, light);
+      }
+    }
+
+    .tab-button {
+      &,
+      .tab-button-icon {
+        color: lighten(color($colors, primary), 15%);
+      }
     }
   }
 }
 
 ion-fab[fab-button-center] {
-  bottom: 2rem;
   button[gradient-button] {
-    height: 6rem;
-    width: 6rem;
+    height: 64px;
+    width: 64px;
     margin: 0;
+    bottom: 5rem;
   }
   z-index: 999 !important;
 }

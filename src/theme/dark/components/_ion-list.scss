@@ -1,13 +1,25 @@
 ion-list[transparent-items] {
-  ion-card,
-  ion-item {
-    background: transparentize(color($colors, light), 0.95);
+  ion-card {
     border-radius: 0.5rem;
+    background: transparentize(color($colors, light), 0.9);
     color: color($colors, light);
+  }
+  ion-item {
+    background: transparent;
+  }
+  ion-card-header {
+    padding-bottom: 0;
+  }
+  ion-card-content {
+    border-top: 0.1px solid transparentize(color($colors, light), 0.85);
   }
 
   ion-item-sliding {
     background: transparentize(color($colors, light), 0.95);
+  }
+
+  p {
+    font-size: 1.2rem;
   }
 
   [selected] {
