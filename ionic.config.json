@@ -1,6 +1,6 @@
 {
   "name": "nem-wallet-v2",
-  "app_id": "",
+  "app_id": "0d739b5c",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
