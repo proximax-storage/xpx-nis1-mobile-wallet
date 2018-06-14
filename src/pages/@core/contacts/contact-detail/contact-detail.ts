@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
 
 /**
- * Generated class for the TransactionListPage page.
+ * Generated class for the ContactDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,18 +11,26 @@ import { App } from '../../../../providers/app/app';
 
 @IonicPage()
 @Component({
-  selector: 'page-transaction-list',
-  templateUrl: 'transaction-list.html',
+  selector: 'page-contact-detail',
+  templateUrl: 'contact-detail.html',
 })
-export class TransactionListPage {
+export class ContactDetailPage {
 
   App = App;
 
+  selectedContact: {
+    id: number,
+    name: string,
+    address: string,
+    telegram: string,
+  };
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.selectedContact = this.navParams.data;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TransactionListPage');
+    console.log('ionViewDidLoad ContactDetailPage');
   }
 
   gotoTransactionDetail() {

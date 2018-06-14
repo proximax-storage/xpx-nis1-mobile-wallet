@@ -22,19 +22,10 @@
     ion-card {
       background: transparentize(color($colors, light), 0.9);
       border-radius: 0.5rem;
-      padding: 8px;
 
       ion-item {
         background-color: transparent;
       }
-    }
-
-    [logo] {
-      width: 10%;
-    }
-
-    [line] {
-      border-top: 0.1px solid transparentize(color($colors, light), 0.7);
     }
   }
 }

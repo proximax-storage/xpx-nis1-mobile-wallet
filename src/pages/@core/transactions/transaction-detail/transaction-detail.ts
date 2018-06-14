@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App } from '../../../../providers/app/app';
 
 /**
  * Generated class for the TransactionDetailPage page.
@@ -14,6 +15,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'transaction-detail.html',
 })
 export class TransactionDetailPage {
+
+  App = App;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

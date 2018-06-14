@@ -23,6 +23,7 @@ export class ContactListPage {
     id: number,
     name: string,
     address: string,
+    telegram: string,
   }> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
@@ -38,12 +39,14 @@ export class ContactListPage {
       {
         id: 1,
         name: 'Jill Haman',
-        address: 'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVUDQ63'
+        address: 'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVUDQ63',
+        telegram: 'jillhaman'
       },
       {
         id: 2,
         name: 'Joe Hopkins',
-        address: 'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVULK32'
+        address: 'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVULK32',
+        telegram: 'joehopkins'
       }
     ];
     this.selectedContact = this.contacts[0];
@@ -51,6 +54,7 @@ export class ContactListPage {
 
   onContactSelect(contact) {
     this.selectedContact = contact;
+    this.navCtrl.push('ContactDetailPage', contact);
   }
 
   gotoAddContact() {
