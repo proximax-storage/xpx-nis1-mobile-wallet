@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
+    "cz-conventional-changelog": "^2.1.0",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
@@ -55,5 +56,10 @@
       "android",
       "ios"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
