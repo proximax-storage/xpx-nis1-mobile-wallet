@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -12,13 +13,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-register',
-  templateUrl: 'register.html',
+  templateUrl: 'register.html'
 })
 export class RegisterPage {
-
   formGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder: FormBuilder,
+    private authProvider: AuthProvider
+  ) {
     this.init();
   }
 
@@ -28,13 +33,13 @@ export class RegisterPage {
 
   init() {
     this.formGroup = this.formBuilder.group({
-      email: [ '', Validators.required ],
-      password: [ '', Validators.required ],
-      confirmPassword: [ '', Validators.required ],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
-    this.formGroup.valueChanges.subscribe((form) => {
+    this.formGroup.valueChanges.subscribe(form => {
       this.checkPasswords(this.formGroup);
-    })
+    });
   }
 
   /**
@@ -50,13 +55,14 @@ export class RegisterPage {
     let pass = group.controls.password.value;
     let confirmPass = group.controls.confirmPassword.value;
 
-    return pass === confirmPass ? null : this.formGroup.setErrors([ { passwordMismatch: true } ]);
+    return pass === confirmPass
+      ? null
+      : this.formGroup.setErrors([{ passwordMismatch: true }]);
   }
 
   onSubmit(form) {
-    this.navCtrl.setRoot('OtpCodePage', {}, {
-      animate: true,
-      direction: 'forward'
-    });
+    this.authProvider.register(form.email, form.password).then((res) => {
+      this.navCtrl.push('OtpCodePage', form.email);
+    }).catch(console.error);
   }
 }
