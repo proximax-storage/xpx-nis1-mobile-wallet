@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class App {
 
-  private static BASE_URL = 'assets/imgs/';
+  private static BASE_URL = 'assets/imgs';
   public static STICKERS = {
     'SORRY': `${App.BASE_URL}/stickers/ninja-cry.png`,
     'HAPPY': `${App.BASE_URL}/stickers/ninja-happy.png`,
