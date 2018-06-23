@@ -52,7 +52,7 @@ export class ContactListPage {
     this.selectedContact = this.contacts[0];
   }
 
-  onContactSelect(contact) {
+  onSelect(contact) {
     this.selectedContact = contact;
     this.navCtrl.push('ContactDetailPage', contact);
   }

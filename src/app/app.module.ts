@@ -20,6 +20,7 @@ import { App } from '../providers/app/app';
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       scrollAssist: false,
+      autoFocusAssist: false,
       tabsHideOnSubPages: true
     })
   ],

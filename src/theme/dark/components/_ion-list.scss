@@ -7,6 +7,14 @@ ion-list[transparent-items] {
   ion-item {
     background: transparent;
 
+    &[no-border] {
+      border: 0 !important;
+    }
+
+    ion-avatar img {
+      border-radius: 0;
+    }
+
     h2, ion-icon {
       color: color($colors, light);
     }
