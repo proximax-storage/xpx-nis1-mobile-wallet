@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { App } from '../../../providers/app/app';
 /**
- * Generated class for the RegisterPage page.
+ * Generated class for the ForgotPasswordPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,10 +12,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-register',
-  templateUrl: 'register.html',
+  selector: 'page-forgot-password',
+  templateUrl: 'forgot-password.html',
 })
-export class RegisterPage {
+export class ForgotPasswordPage {
+
+  App = App;
 
   formGroup: FormGroup;
 
@@ -22,23 +25,26 @@ export class RegisterPage {
     this.init();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
-  }
-
   init() {
     this.formGroup = this.formBuilder.group({
-      email: [ '', Validators.required ],
-      password: [ '', Validators.required ],
-      confirmPassword: [ '', Validators.required ],
+      email: [ '', [ Validators.email, Validators.required ] ],
     });
   }
 
-  onSubmit(form) {
-    console.log(form);
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ForgotPasswordPage');
+  }
+
+  gotoHome() {
     this.navCtrl.setRoot('WalletListPage', {}, {
       animate: true,
       direction: 'forward'
     });
   }
+
+  onSubmit(form) {
+    console.log(form);
+    this.gotoHome();
+  }
+
 }

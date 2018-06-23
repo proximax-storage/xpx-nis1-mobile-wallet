@@ -8,7 +8,9 @@ import { HomePage } from '../pages/home/home';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { App } from '../providers/app/app';
+import { ComponentsModule } from './../components/components.module';
 
 @NgModule({
   declarations: [
@@ -19,10 +21,9 @@ import { App } from '../providers/app/app';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {
-      scrollAssist: false,
-      autoFocusAssist: false,
       tabsHideOnSubPages: true
-    })
+    }),
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
