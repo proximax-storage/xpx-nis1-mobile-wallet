@@ -8,5 +8,5 @@
   <ion-navbar transparent></ion-navbar>
 </ion-header>
 <ion-content fullscreen background>
-  <ngx-otp-code (submit)="onSubmit($event)"></ngx-otp-code>
+  <ngx-otp-code [pin]="pin" (submit)="onSubmit($event)"></ngx-otp-code>
 </ion-content>

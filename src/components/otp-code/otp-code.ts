@@ -13,9 +13,9 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 export class OtpCodeComponent {
 
   @Input() title: String = 'Verification';
-  @Input() subtitle: String = 'Enter the verification code sent to your email.';
+  @Input() subtitle: String = 'Wait for verification code or check your email.';
 
-  pin: string = '';
+  @Input() pin: string = '';
 
   @Output() submit: EventEmitter<string> = new EventEmitter<string>();
 
