@@ -61,8 +61,9 @@ export class RegisterPage {
   }
 
   onSubmit(form) {
-    this.authProvider.register(form.email, form.password).then((res) => {
-      this.navCtrl.push('OtpCodePage', form.email);
-    }).catch(console.error);
+    this.navCtrl.push('OtpCodePage', form.email);
+    // this.authProvider.register(form.email, form.password).then((res) => {
+    //   this.navCtrl.push('OtpCodePage', form.email);
+    // }).catch(console.error);
   }
 }
