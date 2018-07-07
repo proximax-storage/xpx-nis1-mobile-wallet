@@ -15,7 +15,7 @@ ion-list[transparent-items] {
       border-radius: 0;
     }
 
-    h2, ion-icon {
+    h2:not([ion-text]), ion-icon {
       color: color($colors, light);
     }
 
