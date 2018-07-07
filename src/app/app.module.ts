@@ -14,7 +14,6 @@ import { Device } from '@ionic-native/device';
 import { App } from '../providers/app/app';
 import { ComponentsModule } from './../components/components.module';
 import { AuthProvider } from '../providers/auth/auth';
-import { VerificationCodeProvider } from '../providers/verification-code/verification-code';
 import { HttpModule } from '@angular/http';
 
 @NgModule({
@@ -45,7 +44,6 @@ import { HttpModule } from '@angular/http';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     App,
     AuthProvider,
-    VerificationCodeProvider
   ]
 })
 export class AppModule {}

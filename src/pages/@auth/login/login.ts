@@ -38,7 +38,7 @@ export class LoginPage {
   }
 
   gotoHome() {
-    this.navCtrl.setRoot('OtpCodePage', {}, {
+    this.navCtrl.setRoot('VerificationCodePage', {}, {
       animate: true,
       direction: 'forward'
     });

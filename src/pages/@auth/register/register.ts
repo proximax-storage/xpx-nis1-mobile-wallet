@@ -1,4 +1,3 @@
-import { AuthProvider } from './../../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -21,8 +20,7 @@ export class RegisterPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder,
-    private authProvider: AuthProvider
+    public formBuilder: FormBuilder
   ) {
     this.init();
   }
@@ -61,9 +59,6 @@ export class RegisterPage {
   }
 
   onSubmit(form) {
-    this.navCtrl.push('OtpCodePage', form.email);
-    // this.authProvider.register(form.email, form.password).then((res) => {
-    //   this.navCtrl.push('OtpCodePage', form.email);
-    // }).catch(console.error);
+    this.navCtrl.push('VerificationCodePage', form.email);
   }
 }
