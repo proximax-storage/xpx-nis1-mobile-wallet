@@ -1,6 +1,9 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -12,9 +15,10 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { Device } from '@ionic-native/device';
 
 import { App } from '../providers/app/app';
-import { ComponentsModule } from './../components/components.module';
+import { ComponentsModule } from '../components/components.module';
 import { AuthProvider } from '../providers/auth/auth';
-import { HttpModule } from '@angular/http';
+import { NemProvider } from '../providers/nem/nem';
+import { WalletProvider } from '../providers/wallet/wallet';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { HttpModule } from '@angular/http';
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),
+    IonicStorageModule.forRoot(),
     ComponentsModule
   ],
   bootstrap: [IonicApp],
@@ -44,6 +49,8 @@ import { HttpModule } from '@angular/http';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     App,
     AuthProvider,
+    NemProvider,
+    WalletProvider,
   ]
 })
 export class AppModule {}

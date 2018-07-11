@@ -1,0 +1,41 @@
+<!--
+  Generated template for the WalletDeletePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+  <ion-navbar transparent></ion-navbar>
+</ion-header>
+<ion-content fullscreen background>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12></ion-col>
+
+      <ion-col col-12 text-center>
+        <h3 ion-text color="light">
+          Delete
+          <u>{{ selectedWallet.name }}</u>
+          wallet
+        </h3>
+        <p ion-text color="light">
+          Are you sure to delete this wallet forever?
+          <br>
+          Please make sure you backup your wallet before deletion. This is cannot be undone.
+        </p>
+      </ion-col>
+
+      <ion-col buttons padding col-12 text-center>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <button gradient-button color-10 type="submit" color="light">
+            Yes, delete forever
+          </button>
+        </form>
+      </ion-col>
+
+      <ion-col col-12></ion-col>
+      <ion-col col-12></ion-col>
+      <ion-col col-12></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

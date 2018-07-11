@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform } from 'ionic-angular';
+
+import { SimpleWallet } from 'nem-library';
 
 import { App } from '../../../../providers/app/app';
+import { WalletProvider } from './../../../../providers/wallet/wallet';
 
 /**
  * Generated class for the WalletListPage page.
@@ -18,54 +21,71 @@ import { App } from '../../../../providers/app/app';
 export class WalletListPage {
   App = App;
 
-  selectedWallet: any;
-  wallets: Array<{
-    id: string;
-    name: string;
-    type: string;
-    balance: number;
-    selected: boolean;
-  }> = [];
+  wallets: SimpleWallet[];
+  selectedWallet: SimpleWallet;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.init();
-  }
-
-  init() {
-    this.wallets = [
-      {
-        id: 'ID1234',
-        name: 'Savings',
-        type: 'Normal',
-        balance: 100,
-        selected: true
-      },
-      {
-        id: 'ID4321',
-        name: 'Personal',
-        type: 'Multisig',
-        balance: 200,
-        selected: false
-      }
-    ];
-    this.selectedWallet = this.wallets[0];
-  }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public actionSheetCtrl: ActionSheetController,
+    public platform: Platform,
+    public walletProvider: WalletProvider
+  ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletListPage');
   }
 
+  ionViewWillEnter() {
+    this.walletProvider.getWallets().then(value => {
+      this.wallets = value;
+
+      this.walletProvider.getSelectedWallet().then(selectedWallet => {
+        this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
+      });
+    });
+  }
+
   onWalletSelect(wallet) {
     this.selectedWallet = wallet;
 
-    this.navCtrl.setRoot(
-      'TabsPage',
-      {},
-      {
-        animate: true,
-        direction: 'forward'
-      }
-    );
+    this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {
+
+      setTimeout(() => {
+        this.navCtrl.setRoot( 'TabsPage', {}, { animate: true, direction: 'forward' } );
+      }, 100);
+    });
+  }
+
+  onWalletPress(wallet) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: `Modify ${wallet.name}`,
+      cssClass: 'wallet-on-press',
+      buttons: [
+        {
+          text: 'Change name',
+          icon: this.platform.is('ios') ? null : 'create',
+          handler: () => {
+            this.navCtrl.push('WalletUpdatePage', { wallet: wallet });
+          }
+        },{
+          text: 'Delete',
+          role: 'destructive',
+          icon: this.platform.is('ios') ? null : 'trash',
+          handler: () => {
+            this.navCtrl.push('WalletDeletePage', { wallet: wallet });
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          icon: this.platform.is('ios') ? null : 'close',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   gotoAddWallet() {

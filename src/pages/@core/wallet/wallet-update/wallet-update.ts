@@ -1,13 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
-import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
+import { SimpleWallet } from '../../../../../node_modules/nem-library';
 
 /**
- * Generated class for the WalletAddPage page.
+ * Generated class for the WalletUpdatePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,38 +15,37 @@ import { WalletProvider } from '../../../../providers/wallet/wallet';
 
 @IonicPage()
 @Component({
-  selector: 'page-wallet-add',
-  templateUrl: 'wallet-add.html'
+  selector: 'page-wallet-update',
+  templateUrl: 'wallet-update.html'
 })
-export class WalletAddPage {
+export class WalletUpdatePage {
   App = App;
   formGroup: FormGroup;
+  selectedWallet: SimpleWallet;
 
   PASSWORD = '123qweasd';
-
-  @ViewChild('walletName') walletName;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private nemProvider: NemProvider,
-    private walletProvider: WalletProvider,
+    private walletProvider: WalletProvider
   ) {
     this.init();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WalletAddPage');
-
-    setTimeout(() => {
-      this.walletName.setFocus();
-    }, 150);
+    console.log('ionViewDidLoad WalletUpdatePage');
   }
 
   init() {
+    this.selectedWallet = this.navParams.get('wallet');
+
     this.formGroup = this.formBuilder.group({
-      name: ['', [Validators.minLength(3), Validators.required]]
+      name: [
+        this.selectedWallet.name || '',
+        [Validators.minLength(3), Validators.required]
+      ]
     });
   }
 
@@ -62,17 +61,18 @@ export class WalletAddPage {
   }
 
   onSubmit(form) {
-    const newWallet = this.nemProvider.createSimpleWallet(form.name, this.PASSWORD);
-
-    this.walletProvider.checkIfWalletNameExists(newWallet.name).then(value => {
+    this.walletProvider.checkIfWalletNameExists(form.name).then(value => {
       if (value) {
         alert('This wallet name already exists. Please try again.');
       } else {
-        this.walletProvider.storeWallet(newWallet).then(value => {
-          return this.goBack();
-        }).then(() => {
-          this.walletProvider.setSelectedWallet(newWallet);
-        });
+        this.walletProvider
+          .updateWalletName(this.selectedWallet, form.name)
+          .then(selectedWallet => {
+            return this.walletProvider.setSelectedWallet(selectedWallet);
+          })
+          .then(selectedWallet => {
+            this.goBack();
+          });
       }
     });
   }

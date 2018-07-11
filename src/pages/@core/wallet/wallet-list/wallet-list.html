@@ -26,20 +26,26 @@
           <br> Try adding one or two.
         </p>
 
-        <button gradient-button color-1>
+        <button gradient-button color-1 (click)="gotoAddWallet()">
           Create New Wallet
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="wallets && wallets.length">
-    <ion-card [attr.selected]="selectedWallet.id === wallet.id ? true : null" *ngFor="let wallet of wallets" (click)="onWalletSelect(wallet)">
+  <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="selectedWallet && wallets">
+    <ion-card *ngFor="let wallet of wallets"
+              [attr.selected]="selectedWallet.name === wallet.name ? true : null"
+              (click)="onWalletSelect(wallet)"
+              (press)="onWalletPress(wallet)">
       <ion-item>
         <h2 ion-text color="light">{{ wallet.name }}</h2>
-        <p ion-text color="light">{{ wallet.type }} Account</p>
 
-        <p item-right ion-text color="light">{{ wallet.balance | currency }}</p>
+        <!-- TODO: Create an async pipe to get the account type either Normal or Multisign -->
+        <!-- <p ion-text color="light">{{ wallet.name | accountType }}</p> -->
+
+        <!-- TODO: Create an async pipe to get the balance base on the base currency: USD, PHP, BTC etc -->
+        <!-- <p item-right ion-text color="light">{{ wallet.name | remainingBalance }}</p> -->
       </ion-item>
     </ion-card>
   </ion-list>
