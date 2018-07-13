@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-import { App } from '../../../providers/app/app';
+import { AlertProvider } from '../../../../providers/alert/alert';
 
 /**
- * Generated class for the ForgotPasswordPage page.
+ * Generated class for the PrivateKeyPasswordPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,25 +12,33 @@ import { App } from '../../../providers/app/app';
 
 @IonicPage()
 @Component({
-  selector: 'page-forgot-password',
-  templateUrl: 'forgot-password.html'
+  selector: 'page-private-key-password',
+  templateUrl: 'private-key-password.html'
 })
-export class ForgotPasswordPage {
-  App = App;
-
+export class PrivateKeyPasswordPage {
   formGroup: FormGroup;
+
+  credentials: { password: string; privateKey: string };
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public alertProvider: AlertProvider,
   ) {
     this.init();
   }
 
   init() {
+    // Initialize private data
+    this.credentials = {
+      password: '123qweasd',
+      privateKey: ''
+    };
+
+    // Initialize form
     this.formGroup = this.formBuilder.group({
-      email: ['', [Validators.email, Validators.required]]
+      password: ['', [Validators.required]]
     });
   }
 
@@ -51,7 +58,10 @@ export class ForgotPasswordPage {
   }
 
   onSubmit(form) {
-    console.log(form);
-    this.gotoHome();
+    if (form.password === this.credentials.password) {
+      this.navCtrl.push('PrivateKeyPage', form.password);
+    } else {
+      this.alertProvider.showMessage('Incorrect password. Please try again.');
+    }
   }
 }

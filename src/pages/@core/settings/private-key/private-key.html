@@ -20,35 +20,51 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content background>
-  <section padding text-center>
-    <img src="https://image.flaticon.com/icons/svg/545/545824.svg">
-  </section>
+<ion-content fullscreen background>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12></ion-col>
 
-  <ion-list transparent-items>
-    <ion-card>
-      <ion-item>
-        <ion-icon item-left name="key"></ion-icon>
-        <p text-wrap>fc8f0ad4fb8bdb123815cdf4d65d48b3c5116c71ad2d07cb0f5aee9a84f4b1ea</p>
-      </ion-item>
-    </ion-card>
+      <ion-col col-12 text-center>
+        <ngx-kjua text-center *ngIf="currentWallet" fill="#fff" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="QRData">
+        </ngx-kjua>
 
-    <ion-grid normal no-spacing>
-      <ion-row justify-content-center>
-        <ion-col col-3></ion-col>
-        <ion-col col-3 text-center>
-          <button ion-button icon-only clear>
-            <ion-icon ion-text color="light" name="copy"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col col-3 text-center>
-          <button ion-button icon-only clear>
-            <ion-icon ion-text color="light" name="share"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col col-3></ion-col>
-      </ion-row>
-    </ion-grid>
+        <section text-center *ngIf="!currentWallet">
+          <ion-spinner></ion-spinner>
+        </section>
 
-  </ion-list>
+        <ion-list transparent-items>
+          <ion-card>
+            <ion-item>
+              <ion-icon item-left name="key"></ion-icon>
+              <p text-wrap *ngIf="privateKey">{{ privateKey }}</p>
+              <ion-spinner *ngIf="!privateKey"></ion-spinner>
+            </ion-item>
+          </ion-card>
+
+          <ion-grid normal no-spacing>
+            <ion-row justify-content-center>
+              <ion-col col-3></ion-col>
+              <ion-col col-3 text-center>
+                <button gradient-button small color-1 type="button" color="light" (click)="copy()">
+                  <ion-icon name="copy"></ion-icon>
+                </button>
+              </ion-col>
+              <ion-col col-3 text-center>
+                <button gradient-button small color-1 type="button" color="light" (click)="share()">
+                  <ion-icon name="share"></ion-icon>
+                </button>
+              </ion-col>
+              <ion-col col-3></ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </ion-list>
+      </ion-col>
+
+      <ion-col col-12></ion-col>
+      <ion-col col-12></ion-col>
+      <ion-col col-12></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

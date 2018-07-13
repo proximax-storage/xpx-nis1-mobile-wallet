@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+import { NgxKjuaModule } from 'ngx-kjua';
+
 import { PrivateKeyPage } from './private-key';
 
 @NgModule({
@@ -8,6 +10,7 @@ import { PrivateKeyPage } from './private-key';
   ],
   imports: [
     IonicPageModule.forChild(PrivateKeyPage),
+    NgxKjuaModule,
   ],
 })
 export class PrivateKeyPageModule {}

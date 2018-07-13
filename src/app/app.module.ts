@@ -10,6 +10,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { Device } from '@ionic-native/device';
+import { Clipboard } from '@ionic-native/clipboard';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { App } from '../providers/app/app';
 import { ComponentsModule } from '../components/components.module';
@@ -22,6 +24,7 @@ import { UtilitiesProvider } from '../providers/utilities/utilities';
 
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
+import { ToastProvider } from '../providers/toast/toast';
 
 @NgModule({
   declarations: [
@@ -45,11 +48,15 @@ import { HomePage } from '../pages/home/home';
     HomePage,
   ],
   providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    
     StatusBar,
     SplashScreen,
     SecureStorage,
     Device,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Clipboard,
+    SocialSharing,
+
     App,
     AuthProvider,
     NemProvider,
@@ -57,6 +64,7 @@ import { HomePage } from '../pages/home/home';
     AlertProvider,
     GetBalanceProvider,
     UtilitiesProvider,
+    ToastProvider,
   ]
 })
 export class AppModule {}

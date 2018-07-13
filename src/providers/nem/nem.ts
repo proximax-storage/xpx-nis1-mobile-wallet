@@ -139,6 +139,16 @@ export class NemProvider {
     );
   }
 
+   /**
+   * Generate Address QR Text
+   * @param address address
+   * @return Address QR Text
+   */
+  public generateWalletQRText(password: string, wallet: SimpleWallet): string {
+    const PASSWORD = new Password(password)
+    return this.qrService.generateWalletQRText(PASSWORD, wallet);
+  }
+
   /**
    * Generate Address QR Text
    * @param address address
