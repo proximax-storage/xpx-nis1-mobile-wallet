@@ -1,0 +1,33 @@
+ion-modal.inset-modal,
+.inset-modal .show-page {
+  // transparent black background overlay
+  background: transparentize(darken(color($colors, primary), 100%), 0.5);
+  transition: opacity .25s ease-in-out;
+  padding: 20vh 10vw;
+  border-radius: 0.5rem;
+
+  ion-backdrop {
+    // ====================================
+    // Uncomment to enable backdrop dismiss
+    // ====================================
+    visibility: visible;
+
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  ion-modal.modal-wrapper {
+    transform: translateY(30%) !important;
+  }
+  ion-page.modal {
+    padding: 30px;
+    background: transparentize(color($colors, primary), 0.5);
+  }
+  .modal-backdrop-bg {
+    background-color: color($colors, primary);
+    opacity: 0;
+  }
+  .active .modal-backdrop-bg {
+    opacity: 0.5;
+  }
+}

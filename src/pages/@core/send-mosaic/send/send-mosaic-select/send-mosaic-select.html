@@ -16,11 +16,12 @@
 
 <ion-content background>
   <ion-list transparent-items>
-    <ion-card [attr.selected]="selectedMosaic.id === mosaic.id ? true : null" *ngFor="let mosaic of mosaics" (click)="onSelect(mosaic)">
+    <ion-card [attr.selected]="(selectedMosaic.mosaicId.name === mosaic.mosaicId.name && selectedMosaic.mosaicId.namespaceId === mosaic.mosaicId.namespaceId) ? true : null"
+      *ngFor="let mosaic of mosaics" (click)="onSelect(mosaic)">
       <ion-item>
-        <img logo-small item-left [src]="mosaic.logo">
-        <h2 text-uppercase ion-text color="light">{{ mosaic.name }}</h2>
-        <p text-uppercase ion-text color="light">{{ mosaic.namespace }}</p>
+        <img logo-small item-left [src]="utils.getLogo(mosaic)">
+        <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
+        <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
 
         <section item-right>
           <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
@@ -32,12 +33,34 @@
         </section>
       </ion-item>
     </ion-card>
+
+    <section [hidden]="mosaics">
+      <ion-card fake-card *ngFor="let fakeCard of fakeList">
+        <ion-item>
+          <section image item-left></section>
+          <h2> &nbsp; </h2>
+          <p> &nbsp; </p>
+
+          <section item-right>
+            <h2> &nbsp; </h2>
+            <p>
+              <small> &nbsp; </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card>
+      <ion-card>
+        <ion-item text-center>
+          <ion-spinner></ion-spinner>
+        </ion-item>
+      </ion-card>
+    </section>
   </ion-list>
 </ion-content>
 
 <ion-footer no-border>
   <ion-toolbar transparent text-center padding-bottom>
-    <button gradient-button small color-1 no-margin type="submit" color="light">
+    <button gradient-button small color-1 no-margin color="light" (click)="onSubmit()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
   </ion-toolbar>

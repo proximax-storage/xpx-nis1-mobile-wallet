@@ -1,0 +1,47 @@
+[fake-card] {
+  [image],
+  h2,
+  p {
+    border-radius: 1rem;
+    background-image: linear-gradient(
+      to right,
+      transparentize(color($colors, light), 0.7),
+      transparentize(color($colors, light), 0.8)
+    );
+  }
+
+  p,
+  section[item-right] {
+    width: 20%;
+  }
+
+  h2,
+  p {
+    height: 1.2rem;
+    display: block;
+  }
+
+  p {
+    height: 1rem;
+  }
+
+  ion-item ion-label h2 {
+    width: 50%;
+  }
+
+  ion-spinner * {
+    stroke: color($colors, light);
+  }
+
+  [image] {
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+  }
+
+  section[item-right] {
+    p {
+      width: 80%;
+    }
+  }
+}

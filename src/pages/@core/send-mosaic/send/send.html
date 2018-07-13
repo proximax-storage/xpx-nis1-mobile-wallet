@@ -17,72 +17,102 @@
 <ion-content background padding>
   <ion-list transparent-items>
 
-    <!-- Mosaic -->
-    <h6 margin-left ion-text color="light">Mosaic</h6>
-    <ion-card (click)="selectMosaic()">
-      <ion-item>
-        <ion-avatar item-start>
-          <img [src]="App.LOGO.NEM">
-        </ion-avatar>
-        <h2 text-uppercase ion-text color="light">{{ selectedMosaic.mosaic }}</h2>
-        <p text-uppercase ion-text color="light">{{ selectedMosaic.namespace }}</p>
+    <form [formGroup]="form">
+      <!-- Mosaic -->
+      <h6 margin-left ion-text color="light">Mosaic</h6>
+      <ion-card *ngIf="selectedMosaic" (click)="selectMosaic()">
+        <ion-item>
+          <ion-avatar item-start>
+            <img [src]="utils.getLogo(selectedMosaic)">
+          </ion-avatar>
+          <h2 text-uppercase ion-text color="light">{{ selectedMosaic.mosaicId.name }}</h2>
+          <p text-uppercase ion-text color="light">{{ selectedMosaic.mosaicId.namespaceId }}</p>
 
-        <section item-right>
-          <h2 ion-text color="light">{{ selectedMosaic.amount | number:'1.2' }}</h2>
-          <p text-right text-left ion-text color="light">
-            <small>
-              {{ selectedMosaic.amount * 0.19 | currency }}
-            </small>
-          </p>
-        </section>
-      </ion-item>
-    </ion-card>
+          <section item-right>
+            <h2 ion-text color="light">{{ selectedMosaic.amount | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="light">
+              <small>
+                {{ selectedMosaic.amount * 0.19 | currency }}
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card>
+      <ion-card fake-card *ngIf="!selectedMosaic">
+        <ion-item text-center>
+          <ion-spinner></ion-spinner>
+        </ion-item>
+      </ion-card>
 
-    <!-- Sender -->
-    <h6 margin-left ion-text color="light">From</h6>
-    <ion-card (click)="selectContact('From')">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-        </ion-avatar>
-        <h2 ion-text color="light">{{ sender.name }}</h2>
-        <p ion-text color="light">{{ sender.address }}</p>
+      <!-- Sender -->
+      <ion-item no-lines>
+        <ion-label ion-text color="light">From</ion-label>
+        <ion-select [(ngModel)]="addressSourceType.from" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeFrom($event)">
+          <ion-option value="contact">Contacts</ion-option>
+          <ion-option value="manual">Manual input</ion-option>
+        </ion-select>
       </ion-item>
-    </ion-card>
+      <ion-card *ngIf="addressSourceType.from === 'contact'" (click)="selectContact('from')">
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
+          </ion-avatar>
+          <h2 ion-text color="light">{{ form.get('senderName').value }}</h2>
+          <p ion-text color="light">{{ form.get('senderAddress').value }}</p>
+        </ion-item>
+      </ion-card>
+      <ion-card *ngIf="addressSourceType.from === 'manual'" (click)="selectContact('from')">
+        <ion-item>
+          <ion-input placeholder="NXXXXXXXXXXXXXX" formControlName="senderAddress"></ion-input>
+        </ion-item>
+      </ion-card>
 
-    <!-- Recipient -->
-    <h6 margin-left ion-text color="light">To</h6>
-    <ion-card (click)="selectContact('To')">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-        </ion-avatar>
-        <h2 ion-text color="light">{{ recipient.name }}</h2>
-        <p ion-text color="light">{{ recipient.address }}</p>
+      <!-- Recipient -->
+      <ion-item no-lines>
+        <ion-label ion-text color="light">To</ion-label>
+        <ion-select [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
+          <ion-option value="contact">Contacts</ion-option>
+          <ion-option value="manual">Manual input</ion-option>
+        </ion-select>
       </ion-item>
-    </ion-card>
+      <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('to')">
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
+          </ion-avatar>
+          <h2 ion-text color="light">{{ form.get('recipientName').value }}</h2>
+          <p ion-text color="light">{{ form.get('recipientAddress').value }}</p>
+        </ion-item>
+      </ion-card>
+      <ion-card *ngIf="addressSourceType.to === 'manual'" (click)="selectContact('to')">
+        <ion-item>
+          <ion-input placeholder="NXXXXXXXXXXXXXX" formControlName="recipientAddress"></ion-input>
+        </ion-item>
+      </ion-card>
 
-    <!-- Amount -->
-    <h6 margin-left ion-text color="light">Amount</h6>
-    <ion-card amount>
-      <ion-item>
-        <ion-label>
-          <input currencyMask maxlength="20" type="tel" [(ngModel)]="amount" [options]="inputOptions">
-        </ion-label>
-      </ion-item>
-    </ion-card>
+      <!-- Amount -->
+      <h6 margin-left ion-text color="light">Amount</h6>
+      <ion-card amount>
+        <ion-item>
+          <ion-label>
+            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions">
+          </ion-label>
+        </ion-item>
+      </ion-card>
 
-    <!-- Note -->
-    <h6 margin-left ion-text color="light">Note</h6>
-    <ion-card>
-      <ion-item no-border>
-        <ion-textarea autosize ion-text color="light" placeholder="Your message"></ion-textarea>
-      </ion-item>
-    </ion-card>
+      <!-- Note -->
+      <h6 margin-left ion-text color="light">Note</h6>
+      <ion-card>
+        <ion-item no-border>
+          <ion-textarea autosize ion-text color="light" formControlName="message" placeholder="Your message"></ion-textarea>
+        </ion-item>
+      </ion-card>
+    </form>
+
   </ion-list>
 
   <section text-center>
-    <button gradient-button small color-1 type="submit" color="light">
+    <button gradient-button small color-1 (click)="onSubmit()" color="light">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
   </section>

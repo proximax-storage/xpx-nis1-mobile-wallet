@@ -1,6 +1,11 @@
+import { GetBalanceProvider } from './../../../../../providers/get-balance/get-balance';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { SimpleWallet, MosaicTransferable } from 'nem-library';
+
 import { App } from '../../../../../providers/app/app';
+import { WalletProvider } from '../../../../../providers/wallet/wallet';
+import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the SendMosaicSelectPage page.
@@ -12,59 +17,64 @@ import { App } from '../../../../../providers/app/app';
 @IonicPage()
 @Component({
   selector: 'page-send-mosaic-select',
-  templateUrl: 'send-mosaic-select.html',
+  templateUrl: 'send-mosaic-select.html'
 })
 export class SendMosaicSelectPage {
-
   App = App;
 
-  selectedMosaic: any;
-  mosaics : Array<{
-    id: number,
-    logo: string,
-    namespace: string,
-    name: string,
-    amount: number,
-  }>;
+  selectedMosaic: MosaicTransferable;
+  mosaics: Array<MosaicTransferable>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.init();
+  selectedWallet: SimpleWallet;
+
+  fakeList: Array<any>;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public getBalanceProvider: GetBalanceProvider,
+    public walletProvider: WalletProvider,
+    public utils: UtilitiesProvider,
+  ) {
+    this.fakeList = [{}, {}];
+  }
+
+  ionViewWillEnter() {
+
+    this.walletProvider.getSelectedWallet().then(wallet => {
+      if (!wallet) this.navCtrl.setRoot('WalletListPage');
+      else {
+        this.selectedWallet = wallet;
+        this.getBalance();
+      }
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SendMosaicSelectPage');
   }
 
-  init() {
-    this.mosaics = [
-      {
-        id: 1,
-        logo: App.LOGO.NEM,
-        namespace: 'NEM',
-        name: 'XEM',
-        amount: 12345
-      },
-      {
-        id: 2,
-        logo: App.LOGO.XPX,
-        namespace: 'ProximaX',
-        name: 'XPX',
-        amount: 789
-      },
-      {
-        id: 3,
-        logo: App.LOGO.LYL,
-        namespace: 'Appsolutely',
-        name: 'LYL',
-        amount: 987
-      }
-    ];
-
-    this.selectedMosaic = this.mosaics[0];
-  }
-
   onSelect(data) {
     this.selectedMosaic = data;
   }
+
+  onSubmit() {
+    this.viewCtrl.dismiss(this.selectedMosaic);
+  }
+
+  /**
+   * Retrieves current account owned mosaics  into this.mosaics
+   */
+  public getBalance() {
+    this.getBalanceProvider.mosaics(this.selectedWallet.address).subscribe(mosaics => {
+      this.mosaics = mosaics;
+
+      if (this.mosaics.length > 0) {
+        this.selectedMosaic = this.navParams.get('selectedMosaic') || this.mosaics[0];
+      }
+    });
+  }
+
 
 }

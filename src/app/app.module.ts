@@ -19,6 +19,9 @@ import { ComponentsModule } from '../components/components.module';
 import { AuthProvider } from '../providers/auth/auth';
 import { NemProvider } from '../providers/nem/nem';
 import { WalletProvider } from '../providers/wallet/wallet';
+import { AlertProvider } from '../providers/alert/alert';
+import { GetBalanceProvider } from '../providers/get-balance/get-balance';
+import { UtilitiesProvider } from '../providers/utilities/utilities';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { WalletProvider } from '../providers/wallet/wallet';
     AuthProvider,
     NemProvider,
     WalletProvider,
+    AlertProvider,
+    GetBalanceProvider,
+    UtilitiesProvider,
   ]
 })
 export class AppModule {}

@@ -1,0 +1,28 @@
+ion-alert.select-alert {
+  .alert-title,
+  .alert-radio-label,
+  .alert-button-group .alert-button .button-inner {
+    color: color($colors, light);
+  }
+
+  .alert-radio-inner {
+    background: color($colors, light);
+  }
+
+  [aria-checked='true'] .alert-radio-icon,
+  .alert-radio-icon {
+    border-color: color($colors, light);
+  }
+
+  .alert-radio-group {
+    border-color: transparentize(color($colors, light), 0.9);
+  }
+
+  .alert-wrapper {
+    background: linear-gradient(
+      to right,
+      color($colors, secondary),
+      color($colors, dark)
+    );
+  }
+}
