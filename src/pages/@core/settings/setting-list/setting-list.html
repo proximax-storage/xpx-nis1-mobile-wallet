@@ -15,8 +15,17 @@
 </ion-header>
 
 <ion-content background>
-  <section padding text-center>
-    <img src="https://image.flaticon.com/icons/svg/545/545824.svg">
+  <!-- QR code of NEM address -->
+  <ngx-kjua text-center *ngIf="currentWallet"
+    fill="#fff"
+    [label]="'Your wallet'"
+    [mSize]="100"
+    [back]="'transparent'"
+    [text]="getQRCode()">
+  </ngx-kjua>
+
+  <section text-center *ngIf="!currentWallet">
+    <ion-spinner></ion-spinner>
   </section>
 
   <ion-list transparent-items>
@@ -24,7 +33,7 @@
       <ion-item>
         <ion-icon item-left name="barcode"></ion-icon>
         <h2>Address</h2>
-        <p text-wrap>NDUGQB-HEAINJ-CAL7IR-2XI55K-R57AG6-YRGEVU-LL85</p>
+        <p text-wrap *ngIf="currentWallet">{{ currentWallet.address.pretty() }}</p>
       </ion-item>
     </ion-card>
 

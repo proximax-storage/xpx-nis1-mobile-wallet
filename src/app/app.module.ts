@@ -6,9 +6,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { HomePage } from '../pages/home/home';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SecureStorage } from '@ionic-native/secure-storage';
@@ -23,6 +20,9 @@ import { AlertProvider } from '../providers/alert/alert';
 import { GetBalanceProvider } from '../providers/get-balance/get-balance';
 import { UtilitiesProvider } from '../providers/utilities/utilities';
 
+import { AboutPage } from '../pages/about/about';
+import { HomePage } from '../pages/home/home';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -36,7 +36,7 @@ import { UtilitiesProvider } from '../providers/utilities/utilities';
       tabsHideOnSubPages: true
     }),
     IonicStorageModule.forRoot(),
-    ComponentsModule
+    ComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
