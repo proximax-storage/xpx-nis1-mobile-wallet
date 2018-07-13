@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NemProvider } from '../../providers/nem/nem';
 
 /*
  * Raise the value exponentially

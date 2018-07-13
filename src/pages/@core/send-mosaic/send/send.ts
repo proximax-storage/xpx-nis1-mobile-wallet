@@ -103,15 +103,6 @@ export class SendPage {
       thousands: ',',
       nullable: false
     };
-
-    // Set default selected mosaic
-    const defaultMosaicProperties = new MosaicProperties(
-      XEM.DIVISIBILITY,
-      XEM.INITIALSUPPLY,
-      XEM.TRANSFERABLE,
-      XEM.SUPPLYMUTABLE
-    );
-
     // Initialize form
     this.form = this.formBuilder.group({
       senderName: 'Current wallet',

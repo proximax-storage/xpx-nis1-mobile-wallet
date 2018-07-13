@@ -9,8 +9,6 @@ import {
 } from 'nem-library';
 import { Observable } from 'rxjs/Observable';
 
-import find from 'lodash/find';
-
 /*
   Generated class for the GetBalanceProvider provider.
 
