@@ -1,4 +1,3 @@
-import { FormatXemPipe } from './../../../../../pipes/format-xem/format-xem';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -8,6 +7,7 @@ import { NemProvider } from '../../../../../providers/nem/nem';
 import { SimpleWallet } from '../../../../../../node_modules/nem-library';
 import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../../providers/alert/alert';
+import { FormatXemPipe } from './../../../../../pipes/format-xem/format-xem';
 
 /**
  * Generated class for the SendMosaicConfirmationPage page.
@@ -53,8 +53,6 @@ export class SendMosaicConfirmationPage {
     // Get NavParams data
     this.data = this.navParams.data;
     this.currentWallet = <SimpleWallet>this.data.currentWallet;
-
-    console.log(this.data);
 
     // Initialize private data
     this.credentials = {
