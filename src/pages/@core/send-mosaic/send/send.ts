@@ -11,7 +11,6 @@ import {
   SimpleWallet,
   MosaicTransferable,
   XEM,
-  MosaicProperties,
   Address,
   TransferTransaction
 } from 'nem-library';
