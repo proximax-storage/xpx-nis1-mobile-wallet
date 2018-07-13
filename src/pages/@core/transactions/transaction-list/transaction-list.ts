@@ -25,6 +25,10 @@ export class TransactionListPage {
     console.log('ionViewDidLoad TransactionListPage');
   }
 
+  gotoReceive() {
+    this.navCtrl.push('ReceivePage');
+  }
+
   gotoTransactionDetail() {
     this.navCtrl.push('TransactionDetailPage');
   }

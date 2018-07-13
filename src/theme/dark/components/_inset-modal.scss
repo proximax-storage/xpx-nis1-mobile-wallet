@@ -3,7 +3,7 @@ ion-modal.inset-modal,
   // transparent black background overlay
   background: transparentize(darken(color($colors, primary), 100%), 0.5);
   transition: opacity .25s ease-in-out;
-  padding: 20vh 10vw;
+  padding: 10vh 10vw;
   border-radius: 0.5rem;
 
   ion-backdrop {

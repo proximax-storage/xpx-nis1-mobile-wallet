@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { SimpleWallet } from 'nem-library';
+
 import { WalletProvider } from '../../../../providers/wallet/wallet';
-import { SimpleWallet } from '../../../../../node_modules/nem-library';
 import { NemProvider } from '../../../../providers/nem/nem';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
- * Generated class for the SettingListPage page.
+ * Generated class for the ReceiveQrCodePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,21 +15,22 @@ import { NemProvider } from '../../../../providers/nem/nem';
 
 @IonicPage()
 @Component({
-  selector: 'page-setting-list',
-  templateUrl: 'setting-list.html'
+  selector: 'page-receive-qr-code',
+  templateUrl: 'receive-qr-code.html'
 })
-export class SettingListPage {
+export class ReceiveQrCodePage {
   currentWallet: SimpleWallet;
+  data: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private nemProvider: NemProvider,
-    private walletProvider: WalletProvider
-  ) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingListPage');
+    private walletProvider: WalletProvider,
+    public utils: UtilitiesProvider,
+    public viewCtrl: ViewController
+  ) {
+    this.data = this.navParams.data;
   }
 
   ionViewWillEnter() {
@@ -47,14 +50,18 @@ export class SettingListPage {
     });
   }
 
-  goto(page) {
-    this.navCtrl.push(page);
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ReceiveQrCodePage');
   }
 
   getQRCode() {
-    let QRCode: any = this.nemProvider.generateAddressQRText(this.currentWallet.address);
+    let QRCode: any = this.nemProvider.generateInvoiceQRText(
+      this.currentWallet.address,
+      this.data.amount,
+      this.data.message
+    );
     QRCode = JSON.parse(QRCode);
-    QRCode.data.name = this.currentWallet.name;
+    QRCode.data.mosaicId = this.data.mosaic.mosaicId;
 
     return JSON.stringify(QRCode);
   }
