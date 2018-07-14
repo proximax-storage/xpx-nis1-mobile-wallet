@@ -38,7 +38,10 @@
             <ion-item>
               <ion-icon item-left name="key"></ion-icon>
               <p text-wrap *ngIf="privateKey">{{ privateKey }}</p>
-              <ion-spinner *ngIf="!privateKey"></ion-spinner>
+
+              <section text-center>
+                <ion-spinner *ngIf="!privateKey"></ion-spinner>
+              </section>
             </ion-item>
           </ion-card>
 

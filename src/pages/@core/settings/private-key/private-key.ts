@@ -35,7 +35,7 @@ export class PrivateKeyPage {
     private nemProvider: NemProvider,
     private clipboard: Clipboard,
     private socialSharing: SocialSharing,
-    private toastProvider: ToastProvider,
+    private toastProvider: ToastProvider
   ) {
     this.password = this.navParams.data;
   }
@@ -53,8 +53,14 @@ export class PrivateKeyPage {
         );
       } else {
         this.currentWallet = currentWallet;
-        this.privateKey = this.nemProvider.passwordToPrivateKey(this.password, this.currentWallet);
-        this.QRData = this.nemProvider.generateWalletQRText(this.password, this.currentWallet);
+        this.privateKey = this.nemProvider.passwordToPrivateKey(
+          this.password,
+          this.currentWallet
+        );
+        this.QRData = this.nemProvider.generateWalletQRText(
+          this.password,
+          this.currentWallet
+        );
       }
     });
   }
@@ -65,11 +71,18 @@ export class PrivateKeyPage {
 
   copy() {
     this.clipboard.copy(this.privateKey).then(_ => {
-      this.toastProvider.show('Copied private key successfully', 3000, true);
+      this.toastProvider.show('Copied private key successfully', 3, true);
     });
   }
 
   share() {
-    this.socialSharing.share(`Private key of ${this.currentWallet.name}: \n${this.privateKey}`, null, null, null).then(_ => {});
+    this.socialSharing
+      .share(
+        `Private key of ${this.currentWallet.name}: \n${this.privateKey}`,
+        null,
+        null,
+        null
+      )
+      .then(_ => {});
   }
 }

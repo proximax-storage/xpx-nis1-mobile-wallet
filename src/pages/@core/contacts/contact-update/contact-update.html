@@ -15,7 +15,7 @@
       <ion-col col-12 text-center>
         <h3 ion-text color="light">Update contact</h3>
         <p ion-text color="light">
-          To update a contact change up the form below.
+          To update a contact change the form below.
         </p>
       </ion-col>
 
@@ -28,7 +28,14 @@
 
           <ion-item transparent padding>
             <ion-label stacked>Address</ion-label>
-            <ion-input formControlName="address" type="text" placeholder="Enter the address of the contact"></ion-input>
+            <ion-textarea row="1" autosize formControlName="address" type="text" placeholder="Enter the address of the contact"></ion-textarea>
+          </ion-item>
+
+          <ion-item transparent padding>
+            <ion-label stacked>
+              Telegram username (Optional)
+            </ion-label>
+            <ion-input formControlName="telegram" type="text" placeholder="Enter the telegram username of your contact"></ion-input>
           </ion-item>
 
           <button gradient-button small color-1 [disabled]="formGroup.invalid" type="submit" color="light">

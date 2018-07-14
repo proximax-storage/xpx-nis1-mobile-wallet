@@ -18,35 +18,30 @@
 <ion-content background>
   <section text-center>
     <img logo src="https://image.flaticon.com/icons/svg/950/950000.svg">
-    <h2 ion-text color="light">{{ selectedContact.name }}</h2>
-    <p ion-text color="light">{{ selectedContact.address }}</p>
-    <p ion-text color="light">t.me/{{ selectedContact.telegram }}</p>
   </section>
 
-  <ion-grid normal>
-    <ion-row text-center>
-      <ion-col>
-        <button gradient-button no-margin circle color-1>
-          <ion-icon name="paper-plane"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button gradient-button no-margin circle color-1>
-          <ion-icon name="ios-chatbubbles-outline"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button gradient-button no-margin circle color-1>
-          <ion-icon name="globe"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button gradient-button no-margin circle color-1>
-          <ion-icon name="more"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list transparent-items>
+    <h6 margin-left ion-text color="light">Name</h6>
+    <ion-card>
+      <ion-item>
+        <p ion-text color="light">{{ selectedContact.name }}</p>
+      </ion-item>
+    </ion-card>
+
+    <h6 margin-left ion-text color="light">NEM address</h6>
+    <ion-card>
+      <ion-item>
+        <p ion-text color="light">{{ selectedContact.address || 'None' }}</p>
+      </ion-item>
+    </ion-card>
+
+    <h6 margin-left ion-text color="light">Telegram</h6>
+    <ion-card>
+      <ion-item>
+        <p ion-text color="light">{{ selectedContact.telegram || 'None' }}</p>
+      </ion-item>
+    </ion-card>
+  </ion-list>
 
   <h6 margin-left ion-text color="light">Activity</h6>
 

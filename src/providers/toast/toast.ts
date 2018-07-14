@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController, Toast } from 'ionic-angular';
 
 /*
   Generated class for the ToastProvider provider.
@@ -9,6 +9,8 @@ import { ToastController } from 'ionic-angular';
 */
 @Injectable()
 export class ToastProvider {
+  toast: Toast = null;
+
   constructor(public toastCtrl: ToastController) {
     console.log('Hello ToastProvider Provider');
   }
@@ -21,11 +23,17 @@ export class ToastProvider {
   ) {
     const DURATION = duration * 1000;
 
-    return this.toastCtrl.create({
-      message: message,
-      duration: DURATION,
-      showCloseButton: showCloseButton,
-      closeButtonText: showCloseButton ? closeButtonText : 'Ok'
-    }).present();
+    if (!this.toast) {
+      this.toast = this.toastCtrl.create({
+        message: message,
+        duration: DURATION,
+        showCloseButton: showCloseButton,
+        closeButtonText: showCloseButton ? closeButtonText : 'Ok'
+      });
+
+      this.toast.onDidDismiss(_ => this.toast = null);
+
+      this.toast.present();
+    }
   }
 }

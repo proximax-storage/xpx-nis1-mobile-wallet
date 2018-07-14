@@ -26,15 +26,15 @@
           <br> Try adding one or two.
         </p>
 
-        <button gradient-button color-1>
-          Create New Wallet
+        <button gradient-button color-1 (click)="gotoAddContact()">
+          Add new contact
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-list transparent-items *ngIf="contacts && contacts.length">
-    <ion-card *ngFor="let contact of contacts" (click)="onSelect(contact)">
+    <ion-card *ngFor="let contact of contacts" (click)="onSelect(contact)" (press)="onPress(contact)">
       <ion-item-sliding>
         <ion-item>
           <ion-avatar item-start>

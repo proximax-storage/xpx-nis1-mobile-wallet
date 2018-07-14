@@ -25,6 +25,7 @@ import { UtilitiesProvider } from '../providers/utilities/utilities';
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { ToastProvider } from '../providers/toast/toast';
+import { ContactsProvider } from '../providers/contacts/contacts';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ToastProvider } from '../providers/toast/toast';
     GetBalanceProvider,
     UtilitiesProvider,
     ToastProvider,
+    ContactsProvider,
   ]
 })
 export class AppModule {}

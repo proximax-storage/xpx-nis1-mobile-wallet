@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
+import { ContactsProvider } from '../../../../providers/contacts/contacts';
 
 /**
  * Generated class for the ContactAddPage page.
@@ -14,7 +15,7 @@ import { App } from '../../../../providers/app/app';
 @IonicPage()
 @Component({
   selector: 'page-contact-add',
-  templateUrl: 'contact-add.html',
+  templateUrl: 'contact-add.html'
 })
 export class ContactAddPage {
   App = App;
@@ -24,7 +25,8 @@ export class ContactAddPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public contactsProvider: ContactsProvider
   ) {
     this.init();
   }
@@ -37,6 +39,7 @@ export class ContactAddPage {
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.minLength(3), Validators.required]],
       address: ['', [Validators.minLength(40), Validators.required]],
+      telegram: ['']
     });
   }
 
@@ -45,7 +48,8 @@ export class ContactAddPage {
   }
 
   onSubmit(form) {
-    console.log(form);
-    this.gotoHome();
+    this.contactsProvider.push(form).then(_ => {
+      this.gotoHome();
+    });
   }
 }
