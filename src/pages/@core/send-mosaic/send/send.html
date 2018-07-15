@@ -63,7 +63,7 @@
       </ion-card>
       <ion-card *ngIf="addressSourceType.from === 'manual'">
         <ion-item>
-          <ion-input placeholder="Enter NEM address" formControlName="senderAddress"></ion-input>
+          <ion-textarea autosize rows="1" placeholder="Enter NEM address" formControlName="senderAddress"></ion-textarea>
         </ion-item>
       </ion-card>
 
@@ -86,7 +86,7 @@
       </ion-card>
       <ion-card *ngIf="addressSourceType.to === 'manual'">
         <ion-item>
-          <ion-input placeholder="Enter NEM address" formControlName="recipientAddress"></ion-input>
+          <ion-textarea ion-text color="light" autosize rows="1" placeholder="Enter NEM address" formControlName="recipientAddress"></ion-textarea>
         </ion-item>
       </ion-card>
 
@@ -104,7 +104,7 @@
       <h6 margin-left ion-text color="light">Note</h6>
       <ion-card>
         <ion-item no-border>
-          <ion-textarea autosize ion-text color="light" formControlName="message" placeholder="Your message"></ion-textarea>
+          <ion-textarea ion-text color="light" autosize ion-text color="light" formControlName="message" placeholder="Your message"></ion-textarea>
         </ion-item>
       </ion-card>
     </form>
