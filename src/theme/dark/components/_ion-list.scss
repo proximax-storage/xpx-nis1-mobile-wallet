@@ -20,12 +20,19 @@ ion-list[transparent-items] {
       color: color($colors, light);
     }
 
-    p {
+    p:not([ion-text]) {
       color: darken(color($colors, light), 10%);
+    }
+
+    p[small] {
+      font-size: 1rem;
     }
   }
   ion-card-header {
     padding-bottom: 0;
+  }
+  ion-card-header:nth-child(n+2) {
+    padding: 0;
   }
   ion-card-content {
     border-top: 0.1px solid transparentize(color($colors, light), 0.85);

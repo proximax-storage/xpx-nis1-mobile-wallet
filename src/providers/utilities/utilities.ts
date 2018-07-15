@@ -31,6 +31,8 @@ export class UtilitiesProvider {
       return App.LOGO.XPX;
     } else if(mosaic.mosaicId.namespaceId === 'appsolutely' && mosaic.mosaicId.name === 'lyl') {
       return App.LOGO.LYL;
+    } else {
+      return 'https://image.flaticon.com/icons/svg/1018/1018780.svg';
     }
   }
 

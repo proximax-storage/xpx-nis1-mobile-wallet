@@ -1,0 +1,83 @@
+<ion-card-header>
+    <p float-left ion-text color="light">
+      {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
+    </p>
+    <p float-right ion-text color="light">
+      {{ tx.timeWindow.timeStamp.toString() | timeago }}
+    </p>
+  </ion-card-header>
+<ion-card-header no-padding>
+  <ion-item>
+    <img logo-small item-left [src]="App.LOGO.NEM">
+    <h2 ion-text color="light">XEM</h2>
+    <p ion-text color="light">
+      <small>
+        NEM
+      </small>
+    </p>
+
+    <section text-right item-right>
+      <h2 ion-text color="danger">-{{ tx.fee | formatXEM | number: '1.2-16' }}</h2>
+      <p text-right text-left ion-text color="light">
+        <small>
+          {{ (tx.fee * 0.158542) | currency }}
+        </small>
+      </p>
+    </section>
+  </ion-item>
+</ion-card-header>
+
+<ion-card-content line no-padding>
+  <ion-item>
+    <h3 text-wrap ion-text color="light">{{ tx.signer.address.pretty() }}</h3>
+    <p ion-text color="light">
+      <small>
+        Sender
+      </small>
+    </p>
+
+    <section text-right item-right>
+      <button gradient-button pill color-1>
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+
+      <p ion-text color="light" *ngIf="tx.mode == 1">
+        <small>
+          Activate
+          <br> harvesting
+        </small>
+      </p>
+
+      <p ion-text color="light" *ngIf="tx.mode == 2">
+        <small>
+          Deactivate
+          <br> harvesting
+        </small>
+      </p>
+    </section>
+  </ion-item>
+</ion-card-content>
+
+<!-- Sender or recipient -->
+<p class="fit-long-address">
+  <b>
+    <span>{{ 'REMOTE_ACCOUNT' }}</span>
+  </b>
+  {{tx.remoteAccount.address.pretty()}}
+</p>
+
+<!-- Date (Timestamp) -->
+<p>
+  <b>{{'DATE' }}:</b> {{tx.timeWindow.timeStamp.toString()}}
+</p>
+
+<!-- Fee -->
+<p *ngIf="tx.fee">
+  <b>{{'FEE' }}:</b> {{(tx.fee) | formatXEM}} nem:xem</p>
+
+
+<!-- Message -->
+<p>
+  <span *ngIf="tx.mode == 1">{{ 'ACTIVATE_HARVESTING' }}</span>
+  <span *ngIf="tx.mode == 2">{{ 'DEACTIVATE_HARVESTING' }}</span>
+</p>

@@ -5,9 +5,13 @@ import {
   Address,
   MosaicTransferable,
   MosaicId,
-  MosaicProperties
+  MosaicProperties,
+  NEMLibrary,
+  NetworkTypes
 } from 'nem-library';
 import { Observable } from 'rxjs/Observable';
+
+import findIndex from 'lodash/findIndex';
 
 /*
   Generated class for the GetBalanceProvider provider.
@@ -51,23 +55,25 @@ export class GetBalanceProvider {
       this.nemProvider
         .getBalance(address)
         .then((mosaics: Array<MosaicTransferable>) => {
-          mosaics.map(mosaic => {
-            if (
-              mosaic.mosaicId.namespaceId !== 'prx' &&
-              mosaic.mosaicId.name !== 'xpx'
-            ) {
-              mosaics.push(XPX);
-            }
-
-            if (
-              mosaic.mosaicId.namespaceId !== 'appsolutely' &&
-              mosaic.mosaicId.name !== 'lyl'
-            ) {
-              mosaics.push(LYL);
-            }
+          const XPX_INDEX = findIndex(mosaics, {
+            mosaicId: { namespaceId: 'prx', name: 'xpx' }
+          });
+          const LYL_INDEX = findIndex(mosaics, {
+            mosaicId: { namespaceId: 'appsolutely', name: 'lyl' }
           });
 
-          observer.next(mosaics);
+          if (XPX_INDEX < 0) {
+            mosaics.push(XPX);
+          }
+          if (LYL_INDEX < 0) {
+            mosaics.push(LYL);
+          }
+
+          if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
+            observer.next([]);
+          } else {
+            observer.next(mosaics);
+          }
         })
         .catch(observer.error);
     });

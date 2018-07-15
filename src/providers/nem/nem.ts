@@ -22,10 +22,16 @@ import {
   MosaicService,
   QRService,
   QRWalletText,
-  MosaicDefinition
+  MosaicDefinition,
+  ServerConfig
 } from 'nem-library';
 
 import { Observable } from 'nem-library/node_modules/rxjs';
+
+export const SERVER_CONFIG : ServerConfig[] = [
+  { protocol: 'http', domain: '192.3.61.243', port: 7890 },
+  { protocol: 'http', domain: '50.3.87.123', port: 7890 }
+];
 
 /*
  Generated class for the NemProvider provider.
@@ -43,10 +49,18 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET);
-    this.accountHttp = new AccountHttp();
-    this.mosaicHttp = new MosaicHttp();
-    this.transactionHttp = new TransactionHttp();
+    NEMLibrary.bootstrap(NetworkTypes.TEST_NET);
+
+    if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
+      this.accountHttp = new AccountHttp(SERVER_CONFIG);
+      this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
+      this.transactionHttp = new TransactionHttp(SERVER_CONFIG);
+    } else {
+      this.accountHttp = new AccountHttp();
+      this.mosaicHttp = new MosaicHttp();
+      this.transactionHttp = new TransactionHttp();
+    }
+
     this.qrService = new QRService();
     this.accountOwnedMosaicsService = new AccountOwnedMosaicsService(
       this.accountHttp,
@@ -139,13 +153,13 @@ export class NemProvider {
     );
   }
 
-   /**
+  /**
    * Generate Address QR Text
    * @param address address
    * @return Address QR Text
    */
   public generateWalletQRText(password: string, wallet: SimpleWallet): string {
-    const PASSWORD = new Password(password)
+    const PASSWORD = new Password(password);
     return this.qrService.generateWalletQRText(PASSWORD, wallet);
   }
 
@@ -309,7 +323,9 @@ export class NemProvider {
   public getAllTransactionsFromAnAccount(
     address: Address
   ): Observable<Transaction[]> {
-    return this.accountHttp.allTransactions(address);
+    return this.accountHttp.allTransactionsPaginated(address, {
+      pageSize: 25
+    });
   }
 
   /**
