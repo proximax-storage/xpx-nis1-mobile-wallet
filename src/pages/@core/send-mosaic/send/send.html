@@ -63,7 +63,7 @@
       </ion-card>
       <ion-card *ngIf="addressSourceType.from === 'manual'" (click)="selectContact('from')">
         <ion-item>
-          <ion-input placeholder="NXXXXXXXXXXXXXX" formControlName="senderAddress"></ion-input>
+          <ion-input placeholder="Enter NEM address" formControlName="senderAddress"></ion-input>
         </ion-item>
       </ion-card>
 
@@ -86,7 +86,7 @@
       </ion-card>
       <ion-card *ngIf="addressSourceType.to === 'manual'" (click)="selectContact('to')">
         <ion-item>
-          <ion-input placeholder="NXXXXXXXXXXXXXX" formControlName="recipientAddress"></ion-input>
+          <ion-input placeholder="Enter NEM address" formControlName="recipientAddress"></ion-input>
         </ion-item>
       </ion-card>
 

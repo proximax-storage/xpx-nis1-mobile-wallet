@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Clipboard } from '@ionic-native/clipboard';
+
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { SimpleWallet } from '../../../../../node_modules/nem-library';
 import { NemProvider } from '../../../../providers/nem/nem';
+import { ToastProvider } from './../../../../providers/toast/toast';
 
 /**
  * Generated class for the SettingListPage page.
@@ -23,6 +26,8 @@ export class SettingListPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private nemProvider: NemProvider,
+    private clipboard: Clipboard,
+    private toastProvider: ToastProvider,
     private walletProvider: WalletProvider
   ) {}
 
@@ -52,10 +57,18 @@ export class SettingListPage {
   }
 
   getQRCode() {
-    let QRCode: any = this.nemProvider.generateAddressQRText(this.currentWallet.address);
+    let QRCode: any = this.nemProvider.generateAddressQRText(
+      this.currentWallet.address
+    );
     QRCode = JSON.parse(QRCode);
     QRCode.data.name = this.currentWallet.name;
 
     return JSON.stringify(QRCode);
+  }
+
+  copy(address: string) {
+    this.clipboard.copy(address).then(_ => {
+      this.toastProvider.show('Copied address successfully', 3, true);
+    });
   }
 }

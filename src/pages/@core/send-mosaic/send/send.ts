@@ -73,9 +73,11 @@ export class SendPage {
       } else {
         this.currentWallet = currentWallet;
 
-        this.getBalanceProvider.mosaics(this.currentWallet.address).subscribe(mosaics => {
-          this.selectedMosaic = mosaics[0];
-        });
+        this.getBalanceProvider
+          .mosaics(this.currentWallet.address)
+          .subscribe(mosaics => {
+            this.selectedMosaic = mosaics[0];
+          });
 
         // Set sender address to currenWallet.address
         this.form
@@ -122,8 +124,12 @@ export class SendPage {
     // Initialize source type of NEM address in from and to
     this.addressSourceType = {
       from: 'contact',
-      to: 'contact'
+      to: 'manual'
     };
+
+    if (this.addressSourceType.to === 'manual') {
+      this.form.get('recipientAddress').setValue('');
+    }
   }
 
   onChangeFrom(val) {

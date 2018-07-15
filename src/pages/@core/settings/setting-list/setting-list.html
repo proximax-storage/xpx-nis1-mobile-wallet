@@ -29,7 +29,7 @@
   </section>
 
   <ion-list transparent-items>
-    <ion-card>
+    <ion-card (click)="copy(currentWallet.address.plain())">
       <ion-item>
         <ion-icon item-left name="barcode"></ion-icon>
         <h2>Address</h2>

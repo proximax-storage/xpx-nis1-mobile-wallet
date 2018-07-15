@@ -59,6 +59,9 @@ export class RegisterPage {
   }
 
   onSubmit(form) {
-    this.navCtrl.push('WalletListPage', form.email);
+    this.navCtrl.setRoot('WalletListPage', form.email, {
+      animate: true,
+      direction: 'forward'
+    });
   }
 }
