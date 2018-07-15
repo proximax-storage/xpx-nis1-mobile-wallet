@@ -12,17 +12,16 @@ import { App } from '../../../../providers/app/app';
 @IonicPage()
 @Component({
   selector: 'page-contact-detail',
-  templateUrl: 'contact-detail.html',
+  templateUrl: 'contact-detail.html'
 })
 export class ContactDetailPage {
-
   App = App;
 
   selectedContact: {
-    id: number,
-    name: string,
-    address: string,
-    telegram: string,
+    id: number;
+    name: string;
+    address: string;
+    telegram: string;
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -37,4 +36,9 @@ export class ContactDetailPage {
     this.navCtrl.push('TransactionDetailPage');
   }
 
+  gotoTelegram(username) {
+    if (username) {
+      window.open(`https://t.me/${username}`, '_system');
+    }
+  }
 }

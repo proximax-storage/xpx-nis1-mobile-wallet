@@ -12,6 +12,7 @@ import { SecureStorage } from '@ionic-native/secure-storage';
 import { Device } from '@ionic-native/device';
 import { Clipboard } from '@ionic-native/clipboard';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { App } from '../providers/app/app';
 import { ComponentsModule } from '../components/components.module';
@@ -26,6 +27,7 @@ import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { ToastProvider } from '../providers/toast/toast';
 import { ContactsProvider } from '../providers/contacts/contacts';
+import { BarcodeScannerProvider } from '../providers/barcode-scanner/barcode-scanner';
 
 @NgModule({
   declarations: [
@@ -50,13 +52,14 @@ import { ContactsProvider } from '../providers/contacts/contacts';
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    
+
     StatusBar,
     SplashScreen,
     SecureStorage,
     Device,
     Clipboard,
     SocialSharing,
+    BarcodeScanner,
 
     App,
     AuthProvider,
@@ -67,6 +70,7 @@ import { ContactsProvider } from '../providers/contacts/contacts';
     UtilitiesProvider,
     ToastProvider,
     ContactsProvider,
+    BarcodeScannerProvider,
   ]
 })
 export class AppModule {}

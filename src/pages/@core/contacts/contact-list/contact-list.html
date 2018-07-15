@@ -26,7 +26,7 @@
           <br> Try adding one or two.
         </p>
 
-        <button gradient-button color-1 (click)="gotoAddContact()">
+        <button gradient-button color-1 (click)="showAddContactPrompt()">
           Add new contact
         </button>
       </ion-col>
@@ -58,7 +58,7 @@
     </ion-card>
 
     <section margin-top text-center>
-      <button no-margin gradient-button circle color-1 (click)="gotoAddContact()">
+      <button no-margin gradient-button circle color-1 (click)="showAddContactPrompt()">
         <ion-icon name="md-add"></ion-icon>
       </button>
       <p text-wrap ion-text color="light">Add contact</p>

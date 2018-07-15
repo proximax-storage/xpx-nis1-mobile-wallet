@@ -4,6 +4,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
+import { NemProvider } from '../../../../providers/nem/nem';
+import { Address } from '../../../../../node_modules/nem-library';
+import { AlertProvider } from '../../../../providers/alert/alert';
 
 /**
  * Generated class for the ContactAddPage page.
@@ -26,6 +29,8 @@ export class ContactAddPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
+    public nemProvider: NemProvider,
+    public alertProvider: AlertProvider,
     public contactsProvider: ContactsProvider
   ) {
     this.init();
@@ -41,6 +46,10 @@ export class ContactAddPage {
       address: ['', [Validators.minLength(40), Validators.required]],
       telegram: ['']
     });
+
+    if (this.navParams.data) {
+      this.formGroup.setValue(this.navParams.data);
+    }
   }
 
   gotoHome() {
@@ -48,8 +57,15 @@ export class ContactAddPage {
   }
 
   onSubmit(form) {
-    this.contactsProvider.push(form).then(_ => {
-      this.gotoHome();
-    });
+    const CONTACT_ADDRESS = new Address(this.formGroup.get('address').value);
+    if (!this.nemProvider.isValidAddress(CONTACT_ADDRESS)) {
+      this.alertProvider.showMessage(
+        'Sorry, it looks like this NEM address does not belong to this network. Please try again.'
+      );
+    } else {
+      this.contactsProvider.push(form).then(_ => {
+        this.gotoHome();
+      });
+    }
   }
 }

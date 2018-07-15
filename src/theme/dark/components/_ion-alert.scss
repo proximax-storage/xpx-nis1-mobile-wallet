@@ -1,6 +1,9 @@
-ion-alert.select-alert {
+ion-alert.alert-md,
+ion-alert.alert-ios {
   .alert-title,
+  .alert-sub-title,
   .alert-radio-label,
+  .alert-message,
   .alert-button-group .alert-button .button-inner {
     color: color($colors, light);
   }
@@ -20,9 +23,12 @@ ion-alert.select-alert {
 
   .alert-wrapper {
     background: linear-gradient(
-      to right,
-      color($colors, secondary),
-      color($colors, dark)
-    );
+        transparentize(color($colors, secondary), 0.3),
+        color($colors, dark)
+      ),
+      url('https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')
+        no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }

@@ -1,4 +1,3 @@
-import { App } from './../../../../providers/app/app';
 import { Component } from '@angular/core';
 import {
   IonicPage,
@@ -10,6 +9,8 @@ import {
 } from 'ionic-angular';
 
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
+import { BarcodeScannerProvider } from './../../../../providers/barcode-scanner/barcode-scanner';
+import { App } from './../../../../providers/app/app';
 
 /**
  * Generated class for the ContactListPage page.
@@ -17,6 +18,11 @@ import { ContactsProvider } from '../../../../providers/contacts/contacts';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+
+export enum ContactCreationType {
+  MANUAL = 0,
+  QR_SCAN = 1
+}
 
 @IonicPage()
 @Component({
@@ -41,8 +47,8 @@ export class ContactListPage {
     private contactsProvider: ContactsProvider,
     private actionSheetCtrl: ActionSheetController,
     private platform: Platform,
-  ) {
-  }
+    private barcodeScannerProvider: BarcodeScannerProvider,
+  ) {}
 
   ionViewWillEnter() {
     this.init();
@@ -75,14 +81,16 @@ export class ContactListPage {
           handler: () => {
             this.navCtrl.push('ContactUpdatePage', { contact: contact });
           }
-        },{
+        },
+        {
           text: 'Delete',
           role: 'destructive',
           icon: this.platform.is('ios') ? null : 'trash',
           handler: () => {
             this.navCtrl.push('ContactDeletePage', { contact: contact });
           }
-        },{
+        },
+        {
           text: 'Cancel',
           role: 'cancel',
           icon: this.platform.is('ios') ? null : 'close',
@@ -95,8 +103,49 @@ export class ContactListPage {
     actionSheet.present();
   }
 
-  gotoAddContact() {
-    this.navCtrl.push('ContactAddPage');
+  showAddContactPrompt() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Add new contact');
+    alert.setSubTitle('Select adding type below');
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Manual input',
+      value: ContactCreationType.MANUAL.toString(),
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'QR scan',
+      value: ContactCreationType.QR_SCAN.toString(),
+      checked: false
+    });
+
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Proceed',
+      handler: data => {
+        if (data === ContactCreationType.MANUAL.toString()) {
+          this.navCtrl.push('ContactAddPage', {
+            name: '',
+            address: '',
+            telegram: '',
+          });
+        } else if (data === ContactCreationType.QR_SCAN.toString()) {
+          this.barcodeScannerProvider.getData().then(result => {
+            const ACCOUNT_INFO = {
+              name: result.data.name || '',
+              address: result.data.addr || '',
+              telegram: result.data.telegram || '',
+            }
+
+            this.navCtrl.push('ContactAddPage', ACCOUNT_INFO);
+          });
+        }
+      }
+    });
+    alert.present();
   }
 
   update(contact) {
