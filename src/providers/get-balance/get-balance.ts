@@ -62,16 +62,16 @@ export class GetBalanceProvider {
             mosaicId: { namespaceId: 'appsolutely', name: 'lyl' }
           });
 
-          if (XPX_INDEX < 0) {
-            mosaics.push(XPX);
-          }
-          if (LYL_INDEX < 0) {
-            mosaics.push(LYL);
-          }
-
           if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
-            observer.next([]);
+            observer.next(mosaics);
           } else {
+            if (XPX_INDEX < 0) {
+              mosaics.push(XPX);
+            }
+            if (LYL_INDEX < 0) {
+              mosaics.push(LYL);
+            }
+
             observer.next(mosaics);
           }
         })

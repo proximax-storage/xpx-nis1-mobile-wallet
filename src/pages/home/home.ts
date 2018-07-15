@@ -1,20 +1,76 @@
 import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
+import {
+  App,
+  NavController,
+  NavParams,
+  ViewController
+} from 'ionic-angular';
+import { SimpleWallet, MosaicTransferable } from 'nem-library';
+
+import { App as AppConfig } from '../../providers/app/app';
+import { WalletProvider } from '../../providers/wallet/wallet';
+import { UtilitiesProvider } from '../../providers/utilities/utilities';
+import { GetBalanceProvider } from '../../providers/get-balance/get-balance';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  AppConfig = AppConfig;
 
-  constructor(public navCtrl: NavController, private app: App) {
+  selectedMosaic: MosaicTransferable;
+  mosaics: Array<MosaicTransferable>;
 
+  selectedWallet: SimpleWallet;
+
+  fakeList: Array<any>;
+
+  constructor(
+    public app: App,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public getBalanceProvider: GetBalanceProvider,
+    public walletProvider: WalletProvider,
+    public utils: UtilitiesProvider
+  ) {
+    this.fakeList = [{}, {}];
+  }
+  ionViewWillEnter() {
+    this.walletProvider.getSelectedWallet().then(wallet => {
+      if (!wallet) this.navCtrl.setRoot('WalletListPage');
+      else {
+        this.selectedWallet = wallet;
+        this.getBalance();
+      }
+    });
+  }
+
+  /**
+   * Retrieves current account owned mosaics  into this.mosaics
+   */
+  public getBalance() {
+    this.getBalanceProvider
+      .mosaics(this.selectedWallet.address)
+      .subscribe(mosaics => {
+        this.mosaics = mosaics;
+
+        if (this.mosaics.length > 0) {
+          this.selectedMosaic =
+            this.navParams.get('selectedMosaic') || this.mosaics[0];
+        }
+      });
   }
 
   gotoWalletList() {
-   this.app.getRootNav().setRoot('WalletListPage', {}, {
-      animate: true,
-      direction: 'backward'
-    });
+    this.app.getRootNav().setRoot(
+      'WalletListPage',
+      {},
+      {
+        animate: true,
+        direction: 'backward'
+      }
+    );
   }
 }

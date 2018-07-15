@@ -38,7 +38,7 @@ export class LoginPage {
   }
 
   gotoHome() {
-    this.navCtrl.setRoot('VerificationCodePage', {}, {
+    this.navCtrl.setRoot('WalletListPage', {}, {
       animate: true,
       direction: 'forward'
     });

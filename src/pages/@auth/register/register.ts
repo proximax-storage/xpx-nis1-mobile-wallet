@@ -59,6 +59,6 @@ export class RegisterPage {
   }
 
   onSubmit(form) {
-    this.navCtrl.push('VerificationCodePage', form.email);
+    this.navCtrl.push('WalletListPage', form.email);
   }
 }

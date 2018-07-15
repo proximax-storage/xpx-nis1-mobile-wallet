@@ -21,7 +21,48 @@
 
   <h6 margin-left ion-text color="light">Mosaics</h6>
 
-  <ion-list>
+  <ion-list transparent-items>
+    <ion-card *ngFor="let mosaic of mosaics">
+      <ion-item>
+        <img logo-small item-left [src]="utils.getLogo(mosaic)">
+        <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
+        <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
+
+        <section item-right>
+          <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
+          <p text-right text-left ion-text color="light">
+            <small>
+              {{ mosaic.amount * 0.19 | currency }}
+            </small>
+          </p>
+        </section>
+      </ion-item>
+    </ion-card>
+
+    <section [hidden]="mosaics">
+      <ion-card fake-card *ngFor="let fakeCard of fakeList">
+        <ion-item>
+          <section image item-left></section>
+          <h2> &nbsp; </h2>
+          <p> &nbsp; </p>
+
+          <section item-right>
+            <h2> &nbsp; </h2>
+            <p>
+              <small> &nbsp; </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card>
+      <ion-card>
+        <ion-item text-center>
+          <ion-spinner></ion-spinner>
+        </ion-item>
+      </ion-card>
+    </section>
+  </ion-list>
+
+  <!-- <ion-list>
     <ion-card no-padding>
       <ion-card-header no-padding>
         <ion-item>
@@ -147,5 +188,5 @@
         </ion-item>
       </ion-card-content>
     </ion-card>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
