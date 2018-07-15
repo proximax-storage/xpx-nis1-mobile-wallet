@@ -22,14 +22,22 @@ export class NamespaceCreatePage {
   formGroup: FormGroup;
 
   PASSWORD = '123qweasd';
+  list: Array<any>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private listStorage: ListStorageProvider
+    private listStorageProvider: ListStorageProvider
   ) {
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.listStorageProvider.init('namespaces');
+    this.listStorageProvider.getAll().then(value => {
+      this.list = value;
+    });
   }
 
   ionViewDidLoad() {
@@ -39,24 +47,17 @@ export class NamespaceCreatePage {
   init() {
     this.formGroup = this.formBuilder.group({
       parentNamespace: ['new', [Validators.minLength(3), Validators.required]],
-      name: ['', [Validators.minLength(3), Validators.required]]
+      name: ['', [Validators.minLength(3), Validators.required]],
+      sinkAddress: ['TAMESP-ACEWH4-MKFMBC-VFERDP-OOP4FK-7MTDJE-YP35', [Validators.required]],
+      fee: ['0.15', [Validators.required]],
+      rentalFee: ['100.00', [Validators.required]],
     });
   }
 
-  goBack() {
-    return this.navCtrl.setRoot(
-      'WalletListPage',
-      {},
-      {
-        animate: true,
-        direction: 'forward'
-      }
-    );
-  }
-
   onSubmit(form) {
-    this.listStorage.push(form).then(_ => {
-      return this.goBack();
+    form.name = form.parentNamespace ? `${form.parentNamespace}:${form.name}` : form.name;
+    this.listStorageProvider.push(form).then(_ => {
+      return this.navCtrl.pop();
     });
   }
 }

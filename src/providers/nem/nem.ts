@@ -23,7 +23,8 @@ import {
   QRService,
   QRWalletText,
   MosaicDefinition,
-  ServerConfig
+  ServerConfig,
+  ProvisionNamespaceTransaction
 } from 'nem-library';
 
 import { Observable } from 'nem-library/node_modules/rxjs';
@@ -246,6 +247,23 @@ export class NemProvider {
       recipientAddress,
       new XEM(amount),
       PlainMessage.create(message)
+    );
+  }
+
+  /**
+   * Prepares provision namespace transaction
+   * @param recipientAddress recipientAddress
+   * @param mosaicsTransferable mosaicsTransferable
+   * @param message message
+   * @return Promise containing prepared transaction
+   */
+  public prepareProvisionNamespaceTransaction(
+    recipientAddress: Address,
+    namespace: string
+  ): ProvisionNamespaceTransaction {
+    return ProvisionNamespaceTransaction.create(
+      TimeWindow.createWithDeadline(),
+      namespace
     );
   }
 

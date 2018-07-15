@@ -49,6 +49,7 @@ export class NamespaceListPage {
   }
 
   ionViewWillEnter() {
+    this.listStorageProvider.init('namespaces');
     this.listStorageProvider.getAll().then(value => {
       this.list = value;
       this.selectedData = this.list[0];
