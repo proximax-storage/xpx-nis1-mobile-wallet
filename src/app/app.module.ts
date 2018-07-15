@@ -28,6 +28,7 @@ import { HomePage } from '../pages/home/home';
 import { ToastProvider } from '../providers/toast/toast';
 import { ContactsProvider } from '../providers/contacts/contacts';
 import { BarcodeScannerProvider } from '../providers/barcode-scanner/barcode-scanner';
+import { ListStorageProvider } from '../providers/list-storage/list-storage';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { BarcodeScannerProvider } from '../providers/barcode-scanner/barcode-sca
     ToastProvider,
     ContactsProvider,
     BarcodeScannerProvider,
+    ListStorageProvider,
   ]
 })
 export class AppModule {}
