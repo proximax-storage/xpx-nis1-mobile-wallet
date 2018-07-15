@@ -61,7 +61,7 @@
           <p ion-text color="light">{{ form.get('senderAddress').value }}</p>
         </ion-item>
       </ion-card>
-      <ion-card *ngIf="addressSourceType.from === 'manual'" (click)="selectContact('from')">
+      <ion-card *ngIf="addressSourceType.from === 'manual'">
         <ion-item>
           <ion-input placeholder="Enter NEM address" formControlName="senderAddress"></ion-input>
         </ion-item>
@@ -84,7 +84,7 @@
           <p ion-text color="light">{{ form.get('recipientAddress').value }}</p>
         </ion-item>
       </ion-card>
-      <ion-card *ngIf="addressSourceType.to === 'manual'" (click)="selectContact('to')">
+      <ion-card *ngIf="addressSourceType.to === 'manual'">
         <ion-item>
           <ion-input placeholder="Enter NEM address" formControlName="recipientAddress"></ion-input>
         </ion-item>
