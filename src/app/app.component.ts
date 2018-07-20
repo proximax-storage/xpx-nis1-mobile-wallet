@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = 'OnboardingPage';
+  rootPage: any = 'TabsPage';
 
   constructor(
     statusBar: StatusBar,
