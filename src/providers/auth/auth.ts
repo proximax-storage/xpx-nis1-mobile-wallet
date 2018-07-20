@@ -35,7 +35,8 @@ export class AuthProvider {
             (loggedInAccount.email === email &&
               loggedInAccount.password !== password) ||
             // Incorrect password and incorrect email
-            (loggedInAccount.email !== email && loggedInAccount.password !== password)
+            (loggedInAccount.email !== email &&
+              loggedInAccount.password !== password)
           ) {
             return {
               status: 'failed',
@@ -45,7 +46,9 @@ export class AuthProvider {
           }
 
           return {
-            status: 'success'
+            status: 'success',
+            message:
+              "You've successfully logged in."
           };
         }
       );
@@ -71,10 +74,7 @@ export class AuthProvider {
    */
   remove() {
     return this.secureStorage.create('auth').then(storage => {
-      return Promise.all([
-        storage.remove('email'),
-        storage.remove('password')
-      ]);
+      return Promise.all([storage.remove('email'), storage.remove('password')]);
     });
   }
 }

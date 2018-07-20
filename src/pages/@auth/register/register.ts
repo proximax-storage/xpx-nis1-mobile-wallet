@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthProvider } from '../../../providers/auth/auth';
 
 /**
  * Generated class for the RegisterPage page.
@@ -20,7 +21,8 @@ export class RegisterPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public authProvider: AuthProvider,
   ) {
     this.init();
   }
@@ -59,9 +61,11 @@ export class RegisterPage {
   }
 
   onSubmit(form) {
-    this.navCtrl.setRoot('WalletListPage', form.email, {
-      animate: true,
-      direction: 'forward'
+    this.authProvider.register(form.email, form.password).then(_ => {
+      this.navCtrl.push('VerificationCodePage', { status: 'confirm' }, {
+        animate: true,
+        direction: 'forward'
+      });
     });
   }
 }

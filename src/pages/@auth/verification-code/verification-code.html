@@ -8,5 +8,5 @@
   <ion-navbar transparent></ion-navbar>
 </ion-header>
 <ion-content fullscreen background>
-  <ngx-pin (submit)="onSubmit($event)"></ngx-pin>
+  <ngx-pin [title]="pinTitle" (submit)="onSubmit($event)"></ngx-pin>
 </ion-content>

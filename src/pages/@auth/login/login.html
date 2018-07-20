@@ -38,7 +38,7 @@
             </button>
           </section>
 
-          <button gradient-button small color-1 type="submit" color="light">
+          <button gradient-button small color-1 [disabled]="formGroup.invalid" type="submit" color="light">
               <ion-icon name="ios-arrow-forward"></ion-icon>
           </button>
         </form>

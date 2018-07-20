@@ -1,6 +1,9 @@
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+import { AuthProvider } from '../../../providers/auth/auth';
 
 /**
  * Generated class for the LoginPage page.
@@ -12,20 +15,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
-
   formGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder: FormBuilder,
+    public storage: Storage,
+    public authProvider: AuthProvider
+  ) {
     this.init();
   }
 
   init() {
     this.formGroup = this.formBuilder.group({
-      email: [ '', Validators.required ],
-      password: [ '', Validators.required ]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -38,14 +46,37 @@ export class LoginPage {
   }
 
   gotoHome() {
-    this.navCtrl.setRoot('WalletListPage', {}, {
-      animate: true,
-      direction: 'forward'
+    this.storage.get('pin').then(pin => {
+      this.navCtrl.setRoot(
+        'VerificationCodePage',
+        {
+          status: 'verify',
+          title: 'Verify pin',
+          invalidPinMessage: 'It looks like you entered a wrong pin code. Please try again',
+          pin: pin
+        },
+        {
+          animate: true,
+          direction: 'forward'
+        }
+      );
     });
   }
 
   onSubmit(form) {
-    console.log(form);
-    this.gotoHome();
+    this.authProvider
+      .login(form.email, form.password)
+      .then(res => {
+        if (status === 'failed') {
+          alert(res.message);
+        } else {
+          this.gotoHome();
+        }
+      })
+      .catch(err => {
+        alert(
+          'It looks like this account does not exist. Please register first and login again.'
+        );
+      });
   }
 }
