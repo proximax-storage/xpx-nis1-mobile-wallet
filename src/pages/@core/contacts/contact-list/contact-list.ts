@@ -47,7 +47,7 @@ export class ContactListPage {
     private contactsProvider: ContactsProvider,
     private actionSheetCtrl: ActionSheetController,
     private platform: Platform,
-    private barcodeScannerProvider: BarcodeScannerProvider,
+    private barcodeScannerProvider: BarcodeScannerProvider
   ) {}
 
   ionViewWillEnter() {
@@ -130,18 +130,20 @@ export class ContactListPage {
           this.navCtrl.push('ContactAddPage', {
             name: '',
             address: '',
-            telegram: '',
+            telegram: ''
           });
         } else if (data === ContactCreationType.QR_SCAN.toString()) {
-          this.barcodeScannerProvider.getData().then(result => {
-            const ACCOUNT_INFO = {
-              name: result.data.name || '',
-              address: result.data.addr || '',
-              telegram: result.data.telegram || '',
-            }
+          this.barcodeScannerProvider
+            .getData('ContactListPage')
+            .then(result => {
+              const ACCOUNT_INFO = {
+                name: result.data.name || '',
+                address: result.data.addr || '',
+                telegram: result.data.telegram || ''
+              };
 
-            this.navCtrl.push('ContactAddPage', ACCOUNT_INFO);
-          });
+              if (data) this.navCtrl.push('ContactAddPage', ACCOUNT_INFO);
+            });
         }
       }
     });

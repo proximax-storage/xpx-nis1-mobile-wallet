@@ -23,7 +23,7 @@
       [ion-button] {
         height: 5rem;
         width: 4rem;
-        box-shadow: 0 .5px 4px 0 color($colors, dark);
+        box-shadow: 0 0.5px 4px 0 color($colors, dark);
         border: 0;
         border-radius: 0.5rem;
       }
@@ -31,6 +31,11 @@
       [pin] {
         font-size: 4rem;
         letter-spacing: 16px;
+
+        span {
+          -webkit-text-security: disc;
+          font-size: 4rem;
+        }
       }
     }
 

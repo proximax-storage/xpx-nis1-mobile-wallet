@@ -38,8 +38,6 @@ export class VerificationCodePage {
   }
 
   onSubmit(pin) {
-    console.log('pin', pin);
-
     if (this.navParams.data.status === 'confirm') {
       return this.navCtrl.push(
         'VerificationCodePage',

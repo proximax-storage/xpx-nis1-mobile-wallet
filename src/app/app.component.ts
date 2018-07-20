@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = 'TabsPage';
+  rootPage: any = 'OnboardingPage';
 
   constructor(
     statusBar: StatusBar,
@@ -29,9 +29,13 @@ export class MyApp {
 
   initOnPauseResume() {
     this.platform.pause.subscribe(() => {
-      this.storage.get('pin').then(pin => {
-        if (pin) this.storage.set('isLocked', true);
-      });
+      Promise.all([this.storage.get('isLocked'), this.storage.get('pin')]).then(
+        results => {
+          const isLocked = results[0] || false;
+          const pin = results[1];
+          if (pin) this.storage.set('isLocked', isLocked);
+        }
+      );
     });
 
     this.platform.resume.subscribe(() => {

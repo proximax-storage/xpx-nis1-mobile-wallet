@@ -6,8 +6,6 @@ import {
   MosaicTransferable,
   MosaicId,
   MosaicProperties,
-  NEMLibrary,
-  NetworkTypes
 } from 'nem-library';
 import { Observable } from 'rxjs/Observable';
 
@@ -62,18 +60,14 @@ export class GetBalanceProvider {
             mosaicId: { namespaceId: 'appsolutely', name: 'lyl' }
           });
 
-          if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
-            observer.next(mosaics);
-          } else {
-            if (XPX_INDEX < 0) {
-              mosaics.push(XPX);
-            }
-            if (LYL_INDEX < 0) {
-              mosaics.push(LYL);
-            }
-
-            observer.next(mosaics);
+          if (XPX_INDEX < 0) {
+            mosaics.splice(1, 0, XPX);
           }
+          if (LYL_INDEX < 0) {
+            mosaics.splice(2, 0, LYL);
+          }
+
+          observer.next(mosaics);
         })
         .catch(observer.error);
     });

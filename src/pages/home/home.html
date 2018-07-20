@@ -23,36 +23,58 @@
 
   <ion-list transparent-items>
     <ion-card *ngFor="let mosaic of mosaics">
-      <ion-item>
-        <img logo-small item-left [src]="utils.getLogo(mosaic)">
-        <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
-        <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
+      <ion-card-header no-padding>
+        <ion-item>
+          <img logo-small item-left [src]="utils.getLogo(mosaic)">
+          <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
+          <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
 
-        <section item-right>
-          <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
-          <p text-right text-left ion-text color="light">
+          <section item-right>
+            <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="light">
+              <small>
+                {{ mosaic.amount * 0.19 | currency }}
+              </small>
+            </p>
+          </section>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content line no-padding>
+        <ion-item>
+          <h3 ion-text color="light">$6,762.33</h3>
+          <p ion-text color="light">
             <small>
-              {{ mosaic.amount * 0.19 | currency }}
+              Price
             </small>
           </p>
-        </section>
-      </ion-item>
+        </ion-item>
+      </ion-card-content>
     </ion-card>
 
     <section [hidden]="mosaics">
       <ion-card fake-card *ngFor="let fakeCard of fakeList">
-        <ion-item>
-          <section image item-left></section>
-          <h2> &nbsp; </h2>
-          <p> &nbsp; </p>
+        <ion-card-header no-padding>
+          <ion-item>
+            <section image item-left></section>
+            <h2> &nbsp; </h2>
+            <p> &nbsp; </p>
 
-          <section item-right>
+            <section item-right>
+              <h2> &nbsp; </h2>
+              <p>
+                <small> &nbsp; </small>
+              </p>
+            </section>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content line no-padding>
+          <ion-item>
             <h2> &nbsp; </h2>
             <p>
               <small> &nbsp; </small>
             </p>
-          </section>
-        </ion-item>
+          </ion-item>
+        </ion-card-content>
       </ion-card>
       <ion-card>
         <ion-item text-center>

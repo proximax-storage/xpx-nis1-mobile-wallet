@@ -1,5 +1,6 @@
 import { App } from 'ionic-angular';
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import {
   BarcodeScanner,
   BarcodeScannerOptions,
@@ -16,26 +17,38 @@ import {
 export class BarcodeScannerProvider {
   private barcodeScannerOptions: BarcodeScannerOptions;
 
-  constructor(private app: App, private barcodeScanner: BarcodeScanner) {
+  constructor(
+    private app: App,
+    private storage: Storage,
+    private barcodeScanner: BarcodeScanner
+  ) {
     this.barcodeScannerOptions = {
       prompt: '',
       resultDisplayDuration: 0
     };
   }
 
-  getData(): Promise<any> {
-    return this.barcodeScanner
-      .scan(this.barcodeScannerOptions)
+  /**
+   * Gets the data returned from QR scan unless if it is cancelled.
+   * @param page Redirect to this page when QR scan is cancelled.
+   */
+  getData(page: string): Promise<any> {
+    return this.storage
+      .set('isLocked', false)
+      .then(_ => {
+        console.log('isLocked', _)
+        return this.barcodeScanner.scan(this.barcodeScannerOptions);
+      })
       .then((result: BarcodeScanResult) => {
         if (result.cancelled) {
-          this.app.getActiveNav().setRoot(
-            'WalletListPage',
+          return this.app.getActiveNav().setRoot(
+            page,
             {},
             {
               animate: true,
               direction: 'forward'
             }
-          );
+          ).then(_ => false);
         }
 
         return JSON.parse(result.text);

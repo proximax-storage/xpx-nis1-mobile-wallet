@@ -144,8 +144,8 @@ export class WalletListPage {
         } else if (data === WalletCreationType.PRIVATE_KEY.toString()) {
           this.navCtrl.push('WalletAddPrivateKeyPage', { name: '', privateKey: '' });
         } else if (data === WalletCreationType.QR_SCAN.toString()) {
-          this.barcodeScannerProvider.getData().then(data => {
-            this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
+          this.barcodeScannerProvider.getData('WalletListPage').then(data => {
+            if(data) this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
           });
         }
       }
