@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { SimpleWallet } from '../../../../../node_modules/nem-library';
+import { AuthProvider } from '../../../../providers/auth/auth';
 
 /**
  * Generated class for the WalletUpdatePage page.
@@ -23,13 +24,14 @@ export class WalletUpdatePage {
   formGroup: FormGroup;
   selectedWallet: SimpleWallet;
 
-  PASSWORD = '123qweasd';
+  PASSWORD : string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private authProvider: AuthProvider,
   ) {
     this.init();
   }
@@ -46,6 +48,10 @@ export class WalletUpdatePage {
         this.selectedWallet.name || '',
         [Validators.minLength(3), Validators.required]
       ]
+    });
+
+    this.authProvider.getPassword().then(password => {
+      this.PASSWORD = password;
     });
   }
 

@@ -22,7 +22,7 @@ export class RegisterPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public authProvider: AuthProvider,
+    public authProvider: AuthProvider
   ) {
     this.init();
   }
@@ -34,8 +34,8 @@ export class RegisterPage {
   init() {
     this.formGroup = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]]
     });
     this.formGroup.valueChanges.subscribe(form => {
       this.checkPasswords(this.formGroup);
@@ -62,10 +62,14 @@ export class RegisterPage {
 
   onSubmit(form) {
     this.authProvider.register(form.email, form.password).then(_ => {
-      this.navCtrl.push('VerificationCodePage', { status: 'confirm' }, {
-        animate: true,
-        direction: 'forward'
-      });
+      this.navCtrl.push(
+        'VerificationCodePage',
+        { status: 'confirm' },
+        {
+          animate: true,
+          direction: 'forward'
+        }
+      );
     });
   }
 }

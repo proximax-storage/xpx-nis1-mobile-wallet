@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
+import { AuthProvider } from '../../../../providers/auth/auth';
 /**
  * Generated class for the WalletAddPrivateKeyPage page.
  *
@@ -21,14 +22,15 @@ export class WalletAddPrivateKeyPage {
   App = App;
   formGroup: FormGroup;
 
-  PASSWORD = '123qweasd';
+  PASSWORD : string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     private nemProvider: NemProvider,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private authProvider: AuthProvider,
   ) {
     this.init();
   }
@@ -46,6 +48,10 @@ export class WalletAddPrivateKeyPage {
     if (this.navParams.data) {
       this.formGroup.setValue(this.navParams.data);
     }
+
+    this.authProvider.getPassword().then(password => {
+      this.PASSWORD = password;
+    });
   }
 
   goBack() {

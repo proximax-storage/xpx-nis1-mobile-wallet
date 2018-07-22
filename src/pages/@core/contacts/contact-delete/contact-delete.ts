@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
+import { AuthProvider } from '../../../../providers/auth/auth';
 
 /**
  * Generated class for the ContactDeletePage page.
@@ -22,13 +23,14 @@ export class ContactDeletePage {
   formGroup: FormGroup;
   contact: any;
 
-  PASSWORD = '123qweasd';
+  PASSWORD: string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private contactProvider: ContactsProvider
+    private contactProvider: ContactsProvider,
+    private authProvider: AuthProvider
   ) {
     this.contact = this.navParams.get('contact');
     this.init();
@@ -40,6 +42,9 @@ export class ContactDeletePage {
 
   init() {
     this.formGroup = this.formBuilder.group({});
+    this.authProvider.getPassword().then(password => {
+      this.PASSWORD = password;
+    });
   }
 
   goBack() {

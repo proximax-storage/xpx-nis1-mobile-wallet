@@ -13,6 +13,12 @@ export class AuthProvider {
     console.log('Hello AuthProvider Provider');
   }
 
+  getPassword() {
+    return this.secureStorage.create('auth').then(storage => {
+      return storage.get('password');
+    });
+  }
+
   /**
    * Login the user.
    * @param email { string } The email of the user

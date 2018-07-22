@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -26,6 +27,7 @@ export class WalletAddPasswordConfirmationPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public alertProvider: AlertProvider,
+    public authProvider: AuthProvider,
     public nemProvider: NemProvider
   ) {
     this.init();
@@ -33,11 +35,13 @@ export class WalletAddPasswordConfirmationPage {
 
   init() {
 
-    // Initialize private data
-    this.credentials = {
-      password: '123qweasd',
-      privateKey: ''
-    };
+    this.authProvider.getPassword().then(password => {
+      // Initialize private data
+      this.credentials = {
+        password: password,
+        privateKey: ''
+      };
+    });
 
     // Initialize form
     this.formGroup = this.formBuilder.group({

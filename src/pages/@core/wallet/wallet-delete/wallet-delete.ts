@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
+import { AuthProvider } from '../../../../providers/auth/auth';
 
 /**
  * Generated class for the WalletDeletePage page.
@@ -22,7 +23,7 @@ export class WalletDeletePage {
   App = App;
   formGroup: FormGroup;
 
-  PASSWORD = '123qweasd';
+  PASSWORD : string;
 
   selectedWallet: SimpleWallet;
 
@@ -30,7 +31,8 @@ export class WalletDeletePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private authProvider: AuthProvider,
   ) {
     this.selectedWallet = this.navParams.get('wallet');
     this.init();
@@ -42,6 +44,10 @@ export class WalletDeletePage {
 
   init() {
     this.formGroup = this.formBuilder.group({});
+
+    this.authProvider.getPassword().then(password => {
+      this.PASSWORD = password;
+    });
   }
 
   goBack() {

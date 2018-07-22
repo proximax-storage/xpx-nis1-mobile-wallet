@@ -31,7 +31,7 @@ export class MyApp {
     this.platform.pause.subscribe(() => {
       Promise.all([this.storage.get('isLocked'), this.storage.get('pin')]).then(
         results => {
-          const isLocked = results[0] || false;
+          const isLocked = results[0];
           const pin = results[1];
           if (pin) this.storage.set('isLocked', isLocked);
         }

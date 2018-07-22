@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { ListStorageProvider } from '../../../../providers/list-storage/list-storage';
+import { AuthProvider } from '../../../../providers/auth/auth';
 
 /**
  * Generated class for the NamespaceCreatePage page.
@@ -21,14 +22,15 @@ export class NamespaceCreatePage {
   App = App;
   formGroup: FormGroup;
 
-  PASSWORD = '123qweasd';
   list: Array<any>;
+  PASSWORD : string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private listStorageProvider: ListStorageProvider
+    private listStorageProvider: ListStorageProvider,
+    private authProvider: AuthProvider,
   ) {
     this.init();
   }
@@ -51,6 +53,10 @@ export class NamespaceCreatePage {
       sinkAddress: ['TAMESP-ACEWH4-MKFMBC-VFERDP-OOP4FK-7MTDJE-YP35', [Validators.required]],
       fee: ['0.15', [Validators.required]],
       rentalFee: ['100.00', [Validators.required]],
+    });
+
+    this.authProvider.getPassword().then(password => {
+      this.PASSWORD = password;
     });
   }
 
