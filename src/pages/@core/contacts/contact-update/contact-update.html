@@ -23,19 +23,19 @@
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Contact name</ion-label>
-            <ion-input formControlName="name" type="text" placeholder="Enter the name of the contact"></ion-input>
+            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="Enter the name of the contact"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>Address</ion-label>
-            <ion-textarea row="1" autosize formControlName="address" type="text" placeholder="Enter the address of the contact"></ion-textarea>
+            <ion-textarea row="1" autosize formControlName="address" type="text" autocapitalize="none" placeholder="Enter the address of the contact"></ion-textarea>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>
               Telegram username (Optional)
             </ion-label>
-            <ion-input formControlName="telegram" type="text" placeholder="Enter the telegram username of your contact"></ion-input>
+            <ion-input formControlName="telegram" type="text" autocapitalize="none" placeholder="Enter the telegram username of your contact"></ion-input>
           </ion-item>
 
           <button gradient-button small color-1 [disabled]="formGroup.invalid" type="submit" color="light">

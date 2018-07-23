@@ -23,7 +23,7 @@
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Parent namespace</ion-label>
-            <ion-select formControlName="parentNamespace" type="text">
+            <ion-select formControlName="parentNamespace" type="text" autocapitalize="none">
               <ion-option value="new">. (New root namespace)</ion-option>
               <ion-option [value]="namespace.name" *ngFor="let namespace of list">
                 {{ namespace.name }}
@@ -33,22 +33,22 @@
 
           <ion-item transparent padding>
             <ion-label stacked>Namespace name</ion-label>
-            <ion-input formControlName="name" type="text" placeholder="Enter your namespace name"></ion-input>
+            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="Enter your namespace name"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>Sink address</ion-label>
-            <ion-input formControlName="sinkAddress" type="text"></ion-input>
+            <ion-input formControlName="sinkAddress" type="text" autocapitalize="none"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>Fee</ion-label>
-            <ion-input formControlName="fee" type="text"></ion-input>
+            <ion-input formControlName="fee" type="text" autocapitalize="none"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>Rental fee</ion-label>
-            <ion-input formControlName="rentalFee" type="text"></ion-input>
+            <ion-input formControlName="rentalFee" type="text" autocapitalize="none"></ion-input>
           </ion-item>
 
           <button gradient-button small color-1 [disabled]="formGroup.invalid" type="submit" color="light">
