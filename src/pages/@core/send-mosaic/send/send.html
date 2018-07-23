@@ -44,29 +44,6 @@
         </ion-item>
       </ion-card>
 
-      <!-- Sender -->
-      <ion-item no-lines>
-        <ion-label ion-text color="light">From</ion-label>
-        <ion-select [(ngModel)]="addressSourceType.from" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeFrom($event)">
-          <ion-option value="contact">Contacts</ion-option>
-          <ion-option value="manual">Manual input</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-card *ngIf="addressSourceType.from === 'contact'" (click)="selectContact('from')">
-        <ion-item>
-          <ion-avatar item-start>
-            <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-          </ion-avatar>
-          <h2 ion-text color="light">{{ form.get('senderName').value }}</h2>
-          <p ion-text color="light">{{ form.get('senderAddress').value }}</p>
-        </ion-item>
-      </ion-card>
-      <ion-card *ngIf="addressSourceType.from === 'manual'">
-        <ion-item>
-          <ion-textarea autosize rows="1" placeholder="Enter NEM address" formControlName="senderAddress"></ion-textarea>
-        </ion-item>
-      </ion-card>
-
       <!-- Recipient -->
       <ion-item no-lines>
         <ion-label ion-text color="light">To</ion-label>
