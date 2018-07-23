@@ -1,4 +1,4 @@
-import { App } from 'ionic-angular';
+import { App, Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {
@@ -19,6 +19,7 @@ export class BarcodeScannerProvider {
 
   constructor(
     private app: App,
+    private platform: Platform,
     private storage: Storage,
     private barcodeScanner: BarcodeScanner
   ) {
@@ -40,7 +41,7 @@ export class BarcodeScannerProvider {
         return this.barcodeScanner.scan(this.barcodeScannerOptions);
       })
       .then((result: BarcodeScanResult) => {
-        if (result.cancelled) {
+        if (this.platform.is('android') && result.cancelled) {
           return this.app.getActiveNav().setRoot(
             page,
             {},
