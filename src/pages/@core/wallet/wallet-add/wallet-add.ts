@@ -50,9 +50,9 @@ export class WalletAddPage {
     });
   }
 
-  goBack() {
+  gotoHome() {
     return this.navCtrl.setRoot(
-      'WalletListPage',
+      'TabsPage',
       {},
       {
         animate: true,
@@ -69,9 +69,9 @@ export class WalletAddPage {
         alert('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider.storeWallet(newWallet).then(value => {
-          return this.goBack();
+          return this.walletProvider.setSelectedWallet(newWallet);
         }).then(() => {
-          this.walletProvider.setSelectedWallet(newWallet);
+          return this.gotoHome();
         });
       }
     });
