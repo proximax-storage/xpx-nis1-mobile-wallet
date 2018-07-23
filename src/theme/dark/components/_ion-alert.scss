@@ -8,10 +8,6 @@ ion-alert.alert-ios {
     color: color($colors, light);
   }
 
-  .alert-radio-inner {
-    background: color($colors, light);
-  }
-
   [aria-checked='true'] .alert-radio-icon,
   .alert-radio-icon {
     border-color: color($colors, light);
@@ -30,5 +26,16 @@ ion-alert.alert-ios {
         no-repeat;
     background-position: center;
     background-size: cover;
+  }
+}
+
+ion-alert.alert-md {
+  .alert-radio-inner { background: color($colors, light); }
+}
+
+ion-alert.alert-ios {
+  [aria-checked=true] .alert-radio-inner { border-color: color($colors, light); }
+  .alert-button.activated {
+    background: transparentize(color($colors, light), 0.8);
   }
 }
