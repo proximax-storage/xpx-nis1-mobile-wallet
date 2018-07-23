@@ -65,6 +65,8 @@ export class TransactionListPage {
             this.transactions = txns;
           }
         });
+
+        this.transactions = !this.transactions ? [] : this.transactions;
       }
     });
   }
