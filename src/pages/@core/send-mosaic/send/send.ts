@@ -5,7 +5,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  ModalController
 } from 'ionic-angular';
 import {
   SimpleWallet,
@@ -49,7 +48,6 @@ export class SendPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public modalCtrl: ModalController,
     public nemProvider: NemProvider,
     public getBalanceProvider: GetBalanceProvider,
     public walletProvider: WalletProvider,
