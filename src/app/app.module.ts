@@ -13,6 +13,9 @@ import { Device } from '@ionic-native/device';
 import { Clipboard } from '@ionic-native/clipboard';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
 
 import { App } from '../providers/app/app';
 import { ComponentsModule } from '../components/components.module';
@@ -29,6 +32,7 @@ import { ToastProvider } from '../providers/toast/toast';
 import { ContactsProvider } from '../providers/contacts/contacts';
 import { BarcodeScannerProvider } from '../providers/barcode-scanner/barcode-scanner';
 import { ListStorageProvider } from '../providers/list-storage/list-storage';
+import { FilePickerProvider } from '../providers/file-picker/file-picker';
 
 @NgModule({
   declarations: [
@@ -61,6 +65,9 @@ import { ListStorageProvider } from '../providers/list-storage/list-storage';
     Clipboard,
     SocialSharing,
     BarcodeScanner,
+    FileChooser,
+    FilePath,
+    File,
 
     App,
     AuthProvider,
@@ -73,6 +80,7 @@ import { ListStorageProvider } from '../providers/list-storage/list-storage';
     ContactsProvider,
     BarcodeScannerProvider,
     ListStorageProvider,
+    FilePickerProvider,
   ]
 })
 export class AppModule {}

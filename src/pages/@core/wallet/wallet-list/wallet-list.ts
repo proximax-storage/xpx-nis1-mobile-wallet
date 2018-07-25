@@ -12,7 +12,6 @@ import { SimpleWallet } from 'nem-library';
 
 import { App } from '../../../../providers/app/app';
 import { WalletProvider } from './../../../../providers/wallet/wallet';
-import { BarcodeScannerProvider } from '../../../../providers/barcode-scanner/barcode-scanner';
 
 /**
  * Generated class for the WalletListPage page.
@@ -22,9 +21,8 @@ import { BarcodeScannerProvider } from '../../../../providers/barcode-scanner/ba
  */
 
 export enum WalletCreationType {
-  SIMPLE = 0,
-  PRIVATE_KEY = 1,
-  QR_SCAN = 2
+  NEW = 0,
+  IMPORT = 1
 }
 
 @IonicPage()
@@ -45,7 +43,6 @@ export class WalletListPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public walletProvider: WalletProvider,
-    public barcodeScannerProvider: BarcodeScannerProvider,
   ) {}
 
   ionViewDidLoad() {
@@ -111,45 +108,36 @@ export class WalletListPage {
 
   showAddWalletPrompt() {
     let alert = this.alertCtrl.create();
-    alert.setTitle('Create new wallet');
+    alert.setTitle('Add wallet');
     alert.setSubTitle('Select wallet type below');
 
     alert.addInput({
       type: 'radio',
-      label: 'Simple wallet',
-      value: WalletCreationType.SIMPLE.toString(),
+      label: 'New wallet',
+      value: WalletCreationType.NEW.toString(),
       checked: true
     });
 
     alert.addInput({
       type: 'radio',
-      label: 'Private key wallet',
-      value: WalletCreationType.PRIVATE_KEY.toString(),
-      checked: false
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'QR scan',
-      value: WalletCreationType.QR_SCAN.toString(),
+      label: 'Import wallet',
+      value: WalletCreationType.IMPORT.toString(),
       checked: false
     });
 
     alert.addButton('Cancel');
+
     alert.addButton({
       text: 'Proceed',
       handler: data => {
-        if (data === WalletCreationType.SIMPLE.toString()) {
-          this.navCtrl.push('WalletAddPage');
-        } else if (data === WalletCreationType.PRIVATE_KEY.toString()) {
-          this.navCtrl.push('WalletAddPrivateKeyPage', { name: '', privateKey: '' });
-        } else if (data === WalletCreationType.QR_SCAN.toString()) {
-          this.barcodeScannerProvider.getData('WalletListPage').then(data => {
-            if(data) this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
-          });
+        if (data === WalletCreationType.NEW.toString()) {
+          this.navCtrl.push('WalletAddOptionPage');
+        } else if (data === WalletCreationType.IMPORT.toString()) {
+          this.navCtrl.push('WalletImportOptionPage');
         }
       }
     });
+
     alert.present();
   }
 

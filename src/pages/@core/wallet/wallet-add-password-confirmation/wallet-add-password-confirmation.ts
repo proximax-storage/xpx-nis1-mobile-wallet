@@ -5,6 +5,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { NemProvider } from './../../../../providers/nem/nem';
+import {
+  SimpleWallet,
+  QRWalletText
+} from '../../../../../node_modules/nem-library';
 
 /**
  * Generated class for the WalletAddPasswordConfirmationPage page.
@@ -34,7 +38,6 @@ export class WalletAddPasswordConfirmationPage {
   }
 
   init() {
-
     this.authProvider.getPassword().then(password => {
       // Initialize private data
       this.credentials = {
@@ -65,13 +68,26 @@ export class WalletAddPasswordConfirmationPage {
   }
 
   onSubmit(form) {
+    let QRWallet: QRWalletText;
     if (form.password === this.credentials.password) {
+      if (this.navParams.data.address) {
+        const wallet: SimpleWallet = <SimpleWallet>this.navParams.data;
+        QRWallet = <QRWalletText> JSON.parse(
+          this.nemProvider.generateWalletQRText(
+            this.credentials.password,
+            wallet
+          )
+        );
+      } else {
+        QRWallet = <QRWalletText> this.navParams.data;
+      }
+
       const privateKey = this.nemProvider.decryptPrivateKey(
         this.credentials.password,
-        this.navParams.data
+        QRWallet
       );
       this.navCtrl.push('WalletAddPrivateKeyPage', {
-        name: this.navParams.data.data.name,
+        name: QRWallet.data.name,
         privateKey: privateKey
       });
     } else {
