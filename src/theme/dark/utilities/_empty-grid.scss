@@ -12,9 +12,12 @@ ion-grid[empty] {
       color: color($colors, light);
       font-size: 1.5rem;
     }
-
-    img { display: inline-block; }
   }
+}
+
+ion-grid[empty],
+ion-card {
+  img { display: inline-block; }
 }
 
 img[quarter-width] { width: 30%; }

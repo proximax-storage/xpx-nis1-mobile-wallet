@@ -1,0 +1,42 @@
+<!--
+  Generated template for the WalletBackupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar transparent>
+    <ion-title>
+      <span ion-text color="light">Backup wallet</span>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content fullscreen background>
+
+  <ion-list transparent-items radio-group [(ngModel)]="selectedOption">
+
+    <ion-card margin-bottom>
+      <ion-card-header text-center>
+        <img quarter-width [src]="App.STICKERS.INFO">
+      </ion-card-header>
+      <ion-card-content>
+        <p text-wrap text-justify ion-text color="light">We recommend to backup your wallet. If this app is deleted, your money cannot be recovered without it.</p>
+        <p text-wrap text-justify ion-text color="light">
+          Make sure to store it in a safe place, a backup of your wallet can protect you against system failures and many human mistakes.
+          It can also allow you to recover your wallet after your mobile phone was stolen.
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null" (click)="onSelect(option)">
+      <ion-item>
+        <ion-icon item-left ion-text color="light" [name]="option.icon"></ion-icon>
+        <h2 ion-text color="light">{{ option.name }}</h2>
+        <ion-icon item-right ion-text color="grey" name="ios-arrow-forward"></ion-icon>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>

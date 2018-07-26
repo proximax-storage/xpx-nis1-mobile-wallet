@@ -22,7 +22,7 @@ export class WalletAddPrivateKeyPage {
   App = App;
   formGroup: FormGroup;
 
-  PASSWORD : string;
+  PASSWORD: string;
 
   constructor(
     public navCtrl: NavController,
@@ -30,7 +30,7 @@ export class WalletAddPrivateKeyPage {
     public formBuilder: FormBuilder,
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
-    private authProvider: AuthProvider,
+    private authProvider: AuthProvider
   ) {
     this.init();
   }
@@ -54,15 +54,8 @@ export class WalletAddPrivateKeyPage {
     });
   }
 
-  goBack() {
-    return this.navCtrl.setRoot(
-      'WalletListPage',
-      {},
-      {
-        animate: true,
-        direction: 'forward'
-      }
-    );
+  gotoBackup(wallet) {
+    return this.navCtrl.push('WalletBackupPage', wallet);
   }
 
   onSubmit(form) {
@@ -78,11 +71,10 @@ export class WalletAddPrivateKeyPage {
       } else {
         this.walletProvider
           .storeWallet(newWallet)
-          .then(value => {
-            return this.goBack();
-          })
-          .then(() => {
-            this.walletProvider.setSelectedWallet(newWallet);
+          .then(_ => {
+            return this.walletProvider.setSelectedWallet(newWallet);
+          }).then(_ => {
+            this.gotoBackup(newWallet);
           });
       }
     });

@@ -50,15 +50,8 @@ export class WalletAddPage {
     });
   }
 
-  gotoHome() {
-    return this.navCtrl.setRoot(
-      'TabsPage',
-      {},
-      {
-        animate: true,
-        direction: 'forward'
-      }
-    );
+  gotoBackup(wallet) {
+    return this.navCtrl.push('WalletBackupPage', wallet);
   }
 
   onSubmit(form) {
@@ -71,7 +64,7 @@ export class WalletAddPage {
         this.walletProvider.storeWallet(newWallet).then(value => {
           return this.walletProvider.setSelectedWallet(newWallet);
         }).then(() => {
-          return this.gotoHome();
+          this.gotoBackup(newWallet);
         });
       }
     });

@@ -15,6 +15,8 @@ export class App {
     'SORRY': `${App.BASE_URL}/stickers/ninja-cry.png`,
     'HAPPY': `${App.BASE_URL}/stickers/ninja-happy.png`,
     'LOOK': `${App.BASE_URL}/stickers/ninja-look.png`,
+    'INFO': `${App.BASE_URL}/stickers/ninja-info.png`,
+    'THUMBS_UP': `${App.BASE_URL}/stickers/ninja-thumbs-up.png`,
   };
   public static SLIDES = {
     'SLIDE1': `${App.BASE_URL}/slides/nem-slide-1.png`,

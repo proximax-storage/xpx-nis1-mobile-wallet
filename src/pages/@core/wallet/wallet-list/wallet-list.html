@@ -21,7 +21,7 @@
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
 
-        <p text-wrap>
+        <p text-wrap text-center ion-text color="light">
           It looks like you don't have any wallets yet.
           <br> Try adding one or two.
         </p>
@@ -33,12 +33,30 @@
     </ion-row>
   </ion-grid>
 
+
   <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="selectedWallet && wallets">
-    <ion-card *ngFor="let wallet of wallets"
-              [attr.selected]="selectedWallet.name === wallet.name ? true : null"
-              (click)="onWalletSelect(wallet)"
-              (press)="onWalletPress(wallet)">
+    <ion-card margin-bottom>
+      <ion-card-header text-center>
+        <img quarter-width [src]="App.STICKERS.THUMBS_UP">
+      </ion-card-header>
+      <ion-card-content>
+        <p text-wrap text-justify ion-text color="light">
+          A NEM wallet is like a wallet with cash. If you wouldn't keep a thousand dollars in your pocket, you might want to have the
+          same consideration for your NEM wallet. In general, it is a good practice to keep only small amounts of XEMS on
+          your computer, mobile, or server for everyday uses and to keep the remaining part of your funds in a safer environment.
+        </p>
+
+        <section text-center>
+          <button gradient-button small no-margin color-11 color="light">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </section>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngFor="let wallet of wallets" [attr.selected]="selectedWallet.name === wallet.name ? true : null" (click)="onWalletSelect(wallet)"
+      (press)="onWalletPress(wallet)">
       <ion-item>
+        <ion-icon item-left ion-text color="light" name="card"></ion-icon>
         <h2 ion-text color="light">{{ wallet.name }}</h2>
 
         <!-- TODO: Create an async pipe to get the account type either Normal or Multisign -->
