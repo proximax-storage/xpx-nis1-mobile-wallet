@@ -45,3 +45,16 @@
     }
   }
 }
+
+
+p[fake]{
+  border-radius: 1rem;
+  background-image: linear-gradient(
+    to right,
+    transparentize(color($colors, light), 0.7),
+      transparentize(color($colors, light), 0.8)
+  );
+
+  height: 1rem;
+  width: 20%;
+}

@@ -15,7 +15,7 @@
 </ion-header>
 
 
-<ion-content fullscreen background>
+<ion-content background>
   <ion-grid empty *ngIf="wallets && !wallets.length">
     <ion-row>
       <ion-col>
@@ -35,7 +35,7 @@
 
 
   <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="selectedWallet && wallets">
-    <ion-card margin-bottom>
+    <ion-card margin-bottom *ngIf="showWalletsHint">
       <ion-card-header text-center>
         <img quarter-width [src]="App.STICKERS.THUMBS_UP">
       </ion-card-header>
@@ -47,20 +47,25 @@
         </p>
 
         <section text-center>
-          <button gradient-button small no-margin color-11 color="light">
-            <ion-icon name="close"></ion-icon>
+          <button gradient-button small no-margin color-1 (click)="hideWalletsHint()">
+            <ion-icon name="checkmark"></ion-icon>
           </button>
         </section>
       </ion-card-content>
     </ion-card>
-    <ion-card *ngFor="let wallet of wallets" [attr.selected]="selectedWallet.name === wallet.name ? true : null" (click)="onWalletSelect(wallet)"
+    <ion-card *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet.name === wallet.name ? true : null" (click)="onWalletSelect(wallet)"
       (press)="onWalletPress(wallet)">
       <ion-item>
         <ion-icon item-left ion-text color="light" name="card"></ion-icon>
         <h2 ion-text color="light">{{ wallet.name }}</h2>
 
         <!-- TODO: Create an async pipe to get the account type either Normal or Multisign -->
-        <!-- <p ion-text color="light">{{ wallet.address | accountType }}</p> -->
+        <p ion-text color="light" *ngIf="(wallet.address.plain() | getWalletType | async) as walletType; else loading">
+            {{ walletType }}
+        </p>
+        <ng-template #loading>
+          <p fake> &nbsp; </p>
+        </ng-template>
 
         <!-- TODO: Create an async pipe to get the balance base on the base currency: USD, PHP, BTC etc -->
         <!-- <p item-right ion-text color="light">{{ wallet.address | remainingBalance }}</p> -->

@@ -7,11 +7,14 @@ import {
   Platform,
   AlertController
 } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { SimpleWallet } from 'nem-library';
 
 import { App } from '../../../../providers/app/app';
 import { WalletProvider } from './../../../../providers/wallet/wallet';
+
+import sortBy from 'lodash/sortBy';
 
 /**
  * Generated class for the WalletListPage page.
@@ -36,6 +39,8 @@ export class WalletListPage {
   wallets: SimpleWallet[];
   selectedWallet: SimpleWallet;
 
+  showWalletsHint: boolean = true;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -43,6 +48,7 @@ export class WalletListPage {
     public alertCtrl: AlertController,
     public platform: Platform,
     public walletProvider: WalletProvider,
+    public storage: Storage,
   ) {}
 
   ionViewDidLoad() {
@@ -50,13 +56,22 @@ export class WalletListPage {
   }
 
   ionViewWillEnter() {
+    this.storage.get('showWalletsHint').then(val => {
+      console.log('val', val);
+      this.showWalletsHint = val === null ? true : val;
+    });
+
     this.walletProvider.getWallets().then(value => {
-      this.wallets = value;
+      this.wallets = sortBy(value, 'name');
 
       this.walletProvider.getSelectedWallet().then(selectedWallet => {
         this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
       });
     });
+  }
+
+  trackByName(wallet) {
+    return wallet.name;
   }
 
   onWalletSelect(wallet) {
@@ -141,4 +156,8 @@ export class WalletListPage {
     alert.present();
   }
 
+  hideWalletsHint() {
+    this.showWalletsHint = false;
+    this.storage.set('showWalletsHint', this.showWalletsHint);
+  }
 }
