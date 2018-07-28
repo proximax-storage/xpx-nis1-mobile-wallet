@@ -29,33 +29,36 @@ export class MyApp {
 
   initOnPauseResume() {
     this.platform.pause.subscribe(() => {
-      Promise.all([this.storage.get('isLocked'), this.storage.get('pin')]).then(
-        results => {
-          const isLocked = results[0];
-          const pin = results[1];
-          if (pin) this.storage.set('isLocked', isLocked);
-        }
-      );
+      Promise.all([
+        this.storage.get('isBarcodeScan'),
+        this.storage.get('pin')
+      ]).then(results => {
+        const isLocked = results[0] ? false : true;
+        const pin = results[1];
+        if (pin) this.storage.set('isLocked', isLocked);
+      });
     });
 
     this.platform.resume.subscribe(() => {
-      Promise.all([this.storage.get('isLocked'), this.storage.get('pin')]).then(
-        results => {
-          const isLocked = results[0];
-          const pin = results[1];
+      Promise.all([
+        this.storage.get('isLocked'),
+        this.storage.get('pin'),
+        this.storage.set('isBarcodeScan', true)
+      ]).then(results => {
+        const isLocked = results[0];
+        const pin = results[1];
 
-          if (isLocked) {
-            this.app.getRootNav().setRoot(
-              'VerificationCodePage',
-              { status: 'verify', pin: pin },
-              {
-                animate: true,
-                direction: 'forward'
-              }
-            );
-          }
+        if (isLocked) {
+          this.app.getRootNav().setRoot(
+            'VerificationCodePage',
+            { status: 'verify', pin: pin },
+            {
+              animate: true,
+              direction: 'forward'
+            }
+          );
         }
-      );
+      });
     });
   }
 }

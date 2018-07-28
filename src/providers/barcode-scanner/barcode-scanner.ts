@@ -36,9 +36,8 @@ export class BarcodeScannerProvider {
   getData(page: string, prompt: string = ''): Promise<any> {
     this.barcodeScannerOptions.prompt = prompt;
     return this.storage
-      .set('isLocked', false)
+      .set('isBarcodeScan', true)
       .then(_ => {
-        console.log('isLocked', _)
         return this.barcodeScanner.scan(this.barcodeScannerOptions);
       })
       .then((result: BarcodeScanResult) => {
