@@ -18,8 +18,7 @@ import { AuthProvider } from '../auth/auth';
 export class WalletProvider {
   wallets: SimpleWallet[];
 
-  constructor(private storage: Storage, private authProvider: AuthProvider) {
-  }
+  constructor(private storage: Storage, private authProvider: AuthProvider) {}
 
   /**
    * Store wallet
@@ -38,11 +37,10 @@ export class WalletProvider {
 
         accounts[email] = result;
 
-        this.storage.set('wallets', JSON.stringify(accounts));
+        this.storage.set('wallets', accounts);
         return wallet;
       });
-    })
-
+    });
   }
 
   // =======
@@ -68,12 +66,11 @@ export class WalletProvider {
 
         let ACCOUNT = {};
         ACCOUNT[email] = result;
-        ACCOUNT = JSON.stringify(ACCOUNT);
 
         return this.storage.set('wallets', ACCOUNT).then(value => {
           return selectedWallet;
         });
-      })
+      });
     });
   }
 
@@ -89,11 +86,10 @@ export class WalletProvider {
 
         let ACCOUNT = {};
         ACCOUNT[email] = result;
-        ACCOUNT = JSON.stringify(ACCOUNT);
 
         return this.storage.set('wallets', ACCOUNT);
       });
-    })
+    });
   }
 
   /**
@@ -115,8 +111,7 @@ export class WalletProvider {
         }
         return exists;
       });
-    })
-
+    });
   }
 
   /**
@@ -126,11 +121,8 @@ export class WalletProvider {
   public getSelectedWallet(): Promise<SimpleWallet> {
     return this.authProvider.getEmail().then(email => {
       return this.storage.get('selectedWallet').then(data => {
-        console.log('getSelectedWallet :: data', JSON.parse(data))
-
         let result = null;
-        const ACCOUNT = JSON.parse(data)[email];
-
+        const ACCOUNT = data[email];
 
         if (data) {
           result = SimpleWallet.readFromWLT(ACCOUNT);
@@ -140,16 +132,16 @@ export class WalletProvider {
 
         return result;
       });
-    })
+    });
   }
 
   /**
-    * Get loaded wallets from localStorage
-    */
+   * Get loaded wallets from localStorage
+   */
   public getAccounts(): Promise<any> {
     return this.authProvider.getEmail().then(email => {
       return this.storage.get('wallets').then(data => {
-        let ACCOUNT = data ? JSON.parse(data) : {};
+        let ACCOUNT = data ? data : {};
         const ACCOUNT_WALLETS = ACCOUNT[email] ? ACCOUNT[email] : [];
 
         if (data) {
@@ -168,7 +160,7 @@ export class WalletProvider {
 
         return ACCOUNT;
       });
-    })
+    });
   }
 
   /**
@@ -177,7 +169,7 @@ export class WalletProvider {
   public getWallets(): Promise<any> {
     return this.authProvider.getEmail().then(email => {
       return this.storage.get('wallets').then(data => {
-        let ACCOUNT = data ? JSON.parse(data) : {};
+        let ACCOUNT = data ? data : {};
         const ACCOUNT_WALLETS = ACCOUNT[email] ? ACCOUNT[email] : [];
 
         if (data) {
@@ -196,7 +188,7 @@ export class WalletProvider {
 
         return ACCOUNT[email];
       });
-    })
+    });
   }
 
   private convertJSONWalletToFileWallet(wallet): SimpleWallet {
@@ -222,16 +214,16 @@ export class WalletProvider {
    * Set a selected wallet
    */
   public setSelectedWallet(wallet: SimpleWallet) {
-    let ACCOUNT = {};
+    return Promise.all([
+      this.authProvider.getEmail(),
+      this.storage.get('selectedWallet')
+    ]).then(results => {
+      const EMAIL = results[0];
+      const SELECTED_WALLET = results[1] ? results[1] : {};
 
-    return this.authProvider.getEmail().then(email => {
-      ACCOUNT[email] =  JSON.stringify(wallet.writeWLTFile());
-      ACCOUNT = JSON.stringify(ACCOUNT);
+      SELECTED_WALLET[EMAIL] = wallet.writeWLTFile();
 
-      return this.storage.set(
-        'selectedWallet',
-        ACCOUNT
-      );
+      return this.storage.set('selectedWallet', SELECTED_WALLET);
     });
   }
 
@@ -243,8 +235,8 @@ export class WalletProvider {
       this.storage.get('selectedWallet').then(selectedWallet => {
         delete selectedWallet[email];
 
-        this.storage.set('selectedWallet', JSON.stringify(selectedWallet));
+        this.storage.set('selectedWallet', selectedWallet);
       });
-    })
+    });
   }
 }

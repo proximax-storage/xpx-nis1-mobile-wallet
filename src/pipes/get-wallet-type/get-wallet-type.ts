@@ -27,9 +27,9 @@ export class GetWalletTypePipe implements PipeTransform {
     return new Observable(observer => {
       this.nemProvider.accountHttp.status(ADDRESS).subscribe(accountInfo => {
         if (accountInfo.cosignatories.length) {
-          observer.next('Shared account');
+          observer.next('Shared');
         } else {
-          observer.next('Personal wallet');
+          observer.next('Personal');
         }
       });
     });

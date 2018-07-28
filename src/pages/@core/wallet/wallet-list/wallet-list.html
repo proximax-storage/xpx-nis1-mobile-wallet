@@ -10,6 +10,12 @@
     <ion-title>
       <span ion-text color="light">Wallets</span>
     </ion-title>
+
+    <ion-buttons right>
+      <button ion-button icon-only ion-text color="light" (click)="logout()">
+        <ion-icon name="exit"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -54,23 +60,34 @@
     </ion-card>
   </ion-list>
 
-  <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="selectedWallet && wallets">
-    <ion-card *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet.name === wallet.name ? true : null"
+  <ion-list transparent-items radio-group [(ngModel)]="selectedWallet">
+    <ion-card *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet?.name === wallet?.name ? true : null"
       (click)="onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
       <ion-item>
         <ion-icon item-left ion-text color="light" name="card"></ion-icon>
         <h2 ion-text color="light">{{ wallet.name }}</h2>
 
-        <!-- TODO: Create an async pipe to get the account type either Normal or Multisign -->
-        <p ion-text color="light" *ngIf="(wallet.address.plain() | getWalletType | async) as walletType; else loading">
-          {{ walletType }}
+        <p small ion-text color="light" *ngIf="wallet.address; else loading">
+          {{ wallet.address.plain() }}
         </p>
+
         <ng-template #loading>
           <p fake> &nbsp; </p>
         </ng-template>
 
-        <!-- TODO: Create an async pipe to get the balance base on the base currency: USD, PHP, BTC etc -->
-        <!-- <p item-right ion-text color="light">{{ wallet.address | remainingBalance }}</p> -->
+        <section text-right item-right *ngIf="(wallet.address.plain() | getWalletType | async) as walletType; else walletLoading">
+          <button gradient-button pill color-1>
+            <ion-icon *ngIf="walletType === 'Personal'" name="person"></ion-icon>
+            <ion-icon *ngIf="walletType === 'Shared'" name="people"></ion-icon>
+          </button>
+
+          <p small> {{ walletType }} </p>
+        </section>
+        <ng-template #walletLoading>
+          <ion-spinner item-right></ion-spinner>
+        </ng-template>
+
+        <section></section>
       </ion-item>
     </ion-card>
   </ion-list>

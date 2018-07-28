@@ -54,7 +54,8 @@ export class LoginPage {
         {
           status: 'verify',
           title: 'Verify pin',
-          invalidPinMessage: 'It looks like you entered a wrong pin code. Please try again',
+          invalidPinMessage:
+            'It looks like you entered a wrong pin code. Please try again',
           pin: pin
         },
         {
@@ -66,27 +67,25 @@ export class LoginPage {
   }
 
   onSubmit(form) {
-    this.walletProvider.unsetSelectedWallet().then(_ => {
-      this.authProvider
-        .login(form.email, form.password)
-        .then(res => {
-          console.log('authProvider.login :: res', res);
-  
-          if (res.status === 'success') {
-            this.authProvider.setSelectedAccount(form.email, form.password).then(_ => {
+    this.authProvider
+      .login(form.email, form.password)
+      .then(res => {
+        if (res.status === 'success') {
+          this.authProvider
+            .setSelectedAccount(form.email, form.password)
+            .then(_ => {
               setTimeout(() => {
                 this.gotoHome();
               }, 1000);
-            })
-          } else {
-            alert(res.message);
-          }
-        })
-        .catch(err => {
-          alert(
-            'It looks like this account does not exist. Please register first and login again.'
-          );
-        });
-    })
+            });
+        } else {
+          alert(res.message);
+        }
+      })
+      .catch(err => {
+        alert(
+          'It looks like this account does not exist. Please register first and login again.'
+        );
+      });
   }
 }

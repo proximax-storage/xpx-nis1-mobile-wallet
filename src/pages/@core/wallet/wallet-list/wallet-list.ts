@@ -15,6 +15,7 @@ import { App } from '../../../../providers/app/app';
 import { WalletProvider } from './../../../../providers/wallet/wallet';
 
 import sortBy from 'lodash/sortBy';
+import { AuthProvider } from '../../../../providers/auth/auth';
 
 /**
  * Generated class for the WalletListPage page.
@@ -47,6 +48,7 @@ export class WalletListPage {
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
     public platform: Platform,
+    public authProvider: AuthProvider,
     public walletProvider: WalletProvider,
     public storage: Storage,
   ) {}
@@ -63,11 +65,20 @@ export class WalletListPage {
     this.walletProvider.getWallets().then(value => {
       this.wallets = sortBy(value, 'name');
 
-      console.log('WalletListPage :: wallets', this.wallets);
+      this.walletProvider.getSelectedWallet().then(selectedWallet => {
+        this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
+      }).catch(err => {
+        this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
+      });
+    });
+  }
 
-      // this.walletProvider.getSelectedWallet().then(selectedWallet => {
-      //   this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-      // });
+  logout() {
+    this.authProvider.logout().then(_ => {
+      this.navCtrl.setRoot('WelcomePage', {}, {
+        animate: true,
+        direction: 'backward'
+      });
     });
   }
 
