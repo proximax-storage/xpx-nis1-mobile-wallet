@@ -6,6 +6,8 @@ import { SimpleWallet, NetworkTypes } from 'nem-library';
 
 import { findIndex } from 'lodash';
 
+import { AuthProvider } from '../auth/auth';
+
 /*
  Generated class for the NemProvider provider.
 
@@ -16,7 +18,8 @@ import { findIndex } from 'lodash';
 export class WalletProvider {
   wallets: SimpleWallet[];
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private authProvider: AuthProvider) {
+  }
 
   /**
    * Store wallet
@@ -25,13 +28,21 @@ export class WalletProvider {
    */
   public storeWallet(wallet: SimpleWallet): Promise<SimpleWallet> {
     let result = [];
-    return this.getWallets().then(value => {
-      result = value;
-      result.push(wallet);
-      result = result.map(_ => _.writeWLTFile());
-      this.storage.set('wallets', JSON.stringify(result));
-      return wallet;
-    });
+    return this.authProvider.getEmail().then(email => {
+      return this.getAccounts().then(value => {
+        let accounts = value;
+
+        result = accounts[email];
+        result.push(wallet);
+        result = result.map(_ => _.writeWLTFile());
+
+        accounts[email] = result;
+
+        this.storage.set('wallets', JSON.stringify(accounts));
+        return wallet;
+      });
+    })
+
   }
 
   // =======
@@ -43,34 +54,46 @@ export class WalletProvider {
    * @param wallet The wallet to change the name.
    * @param newWalletName The new name for the wallet.
    */
-  public updateWalletName(wallet, newWalletName) {
-    return this.getWallets().then(wallets => {
-      let result : any = wallets;
+  public updateWalletName(wallet: SimpleWallet, newWalletName: string) {
+    return this.authProvider.getEmail().then(email => {
+      return this.getAccounts().then(value => {
+        let result: any = value[email];
 
-      const walletIndex = findIndex(result, wallet);
+        const walletIndex = findIndex(result, wallet);
 
-      let selectedWallet : any = result[walletIndex];
-      selectedWallet.name = newWalletName;
+        let selectedWallet: any = result[walletIndex];
+        selectedWallet.name = newWalletName;
 
-      result = result.map(_ => _.writeWLTFile());
+        result = result.map(_ => _.writeWLTFile());
 
-      return this.storage.set('wallets', JSON.stringify(result)).then(value => {
-        return selectedWallet;
-      });
+        let ACCOUNT = {};
+        ACCOUNT[email] = result;
+        ACCOUNT = JSON.stringify(ACCOUNT);
+
+        return this.storage.set('wallets', ACCOUNT).then(value => {
+          return selectedWallet;
+        });
+      })
     });
   }
 
-  deleteWallet(wallet) {
-    return this.getWallets().then(wallets => {
-      let result : any = wallets;
+  deleteWallet(wallet: SimpleWallet) {
+    return this.authProvider.getEmail().then(email => {
+      return this.getAccounts().then(value => {
+        let result: any = value[email];
 
-      const walletIndex = findIndex(result, wallet);
-      result.splice(walletIndex, 1);
+        const walletIndex = findIndex(result, wallet);
+        result.splice(walletIndex, 1);
 
-      result = result.map(_ => _.writeWLTFile());
+        result = result.map(_ => _.writeWLTFile());
 
-      return this.storage.set('wallets', JSON.stringify(result));
-    });
+        let ACCOUNT = {};
+        ACCOUNT[email] = result;
+        ACCOUNT = JSON.stringify(ACCOUNT);
+
+        return this.storage.set('wallets', ACCOUNT);
+      });
+    })
   }
 
   /**
@@ -78,19 +101,22 @@ export class WalletProvider {
    * @param walletName
    * @return Promise that resolves a boolean if exists
    */
-  public checkIfWalletNameExists(walletName): Promise<boolean> {
+  public checkIfWalletNameExists(walletName: string): Promise<boolean> {
     let exists = false;
 
-    return this.getWallets().then(value => {
-      let wallets = value || [];
-      for (var i = 0; i < wallets.length; i++) {
-        if (wallets[i].name == walletName) {
-          exists = true;
-          break;
+    return this.authProvider.getEmail().then(email => {
+      return this.getAccounts().then(value => {
+        let wallets = value[email];
+        for (var i = 0; i < wallets.length; i++) {
+          if (wallets[i].name == walletName) {
+            exists = true;
+            break;
+          }
         }
-      }
-      return exists;
-    });
+        return exists;
+      });
+    })
+
   }
 
   /**
@@ -98,32 +124,79 @@ export class WalletProvider {
    * @return promise with selected wallet
    */
   public getSelectedWallet(): Promise<SimpleWallet> {
-    return this.storage.get('selectedWallet').then(data => {
-      let result = null;
-      if (data) {
-        result = SimpleWallet.readFromWLT(JSON.parse(data));
-      }
-      return result;
-    });
+    return this.authProvider.getEmail().then(email => {
+      return this.storage.get('selectedWallet').then(data => {
+        console.log('getSelectedWallet :: data', JSON.parse(data))
+
+        let result = null;
+        const ACCOUNT = JSON.parse(data)[email];
+
+
+        if (data) {
+          result = SimpleWallet.readFromWLT(ACCOUNT);
+        } else {
+          result = {};
+        }
+
+        return result;
+      });
+    })
+  }
+
+  /**
+    * Get loaded wallets from localStorage
+    */
+  public getAccounts(): Promise<any> {
+    return this.authProvider.getEmail().then(email => {
+      return this.storage.get('wallets').then(data => {
+        let ACCOUNT = data ? JSON.parse(data) : {};
+        const ACCOUNT_WALLETS = ACCOUNT[email] ? ACCOUNT[email] : [];
+
+        if (data) {
+          const wallets = ACCOUNT_WALLETS.map(walletFile => {
+            if (walletFile.name) {
+              return this.convertJSONWalletToFileWallet(walletFile);
+            } else {
+              return SimpleWallet.readFromWLT(walletFile);
+            }
+          });
+
+          ACCOUNT[email] = wallets;
+        } else {
+          ACCOUNT[email] = [];
+        }
+
+        return ACCOUNT;
+      });
+    })
   }
 
   /**
    * Get loaded wallets from localStorage
    */
-  public getWallets(): Promise<SimpleWallet[]> {
-    return this.storage.get('wallets').then(data => {
-      let result = [];
-      if (data) {
-        result = JSON.parse(data).map(walletFile => {
-          if (walletFile.name) {
-            return this.convertJSONWalletToFileWallet(walletFile);
-          } else {
-            return SimpleWallet.readFromWLT(walletFile);
-          }
-        });
-      }
-      return result;
-    });
+  public getWallets(): Promise<any> {
+    return this.authProvider.getEmail().then(email => {
+      return this.storage.get('wallets').then(data => {
+        let ACCOUNT = data ? JSON.parse(data) : {};
+        const ACCOUNT_WALLETS = ACCOUNT[email] ? ACCOUNT[email] : [];
+
+        if (data) {
+          const wallets = ACCOUNT_WALLETS.map(walletFile => {
+            if (walletFile.name) {
+              return this.convertJSONWalletToFileWallet(walletFile);
+            } else {
+              return SimpleWallet.readFromWLT(walletFile);
+            }
+          });
+
+          ACCOUNT[email] = wallets;
+        } else {
+          ACCOUNT[email] = [];
+        }
+
+        return ACCOUNT[email];
+      });
+    })
   }
 
   private convertJSONWalletToFileWallet(wallet): SimpleWallet {
@@ -149,16 +222,29 @@ export class WalletProvider {
    * Set a selected wallet
    */
   public setSelectedWallet(wallet: SimpleWallet) {
-    return this.storage.set(
-      'selectedWallet',
-      JSON.stringify(wallet.writeWLTFile())
-    );
+    let ACCOUNT = {};
+
+    return this.authProvider.getEmail().then(email => {
+      ACCOUNT[email] =  JSON.stringify(wallet.writeWLTFile());
+      ACCOUNT = JSON.stringify(ACCOUNT);
+
+      return this.storage.set(
+        'selectedWallet',
+        ACCOUNT
+      );
+    });
   }
 
   /**
    * Remove selected Wallet
    */
   public unsetSelectedWallet() {
-    this.storage.set('selectedWallet', null);
+    return this.authProvider.getEmail().then(email => {
+      this.storage.get('selectedWallet').then(selectedWallet => {
+        delete selectedWallet[email];
+
+        this.storage.set('selectedWallet', JSON.stringify(selectedWallet));
+      });
+    })
   }
 }

@@ -33,9 +33,8 @@
     </ion-row>
   </ion-grid>
 
-
-  <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="selectedWallet && wallets">
-    <ion-card margin-bottom *ngIf="showWalletsHint">
+  <ion-list transparent-items *ngIf="showWalletsHint">
+    <ion-card margin-bottom>
       <ion-card-header text-center>
         <img quarter-width [src]="App.STICKERS.THUMBS_UP">
       </ion-card-header>
@@ -53,15 +52,18 @@
         </section>
       </ion-card-content>
     </ion-card>
-    <ion-card *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet.name === wallet.name ? true : null" (click)="onWalletSelect(wallet)"
-      (press)="onWalletPress(wallet)">
+  </ion-list>
+
+  <ion-list transparent-items radio-group [(ngModel)]="selectedWallet" *ngIf="selectedWallet && wallets">
+    <ion-card *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet.name === wallet.name ? true : null"
+      (click)="onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
       <ion-item>
         <ion-icon item-left ion-text color="light" name="card"></ion-icon>
         <h2 ion-text color="light">{{ wallet.name }}</h2>
 
         <!-- TODO: Create an async pipe to get the account type either Normal or Multisign -->
         <p ion-text color="light" *ngIf="(wallet.address.plain() | getWalletType | async) as walletType; else loading">
-            {{ walletType }}
+          {{ walletType }}
         </p>
         <ng-template #loading>
           <p fake> &nbsp; </p>
