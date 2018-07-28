@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { AuthProvider } from '../../../providers/auth/auth';
+import { WalletProvider } from '../../../providers/wallet/wallet';
 
 /**
  * Generated class for the LoginPage page.
@@ -25,6 +26,7 @@ export class LoginPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public storage: Storage,
+    public walletProvider: WalletProvider,
     public authProvider: AuthProvider
   ) {
     this.init();
@@ -64,19 +66,27 @@ export class LoginPage {
   }
 
   onSubmit(form) {
-    this.authProvider
-      .login(form.email, form.password)
-      .then(res => {
-        if (status === 'failed') {
-          alert(res.message);
-        } else {
-          this.gotoHome();
-        }
-      })
-      .catch(err => {
-        alert(
-          'It looks like this account does not exist. Please register first and login again.'
-        );
-      });
+    this.walletProvider.unsetSelectedWallet().then(_ => {
+      this.authProvider
+        .login(form.email, form.password)
+        .then(res => {
+          console.log('authProvider.login :: res', res);
+  
+          if (res.status === 'success') {
+            this.authProvider.setSelectedAccount(form.email, form.password).then(_ => {
+              setTimeout(() => {
+                this.gotoHome();
+              }, 1000);
+            })
+          } else {
+            alert(res.message);
+          }
+        })
+        .catch(err => {
+          alert(
+            'It looks like this account does not exist. Please register first and login again.'
+          );
+        });
+    })
   }
 }

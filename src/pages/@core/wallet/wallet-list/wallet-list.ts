@@ -57,16 +57,17 @@ export class WalletListPage {
 
   ionViewWillEnter() {
     this.storage.get('showWalletsHint').then(val => {
-      console.log('val', val);
       this.showWalletsHint = val === null ? true : val;
     });
 
     this.walletProvider.getWallets().then(value => {
       this.wallets = sortBy(value, 'name');
 
-      this.walletProvider.getSelectedWallet().then(selectedWallet => {
-        this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-      });
+      console.log('WalletListPage :: wallets', this.wallets);
+
+      // this.walletProvider.getSelectedWallet().then(selectedWallet => {
+      //   this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
+      // });
     });
   }
 

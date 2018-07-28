@@ -61,6 +61,12 @@ export class RegisterPage {
   }
 
   onSubmit(form) {
+    // this.authProvider.checkAccountExistence(form.email).then(exists => {
+    //   if (exists) {
+    //     alert('Email is already registered. Please try another email.')
+    //   } else {
+    //   }
+    // })
     this.authProvider.register(form.email, form.password).then(_ => {
       this.navCtrl.push(
         'VerificationCodePage',
@@ -70,6 +76,12 @@ export class RegisterPage {
           direction: 'forward'
         }
       );
-    });
+    }).then(_ => {
+      this.authProvider.setSelectedAccount(form.email, form.password).then(_ => {
+        this.authProvider.getEmail().then(_ => {
+          console.log('this.authProvider :: email', _);
+        })
+      })
+    })
   }
 }
