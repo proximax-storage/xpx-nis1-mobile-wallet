@@ -33,6 +33,7 @@ import { ContactsProvider } from '../providers/contacts/contacts';
 import { BarcodeScannerProvider } from '../providers/barcode-scanner/barcode-scanner';
 import { ListStorageProvider } from '../providers/list-storage/list-storage';
 import { FilePickerProvider } from '../providers/file-picker/file-picker';
+import { WalletBackupProvider } from '../providers/wallet-backup/wallet-backup';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { FilePickerProvider } from '../providers/file-picker/file-picker';
     BarcodeScannerProvider,
     ListStorageProvider,
     FilePickerProvider,
+    WalletBackupProvider,
   ]
 })
 export class AppModule {}

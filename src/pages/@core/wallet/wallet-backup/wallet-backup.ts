@@ -1,9 +1,9 @@
-import { App } from './../../../../providers/app/app';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FilePickerProvider } from '../../../../providers/file-picker/file-picker';
-import { SimpleWallet } from '../../../../../node_modules/nem-library';
+import { SimpleWallet } from 'nem-library';
 
+import { App } from './../../../../providers/app/app';
+import { WalletBackupProvider } from '../../../../providers/wallet-backup/wallet-backup';
 /**
  * Generated class for the WalletBackupPage page.
  *
@@ -35,7 +35,7 @@ export class WalletBackupPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private filePicker: FilePickerProvider
+    private walletBackupProvider: WalletBackupProvider,
   ) {
     this.init();
   }
@@ -74,16 +74,31 @@ export class WalletBackupPage {
     this.onSubmit();
   }
 
+  goHome() {
+    this.navCtrl.setRoot('TabsPage', {}, {
+      animate: true,
+      direction: 'forward'
+    });
+  }
+
   onSubmit() {
     const WALLET: SimpleWallet = <SimpleWallet> this.navParams.data;
 
     if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
       // TODO: export as .wlt file
-      this.filePicker.save(WALLET);
+      this.walletBackupProvider.saveAsFile(WALLET).then(_ => {
+        this.goHome();
+      });
     } else if (this.selectedOption === WalletBackupType.GOOGLE_DRIVE) {
-      // TODO: copy to clipbboard
+      // TODO: save to Google drive
+      this.walletBackupProvider.saveToGoogleDrive(WALLET).then(_ => {
+        this.goHome();
+      });
     } else if (this.selectedOption === WalletBackupType.COPY_TO_CLIPBOARD) {
       // TODO: copy to clipbboard
+      this.walletBackupProvider.copyToClipboard(WALLET).then(_ => {
+        this.goHome();
+      });
     }
   }
 }

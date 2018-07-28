@@ -4,8 +4,6 @@ import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
 
 import { SimpleWallet } from 'nem-library';
-import { NemProvider } from '../nem/nem';
-import { AuthProvider } from '../auth/auth';
 
 /*
   Generated class for the FilePickerProvider provider.
@@ -18,9 +16,7 @@ export class FilePickerProvider {
   constructor(
     private fileChooser: FileChooser,
     private filePath: FilePath,
-    private file: File,
-    private authProvider: AuthProvider,
-    private nemProvider: NemProvider
+    private file: File
   ) {
     console.log('Hello FilePickerProvider Provider');
   }
@@ -80,33 +76,6 @@ export class FilePickerProvider {
         // |   11 | `TYPE_MISMATCH_ERR`           |
         // |   12 | `PATH_EXISTS_ERR`             |
 
-        console.log(e);
-      });
-  }
-
-  save(wallet: SimpleWallet) {
-    const WALLET_NAME = wallet.name + '.wlt';
-    const STORAGE_DIRECTORY =
-      this.file.externalApplicationStorageDirectory + 'files';
-
-    this.authProvider
-      .getPassword()
-      .then(password => {
-        const QR_TEXT = this.nemProvider.generateWalletQRText(password, wallet);
-
-        return this.file.writeFile(
-          STORAGE_DIRECTORY,
-          WALLET_NAME,
-          QR_TEXT,
-          {
-            replace: true
-          }
-        );
-      })
-      .then(result => {
-        alert(`You can view your backed up wallet in ${STORAGE_DIRECTORY}`);
-      })
-      .catch(e => {
         console.log(e);
       });
   }
