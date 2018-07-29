@@ -82,7 +82,7 @@
                 <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
               </ion-avatar>
               <h2 ion-text color="light" *ngIf="data.senderName">{{ data.senderName }}</h2>
-              <p ion-text color="light" [attr.text-wrap]="!data.senderName ? true : null">{{ data.senderAddress }}</p>
+              <p small ion-text color="light" [attr.text-wrap]="!data.senderName ? true : null">{{ data.senderAddress }}</p>
             </ion-item>
           </ion-card>
 
@@ -96,7 +96,7 @@
                 <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
               </ion-avatar>
               <h2 ion-text color="light" *ngIf="data.recipientName">{{ data.recipientName }}</h2>
-              <p ion-text color="light" [attr.text-wrap]="!data.recipientName ? true : null">{{ data.recipientAddress }}</p>
+              <p small ion-text color="light" [attr.text-wrap]="!data.recipientName ? true : null">{{ data.recipientAddress }}</p>
             </ion-item>
           </ion-card>
         </ion-list>

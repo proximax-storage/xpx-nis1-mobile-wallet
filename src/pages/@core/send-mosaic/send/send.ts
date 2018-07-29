@@ -1,11 +1,7 @@
 import { GetBalanceProvider } from './../../../../providers/get-balance/get-balance';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-} from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {
   SimpleWallet,
   MosaicTransferable,
@@ -79,6 +75,9 @@ export class SendPage {
 
         // Set sender address to currenWallet.address
         this.form
+          .get('senderName')
+          .setValue(this.currentWallet.name);
+        this.form
           .get('senderAddress')
           .setValue(this.currentWallet.address.plain());
       }
@@ -104,14 +103,11 @@ export class SendPage {
     };
     // Initialize form
     this.form = this.formBuilder.group({
-      senderName: 'Current wallet',
+      senderName: '',
       senderAddress: ['', Validators.required],
 
-      recipientName: 'Jill Haman',
-      recipientAddress: [
-        'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVUDQ63',
-        Validators.required
-      ],
+      recipientName: '',
+      recipientAddress: ['', Validators.required],
 
       isMosaicTransfer: [false, Validators.required],
       message: ['', Validators.required],
@@ -122,7 +118,7 @@ export class SendPage {
     // Initialize source type of NEM address in from and to
     this.addressSourceType = {
       from: 'contact',
-      to: 'manual'
+      to: 'contact'
     };
 
     if (this.addressSourceType.to === 'manual') {
@@ -146,11 +142,6 @@ export class SendPage {
     if (val === 'manual') {
       this.form.get('recipientName').setValue(null);
       this.form.get('recipientAddress').setValue(null);
-    } else {
-      this.form.get('recipientName').setValue('Jill Haman');
-      this.form
-        .get('recipientAddress')
-        .setValue('NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVUDQ63');
     }
   }
 
@@ -171,7 +162,10 @@ export class SendPage {
   selectContact(title) {
     this.utils
       .showInsetModal('SendContactSelectPage', { title: title })
-      .subscribe(data => {});
+      .subscribe(data => {
+        this.form.get('recipientName').setValue(data.name);
+        this.form.get('recipientAddress').setValue(data.address);
+      });
   }
 
   /**
@@ -208,7 +202,15 @@ export class SendPage {
       !this.form.get('senderAddress').value ||
       !this.form.get('recipientAddress').value
     ) {
-      this.alertProvider.showMessage('Please put the NEM address first.');
+      if (this.addressSourceType.to === 'contact') {
+        this.alertProvider.showMessage(
+          'Please select a recipient first.'
+        );
+      } else {
+        this.alertProvider.showMessage(
+          'Please type the recipient\'s address NEM address first.'
+        );
+      }
       return;
     }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { App } from '../../../../../providers/app/app';
+import { ContactsProvider } from '../../../../../providers/contacts/contacts';
 
 /**
  * Generated class for the SendContactSelectPage page.
@@ -26,7 +27,12 @@ export class SendContactSelectPage {
     telegram: string;
   }> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public contactsProvider: ContactsProvider
+  ) {
     this.init();
   }
 
@@ -36,24 +42,17 @@ export class SendContactSelectPage {
 
   init() {
     this.title = this.navParams.get('title');
-    this.contacts = [
-      {
-        id: 1,
-        name: 'Jill Haman',
-        address: 'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVUDQ63',
-        telegram: 'jillhaman'
-      },
-      {
-        id: 2,
-        name: 'Joe Hopkins',
-        address: 'NDUGQBHEAINJCAL7IR2XI55KR57AG6YRGEVULK32',
-        telegram: 'joehopkins'
-      }
-    ];
-    this.selectedContact = this.contacts[0];
+    this.contactsProvider.getAll().then(contacts => {
+      this.contacts = contacts;
+      this.selectedContact = this.contacts[0];
+    });
   }
 
   onSelect(data) {
     this.selectedContact = data;
+  }
+
+  onSubmit() {
+    this.viewCtrl.dismiss(this.selectedContact);
   }
 }

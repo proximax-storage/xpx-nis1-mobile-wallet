@@ -26,21 +26,21 @@
           <br> Try adding one or two.
         </p>
 
-        <button gradient-button color-1>
-          Create New Wallet
+        <button gradient-button color-1 (click)="showAddContactPrompt()">
+          Add new contact
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-list transparent-items *ngIf="contacts && contacts.length">
-    <ion-card [attr.selected]="selectedContact.id === contact.id ? true : null" *ngFor="let contact of contacts" (click)="onSelect(contact)">
+    <ion-card [attr.selected]="selectedContact.address === contact.address" *ngFor="let contact of contacts" (click)="onSelect(contact)">
       <ion-item>
         <ion-avatar item-start>
           <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
         </ion-avatar>
         <h2 ion-text color="light">{{ contact.name }}</h2>
-        <p ion-text color="light">{{ contact.address }}</p>
+        <p small ion-text color="light">{{ contact.address }}</p>
       </ion-item>
     </ion-card>
   </ion-list>
@@ -48,7 +48,7 @@
 
 <ion-footer no-border>
   <ion-toolbar transparent text-center padding-bottom>
-    <button gradient-button small color-1 no-margin type="submit" color="light">
+    <button gradient-button small color-1 no-margin type="submit" color="light" (click)="onSubmit()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
   </ion-toolbar>

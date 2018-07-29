@@ -57,8 +57,8 @@
           <ion-avatar item-start>
             <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
           </ion-avatar>
-          <h2 ion-text color="light">{{ form.get('recipientName').value }}</h2>
-          <p ion-text color="light">{{ form.get('recipientAddress').value }}</p>
+          <h2 ion-text color="light">{{ form.get('recipientName').value || 'None' }}</h2>
+          <p small ion-text color="light">{{ form.get('recipientAddress').value || 'Please select one' }}</p>
         </ion-item>
       </ion-card>
       <ion-card *ngIf="addressSourceType.to === 'manual'">
