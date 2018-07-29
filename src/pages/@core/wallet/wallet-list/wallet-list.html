@@ -39,7 +39,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list transparent-items *ngIf="showWalletsHint">
+  <ion-list transparent-items [hidden]="!showWalletsHint">
     <ion-card margin-bottom>
       <ion-card-header text-center>
         <img quarter-width [src]="App.STICKERS.THUMBS_UP">

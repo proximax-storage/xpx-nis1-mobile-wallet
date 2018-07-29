@@ -35,9 +35,11 @@ export class AuthProvider {
       password: password
     };
 
-    return this.storage
-      .get('selectedAccount')
-      .then(data => {
+    return this.storage.set('isLoggedIn', true)
+      .then(_ => {
+        return this.storage.get('selectedAccount');
+      })
+      .then(_ => {
         return accountFromInput;
       })
       .then(_ => {
@@ -147,7 +149,9 @@ export class AuthProvider {
   /**
    * Log out account delete any related data to it.
    */
-  logout() : Promise<any> {
-    return this.storage.set('selectedAccount', {});
+  logout(): Promise<any> {
+    return this.storage.set('isLoggedIn', false).then(_ => {
+      this.storage.set('selectedAccount', {})
+    });
   }
 }

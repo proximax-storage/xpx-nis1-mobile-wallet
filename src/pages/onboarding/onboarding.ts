@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { App } from '../../providers/app/app';
+import { Storage } from '../../../node_modules/@ionic/storage';
 
 /**
  * Generated class for the OnboardingPage page.
@@ -26,7 +27,11 @@ export class OnboardingPage {
     isSmall?: boolean;
   }>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public storage: Storage
+  ) {
     this.init();
   }
 
@@ -68,13 +73,16 @@ export class OnboardingPage {
   }
 
   gotoWelcome() {
-    this.navCtrl.setRoot(
-      'WelcomePage',
-      {},
-      {
-        animate: true,
-        direction: 'forward'
-      }
-    );
+    this.storage.set('isFirstAppOpen', false).then(_ => {
+      this.navCtrl.setRoot(
+        'WelcomePage',
+        {},
+        {
+          animate: true,
+          direction: 'forward'
+        }
+      );
+    })
+
   }
 }
