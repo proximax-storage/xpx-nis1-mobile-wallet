@@ -28,7 +28,7 @@ export class SettingListPage {
     private nemProvider: NemProvider,
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
   ) {}
 
   ionViewDidLoad() {
@@ -70,5 +70,9 @@ export class SettingListPage {
     this.clipboard.copy(address).then(_ => {
       this.toastProvider.show('Copied address successfully', 3, true);
     });
+  }
+
+  showComingSoon() {
+    this.toastProvider.show('Coming soon', 3, false);
   }
 }

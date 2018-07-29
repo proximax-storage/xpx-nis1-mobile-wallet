@@ -101,6 +101,8 @@ export class WalletListPage {
   }
 
   onWalletPress(wallet) {
+    this.selectedWallet = wallet;
+
     const actionSheet = this.actionSheetCtrl.create({
       title: `Modify ${wallet.name}`,
       cssClass: 'wallet-on-press',
