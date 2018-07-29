@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { AlertProvider } from '../../../../providers/alert/alert';
-import { NemProvider } from './../../../../providers/nem/nem';
 import {
   SimpleWallet,
   QRWalletText
-} from '../../../../../node_modules/nem-library';
+} from 'nem-library';
+
+import { AlertProvider } from '../../../../providers/alert/alert';
+import { NemProvider } from './../../../../providers/nem/nem';
 
 /**
  * Generated class for the WalletAddPasswordConfirmationPage page.

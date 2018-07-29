@@ -41,9 +41,9 @@ export class UtilitiesProvider {
    * @param page { Component || string } The page to set as modal.
    * @param data { Object } Any data to pass when modal is shown
    */
-  showInsetModal(page, data = {}): Observable<any> {
+  showInsetModal(page, data = {}, size = ''): Observable<any> {
     const modal = this.modalCtrl.create(page, data, {
-      cssClass: 'inset-modal',
+      cssClass: `inset-modal ${size}`,
       enableBackdropDismiss: true,
       showBackdrop: true
     });

@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Address } from 'nem-library';
+
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
 import { NemProvider } from '../../../../providers/nem/nem';
-import { Address } from '../../../../../node_modules/nem-library';
 import { AlertProvider } from '../../../../providers/alert/alert';
 
 /**

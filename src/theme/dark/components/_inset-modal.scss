@@ -5,6 +5,11 @@ ion-modal.inset-modal,
   transition: opacity .25s ease-in-out;
   padding: 10vh 10vw;
 
+  &.small {
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+  }
+
   ion-backdrop {
     // ====================================
     // Uncomment to enable backdrop dismiss

@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { SimpleWallet } from 'nem-library';
+
 import { App } from '../../../../../providers/app/app';
 import { NemProvider } from '../../../../../providers/nem/nem';
-import { SimpleWallet } from '../../../../../../node_modules/nem-library';
 import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../../providers/alert/alert';
 import { FormatXemPipe } from './../../../../../pipes/format-xem/format-xem';

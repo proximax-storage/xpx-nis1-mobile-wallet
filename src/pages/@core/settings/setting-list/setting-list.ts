@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Clipboard } from '@ionic-native/clipboard';
 
+import { SimpleWallet } from 'nem-library';
+
 import { WalletProvider } from '../../../../providers/wallet/wallet';
-import { SimpleWallet } from '../../../../../node_modules/nem-library';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { ToastProvider } from './../../../../providers/toast/toast';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
@@ -75,6 +76,6 @@ export class SettingListPage {
   }
 
   showComingSoon() {
-    this.utils.showInsetModal('ComingSoonPage');
+    this.utils.showInsetModal('ComingSoonPage', {}, 'small');
   }
 }

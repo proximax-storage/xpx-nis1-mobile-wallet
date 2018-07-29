@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 import { App } from '../../providers/app/app';
-import { Storage } from '../../../node_modules/@ionic/storage';
 
 /**
  * Generated class for the OnboardingPage page.
