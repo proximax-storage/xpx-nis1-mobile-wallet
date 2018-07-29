@@ -6,6 +6,7 @@ import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { SimpleWallet } from '../../../../../node_modules/nem-library';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { ToastProvider } from './../../../../providers/toast/toast';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the SettingListPage page.
@@ -29,6 +30,7 @@ export class SettingListPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
+    private utils: UtilitiesProvider,
   ) {}
 
   ionViewDidLoad() {
@@ -73,6 +75,6 @@ export class SettingListPage {
   }
 
   showComingSoon() {
-    this.toastProvider.show('Coming soon', 3, false);
+    this.utils.showInsetModal('ComingSoonPage');
   }
 }

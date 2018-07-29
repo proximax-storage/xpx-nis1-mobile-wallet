@@ -39,7 +39,7 @@ export class MyApp {
       this.storage.get('isFirstAppOpen'),
       this.storage.get('isLoggedIn')
     ]).then(results => {
-      const isFirstAppOpen = !!results[0];
+      const isFirstAppOpen = results[0] === null ? true : !!results[0];
       const isLoggedIn = results[1];
 
       if (isFirstAppOpen) {
