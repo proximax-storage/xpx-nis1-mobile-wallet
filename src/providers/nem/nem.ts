@@ -338,7 +338,7 @@ export class NemProvider {
    * @param address account Address
    * @return Promise with account transactions
    */
-  public getAllTransactionsFromAnAccount(
+  public getAllTransactions(
     address: Address
   ): Observable<Transaction[]> {
     return this.accountHttp.allTransactionsPaginated(address, {
@@ -351,7 +351,18 @@ export class NemProvider {
    * @param address account Address
    * @return Promise with account transactions
    */
-  public getUnconfirmedTransactionsFromAnAccount(
+  public getUnconfirmedTransactions(
+    address: Address
+  ): Observable<Transaction[]> {
+    return this.accountHttp.unconfirmedTransactions(address);
+  }
+
+  /**
+   * Get all confirmed transactions of an account
+   * @param address account Address
+   * @return Promise with account transactions
+   */
+  public getConfirmedTransactions(
     address: Address
   ): Observable<Transaction[]> {
     return this.accountHttp.unconfirmedTransactions(address);

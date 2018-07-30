@@ -12,19 +12,21 @@ export class MyApp {
 
   constructor(
     statusBar: StatusBar,
-    splashScreen: SplashScreen,
+    private splashScreen: SplashScreen,
     private platform: Platform,
     private storage: Storage,
     private app: App
   ) {
     platform.ready().then(() => {
-      this.initGetRoot();
+      this.initGetRoot().then(_ => {
+        this.splashScreen.hide();
+      });
+
       this.initOnResumeListener();
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
-      splashScreen.hide();
     });
   }
 
@@ -35,7 +37,7 @@ export class MyApp {
    *  3. Anything else -  WelcomePage.
    */
   initGetRoot() {
-    Promise.all([
+    return Promise.all([
       this.storage.get('isFirstAppOpen'),
       this.storage.get('isLoggedIn')
     ]).then(results => {
@@ -43,11 +45,11 @@ export class MyApp {
       const isLoggedIn = results[1];
 
       if (isFirstAppOpen) {
-        this.showPin('OnboardingPage');
+        return this.showPin('OnboardingPage')
       } else if (isLoggedIn) {
-        this.showPin('WalletListPage');
+        return this.showPin('WalletListPage');
       } else {
-        this.showPin('WelcomePage');
+        return this.showPin('WelcomePage');
       }
     });
   }
@@ -68,19 +70,26 @@ export class MyApp {
   showPin(page?: string) {
     return Promise.all([
       this.storage.get('isBarcodeScan'),
+      this.storage.get('isLoggedIn'),
       this.storage.get('pin')
     ]).then(results => {
-      const isLocked = results[0] ? false : true;
-      const pin = results[1];
+      const isBarcodeScan = results[0] ? false : true;
+      const isLoggedIn = results[1];
+      const pin = results[2];
 
-      if (pin && page !== 'OnboardingPage' && page !== 'WelcomePage') {
-        return this.storage.set('isLocked', isLocked).then(_ => {
+      if (!isBarcodeScan && isLoggedIn && pin && page !== 'OnboardingPage' && page !== 'WelcomePage') {
+        return this.storage.set('isLoggedIn', true).then(_ => {
           return this.app
             .getRootNav()
-            .setRoot('VerificationCodePage', { title: 'Verify pin', status: 'verify', pin: pin });
+            .setRoot('VerificationCodePage', {
+              title: 'Verify pin',
+              status: 'verify',
+              pin: pin
+            });
         });
       } else {
         this.rootPage = page ? page : 'WelcomePage';
+        return;
       }
     });
   }

@@ -34,7 +34,7 @@
 
         span {
           -webkit-text-security: disc;
-          font-size: 2rem;
+          vertical-align: middle;
         }
       }
     }
@@ -50,5 +50,17 @@
         font-size: 150%;
       }
     }
+  }
+}
+
+.md {
+  ngx-pin [upper] [pin] span {
+    font-size: 2rem;
+  }
+}
+
+.md {
+  ngx-pin [upper] [pin] span {
+    font-size: 6rem;
   }
 }

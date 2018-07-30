@@ -75,7 +75,7 @@
     </button>
   </section>
 
-  <ion-list transparent-items [hidden]="transactions">
+  <ion-list transparent-items *ngIf="!transactions">
     <ion-card fake-card *ngFor="let fakeCard of fakeList">
       <ion-card-header>
         <p float-left> &nbsp; </p>

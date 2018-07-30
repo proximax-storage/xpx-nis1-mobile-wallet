@@ -8,7 +8,6 @@ import { App } from '../../../../../providers/app/app';
 import { NemProvider } from '../../../../../providers/nem/nem';
 import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../../providers/alert/alert';
-import { FormatXemPipe } from './../../../../../pipes/format-xem/format-xem';
 
 /**
  * Generated class for the SendMosaicConfirmationPage page.
@@ -38,7 +37,6 @@ export class SendMosaicConfirmationPage {
     private nemProvider: NemProvider,
     private alertProvider: AlertProvider,
     public utils: UtilitiesProvider,
-    private formatXEM: FormatXemPipe
   ) {
     this.init();
   }
@@ -77,16 +75,20 @@ export class SendMosaicConfirmationPage {
         .subscribe(
           value => {
             this.alertProvider.showMessage(
-              `You have successfully sent ${this.formatXEM.transform(
+              `You have successfully sent ${
                 this.data.amount
-              )}${this.data.mosaic.mosaicId.name.toUpperCase()} to ${
-                this.data.recipientName
+              }${this.data.mosaic.mosaicId.name.toUpperCase()} to ${
+                this.data.recipientName || this.data.recipientAddress
               }`
             );
-            this.navCtrl.setRoot('TransactionListPage', {}, {
-              animate: true,
-              direction: 'backward'
-            });
+            this.navCtrl.setRoot(
+              'TabsPage',
+              { tabIndex: 2 },
+              {
+                animate: true,
+                direction: 'backward'
+              }
+            );
           },
           error => {
             console.log(error);

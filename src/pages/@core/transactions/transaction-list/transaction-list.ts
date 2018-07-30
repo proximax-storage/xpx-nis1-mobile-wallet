@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SimpleWallet, TransactionTypes } from 'nem-library';
+import { Observable } from 'rxjs';
 
 import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
@@ -48,25 +49,31 @@ export class TransactionListPage {
           }
         );
       } else {
+        this.transactions = null;
         this.currentWallet = currentWallet;
 
         this.fakeList = [{}, {}];
 
-        this.pageable = this.nemProvider.getAllTransactionsFromAnAccount(
+        this.pageable = this.nemProvider.getAllTransactions(
           this.currentWallet.address
         );
 
-        this.pageable.subscribe(txns => {
-          this.hasTransactions = txns.length ? true : false;
+        Observable.zip(
+          this.nemProvider.getUnconfirmedTransactions(
+            this.currentWallet.address
+          ),
+          this.pageable
+        ).subscribe(([unconfirmedTransactions, confirmedTransactions]) => {
+          this.hasTransactions = confirmedTransactions.length ? true : false;
 
           if (this.transactions) {
-            this.transactions.push(...txns);
-          } else if (txns.length) {
-            this.transactions = txns;
+            this.transactions.push(...confirmedTransactions);
+          } else if (confirmedTransactions.length) {
+            this.transactions = [...unconfirmedTransactions, ...confirmedTransactions];
           }
-        });
 
-        this.transactions = !this.transactions ? [] : this.transactions;
+          console.log(this.transactions)
+        });
       }
     });
   }
@@ -77,7 +84,8 @@ export class TransactionListPage {
 
   // Treat the instructor name as the unique identifier for the object
   trackByHash(index, transaction) {
-    return transaction.getTransactionInfo().hash.data;
+    // return transaction.getTransactionInfo().hash.data;
+    return index;
   }
 
   gotoReceive() {

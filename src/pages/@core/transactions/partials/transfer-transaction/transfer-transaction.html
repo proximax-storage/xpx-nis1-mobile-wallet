@@ -70,8 +70,8 @@
       {{ tx?.signer.address.pretty() }}
     </h3>
     <p ion-text color="light">
-      <small *ngIf="owner?.plain() != tx?.recipient.plain()">Sender</small>
-      <small *ngIf="owner?.plain() == tx?.recipient.plain()">Receiver</small>
+      <small *ngIf="owner?.plain() !== tx?.recipient.plain()">Sender</small>
+      <small *ngIf="owner?.plain() === tx?.recipient.plain()">Receiver</small>
     </p>
 
     <!-- Confirmed transfer -->

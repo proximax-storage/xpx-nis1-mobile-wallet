@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 
@@ -14,7 +14,13 @@ export class TabsPage {
   tab3Root = 'TransactionListPage';
   tab4Root = 'SettingListPage';
 
-  constructor(private navCtrl: NavController) {}
+  tabIndex: number;
+
+  constructor(private navCtrl: NavController, private navParams: NavParams) {}
+
+  ionViewWillEnter() {
+    this.tabIndex = <number> this.navParams.get('tabIndex') || 0;
+  }
 
   gotoSend() {
     this.navCtrl.push('SendPage');
