@@ -31,10 +31,11 @@
       [pin] {
         font-size: 4rem;
         letter-spacing: 16px;
+        vertical-align: middle;
 
         span {
+          vertical-align: inherit;
           -webkit-text-security: disc;
-          vertical-align: middle;
         }
       }
     }

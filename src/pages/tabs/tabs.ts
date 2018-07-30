@@ -20,6 +20,7 @@ export class TabsPage {
 
   ionViewWillEnter() {
     this.tabIndex = <number> this.navParams.get('tabIndex') || 0;
+    console.log('tabIndex', this.tabIndex);
   }
 
   gotoSend() {
