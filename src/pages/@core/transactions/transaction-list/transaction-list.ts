@@ -72,8 +72,9 @@ export class TransactionListPage {
             this.transactions = [...unconfirmedTransactions, ...confirmedTransactions];
           }
 
-          console.log(this.transactions);
         });
+
+        if(!this.transactions) this.transactions = [];
       }
     });
   }

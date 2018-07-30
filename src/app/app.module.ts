@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -34,6 +34,8 @@ import { BarcodeScannerProvider } from '../providers/barcode-scanner/barcode-sca
 import { ListStorageProvider } from '../providers/list-storage/list-storage';
 import { FilePickerProvider } from '../providers/file-picker/file-picker';
 import { WalletBackupProvider } from '../providers/wallet-backup/wallet-backup';
+import { CoingeckoProvider } from '../providers/coingecko/coingecko';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -43,12 +45,13 @@ import { WalletBackupProvider } from '../providers/wallet-backup/wallet-backup';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),
     IonicStorageModule.forRoot(),
     ComponentsModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -83,6 +86,7 @@ import { WalletBackupProvider } from '../providers/wallet-backup/wallet-backup';
     ListStorageProvider,
     FilePickerProvider,
     WalletBackupProvider,
+    CoingeckoProvider,
   ]
 })
 export class AppModule {}
