@@ -18,15 +18,19 @@ export class MyApp {
     private app: App
   ) {
     platform.ready().then(() => {
-      this.initGetRoot().then(_ => {
-        this.splashScreen.hide();
-      });
-
-      this.initOnResumeListener();
-
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
+
+      this.initGetRoot().then(rootPage => {
+        this.rootPage = rootPage;
+
+        setTimeout(() => {
+          this.splashScreen.hide();
+        }, 1000);
+      });
+      this.initOnPauseResume();
+      this.showPin();
     });
   }
 
@@ -45,51 +49,68 @@ export class MyApp {
       const isLoggedIn = results[1];
 
       if (isFirstAppOpen) {
-        return this.showPin('OnboardingPage')
+        return 'OnboardingPage';
       } else if (isLoggedIn) {
-        return this.showPin('WalletListPage');
+        return 'WalletListPage';
       } else {
-        return this.showPin('WelcomePage');
+        return 'WelcomePage';
       }
     });
   }
 
-  /**
-   * Listen to onPause of app - leaving this app and go to another or go to home screen.
-   */
-  initOnResumeListener() {
+  initOnPauseResume() {
+    this.platform.pause.subscribe(() => {
+      console.log(this.app.getActiveNav());
+
+      Promise.all([
+        this.storage.get('pin'),
+        this.storage.get('isAppPaused')
+      ]).then(results => {
+        const pin = results[0];
+        const isLocked = results[1] ? false : true;
+        if (pin) this.storage.set('isLocked', isLocked);
+      });
+    });
+
     this.platform.resume.subscribe(() => {
       this.showPin();
     });
   }
 
-  /**
-   * Checks the if resume is triggered by barcode scan or thru app navigation and
-   * gets the pin of the app
-   */
-  showPin(page?: string) {
-    return Promise.all([
-      this.storage.get('isBarcodeScan'),
+  private showPin() {
+    Promise.all([
+      this.storage.get('pin'),
       this.storage.get('isLoggedIn'),
-      this.storage.get('pin')
-    ]).then(results => {
-      const isBarcodeScan = !!results[0];
-      const isLoggedIn = !!results[1];
-      const pin = results[2];
+      this.storage.get('isAppPaused')
+    ])
+    .then(results => {
+      const pin = results[0];
+      const isLoggedIn = results[1];
+      const isAppPaused = results[2];
 
-      if (!isBarcodeScan && isLoggedIn && pin && page !== 'OnboardingPage' && page !== 'WelcomePage') {
-        return this.storage.set('isLoggedIn', true).then(_ => {
-          return this.app
-            .getRootNav()
-            .setRoot('VerificationCodePage', {
-              title: 'Verify pin',
-              status: 'verify',
-              pin: pin
-            });
-        });
-      } else {
-        this.rootPage = page ? page : 'WelcomePage';
-        return;
+      if(isAppPaused) {
+        return this.storage.set('isAppPaused', false);
+      } else if (
+        this.rootPage !== 'OnboardingPage' &&
+        this.rootPage !== 'WelcomePage' &&
+        isLoggedIn &&
+        pin
+      ) {
+        return this.app.getRootNav().setRoot(
+          'VerificationCodePage',
+          {
+            status: 'verify',
+            title: 'Verify your PIN CODE',
+            subtitle:
+              'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+            invalidPinMessage: 'Incorrect pin. Please try again',
+            pin: pin
+          },
+          {
+            animate: true,
+            direction: 'forward'
+          }
+        );
       }
     });
   }

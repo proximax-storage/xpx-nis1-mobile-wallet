@@ -19,6 +19,9 @@
   <ion-list transparent-items radio-group [(ngModel)]="selectedOption">
     <ion-card *ngFor="let option of options" [attr.selected]="selectedOption.value === option.value ? true : null" (click)="onSelect(option)">
       <ion-item>
+        <img logo-small item-left *ngIf="isImage" [src]="utils.getLogo(mosaic)">
+        <ion-icon item-left *ngIf="!isImage" [name]="option.icon"></ion-icon>
+
         <h2 ion-text color="light">{{ option.name }}</h2>
 
         <ion-icon item-right ion-text color="grey" name="ios-arrow-forward"></ion-icon>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { BarcodeScannerProvider } from '../../../../providers/barcode-scanner/barcode-scanner';
 import { FilePickerProvider } from '../../../../providers/file-picker/file-picker';
@@ -30,20 +31,24 @@ export enum WalletImportOption {
 export class WalletImportOptionPage {
   options: Array<{
     name: string;
+    icon: string;
     value: number;
     prompt?: string;
   }>;
   selectedOption: {
     name: string;
     value: number;
+    icon: string;
     prompt?: string;
   };
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public platform: Platform,
+    public storage: Storage,
     private filePickerProvider: FilePickerProvider,
-    private barcodeScannerProvider: BarcodeScannerProvider,
+    private barcodeScannerProvider: BarcodeScannerProvider
   ) {
     this.init();
   }
@@ -56,43 +61,52 @@ export class WalletImportOptionPage {
     this.options = [
       {
         name: 'Private key',
+        icon: 'key',
         value: WalletImportOption.PRIVATE_KEY
       },
       {
-        name: 'Wallet file',
-        value: WalletImportOption.WALLET_FILE
-      },
-      {
-        name: 'Nano wallet',
+        name: 'Import from Nano wallet',
         value: WalletImportOption.NANO_WALLET,
+        icon: 'key',
         prompt: 'Scan QR from Nano wallet'
       },
       {
-        name: 'NEM mobile wallet (iOS & android)',
+        name: 'Import from NEM mobile wallet (iOS & android)',
         value: WalletImportOption.NEM_MOBILE_WALLET,
+        icon: 'key',
         prompt: 'Scan QR from NEM mobile wallet'
       },
       {
-        name: 'Shelter DAO',
-        value: WalletImportOption.SHELTER_DAO,
-        prompt: 'Scan QR from NEM Shelter DAO'
-      },
-      {
-        name: 'Raccoon wallet',
-        value: WalletImportOption.RACCOON_WALLET,
-        prompt: 'Scan QR from Raccoon wallet'
-      },
-      {
-        name: 'NEMPay',
+        name: 'Import from NEMPay',
         value: WalletImportOption.NEM_PAY,
+        icon: 'key',
         prompt: 'Scan QR from NEMPay'
-      },
-      {
-        name: 'ProximaX wallet',
-        value: WalletImportOption.PROXIMAX_WALLET,
-        prompt: 'Scan QR from ProximaX wallet'
       }
+      // {
+      //   name: 'Shelter DAO',
+      //   value: WalletImportOption.SHELTER_DAO,
+      //   prompt: 'Scan QR from NEM Shelter DAO'
+      // },
+      // {
+      //   name: 'Raccoon wallet',
+      //   value: WalletImportOption.RACCOON_WALLET,
+      //   prompt: 'Scan QR from Raccoon wallet'
+      // },
+      // {
+      //   name: 'ProximaX wallet',
+      //   value: WalletImportOption.PROXIMAX_WALLET,
+      //   prompt: 'Scan QR from ProximaX wallet'
+      // }
     ];
+
+    if (this.platform.is('android')) {
+      this.options.splice(1, 0, {
+        name: 'Wallet file',
+        icon: 'document',
+        value: WalletImportOption.WALLET_FILE
+      });
+    }
+
     this.selectedOption = this.options[0];
   }
 
@@ -109,9 +123,11 @@ export class WalletImportOptionPage {
         privateKey: ''
       });
     } else if (this.selectedOption.value === WalletImportOption.WALLET_FILE) {
-      this.filePickerProvider.open().then(data => {
-        this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
-      });
+      this.storage.set('isAppPaused', true).then(_ => {
+        this.filePickerProvider.open().then(data => {
+          this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
+        });
+      })
     } else {
       this.barcodeScannerProvider
         .getData('WalletImportOption', this.selectedOption.prompt)

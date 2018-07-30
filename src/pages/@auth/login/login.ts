@@ -60,7 +60,7 @@ export class LoginPage {
           title: 'Verify your PIN CODE',
           subtitle: 'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
           invalidPinMessage:
-            'It looks like you entered a wrong pin code. Please try again',
+            'Incorrect pin. Please try again',
           pin: pin
         },
         {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the WalletAddOptionPage page.
@@ -22,10 +23,16 @@ export class WalletAddOptionPage {
   options: Array<{
     name: string;
     value: number;
+    icon: string;
+    description: string;
   }>;
   selectedOption: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public utils: UtilitiesProvider
+  ) {
     this.init();
   }
 
@@ -36,12 +43,18 @@ export class WalletAddOptionPage {
   init() {
     this.options = [
       {
-        name: 'Create personal wallet',
-        value: WalletAddOption.SIMPLE
+        name: 'Create simple wallet',
+        value: WalletAddOption.SIMPLE,
+        icon: 'ios-person-outline',
+        description:
+          'A simple wallet enables you to do a “single-signature transactions,” it requires only one signature of the owner before transaction is executed.'
       },
       {
-        name: 'Create shared wallet',
-        value: WalletAddOption.SHARED
+        name: 'Create multisigsimple wallet',
+        value: WalletAddOption.SHARED,
+        icon: 'ios-people-outline',
+        description:
+          'A multisig wallet has an additional security measure for cryptocurrency transactions. Rather than a single wallet signature requirement for transactions, it requires the signature of multiple people before transaction is executed.'
       }
     ];
   }
@@ -56,6 +69,7 @@ export class WalletAddOptionPage {
     if (this.selectedOption === WalletAddOption.SIMPLE) {
       this.navCtrl.push('WalletAddPage');
     } else if (this.selectedOption === WalletAddOption.SHARED) {
+      this.utils.showInsetModal('ComingSoonPage', {}, 'small');
     }
   }
 }

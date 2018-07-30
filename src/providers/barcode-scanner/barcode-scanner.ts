@@ -20,7 +20,7 @@ export class BarcodeScannerProvider {
   constructor(
     private platform: Platform,
     private storage: Storage,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
   ) {
     this.barcodeScannerOptions = {
       prompt: '',
@@ -36,14 +36,14 @@ export class BarcodeScannerProvider {
   getData(page: string, prompt: string = ''): Promise<any> {
     this.barcodeScannerOptions.prompt = prompt;
     return this.storage
-      .set('isBarcodeScan', true)
+      .set('isAppPaused', true)
       .then(_ => {
         return this.barcodeScanner.scan(this.barcodeScannerOptions);
       })
       .then((result: BarcodeScanResult) => {
-        if (this.platform.is('android') && result.cancelled) return {};
+        if (this.platform.is('android') && result.cancelled) {return {}};
 
         return JSON.parse(result.text);
-      });
+      })
   }
 }
