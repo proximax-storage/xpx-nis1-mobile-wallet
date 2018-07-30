@@ -25,11 +25,12 @@
   <ion-grid empty *ngIf="wallets && !wallets.length">
     <ion-row>
       <ion-col>
-        <img half-width [src]="App.STICKERS.SORRY">
+        <img half-width [src]="App.STICKERS.HAPPY">
+
+        <h2 ion-text color="light">Welcome to NEM Wallet PRO!</h2>
 
         <p text-wrap text-center ion-text color="light">
-          It looks like you don't have any wallets yet.
-          <br> Try adding one or two.
+          Let's start by creating your new wallet.
         </p>
 
         <button gradient-button color-1 (click)="showAddWalletPrompt()">

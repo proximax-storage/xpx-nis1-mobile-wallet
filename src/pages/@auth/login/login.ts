@@ -5,6 +5,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { AuthProvider } from '../../../providers/auth/auth';
 import { WalletProvider } from '../../../providers/wallet/wallet';
+import { AlertProvider } from '../../../providers/alert/alert';
+import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,8 +28,10 @@ export class LoginPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public storage: Storage,
+    public alertProvider: AlertProvider,
     public walletProvider: WalletProvider,
-    public authProvider: AuthProvider
+    public authProvider: AuthProvider,
+    public utils: UtilitiesProvider,
   ) {
     this.init();
   }
@@ -53,7 +57,8 @@ export class LoginPage {
         'VerificationCodePage',
         {
           status: 'verify',
-          title: 'Verify pin',
+          title: 'Verify your PIN CODE',
+          subtitle: 'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
           invalidPinMessage:
             'It looks like you entered a wrong pin code. Please try again',
           pin: pin
@@ -79,13 +84,11 @@ export class LoginPage {
               }, 1000);
             });
         } else {
-          alert(res.message);
+          this.utils.showInsetModal('TryAgainPage', {}, 'small');
         }
       })
       .catch(err => {
-        alert(
-          'It looks like this account does not exist. Please register first and login again.'
-        );
+        this.utils.showInsetModal('TryAgainPage', {}, 'small');
       });
   }
 }

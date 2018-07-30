@@ -6,6 +6,7 @@ import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
+import { AlertProvider } from '../../../../providers/alert/alert';
 /**
  * Generated class for the WalletAddPrivateKeyPage page.
  *
@@ -28,6 +29,7 @@ export class WalletAddPrivateKeyPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
+    private alertProvider: AlertProvider,
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider
@@ -67,7 +69,7 @@ export class WalletAddPrivateKeyPage {
 
     this.walletProvider.checkIfWalletNameExists(newWallet.name).then(value => {
       if (value) {
-        alert('This wallet name already exists. Please try again.');
+        this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider
           .storeWallet(newWallet)

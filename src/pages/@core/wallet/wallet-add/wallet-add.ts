@@ -6,6 +6,7 @@ import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
+import { AlertProvider } from '../../../../providers/alert/alert';
 
 /**
  * Generated class for the WalletAddPage page.
@@ -32,6 +33,7 @@ export class WalletAddPage {
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
+    private alertProvider: AlertProvider,
   ) {
     this.init();
   }
@@ -59,7 +61,7 @@ export class WalletAddPage {
 
     this.walletProvider.checkIfWalletNameExists(newWallet.name).then(value => {
       if (value) {
-        alert('This wallet name already exists. Please try again.');
+        this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider.storeWallet(newWallet).then(value => {
           return this.walletProvider.setSelectedWallet(newWallet);

@@ -30,7 +30,7 @@ export class VerificationCodePage {
     console.log('ionViewDidLoad VerificationCodePage');
     this.pinTitle = this.navParams.data.title
       ? this.navParams.data.title
-      : 'Enter Pin';
+      : "Let's setup your PIN CODE";
 
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
@@ -41,7 +41,12 @@ export class VerificationCodePage {
     if (this.navParams.data.status === 'confirm') {
       return this.navCtrl.push(
         'VerificationCodePage',
-        { status: 'verify', title: 'Verify pin', pin: pin },
+        {
+          status: 'verify',
+          title: 'Verify your PIN CODE',
+          subtitle: 'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+          pin: pin
+        },
         {
           animate: true,
           direction: 'forward'

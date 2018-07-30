@@ -6,6 +6,7 @@ import findIndex from 'lodash/findIndex';
 import { Address } from 'nem-library';
 import * as uniqid from 'uniqid';
 import { WalletProvider } from '../wallet/wallet';
+import { AlertProvider } from '../alert/alert';
 
 /*
   Generated class for the ContactsProvider provider.
@@ -17,7 +18,8 @@ import { WalletProvider } from '../wallet/wallet';
 export class ContactsProvider {
   constructor(
     private storage: Storage,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private alertProvider: AlertProvider,
   ) {
     console.log('Hello CrudProvider Provider');
   }
@@ -78,7 +80,7 @@ export class ContactsProvider {
   update(id, contact) {
     return this.doesContactExist(contact).then(doesContactExist => {
       if (doesContactExist) {
-        alert('Nothing is changed. Please try again.');
+        this.alertProvider.showMessage('Nothing is changed. Please try again.');
       } else {
         return this.getAll().then(contacts => {
           const CONTACT_INDEX = findIndex(contacts, { id: id });

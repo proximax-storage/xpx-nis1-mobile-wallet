@@ -7,6 +7,7 @@ import { SimpleWallet } from 'nem-library';
 import { App } from '../../../../providers/app/app';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
+import { AlertProvider } from '../../../../providers/alert/alert';
 
 /**
  * Generated class for the WalletUpdatePage page.
@@ -33,6 +34,7 @@ export class WalletUpdatePage {
     public formBuilder: FormBuilder,
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
+    private alertProvider: AlertProvider,
   ) {
     this.init();
   }
@@ -70,7 +72,7 @@ export class WalletUpdatePage {
   onSubmit(form) {
     this.walletProvider.checkIfWalletNameExists(form.name).then(value => {
       if (value) {
-        alert('This wallet name already exists. Please try again.');
+        this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider
           .updateWalletName(this.selectedWallet, form.name)

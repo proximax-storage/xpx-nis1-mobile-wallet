@@ -58,7 +58,7 @@ export class MyApp {
    * Listen to onPause of app - leaving this app and go to another or go to home screen.
    */
   initOnResumeListener() {
-    this.platform.pause.subscribe(() => {
+    this.platform.resume.subscribe(() => {
       this.showPin();
     });
   }
@@ -73,8 +73,8 @@ export class MyApp {
       this.storage.get('isLoggedIn'),
       this.storage.get('pin')
     ]).then(results => {
-      const isBarcodeScan = results[0] ? false : true;
-      const isLoggedIn = results[1];
+      const isBarcodeScan = !!results[0];
+      const isLoggedIn = !!results[1];
       const pin = results[2];
 
       if (!isBarcodeScan && isLoggedIn && pin && page !== 'OnboardingPage' && page !== 'WelcomePage') {

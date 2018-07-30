@@ -4,6 +4,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
 
 import { SimpleWallet } from 'nem-library';
+import { AlertProvider } from '../alert/alert';
 
 /*
   Generated class for the FilePickerProvider provider.
@@ -16,7 +17,8 @@ export class FilePickerProvider {
   constructor(
     private fileChooser: FileChooser,
     private filePath: FilePath,
-    private file: File
+    private file: File,
+    private alertProvider: AlertProvider,
   ) {
     console.log('Hello FilePickerProvider Provider');
   }
@@ -45,7 +47,7 @@ export class FilePickerProvider {
 
         // 4. Return empty string if the the file extension is now wlt.
         if (fileName.indexOf('.wlt') === -1) {
-          alert('The wallet file must have a .wlt extension type');
+          this.alertProvider.showMessage('The wallet file must have a .wlt extension type');
           return '';
         }
 

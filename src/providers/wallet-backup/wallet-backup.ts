@@ -7,6 +7,7 @@ import { SimpleWallet, Password } from 'nem-library';
 import { NemProvider } from '../nem/nem';
 import { AuthProvider } from '../auth/auth';
 import { ToastProvider } from '../toast/toast';
+import { AlertProvider } from '../alert/alert';
 
 /*
   Generated class for the WalletBackupProvider provider.
@@ -22,7 +23,8 @@ export class WalletBackupProvider {
     private socialSharing: SocialSharing,
     private authProvider: AuthProvider,
     private nemProvider: NemProvider,
-    private toastProvider: ToastProvider
+    private toastProvider: ToastProvider,
+    private alertProvider: AlertProvider
   ) {
     console.log('Hello WalletBackupProvider Provider');
   }
@@ -42,7 +44,9 @@ export class WalletBackupProvider {
         });
       })
       .then(result => {
-        alert(`You can view your backed up wallet in ${STORAGE_DIRECTORY}`);
+        this.alertProvider.showMessage(
+          `You can view your backed up wallet in ${STORAGE_DIRECTORY}`
+        );
         return result;
       })
       .catch(e => {

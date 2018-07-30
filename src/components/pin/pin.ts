@@ -11,8 +11,8 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
   templateUrl: 'pin.html'
 })
 export class PinComponent {
-  @Input() title: String = 'Enter pin';
-  @Input() subtitle: String = 'In order to continue you must enter your pin code';
+  @Input() title: String = 'Let\'s setup your PIN CODE';
+  @Input() subtitle: String = 'PIN CODE serves as a secondary form of verification. Having a PIN CODE provides additional security capability on your wallet.';
 
   pin: string = '';
 
