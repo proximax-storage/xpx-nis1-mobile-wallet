@@ -66,9 +66,16 @@
 </ion-card-header>
 <ion-card-content line no-padding>
   <ion-item>
-    <h3 text-wrap ion-text color="light">
-      {{ tx?.signer.address.pretty() }}
-    </h3>
+    <section *ngIf="tx.signer">
+      <h3 text-wrap ion-text color="light" *ngIf="(tx?.signer.address.pretty() | searchContact: tx?.signer.address.plain() | async) as contact; else loading">
+        {{ contact }}
+      </h3>
+
+      <ng-template #loading>
+        <ion-spinner name="dots"></ion-spinner>
+      </ng-template>
+    </section>
+
     <p ion-text color="light">
       <small *ngIf="owner?.plain() !== tx?.recipient.plain()">Sender</small>
       <small *ngIf="owner?.plain() === tx?.recipient.plain()">Receiver</small>

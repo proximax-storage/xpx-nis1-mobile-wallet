@@ -72,7 +72,7 @@ export class TransactionListPage {
             this.transactions = [...unconfirmedTransactions, ...confirmedTransactions];
           }
 
-          console.log(this.transactions)
+          console.log(this.transactions);
         });
       }
     });

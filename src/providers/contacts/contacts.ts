@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
-import * as uniqid from 'uniqid';
+import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
+import { Address } from 'nem-library';
+import * as uniqid from 'uniqid';
+import { WalletProvider } from '../wallet/wallet';
 
 /*
   Generated class for the ContactsProvider provider.
@@ -12,7 +15,10 @@ import findIndex from 'lodash/findIndex';
 */
 @Injectable()
 export class ContactsProvider {
-  constructor(private storage: Storage) {
+  constructor(
+    private storage: Storage,
+    private walletProvider: WalletProvider
+  ) {
     console.log('Hello CrudProvider Provider');
   }
 
@@ -33,6 +39,30 @@ export class ContactsProvider {
     return this.storage.get('contacts').then(contacts => {
       return contacts || [];
     });
+  }
+
+  search(rawAddress: string): Promise<string> {
+    const ADDRESS = new Address(rawAddress);
+    return Promise.all([this.walletProvider.getWallets(), this.getAll()]).then(
+      results => {
+        const wallets = results[0];
+        const contacts = results[1];
+
+        const WALLET = find(
+          wallets,
+          wlt => wlt.address.plain() === ADDRESS.plain()
+        );
+        const CONTACT = find(contacts, { address: ADDRESS.plain() });
+
+        if (WALLET) {
+          return WALLET.name;
+        } else if (CONTACT) {
+          return CONTACT.name;
+        } else {
+          return ADDRESS.pretty();
+        }
+      }
+    );
   }
 
   push(contact) {
