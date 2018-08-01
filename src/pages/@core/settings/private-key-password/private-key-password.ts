@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertProvider } from '../../../../providers/alert/alert';
+import { AuthProvider } from '../../../../providers/auth/auth';
 
 /**
  * Generated class for the PrivateKeyPasswordPage page.
@@ -24,6 +25,7 @@ export class PrivateKeyPasswordPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
+    public authProvider: AuthProvider,
     public alertProvider: AlertProvider,
   ) {
     this.init();
@@ -31,10 +33,12 @@ export class PrivateKeyPasswordPage {
 
   init() {
     // Initialize private data
-    this.credentials = {
-      password: '123qweasd',
-      privateKey: ''
-    };
+    this.authProvider.getPassword().then(password => {
+      this.credentials = {
+        password: password,
+        privateKey: ''
+      };
+    })
 
     // Initialize form
     this.formGroup = this.formBuilder.group({

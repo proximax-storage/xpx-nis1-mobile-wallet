@@ -8,6 +8,7 @@ import { App } from '../../../../../providers/app/app';
 import { NemProvider } from '../../../../../providers/nem/nem';
 import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../../providers/alert/alert';
+import { AuthProvider } from '../../../../../providers/auth/auth';
 
 /**
  * Generated class for the SendMosaicConfirmationPage page.
@@ -36,6 +37,7 @@ export class SendMosaicConfirmationPage {
     public formBuilder: FormBuilder,
     private nemProvider: NemProvider,
     private alertProvider: AlertProvider,
+    private authProvider: AuthProvider,
     public utils: UtilitiesProvider,
   ) {
     this.init();
@@ -53,11 +55,14 @@ export class SendMosaicConfirmationPage {
     this.data = this.navParams.data;
     this.currentWallet = <SimpleWallet>this.data.currentWallet;
 
+
     // Initialize private data
-    this.credentials = {
-      password: '123qweasd',
-      privateKey: ''
-    };
+    this.authProvider.getPassword().then(password => {
+      this.credentials = {
+        password: password,
+        privateKey: ''
+      };
+    })
   }
 
   goBack() {
