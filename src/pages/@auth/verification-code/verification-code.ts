@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ViewController
+} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AlertProvider } from '../../../providers/alert/alert';
+import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 
 /**
  * Generated class for the VerificationCodePage page.
@@ -22,9 +28,27 @@ export class VerificationCodePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public viewCtrl: ViewController,
     public storage: Storage,
-    private alertProvider: AlertProvider
+    private alertProvider: AlertProvider,
+    private utils: UtilitiesProvider
   ) {}
+
+  ionViewWillEnter() {
+    console.log('VerificationCodePage :: ionViewWillEnter',
+      !this.navParams.data.destination &&
+        this.navParams.data.status === 'verify'
+    );
+
+    if (
+      !this.navParams.data.destination &&
+      this.navParams.data.status === 'verify'
+    ) {
+      this.utils.setHardwareBack();
+    } else {
+      this.utils.setHardwareBackModal(this.viewCtrl);
+    }
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VerificationCodePage');
@@ -38,20 +62,19 @@ export class VerificationCodePage {
   }
 
   onSubmit(pin) {
+    let data: any = {
+      status: 'verify',
+      title: 'Verify your PIN CODE',
+      subtitle:
+        'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+      pin: pin
+    };
+    data.destination = this.navParams.data.destination
+      ? this.navParams.data.destination
+      : null;
+
     if (this.navParams.data.status === 'confirm') {
-      return this.navCtrl.push(
-        'VerificationCodePage',
-        {
-          status: 'verify',
-          title: 'Verify your PIN CODE',
-          subtitle: 'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
-          pin: pin
-        },
-        {
-          animate: true,
-          direction: 'forward'
-        }
-      );
+      return this.utils.showModal('VerificationCodePage', data);
     }
 
     if (
@@ -59,14 +82,14 @@ export class VerificationCodePage {
       this.navParams.data.pin === pin
     ) {
       return this.storage.set('pin', pin).then(_ => {
-        return this.navCtrl.setRoot(
-          'WalletListPage',
-          {},
-          {
+        if (this.navParams.data.destination) {
+          return this.navCtrl.setRoot(this.navParams.data.destination, data, {
             animate: true,
             direction: 'forward'
-          }
-        );
+          });
+        } else {
+          this.viewCtrl.dismiss();
+        }
       });
     } else if (
       this.navParams.data.status === 'verify' &&

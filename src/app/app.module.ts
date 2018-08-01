@@ -83,7 +83,7 @@ import { CoinPriceChartProvider } from '../providers/coin-price-chart/coin-price
     FilePickerProvider,
     WalletBackupProvider,
     CoingeckoProvider,
-    CoinPriceChartProvider
+    CoinPriceChartProvider,
   ]
 })
 export class AppModule {}

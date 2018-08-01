@@ -70,7 +70,7 @@
     <button margin-bottom gradient-button color-1 *ngIf="hasTransactions" (click)="loadMore()">
       Load more ...
     </button>
-    <button margin-bottom gradient-button color-1 *ngIf="!hasTransactions" (click)="loadMore()">
+    <button margin-bottom gradient-button color-1 *ngIf="transactions.length && !hasTransactions" (click)="loadMore()">
       No more transactions
     </button>
   </section>

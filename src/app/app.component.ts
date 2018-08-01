@@ -3,6 +3,7 @@ import { Platform, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+import { UtilitiesProvider } from '../providers/utilities/utilities';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,8 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private platform: Platform,
     private storage: Storage,
-    private app: App
+    private app: App,
+    private utils: UtilitiesProvider
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -82,13 +84,12 @@ export class MyApp {
       this.storage.get('pin'),
       this.storage.get('isLoggedIn'),
       this.storage.get('isAppPaused')
-    ])
-    .then(results => {
+    ]).then(results => {
       const pin = results[0];
       const isLoggedIn = results[1];
       const isAppPaused = results[2];
 
-      if(isAppPaused) {
+      if (isAppPaused) {
         return this.storage.set('isAppPaused', false);
       } else if (
         this.rootPage !== 'OnboardingPage' &&
@@ -96,21 +97,14 @@ export class MyApp {
         isLoggedIn &&
         pin
       ) {
-        return this.app.getRootNav().setRoot(
-          'VerificationCodePage',
-          {
-            status: 'verify',
-            title: 'Verify your PIN CODE',
-            subtitle:
-              'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
-            invalidPinMessage: 'Incorrect pin. Please try again',
-            pin: pin
-          },
-          {
-            animate: true,
-            direction: 'forward'
-          }
-        );
+        return this.utils.showModal('VerificationCodePage', {
+          status: 'verify',
+          title: 'Verify your PIN CODE',
+          subtitle:
+            'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+          invalidPinMessage: 'Incorrect pin. Please try again',
+          pin: pin
+        });
       }
     });
   }
