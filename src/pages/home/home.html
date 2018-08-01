@@ -22,18 +22,18 @@
   <h6 margin-left ion-text color="light">Mosaics</h6>
 
   <ion-list transparent-items>
-    <ion-card *ngFor="let mosaic of mosaics">
+    <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
       <ion-card-header no-padding>
         <ion-item>
           <img logo-small item-left [src]="utils.getLogo(mosaic)">
           <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
           <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
 
-          <section item-right>
+          <section text-right item-right>
             <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
-            <p text-right text-right ion-text color="light" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
+            <p text-right ion-text color="light" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
               <small>
-                {{ mosaic.amount * marketPrice | currency : 'USD' : 'symbol' : '1.6-6' }}
+                {{ mosaic.amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
               </small>
             </p>
           </section>
@@ -216,5 +216,6 @@
 </ion-content>
 
 <ng-template #loading>
-  <ion-spinner name="dots"></ion-spinner>
+  <!-- <ion-spinner name="dots"></ion-spinner> -->
+  <small ion-text color="light">N/A</small>
 </ng-template>

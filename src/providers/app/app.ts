@@ -32,6 +32,7 @@ export class App {
     'XPX': `https://discourse-cdn-sjc1.com/business5/uploads/safenetwork/original/2X/3/32b90ee44d17ddf9dc89c661b00effdb46302a6e.png`,
     'LYL': `https://s2.coinmarketcap.com/static/img/coins/200x200/2841.png`,
   };
+  public static USER = `${App.BASE_URL}/user.svg`
 
   constructor(public http: HttpClient) {
     console.log('Hello AppProvider Provider');

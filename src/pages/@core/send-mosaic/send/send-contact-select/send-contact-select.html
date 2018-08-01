@@ -34,11 +34,10 @@
   </ion-grid>
 
   <ion-list transparent-items *ngIf="contacts && contacts.length">
-    <ion-card [attr.selected]="selectedContact.address === contact.address" *ngFor="let contact of contacts" (click)="onSelect(contact)">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-        </ion-avatar>
+    <ion-card [attr.selected]="selectedContact.address === contact.address ? true : null" *ngFor="let contact of contacts" (click)="onSelect(contact)">
+      <ion-item text-wrap>
+        <img item-left logo-small [src]="App.USER">
+
         <h2 ion-text color="light">{{ contact.name }}</h2>
         <p small ion-text color="light">{{ contact.address }}</p>
       </ion-item>

@@ -17,7 +17,7 @@
 
 <ion-content background>
   <section text-center>
-    <img logo src="https://image.flaticon.com/icons/svg/950/950000.svg">
+    <img logo [src]="App.USER">
   </section>
 
   <ion-list transparent-items>
@@ -44,10 +44,9 @@
     </ion-card>
   </ion-list>
 
-  <h6 margin-left ion-text color="light">Activity</h6>
+  <!-- <h6 margin-left ion-text color="light">Activity</h6>
 
   <ion-list transparent-items>
-    <!-- Confirmed transfer -->
     <ion-card (click)="gotoTransactionDetail()">
       <ion-card-header>
         <p float-left ion-text color="light">
@@ -90,7 +89,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Confirmed transfer -->
     <ion-card (click)="gotoTransactionDetail()">
       <ion-card-header>
         <p float-left ion-text color="light">
@@ -133,7 +131,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Confirmed transfer -->
     <ion-card (click)="gotoTransactionDetail()">
       <ion-card-header>
         <p float-left ion-text color="light">
@@ -175,5 +172,5 @@
         </ion-item>
       </ion-card-content>
     </ion-card>
-  </ion-list>
+  </ion-list> -->
 </ion-content>

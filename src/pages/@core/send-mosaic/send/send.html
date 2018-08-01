@@ -54,9 +54,7 @@
       </ion-item>
       <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('to')">
         <ion-item>
-          <ion-avatar item-start>
-            <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-          </ion-avatar>
+          <img item-left logo-small [src]="App.USER">
           <h2 ion-text color="light">{{ form.get('recipientName').value || 'None' }}</h2>
           <p small ion-text color="light">{{ form.get('recipientAddress').value || 'Please select one' }}</p>
         </ion-item>

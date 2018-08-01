@@ -37,9 +37,7 @@
     <ion-card *ngFor="let contact of contacts" (click)="onSelect(contact)" (press)="onPress(contact)">
       <ion-item-sliding>
         <ion-item>
-          <ion-avatar item-start>
-            <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-          </ion-avatar>
+          <img item-left logo-small [src]="App.USER">
           <h2 ion-text color="light">{{ contact.name }}</h2>
           <p small ion-text color="light">{{ contact.address }}</p>
           <ion-icon item-end ion-text color="light" name="information-circle"></ion-icon>

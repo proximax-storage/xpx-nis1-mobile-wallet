@@ -77,7 +77,7 @@ export class SendMosaicConfirmationPage {
             this.alertProvider.showMessage(
               `You have successfully sent ${
                 this.data.amount
-              }${this.data.mosaic.mosaicId.name.toUpperCase()} to ${
+              } ${this.data.mosaic.mosaicId.name.toUpperCase()} to ${
                 this.data.recipientName || this.data.recipientAddress
               }`
             );

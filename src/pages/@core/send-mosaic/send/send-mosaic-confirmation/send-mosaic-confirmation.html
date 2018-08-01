@@ -78,9 +78,7 @@
           </h6>
           <ion-card>
             <ion-item>
-              <ion-avatar item-start>
-                <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-              </ion-avatar>
+              <img item-left logo-small [src]="App.USER">
               <h2 ion-text color="light" *ngIf="data.senderName">{{ data.senderName }}</h2>
               <p small ion-text color="light" [attr.text-wrap]="!data.senderName ? true : null">{{ data.senderAddress }}</p>
             </ion-item>
@@ -92,9 +90,8 @@
           </h6>
           <ion-card>
             <ion-item>
-              <ion-avatar item-start>
-                <img src="https://image.flaticon.com/icons/svg/950/950000.svg">
-              </ion-avatar>
+              <img item-left logo-small [src]="App.USER">
+
               <h2 ion-text color="light" *ngIf="data.recipientName">{{ data.recipientName }}</h2>
               <p small ion-text color="light" [attr.text-wrap]="!data.recipientName ? true : null">{{ data.recipientAddress }}</p>
             </ion-item>

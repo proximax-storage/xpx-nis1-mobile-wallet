@@ -52,7 +52,7 @@ export class NemProvider {
   constructor() {
     NEMLibrary.bootstrap(NetworkTypes.TEST_NET);
 
-    if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
+    if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
       this.accountHttp = new AccountHttp(SERVER_CONFIG);
       this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
       this.transactionHttp = new TransactionHttp(SERVER_CONFIG);

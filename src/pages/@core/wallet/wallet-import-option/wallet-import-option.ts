@@ -65,21 +65,21 @@ export class WalletImportOptionPage {
         value: WalletImportOption.PRIVATE_KEY
       },
       {
-        name: 'Import from Nano wallet',
+        name: 'Import from nanoWallet',
         value: WalletImportOption.NANO_WALLET,
-        icon: 'key',
-        prompt: 'Scan QR from Nano wallet'
+        icon: 'barcode',
+        prompt: 'Scan QR from nanoWallet'
       },
       {
-        name: 'Import from NEM mobile wallet (iOS & android)',
+        name: 'Import from NEM Mobile Wallet',
         value: WalletImportOption.NEM_MOBILE_WALLET,
-        icon: 'key',
-        prompt: 'Scan QR from NEM mobile wallet'
+        icon: 'barcode',
+        prompt: 'Scan QR from NEM Mobile Wallet'
       },
       {
         name: 'Import from NEMPay',
         value: WalletImportOption.NEM_PAY,
-        icon: 'key',
+        icon: 'barcode',
         prompt: 'Scan QR from NEMPay'
       }
       // {

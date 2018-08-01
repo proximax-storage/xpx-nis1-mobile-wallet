@@ -4,6 +4,9 @@ import { SimpleWallet } from 'nem-library';
 
 import { App } from './../../../../providers/app/app';
 import { WalletBackupProvider } from '../../../../providers/wallet-backup/wallet-backup';
+import { SocialSharing } from '../../../../../node_modules/@ionic-native/social-sharing';
+import { AuthProvider } from '../../../../providers/auth/auth';
+import { NemProvider } from '../../../../providers/nem/nem';
 /**
  * Generated class for the WalletBackupPage page.
  *
@@ -13,7 +16,7 @@ import { WalletBackupProvider } from '../../../../providers/wallet-backup/wallet
 
 export enum WalletBackupType {
   EXPORT_AS_FILE = 0,
-  GOOGLE_DRIVE = 1,
+  SHARE = 1,
   COPY_TO_CLIPBOARD = 2
 }
 
@@ -35,7 +38,10 @@ export class WalletBackupPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private authProvider: AuthProvider,
     private walletBackupProvider: WalletBackupProvider,
+    private nemProvider: NemProvider,
+    private socialSharing: SocialSharing
   ) {
     this.init();
   }
@@ -53,17 +59,17 @@ export class WalletBackupPage {
       {
         name: 'Export as file',
         value: WalletBackupType.EXPORT_AS_FILE,
-        icon: 'folder',
-      },
-      {
-        name: 'Save to google drive',
-        value: WalletBackupType.GOOGLE_DRIVE,
-        icon: 'cloud-upload',
+        icon: 'folder'
       },
       {
         name: 'Copy to clipboard',
         value: WalletBackupType.COPY_TO_CLIPBOARD,
-        icon: 'copy',
+        icon: 'copy'
+      },
+      {
+        name: 'Share',
+        value: WalletBackupType.SHARE,
+        icon: 'share'
       }
     ];
   }
@@ -75,24 +81,38 @@ export class WalletBackupPage {
   }
 
   goHome() {
-    this.navCtrl.setRoot('TabsPage', {}, {
-      animate: true,
-      direction: 'forward'
-    });
+    this.navCtrl.setRoot(
+      'TabsPage',
+      {},
+      {
+        animate: true,
+        direction: 'forward'
+      }
+    );
   }
 
   onSubmit() {
-    const WALLET: SimpleWallet = <SimpleWallet> this.navParams.data;
+    const WALLET: SimpleWallet = <SimpleWallet>this.navParams.data;
 
     if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
       // TODO: export as .wlt file
       this.walletBackupProvider.saveAsFile(WALLET).then(_ => {
         this.goHome();
       });
-    } else if (this.selectedOption === WalletBackupType.GOOGLE_DRIVE) {
+    } else if (this.selectedOption === WalletBackupType.SHARE) {
       // TODO: save to Google drive
-      this.walletBackupProvider.saveToGoogleDrive(WALLET).then(_ => {
-        this.goHome();
+      this.authProvider.getPassword().then(password => {
+        const privateKey = this.nemProvider.passwordToPrivateKey(
+          password,
+          WALLET
+        );
+
+        this.socialSharing.share(
+          privateKey,
+          null,
+          null,
+          null
+        );
       });
     } else if (this.selectedOption === WalletBackupType.COPY_TO_CLIPBOARD) {
       // TODO: copy to clipbboard

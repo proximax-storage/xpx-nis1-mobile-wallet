@@ -36,31 +36,27 @@ import { FilePickerProvider } from '../providers/file-picker/file-picker';
 import { WalletBackupProvider } from '../providers/wallet-backup/wallet-backup';
 import { CoingeckoProvider } from '../providers/coingecko/coingecko';
 import { PipesModule } from '../pipes/pipes.module';
+import { CoinPriceChartProvider } from '../providers/coin-price-chart/coin-price-chart';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    HomePage,
-  ],
+  declarations: [MyApp, AboutPage, HomePage],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__nem_wallet',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
     ComponentsModule,
     PipesModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AboutPage,
-    HomePage,
-  ],
+  entryComponents: [MyApp, AboutPage, HomePage],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
 
     StatusBar,
     SplashScreen,
@@ -87,6 +83,7 @@ import { PipesModule } from '../pipes/pipes.module';
     FilePickerProvider,
     WalletBackupProvider,
     CoingeckoProvider,
+    CoinPriceChartProvider
   ]
 })
 export class AppModule {}
