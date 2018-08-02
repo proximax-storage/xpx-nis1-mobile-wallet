@@ -50,7 +50,7 @@ export class WalletAddOptionPage {
           'A simple wallet enables you to do a “single-signature transactions,” it requires only one signature of the owner before transaction is executed.'
       },
       {
-        name: 'Create multisigsimple wallet',
+        name: 'Create multisig wallet',
         value: WalletAddOption.SHARED,
         icon: 'ios-people-outline',
         description:
