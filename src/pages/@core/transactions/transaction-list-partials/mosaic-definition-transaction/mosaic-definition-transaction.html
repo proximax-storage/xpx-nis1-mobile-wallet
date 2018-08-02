@@ -17,10 +17,10 @@
     </p>
 
     <section text-right item-right>
-      <h2 ion-text color="danger">- {{ tx.fee | formatXEM }} </h2>
+      <h2 ion-text color="danger">- {{ (tx.creationFee + tx.fee) | formatXEM }} </h2>
       <p text-right text-left ion-text color="light">
         <small>
-          {{ (tx.fee * 0.158542) | currency }}
+          {{ (tx.creationFee + tx.fee) | formatXEM | currency }}
         </small>
       </p>
     </section>
@@ -41,19 +41,10 @@
         <ion-icon name="checkmark"></ion-icon>
       </button>
 
-      <p ion-text color="light" *ngIf="tx.supplyType == 1">
+      <p ion-text color="light">
         <small>
-          Increase supply to
-          <br>
-          <b ion-text color="trinary">{{ tx.delta | number: '1.2' }}</b>
-        </small>
-      </p>
-
-      <p ion-text color="light" *ngIf="tx.supplyType == 2">
-        <small>
-          Decrease supply to
-          <br>
-          <b ion-text color="danger">{{ tx.delta | number: '1.2' }}</b>
+          Created mosaic
+          <br> {{ tx.mosaicDefinition.id.namespaceId }}:<b ion-text color="trinary">{{ tx.mosaicDefinition.id.name }}</b>
         </small>
       </p>
     </section>

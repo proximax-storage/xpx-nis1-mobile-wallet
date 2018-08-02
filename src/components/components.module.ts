@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { PinComponent } from './pin/pin';
 @NgModule({
-  declarations: [PinComponent],
+  declarations: [
+    PinComponent
+  ],
   imports: [IonicModule],
-  exports: [PinComponent]
+  exports: [
+    PinComponent
+  ]
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

@@ -20,7 +20,7 @@
       <h2 ion-text color="danger">-{{ (tx.fee + tx.rentalFee) | formatXEM }}</h2>
       <p text-right text-left ion-text color="light">
         <small>
-          ${{ ((tx.fee + tx.rentalFee) * 0.158542) | currency }}
+          {{ (tx.fee + tx.rentalFee) | formatXEM | currency }}
         </small>
       </p>
     </section>

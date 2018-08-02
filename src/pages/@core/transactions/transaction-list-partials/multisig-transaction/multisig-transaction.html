@@ -27,7 +27,7 @@
 
       <p text-right text-left ion-text color="light">
         <small>
-          {{ amount * 0.158542 | currency }}
+          {{ amount | currency }}
         </small>
       </p>
     </section>
@@ -67,11 +67,11 @@
 <ion-card-content line no-padding>
   <ion-item>
     <h3 text-wrap ion-text color="light">
-      {{ tx.signer.address.pretty() }}
+      {{ tx.signer.address.value | searchContact: tx.signer.address.value | async }}
     </h3>
     <p ion-text color="light">
-      <small *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">Sender</small>
-      <small *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">Receiver</small>
+      <small *ngIf="owner?.plain() !== tx?.otherTransaction?.recipient.plain()">Sender</small>
+      <small *ngIf="owner?.plain() === tx?.otherTransaction?.recipient.plain()">Receiver</small>
     </p>
 
     <!-- Confirmed transfer -->

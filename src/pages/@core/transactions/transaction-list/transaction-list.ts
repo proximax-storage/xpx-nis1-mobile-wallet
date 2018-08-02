@@ -94,7 +94,7 @@ export class TransactionListPage {
   }
 
   gotoTransactionDetail(tx) {
-    this.navCtrl.push('TransactionDetailPage', JSON.stringify(tx));
+    this.navCtrl.push('TransactionDetailPage', tx);
   }
 
   loadMore() {

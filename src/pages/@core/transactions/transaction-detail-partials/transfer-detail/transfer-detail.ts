@@ -7,13 +7,21 @@ import { Address, MosaicTransferable } from 'nem-library';
 import { NemProvider } from '../../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../../providers/wallet/wallet';
 import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
+import { App } from '../../../../../providers/app/app';
 
+/**
+ * Generated class for the TransferDetailComponent component.
+ *
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
+ */
 @Component({
-  selector: 'transfer-transaction',
-  templateUrl: 'transfer-transaction.html'
+  selector: 'transfer-detail',
+  templateUrl: 'transfer-detail.html'
 })
-export class TransferTransactionComponent {
+export class TransferDetailComponent {
   @Input() tx: any;
+  App = App;
 
   owner: Address;
   amount: number;
@@ -58,8 +66,11 @@ export class TransferTransactionComponent {
   }
 
   ngOnInit() {
+    this._setOwner();
     this._getAmount();
     this._getMosaics();
-    this._setOwner();
+
+    console.log(this.tx);
+
   }
 }
