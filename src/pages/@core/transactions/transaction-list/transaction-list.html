@@ -40,7 +40,7 @@
 
   <ion-list transparent-items>
 
-    <ion-card *ngFor="let transaction of transactions; trackBy: trackByHash">
+    <ion-card *ngFor="let transaction of transactions; trackBy: trackByHash" (click)="gotoTransactionDetail(transaction)">
       <!-- if importance transfer -->
       <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER" [tx]="transaction"></importance-transfer-transaction>
 

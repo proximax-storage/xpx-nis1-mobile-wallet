@@ -17,11 +17,15 @@
     </p>
 
     <section item-right>
-      <h2 text-right ion-text color="trinary" *ngIf="owner?.plain() == tx?.recipient.plain()">
+      <h2 text-right ion-text color="light" *ngIf="amount == 0">
+        0
+      </h2>
+
+      <h2 text-right ion-text color="trinary" *ngIf="owner?.plain() == tx?.recipient.plain() && amount !== 0">
         + {{ amount | number: '1.2-16' }}
       </h2>
 
-      <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.recipient.plain()">
+      <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.recipient.plain() && amount !== 0">
         - {{ amount | number: '1.2-16' }}
       </h2>
 
