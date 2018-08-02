@@ -74,9 +74,7 @@ export class SendPage {
           });
 
         // Set sender address to currenWallet.address
-        this.form
-          .get('senderName')
-          .setValue(this.currentWallet.name);
+        this.form.get('senderName').setValue(this.currentWallet.name);
         this.form
           .get('senderAddress')
           .setValue(this.currentWallet.address.plain());
@@ -155,6 +153,10 @@ export class SendPage {
           this.selectedMosaic = data;
           this.inputOptions.suffix =
             ' ' + this.selectedMosaic.mosaicId.name.toUpperCase();
+
+          if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
+            this.form.get('isMosaicTransfer').setValue(true);
+          }
         }
       });
   }
@@ -174,9 +176,18 @@ export class SendPage {
   private _prepareTx(recipient: Address): TransferTransaction {
     let transferTransaction: TransferTransaction;
     if (this.form.get('isMosaicTransfer').value) {
+      const MOSAIC_TRANSFERRABLE = [
+        new MosaicTransferable(
+          this.selectedMosaic.mosaicId,
+          this.selectedMosaic.properties,
+          this.form.get('amount').value,
+          this.selectedMosaic.levy
+        )
+      ];
+
       transferTransaction = this.nemProvider.prepareMosaicTransaction(
         recipient,
-        [this.selectedMosaic],
+        MOSAIC_TRANSFERRABLE,
         this.form.get('message').value
       );
     } else {
@@ -188,6 +199,8 @@ export class SendPage {
 
       this.form.get('fee').setValue(transferTransaction.fee);
     }
+
+    console.log('transferTransaction', transferTransaction);
 
     return transferTransaction;
   }
@@ -203,19 +216,13 @@ export class SendPage {
       !this.form.get('recipientAddress').value
     ) {
       if (this.addressSourceType.to === 'contact') {
-        this.alertProvider.showMessage(
-          'Please select a recipient first.'
-        );
+        this.alertProvider.showMessage('Please select a recipient first.');
       } else {
         this.alertProvider.showMessage(
-          'Please type the recipient\'s address NEM address first.'
+          "Please type the recipient's address NEM address first."
         );
       }
       return;
-    }
-
-    if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
-      this.form.get('isMosaicTransfer').setValue(true);
     }
 
     try {

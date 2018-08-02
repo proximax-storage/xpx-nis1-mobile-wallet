@@ -37,6 +37,7 @@ import { WalletBackupProvider } from '../providers/wallet-backup/wallet-backup';
 import { CoingeckoProvider } from '../providers/coingecko/coingecko';
 import { PipesModule } from '../pipes/pipes.module';
 import { CoinPriceChartProvider } from '../providers/coin-price-chart/coin-price-chart';
+import { DecimalPipe } from '../../node_modules/@angular/common';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -68,6 +69,8 @@ import { CoinPriceChartProvider } from '../providers/coin-price-chart/coin-price
     FileChooser,
     FilePath,
     File,
+
+    DecimalPipe,
 
     App,
     AuthProvider,

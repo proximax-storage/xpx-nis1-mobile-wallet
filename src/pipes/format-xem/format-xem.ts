@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { XEM } from 'nem-library';
-
-import { NemProvider } from '../../providers/nem/nem';
 
 /**
  * Generated class for the FormatXemPipe pipe.
@@ -12,9 +11,9 @@ import { NemProvider } from '../../providers/nem/nem';
   name: 'formatXEM'
 })
 export class FormatXemPipe implements PipeTransform {
-  constructor(public nem: NemProvider) {}
+  constructor(public decimalPipe: DecimalPipe) {}
 
   transform(xem: number): any {
-    return xem / Math.pow(10, XEM.DIVISIBILITY);
+    return this.decimalPipe.transform(xem, `2-${XEM.DIVISIBILITY}`);
   }
 }
