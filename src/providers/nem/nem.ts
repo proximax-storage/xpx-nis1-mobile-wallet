@@ -341,7 +341,7 @@ export class NemProvider {
   public getAllTransactions(
     address: Address
   ): Observable<Transaction[]> {
-    return this.accountHttp.allTransactionsPaginated(address, {
+    return this.accountHttp.allTransactions(address, {
       pageSize: 25
     });
   }

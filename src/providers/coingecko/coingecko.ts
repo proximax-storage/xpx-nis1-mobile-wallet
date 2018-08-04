@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
+import * as moment from 'moment';
+
 /*
   Generated class for the CoingeckoProvider provider.
 
@@ -28,6 +31,7 @@ export class CoingeckoProvider {
     return this.http.get(`${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`)
       .map((data: any) => {
         data.prices = data.prices.map(price => {
+          price[0] = moment(price[0]).format('MMM DD, YYYY hh:mm:a');
           price[1] = parseFloat(price[1].toFixed(4));
           return price;
         });

@@ -35,9 +35,11 @@ export class TransactionListPage {
     public navParams: NavParams,
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
+    this.transactions = null;
+
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(
@@ -49,7 +51,6 @@ export class TransactionListPage {
           }
         );
       } else {
-        this.transactions = null;
         this.currentWallet = currentWallet;
 
         this.fakeList = [{}, {}];
@@ -59,22 +60,25 @@ export class TransactionListPage {
         );
 
         Observable.zip(
-          this.nemProvider.getUnconfirmedTransactions(
-            this.currentWallet.address
-          ),
-          this.pageable
-        ).subscribe(([unconfirmedTransactions, confirmedTransactions]) => {
-          this.hasTransactions = confirmedTransactions.length ? true : false;
-
+          this.nemProvider
+            .getAllTransactions(this.currentWallet.address)
+            .flatMap(_ => _)
+            .toArray(),
+          this.nemProvider
+            .getUnconfirmedTransactions(this.currentWallet.address)
+            .flatMap(_ => _)
+            .toArray()
+        ).subscribe(([confirmedTransactions, unconfirmedTransactions]) => {
           if (this.transactions) {
             this.transactions.push(...confirmedTransactions);
           } else if (confirmedTransactions.length) {
             this.transactions = [...unconfirmedTransactions, ...confirmedTransactions];
           }
 
+          if (!this.transactions) {
+            this.transactions = [];
+          }
         });
-
-        if(!this.transactions) this.transactions = [];
       }
     });
   }
@@ -98,6 +102,7 @@ export class TransactionListPage {
   }
 
   loadMore() {
+    if (!this.hasTransactions) return;
     this.pageable.nextPage();
   }
 }
