@@ -165,8 +165,10 @@ export class SendPage {
     this.utils
       .showInsetModal('SendContactSelectPage', { title: title })
       .subscribe(data => {
-        this.form.get('recipientName').setValue(data.name);
-        this.form.get('recipientAddress').setValue(data.address);
+        if(data != undefined || data != null) {
+          this.form.get('recipientName').setValue(data.name);
+          this.form.get('recipientAddress').setValue(data.address);
+        }
       });
   }
 
