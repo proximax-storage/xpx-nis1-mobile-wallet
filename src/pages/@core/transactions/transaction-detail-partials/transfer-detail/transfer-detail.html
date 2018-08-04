@@ -1,0 +1,180 @@
+<!-- XEM -->
+<ion-card *ngIf="tx.containsMosaics && !tx.containsMosaics()">
+  <ion-card-content no-padding>
+    <ion-item>
+      <img logo-small item-left [src]="App.LOGO.NEM">
+      <h2 ion-text color="light">XEM</h2>
+      <p ion-text color="light">
+        <small>
+          NEM
+        </small>
+      </p>
+
+      <section item-right>
+        <h2 text-right ion-text color="light" *ngIf="amount == 0">
+          0
+        </h2>
+
+        <h2 text-right ion-text color="trinary" *ngIf="owner?.plain() == tx?.recipient.value && amount !== 0">
+          + {{ amount | number: '1.2-16' }}
+        </h2>
+
+        <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.recipient.value && amount !== 0">
+          - {{ amount | number: '1.2-16' }}
+        </h2>
+
+        <p text-right text-left ion-text color="light" *ngIf="amount">
+          <small>
+            {{ amount | currency }}
+          </small>
+        </p>
+      </section>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./XEM -->
+
+<!-- Mosaic/s -->
+<ion-card *ngFor="let mosaic of mosaics">
+  <ion-item>
+    <img logo-small item-left [src]="utils.getLogo(mosaic)">
+    <h2 ion-text text-uppercase color="light">{{ mosaic.mosaicId.name }}</h2>
+    <p ion-text color="light">
+      <small>
+        {{ mosaic.mosaicId.namespaceId }}
+      </small>
+    </p>
+
+    <section item-right>
+      <h2 text-right ion-text color="trinary" [hidden]="!mosaics" *ngIf="owner?.plain() == tx?.recipient.value">
+        + {{ mosaic.amount?.toString() | number: '1.2-16' }}
+      </h2>
+
+      <h2 text-right ion-text color="danger" [hidden]="!mosaics" *ngIf="owner?.plain() != tx?.recipient.value">
+        - {{ mosaic.amount?.toString() | number: '1.2-16' }}
+      </h2>
+
+      <p text-right text-left ion-text color="light">
+        <small *ngIf="mosaic.mosaicId.name === 'xpx'; else otherMosaic">
+          {{ mosaic.amount * 0.00837014 | currency }}
+        </small>
+
+        <small *ngIf="mosaic.mosaicId.name === 'lyl'; else otherMosaic">
+          {{ mosaic.amount * 0.00436937 | currency }}
+        </small>
+
+        <ng-template #otherMosaic>
+          {{ mosaic.amount * 0.00436937 | currency }}
+        </ng-template>
+      </p>
+    </section>
+  </ion-item>
+</ion-card>
+<!-- ./Mosaic/s -->
+
+<!-- Date -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">Date</h2>
+
+      <p text-wrap ion-text color="light">
+        {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
+      </p>
+
+      <p item-right>
+        {{ tx.timeWindow.timeStamp.toString() | timeago }}
+      </p>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Date -->
+
+<!-- Sender -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">
+        Sender
+      </h2>
+
+      <p text-wrap> {{ tx?.signer.address.value | nemAddressPretty | searchContact: tx?.signer.address.value | async }}</p>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Sender -->
+
+<!-- Receiver -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">
+        Receiver
+      </h2>
+
+      <p text-wrap> {{ tx?.recipient.value | nemAddressPretty | searchContact: tx?.recipient.value | async }}</p>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Receiver -->
+
+<!-- Fee -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">Fee</h2>
+
+      <p text-wrap ion-text color="light">
+        {{ tx.fee | formatXEM }} XEM
+      </p>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Fee -->
+
+<!-- Block -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">Block</h2>
+
+      <p text-wrap ion-text color="light">
+        {{ tx?.transactionInfo?.height | number }}
+      </p>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Block -->
+
+<!-- Hash -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">Hash</h2>
+
+      <p text-wrap>
+        {{ tx?.transactionInfo?.hash?.data }}
+      </p>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Hash -->
+
+<!-- Message -->
+<ion-card>
+  <ion-card-content no-padding>
+    <ion-item>
+      <h2 ion-text color="light">Message</h2>
+
+      <p text-wrap ion-text color="light" *ngIf="tx.message.payload; else noMessage">
+        {{ tx.message.payload }}
+      </p>
+      <ng-template #noMessage>
+        <p ion-text color="light">
+          No message
+        </p>
+      </ng-template>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+<!-- ./Message -->

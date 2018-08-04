@@ -1,12 +1,7 @@
-import { NavParams } from 'ionic-angular';
+import { NavParams, IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
 
-import { Address, MosaicTransferable } from 'nem-library';
-
-import { NemProvider } from '../../../../providers/nem/nem';
-import { WalletProvider } from '../../../../providers/wallet/wallet';
-import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
-import { App } from '../../../../providers/app/app';
+import { TransactionTypes } from 'nem-library';
 
 /**
  * Generated class for the TransactionDetailPage page.
@@ -21,60 +16,10 @@ import { App } from '../../../../providers/app/app';
   templateUrl: 'transaction-detail.html'
 })
 export class TransactionDetailPage {
-  App = App;
+  TransactionTypes = TransactionTypes;
   tx: any;
 
-  owner: Address;
-  amount: number;
-  mosaics: MosaicTransferable[];
-  hasLevy: boolean;
-
-  private _getAmount() {
-    try {
-      this.amount = this.tx.xem().amount;
-    } catch (e) {
-      this.amount = 0;
-    }
-  }
-
-  private _getMosaics() {
-    try {
-      this.nemProvider
-        .getMosaicsDefinition(this.tx.mosaics())
-        .subscribe(mosaics => {
-          this.mosaics = mosaics;
-          this.hasLevy = this.mosaics.filter(mosaic => mosaic.levy).length
-            ? true
-            : false;
-        });
-    } catch (e) {
-      this.mosaics = [];
-    }
-  }
-
-  private _setOwner() {
-    this.wallet.getSelectedWallet().then(wallet => {
-      this.owner = wallet.address;
-    });
-  }
-
-  constructor(
-    private navParams: NavParams,
-    private nemProvider: NemProvider,
-    private wallet: WalletProvider,
-    public utils: UtilitiesProvider
-  ) {
-    this.hasLevy = false;
-    this.amount = 0;
-    this.mosaics = [];
-  }
-
-  ngOnInit() {
-    this.tx = JSON.parse(this.navParams.data);
-
-
-    this._getAmount();
-    this._getMosaics();
-    this._setOwner();
+  constructor(private navParams: NavParams) {
+    this.tx = this.navParams.data;
   }
 }

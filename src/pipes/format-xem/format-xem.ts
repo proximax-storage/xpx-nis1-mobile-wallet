@@ -14,6 +14,7 @@ export class FormatXemPipe implements PipeTransform {
   constructor(public decimalPipe: DecimalPipe) {}
 
   transform(xem: number): any {
-    return this.decimalPipe.transform(xem, `2-${XEM.DIVISIBILITY}`);
+    const XEM_AMOUNT = xem / Math.pow(10, XEM.DIVISIBILITY);
+    return this.decimalPipe.transform(XEM_AMOUNT, `1.2-${XEM.DIVISIBILITY}`);
   }
 }

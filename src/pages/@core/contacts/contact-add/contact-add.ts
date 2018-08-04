@@ -59,12 +59,14 @@ export class ContactAddPage {
 
   onSubmit(form) {
     const CONTACT_ADDRESS = new Address(this.formGroup.get('address').value);
+    const DATA = form;
     if (!this.nemProvider.isValidAddress(CONTACT_ADDRESS)) {
       this.alertProvider.showMessage(
         'Sorry, it looks like this NEM address does not belong to this network. Please try again.'
       );
     } else {
-      this.contactsProvider.push(form).then(_ => {
+      DATA.address = CONTACT_ADDRESS.plain();
+      this.contactsProvider.push(DATA).then(_ => {
         this.gotoHome();
       });
     }

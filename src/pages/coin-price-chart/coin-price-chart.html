@@ -7,8 +7,10 @@
 <ion-header no-border>
 
   <ion-navbar transparent>
-    <ion-title>
-      <span ion-text color="light">Coin price</span>
+    <ion-title *ngIf="selectedCoin">
+      <span text-uppercase ion-text color="light">
+        {{ selectedCoin.name }} ({{ selectedCoin.symbol }})
+      </span>
     </ion-title>
   </ion-navbar>
 
@@ -16,6 +18,16 @@
 
 
 <ion-content background>
+  <section text-center>
+    <h1 price ion-text color="light" *ngIf="selectedCoin">{{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-4' }}</h1>
+    <button gradient-button tiny width-auto no-margin
+      [attr.color-1]="selectedCoin.market_data.market_cap_change_percentage_24h > 0 ? true : null"
+      [attr.color-4]="selectedCoin.market_data.market_cap_change_percentage_24h < 0 ? true : null"
+      *ngIf="selectedCoin">
+      {{ selectedCoin.market_data.market_cap_change_percentage_24h | number: '1.1-1' }}%
+    </button>
+  </section>
+
   <section id="container"></section>
 
   <ion-grid normal>
@@ -29,72 +41,86 @@
     </ion-row>
   </ion-grid>
 
+  <ion-grid normal>
+    <ion-row>
+      <ion-col text-center col-6>
+        <button full gradient-button color-1 no-margin>
+          Buy
+        </button>
+      </ion-col>
+      <ion-col text-center col-6>
+        <button full gradient-button color-1 no-margin>
+          Sell
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
   <ion-list transparent-items>
-    <h2 margin-left ion-text color="light">Details</h2>
+    <h2 margin-left ion-text color="light">About</h2>
+    <ion-card (click)="readMore(selectedCoin.description['en'].length)">
+      <ion-item>
+        <h2 text-wrap text-justify *ngIf="selectedCoin; else loading">{{ selectedCoin.description['en'] | ngXtruncate: descriptionLength : '...' }}</h2>
+      </ion-item>
+    </ion-card>
+
+    <h2 margin-left ion-text color="light">Stats</h2>
 
     <ion-card>
       <ion-item>
-        <h2 *ngIf="selectedCoin; else loading">{{ selectedCoin.name }}</h2>
-        <p>Name</p>
+        <p item-left ion-text color="grey">Current Price</p>
+        <button item-right gradient-button color-1 no-margin tiny width-auto *ngIf="selectedCoin; else loading">
+          {{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-4' }}
+        </button>
       </ion-item>
     </ion-card>
 
     <ion-card>
       <ion-item>
-        <h2 text-uppercase *ngIf="selectedCoin; else loading">{{ selectedCoin.symbol }}</h2>
-        <p>Symbol</p>
+        <p item-left ion-text color="grey">Market rank</p>
+        <button item-right gradient-button color-1 no-margin tiny *ngIf="selectedCoin; else loading">
+          #{{ selectedCoin.market_cap_rank }}
+        </button>
       </ion-item>
     </ion-card>
 
     <ion-card>
       <ion-item>
-        <h2 *ngIf="selectedCoin; else loading"># {{ selectedCoin.market_cap_rank }}</h2>
-        <p>Market rank</p>
+        <p item-left ion-text color="grey">Highest price in 24 hours</p>
+        <button item-right gradient-button color-1 no-margin tiny width-auto *ngIf="selectedCoin; else loading">
+          {{ selectedCoin.market_data.high_24h.usd | currency: 'USD': 'symbol': '1.2-4' }}
+        </button>
       </ion-item>
     </ion-card>
 
     <ion-card>
       <ion-item>
-        <h2 *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.current_price.usd | currency }}
+        <p item-left ion-text color="grey">Lowest price in 24 hours</p>
+        <button item-right gradient-button color-4 no-margin tiny width-auto *ngIf="selectedCoin; else loading">
+          {{ selectedCoin.market_data.low_24h.usd | currency: 'USD': 'symbol': '1.2-4' }}
+        </button>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-item>
+        <p item-left ion-text color="grey">Market Cap</p>
+        <h2 item-right *ngIf="selectedCoin; else loading">
+          ${{ selectedCoin.market_data.market_cap.usd | shortNum }}
         </h2>
-        <p>Current Price</p>
       </ion-item>
     </ion-card>
 
     <ion-card>
-      <ion-item>
-        <h2 *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.market_cap.usd | currency }}
+      <ion-item tooltip="Total supply is the number of coins in existence." positionV="top" arrow>
+        <p ion-text color="grey">Circulating supply</p>
+        <h2 item-right *ngIf="selectedCoin; else loading">
+          {{ selectedCoin.market_data.circulating_supply | shortNum }}
+          <span text-uppercase>
+            {{ selectedCoin.symbol }}
+          </span>
         </h2>
-        <p>Market Cap</p>
-      </ion-item>
-    </ion-card>
-
-    <ion-card>
-      <ion-item>
-        <h2 *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.high_24h.usd | currency }}
-        </h2>
-        <p>Highest price in 24 hours</p>
-      </ion-item>
-    </ion-card>
-
-    <ion-card>
-      <ion-item>
-        <h2 *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.low_24h.usd | currency }}
-        </h2>
-        <p>Lowest price in 24 hours</p>
-      </ion-item>
-    </ion-card>
-
-    <ion-card>
-      <ion-item>
-        <h2 *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.circulating_supply | currency }}
-        </h2>
-        <p>Circulating supply</p>
       </ion-item>
     </ion-card>
   </ion-list>

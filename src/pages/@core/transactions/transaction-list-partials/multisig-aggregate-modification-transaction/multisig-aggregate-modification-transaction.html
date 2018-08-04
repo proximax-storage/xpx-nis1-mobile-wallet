@@ -17,10 +17,10 @@
     </p>
 
     <section text-right item-right>
-      <h2 ion-text color="danger">- {{ tx.fee | formatXEM | number: '1.2-16' }} </h2>
+      <h2 ion-text color="danger">- {{ tx.fee | formatXEM }} </h2>
       <p text-right text-left ion-text color="light">
         <small>
-          {{ (tx.fee * 0.158542) | currency }}
+          {{ tx.fee | formatXEM | currency }}
         </small>
       </p>
     </section>

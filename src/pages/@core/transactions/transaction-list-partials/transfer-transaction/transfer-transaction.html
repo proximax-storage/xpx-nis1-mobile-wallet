@@ -1,14 +1,14 @@
 <ion-card-header>
   <p float-left ion-text color="light">
-    {{ tx.otherTransaction.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
+    {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
   </p>
   <p float-right ion-text color="light">
-    {{ tx.otherTransaction.timeWindow.timeStamp.toString() | timeago }}
+    {{ tx.timeWindow.timeStamp.toString() | timeago }}
   </p>
 </ion-card-header>
-<ion-card-header *ngIf="tx.otherTransaction.containsMosaics && !tx.otherTransaction.containsMosaics()">
+<ion-card-header *ngIf="tx.containsMosaics && !tx.containsMosaics()">
   <ion-item>
-    <img logo-small item-left [src]="utils.getLogo(tx.otherTransaction.xem())">
+    <img logo-small item-left [src]="utils.getLogo(tx.xem())">
     <h2 ion-text color="light">XEM</h2>
     <p ion-text color="light">
       <small>
@@ -17,17 +17,21 @@
     </p>
 
     <section item-right>
-      <h2 text-right ion-text color="trinary" *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">
+      <h2 text-right ion-text color="light" *ngIf="amount == 0">
+        0
+      </h2>
+
+      <h2 text-right ion-text color="trinary" *ngIf="owner?.plain() == tx?.recipient.value && amount !== 0">
         + {{ amount | number: '1.2-16' }}
       </h2>
 
-      <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">
+      <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.recipient.value && amount !== 0">
         - {{ amount | number: '1.2-16' }}
       </h2>
 
       <p text-right text-left ion-text color="light">
         <small>
-          {{ amount * 0.158542 | currency }}
+          {{ amount | currency }}
         </small>
       </p>
     </section>
@@ -44,11 +48,11 @@
     </p>
 
     <section item-right>
-      <h2 text-right ion-text color="trinary" [hidden]="!mosaics" *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">
+      <h2 text-right ion-text color="trinary" [hidden]="!mosaics" *ngIf="owner?.plain() == tx?.recipient.value">
         + {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
 
-      <h2 text-right ion-text color="danger" [hidden]="!mosaics" *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">
+      <h2 text-right ion-text color="danger" [hidden]="!mosaics" *ngIf="owner?.plain() != tx?.recipient.value">
         - {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
 
@@ -60,18 +64,29 @@
         <small *ngIf="mosaic.mosaicId.name === 'lyl'">
           {{ mosaic.amount * 0.00436937 | currency }}
         </small>
+
+        <small *ngIf="mosaic.mosaicId.name !== 'xpx' || mosaic.mosaicId.name !== 'lyl'">
+          {{ mosaic.amount * 0.00436937 | currency }}
+        </small>
       </p>
     </section>
   </ion-item>
 </ion-card-header>
 <ion-card-content line no-padding>
   <ion-item>
-    <h3 text-wrap ion-text color="light">
-      {{ tx.signer.address.pretty() }}
-    </h3>
+    <section *ngIf="tx.signer">
+      <h3 text-wrap ion-text color="light" *ngIf="(tx?.signer.address.pretty() | searchContact: tx?.signer.address.value | async) as contact; else loading">
+        {{ contact }}
+      </h3>
+
+      <ng-template #loading>
+        <ion-spinner name="dots"></ion-spinner>
+      </ng-template>
+    </section>
+
     <p ion-text color="light">
-      <small *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">Sender</small>
-      <small *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">Receiver</small>
+      <small *ngIf="owner?.plain() === tx?.recipient.value">Sender</small>
+      <small *ngIf="owner?.plain() !== tx?.recipient.value">Receiver</small>
     </p>
 
     <!-- Confirmed transfer -->
@@ -83,7 +98,7 @@
       <p ion-text color="light">
         <small>
           Confirmed
-          <br> Multisign Transfer
+          <br> Transfer
         </small>
       </p>
     </section>
@@ -97,7 +112,7 @@
       <p ion-text color="light">
         <small>
           Unconfirmed
-          <br> Multisign Transfer
+          <br> Transfer
         </small>
       </p>
     </section>

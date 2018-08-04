@@ -232,25 +232,24 @@ export class CoinPriceChartProvider {
 
   private initChart(data, from_coin, to_coin) {
     HighCharts.chart('container', {
+      credits: {
+        enabled: false
+      },
       chart: {
-        zoomType: 'x'
+        margin: 0,
+        zoomType: 'x',
       },
       title: {
-        text: `${from_coin} to ${to_coin} exchange rate over time`
+        text: null
       },
       subtitle: {
-        text:
-          document.ontouchstart === undefined
-            ? 'Click and drag in the plot area to zoom in'
-            : 'Pinch the chart to zoom in'
+        text: null
       },
       xAxis: {
-        type: 'datetime'
+        visible: false
       },
       yAxis: {
-        title: {
-          text: 'Rate (USD)'
-        }
+        visible: false
       },
       legend: {
         enabled: false
@@ -303,6 +302,7 @@ export class CoinPriceChartProvider {
     this.coingeckoProvider
       .getPrices(coin.id, to_coin, duration)
       .subscribe(data => {
+        console.log(data);
         this.initChart(data, coin.symbol, to_coin);
       });
   }

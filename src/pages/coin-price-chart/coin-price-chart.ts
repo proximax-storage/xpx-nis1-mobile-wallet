@@ -20,6 +20,8 @@ export class CoinPriceChartPage {
   selectedDuration: { label: string; value: number };
   selectedCoin: any;
 
+  descriptionLength: number = 450;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -53,5 +55,9 @@ export class CoinPriceChartPage {
       this.selectedDuration.value,
       'usd'
     );
+  }
+
+  readMore(descriptionLength) {
+    this.descriptionLength = descriptionLength === this.descriptionLength ? 450 : descriptionLength;
   }
 }

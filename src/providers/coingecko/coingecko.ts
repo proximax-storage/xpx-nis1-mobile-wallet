@@ -16,16 +16,23 @@ export class CoingeckoProvider {
     console.log('Hello CoingeckoProvider Provider');
   }
 
-  getAll() : Observable<any> {
+  getAll(): Observable<any> {
     return this.http.get(`${this.url}/coins`);
   }
 
-  getDetails(coin_id: string) : Observable<any> {
+  getDetails(coin_id: string): Observable<any> {
     return this.http.get(`${this.url}/coins/${coin_id}`);
   }
 
-  getPrices(coin_id: string, currency: string, days: number) : Observable<any> {
-    return this.http.get(`${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`);
+  getPrices(coin_id: string, currency: string, days: number): Observable<any> {
+    return this.http.get(`${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`)
+      .map((data: any) => {
+        data.prices = data.prices.map(price => {
+          price[1] = parseFloat(price[1].toFixed(4));
+          return price;
+        });
+        return data;
+      });
   }
 
 }

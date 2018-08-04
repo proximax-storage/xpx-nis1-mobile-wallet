@@ -17,10 +17,10 @@
     </p>
 
     <section text-right item-right>
-      <h2 ion-text color="danger">- {{ (tx.creationFee + tx.fee) | formatXEM }} </h2>
+      <h2 ion-text color="danger">-{{ (tx.fee + tx.rentalFee) | formatXEM }}</h2>
       <p text-right text-left ion-text color="light">
         <small>
-          {{ ((tx.creationFee + tx.fee) * 0.158542) | currency }}
+          {{ (tx.fee + tx.rentalFee) | formatXEM | currency }}
         </small>
       </p>
     </section>
@@ -37,14 +37,26 @@
     </p>
 
     <section text-right item-right>
-      <button gradient-button pill color-1>
+      <button gradient-button pill color-1 *ngIf="tx.isConfirmed()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
+      <button gradient-button pill color-11 *ngIf="!tx.isConfirmed()">
+        <ion-icon name="ios-more"></ion-icon>
+      </button>
 
-      <p ion-text color="light">
+      <p ion-text color="light" *ngIf="!tx.parent">
         <small>
-          Created mosaic
-          <br> {{ tx.mosaicDefinition.id.namespaceId }}:<b ion-text color="trinary">{{ tx.mosaicDefinition.id.name }}</b>
+          Created
+          <br> namespace
+          <b ion-text color="trinary">{{ tx.newPart }}</b>
+        </small>
+      </p>
+
+      <p ion-text color="light" *ngIf="tx.parent">
+        <small>
+          Created subnamespace
+          <br> {{ tx.parent }}.
+          <b ion-text color="trinary">{{ tx.newPart }}</b>
         </small>
       </p>
     </section>
