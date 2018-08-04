@@ -7,20 +7,23 @@ import { GetWalletTypePipe } from './get-wallet-type/get-wallet-type';
 import { SearchContactPipe } from './search-contact/search-contact';
 import { GetMarketPricePipe } from './get-market-price/get-market-price';
 import { NemAddressPrettyPipe } from './nem-address-pretty/nem-address-pretty';
+import { ShortNumPipe } from './short-num/short-num';
 @NgModule({
   declarations: [FormatXemPipe, FormatMosaicPipe, FormatLevyPipe,
     TimeagoPipe,
     GetWalletTypePipe,
     SearchContactPipe,
     GetMarketPricePipe,
-    NemAddressPrettyPipe],
+    NemAddressPrettyPipe,
+    ShortNumPipe],
   imports: [],
   exports: [FormatXemPipe, FormatMosaicPipe, FormatLevyPipe,
     TimeagoPipe,
     GetWalletTypePipe,
     SearchContactPipe,
     GetMarketPricePipe,
-    NemAddressPrettyPipe],
+    NemAddressPrettyPipe,
+    ShortNumPipe],
   providers: [FormatXemPipe, FormatMosaicPipe, FormatLevyPipe]
 })
 export class PipesModule {}
