@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ModalController, Platform, App, ViewController } from 'ionic-angular';
+import { ModalController, Platform, App, ViewController, NavController } from 'ionic-angular';
 import { MosaicTransferable } from 'nem-library';
 
 import { App as AppConfig } from './../app/app';
@@ -23,9 +23,9 @@ export class UtilitiesProvider {
     console.log('Hello UtilitiesProvider Provider');
   }
 
-  setHardwareBack(page?: string) {
+  setHardwareBack(nav?: NavController) {
     return this.platform.registerBackButtonAction(() => {
-      if (page) this.app.getRootNav().pop();
+      if (nav) nav.pop();
     }, 0);
   }
 

@@ -1,7 +1,8 @@
-import { NavParams, IonicPage } from 'ionic-angular';
+import { NavParams, IonicPage, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 
 import { TransactionTypes } from 'nem-library';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the TransactionDetailPage page.
@@ -19,7 +20,11 @@ export class TransactionDetailPage {
   TransactionTypes = TransactionTypes;
   tx: any;
 
-  constructor(private navParams: NavParams) {
+  constructor(private navParams: NavParams, private navCtrl: NavController, private utils: UtilitiesProvider) {
     this.tx = this.navParams.data;
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 }

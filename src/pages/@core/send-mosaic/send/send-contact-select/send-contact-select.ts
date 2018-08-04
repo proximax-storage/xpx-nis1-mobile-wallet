@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { App } from '../../../../../providers/app/app';
 import { ContactsProvider } from '../../../../../providers/contacts/contacts';
-import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 import { BarcodeScannerProvider } from '../../../../../providers/barcode-scanner/barcode-scanner';
 
 /**

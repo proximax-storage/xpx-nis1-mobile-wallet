@@ -22,12 +22,6 @@
         <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.recipient.value && amount !== 0">
           - {{ amount | number: '1.2-16' }}
         </h2>
-
-        <p text-right text-left ion-text color="light" *ngIf="amount">
-          <small>
-            {{ amount | currency }}
-          </small>
-        </p>
       </section>
     </ion-item>
   </ion-card-content>
