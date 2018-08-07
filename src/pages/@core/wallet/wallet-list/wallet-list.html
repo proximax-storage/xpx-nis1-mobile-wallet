@@ -92,12 +92,14 @@
       </ion-item>
     </ion-card>
   </ion-list>
+
+  <section spacing></section>
 </ion-content>
 
 <ion-footer no-border *ngIf="wallets && wallets.length">
-  <ion-toolbar transparent text-center>
+  <ion-navbar transparent text-center [hideBackButton]="true">
     <button gradient-button circle color-1 (click)="showAddWalletPrompt()">
       <ion-icon name="md-add"></ion-icon>
     </button>
-  </ion-toolbar>
+  </ion-navbar>
 </ion-footer>
