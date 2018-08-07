@@ -4,6 +4,7 @@ import { MosaicTransferable } from 'nem-library';
 
 import { App as AppConfig } from './../app/app';
 import { Observable } from 'rxjs/Observable';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the UtilitiesProvider provider.
@@ -19,6 +20,7 @@ export class UtilitiesProvider {
     private app: App,
     private modalCtrl: ModalController,
     private platform: Platform,
+    private storage: Storage,
     private events: Events,
   ) {
     console.log('Hello UtilitiesProvider Provider');
@@ -90,7 +92,10 @@ export class UtilitiesProvider {
       enableBackdropDismiss: false,
       showBackdrop: true
     });
-    modal.present();
+
+    this.storage.set('isModalShown', true).then(() => {
+      modal.present();
+    });
 
     return new Observable(observer => {
       modal.onDidDismiss(data => {

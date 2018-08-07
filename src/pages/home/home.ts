@@ -64,14 +64,7 @@ export class HomePage {
   }
 
   gotoWalletList() {
-    this.app.getActiveNavs()[0].setRoot(
-      'WalletListPage',
-      {},
-      {
-        animate: true,
-        direction: 'backward'
-      }
-    );
+    this.utils.setRoot('WalletListPage');
   }
 
   gotoCoinPrice(mosaic) {

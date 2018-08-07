@@ -44,7 +44,7 @@ export class MyApp {
   initGetRoot() {
     return Promise.all([
       this.storage.get('isFirstAppOpen'),
-      this.storage.get('isLoggedIn')
+      this.storage.get('isLoggedIn'),
     ]).then(results => {
       const isFirstAppOpen = results[0] === null ? true : !!results[0];
       const isLoggedIn = results[1];
@@ -63,10 +63,11 @@ export class MyApp {
     this.platform.pause.subscribe(() => {
       Promise.all([
         this.storage.get('pin'),
-        this.storage.get('isAppPaused')
+        this.storage.get('isAppPaused'),
       ]).then(results => {
         const pin = results[0];
         const isLocked = results[1] ? false : true;
+
         if (pin) this.storage.set('isLocked', isLocked);
       });
     });
@@ -80,17 +81,20 @@ export class MyApp {
     Promise.all([
       this.storage.get('pin'),
       this.storage.get('isLoggedIn'),
-      this.storage.get('isAppPaused')
+      this.storage.get('isAppPaused'),
+      this.storage.get('isModalShown'),
     ]).then(results => {
       const pin = results[0];
       const isLoggedIn = results[1];
       const isAppPaused = results[2];
+      const isModalShown = results[3];
 
       if (isAppPaused) {
         return this.storage.set('isAppPaused', false);
       } else if (
         this.rootPage !== 'OnboardingPage' &&
         this.rootPage !== 'WelcomePage' &&
+        !isModalShown &&
         isLoggedIn &&
         pin
       ) {

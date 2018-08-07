@@ -32,12 +32,12 @@ export class VerificationCodePage {
     public storage: Storage,
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
     console.log('VerificationCodePage :: ionViewWillEnter',
       !this.navParams.data.destination &&
-        this.navParams.data.status === 'verify'
+      this.navParams.data.status === 'verify'
     );
 
     if (
@@ -82,6 +82,8 @@ export class VerificationCodePage {
       this.navParams.data.pin === pin
     ) {
       return this.storage.set('pin', pin).then(_ => {
+        return this.storage.set('isModalShown', false);
+      }).then(_ => {
         if (this.navParams.data.destination) {
           return this.navCtrl.setRoot(this.navParams.data.destination, data, {
             animate: true,
