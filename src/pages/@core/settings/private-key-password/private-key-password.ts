@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { AuthProvider } from '../../../../providers/auth/auth';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the PrivateKeyPasswordPage page.
@@ -27,6 +28,7 @@ export class PrivateKeyPasswordPage {
     public formBuilder: FormBuilder,
     public authProvider: AuthProvider,
     public alertProvider: AlertProvider,
+    public utils: UtilitiesProvider,
   ) {
     this.init();
   }
@@ -44,6 +46,10 @@ export class PrivateKeyPasswordPage {
     this.formGroup = this.formBuilder.group({
       password: ['', [Validators.required]]
     });
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

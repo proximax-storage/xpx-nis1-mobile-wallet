@@ -11,6 +11,7 @@ import {
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
 import { BarcodeScannerProvider } from './../../../../providers/barcode-scanner/barcode-scanner';
 import { App } from './../../../../providers/app/app';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the ContactListPage page.
@@ -47,7 +48,8 @@ export class ContactListPage {
     private contactsProvider: ContactsProvider,
     private actionSheetCtrl: ActionSheetController,
     private platform: Platform,
-    private barcodeScannerProvider: BarcodeScannerProvider
+    private barcodeScannerProvider: BarcodeScannerProvider,
+    private utils: UtilitiesProvider,
   ) {}
 
   ionViewWillEnter() {
@@ -59,6 +61,8 @@ export class ContactListPage {
   }
 
   init() {
+    this.utils.setTabIndex(0);
+
     this.contactsProvider.getAll().then(contacts => {
       this.contacts = contacts;
       this.selectedContact = this.contacts[0];

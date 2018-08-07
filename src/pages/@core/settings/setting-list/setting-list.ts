@@ -34,25 +34,20 @@ export class SettingListPage {
     private utils: UtilitiesProvider,
   ) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingListPage');
-  }
-
   ionViewWillEnter() {
+    this.utils.setTabIndex(0);
+
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
-        this.navCtrl.setRoot(
-          'WalletListPage',
-          {},
-          {
-            animate: true,
-            direction: 'backward'
-          }
-        );
+        this.utils.setRoot('WalletListPage')
       } else {
         this.currentWallet = currentWallet;
       }
     });
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SettingListPage');
   }
 
   goto(page) {

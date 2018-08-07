@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
 import { AuthProvider } from '../../../../providers/auth/auth';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the ContactDeletePage page.
@@ -30,10 +31,15 @@ export class ContactDeletePage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     private contactProvider: ContactsProvider,
-    private authProvider: AuthProvider
+    private authProvider: AuthProvider,
+    private utils: UtilitiesProvider,
   ) {
     this.contact = this.navParams.get('contact');
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

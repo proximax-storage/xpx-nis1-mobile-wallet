@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the ContactDetailPage page.
@@ -24,8 +25,12 @@ export class ContactDetailPage {
     telegram: string;
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public utils: UtilitiesProvider) {
     this.selectedContact = this.navParams.data;
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

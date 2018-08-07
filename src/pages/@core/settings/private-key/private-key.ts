@@ -8,6 +8,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { NemProvider } from './../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { ToastProvider } from '../../../../providers/toast/toast';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the PrivateKeyPage page.
@@ -35,12 +36,15 @@ export class PrivateKeyPage {
     private nemProvider: NemProvider,
     private clipboard: Clipboard,
     private socialSharing: SocialSharing,
-    private toastProvider: ToastProvider
+    private toastProvider: ToastProvider,
+    private utils: UtilitiesProvider,
   ) {
     this.password = this.navParams.data;
   }
 
   ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
+
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(
@@ -69,6 +73,10 @@ export class PrivateKeyPage {
     console.log('ionViewDidLoad PrivateKeyPage');
   }
 
+  ionViewWillLeave() {
+    this.navCtrl.popToRoot();
+  }
+
   copy() {
     this.clipboard.copy(this.privateKey).then(_ => {
       this.toastProvider.show('Copied private key successfully', 3, true);
@@ -83,6 +91,6 @@ export class PrivateKeyPage {
         null,
         null
       )
-      .then(_ => {});
+      .then(_ => { });
   }
 }

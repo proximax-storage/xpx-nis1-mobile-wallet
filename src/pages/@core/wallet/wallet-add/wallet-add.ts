@@ -7,6 +7,7 @@ import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../providers/alert/alert';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the WalletAddPage page.
@@ -24,7 +25,7 @@ export class WalletAddPage {
   App = App;
   formGroup: FormGroup;
 
-  PASSWORD : string;
+  PASSWORD: string;
 
   constructor(
     public navCtrl: NavController,
@@ -34,8 +35,13 @@ export class WalletAddPage {
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
     private alertProvider: AlertProvider,
+    private utils: UtilitiesProvider,
   ) {
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

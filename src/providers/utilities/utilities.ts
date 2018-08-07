@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ModalController, Platform, App, ViewController, NavController } from 'ionic-angular';
+import { ModalController, Platform, ViewController, NavController, App, Events } from 'ionic-angular';
 import { MosaicTransferable } from 'nem-library';
 
 import { App as AppConfig } from './../app/app';
@@ -18,9 +18,16 @@ export class UtilitiesProvider {
   constructor(
     private app: App,
     private modalCtrl: ModalController,
-    private platform: Platform
+    private platform: Platform,
+    private events: Events,
   ) {
     console.log('Hello UtilitiesProvider Provider');
+  }
+
+  setTabIndex(index) {
+    return this.platform.registerBackButtonAction(() => {
+      this.events.publish('tab:back', index);
+    }, 0);
   }
 
   setHardwareBack(nav?: NavController) {
@@ -29,10 +36,23 @@ export class UtilitiesProvider {
     }, 0);
   }
 
+  setHardwareBackToPage(page: string) {
+    return this.platform.registerBackButtonAction(() => {
+      this.setRoot(page);
+    }, 0);
+  }
+
   setHardwareBackModal(viewCtrl: ViewController) {
     return this.platform.registerBackButtonAction(() => {
       viewCtrl.dismiss();
     }, 0);
+  }
+
+  setRoot(page: string, data = {}) {
+    this.app.getRootNavs()[0].setRoot(page, data, {
+      animate: true,
+      direction: 'backward'
+    });
   }
 
   /**

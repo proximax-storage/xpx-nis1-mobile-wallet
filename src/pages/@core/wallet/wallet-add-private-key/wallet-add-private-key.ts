@@ -7,6 +7,7 @@ import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../providers/alert/alert';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 /**
  * Generated class for the WalletAddPrivateKeyPage page.
  *
@@ -32,9 +33,14 @@ export class WalletAddPrivateKeyPage {
     private alertProvider: AlertProvider,
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
-    private authProvider: AuthProvider
+    private authProvider: AuthProvider,
+    private utils: UtilitiesProvider,
   ) {
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack();
   }
 
   ionViewDidLoad() {

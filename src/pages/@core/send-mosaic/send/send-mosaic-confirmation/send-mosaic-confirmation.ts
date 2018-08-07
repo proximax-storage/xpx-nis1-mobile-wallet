@@ -43,6 +43,10 @@ export class SendMosaicConfirmationPage {
     this.init();
   }
 
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletDeletePage');
   }
@@ -86,9 +90,10 @@ export class SendMosaicConfirmationPage {
                 this.data.recipientName || this.data.recipientAddress
               }`
             );
+            this.utils.setTabIndex(2);
             this.navCtrl.setRoot(
               'TabsPage',
-              { tabIndex: 2 },
+              {},
               {
                 animate: true,
                 direction: 'backward'

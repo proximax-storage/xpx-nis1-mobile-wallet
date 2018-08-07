@@ -10,6 +10,7 @@ import {
 
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { NemProvider } from './../../../../providers/nem/nem';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the WalletAddPasswordConfirmationPage page.
@@ -33,7 +34,8 @@ export class WalletAddPasswordConfirmationPage {
     public formBuilder: FormBuilder,
     public alertProvider: AlertProvider,
     public authProvider: AuthProvider,
-    public nemProvider: NemProvider
+    public nemProvider: NemProvider,
+    public utils: UtilitiesProvider,
   ) {
     this.init();
   }
@@ -51,6 +53,10 @@ export class WalletAddPasswordConfirmationPage {
     this.formGroup = this.formBuilder.group({
       password: ['', [Validators.required]]
     });
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {
@@ -73,14 +79,14 @@ export class WalletAddPasswordConfirmationPage {
     if (form.password === this.credentials.password) {
       if (this.navParams.data.address) {
         const wallet: SimpleWallet = <SimpleWallet>this.navParams.data;
-        QRWallet = <QRWalletText> JSON.parse(
+        QRWallet = <QRWalletText>JSON.parse(
           this.nemProvider.generateWalletQRText(
             this.credentials.password,
             wallet
           )
         );
       } else {
-        QRWallet = <QRWalletText> this.navParams.data;
+        QRWallet = <QRWalletText>this.navParams.data;
       }
 
       const privateKey = this.nemProvider.decryptPrivateKey(

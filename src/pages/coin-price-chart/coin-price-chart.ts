@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CoinPriceChartProvider } from '../../providers/coin-price-chart/coin-price-chart';
 import { CoingeckoProvider } from '../../providers/coingecko/coingecko';
+import { UtilitiesProvider } from '../../providers/utilities/utilities';
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -26,7 +27,8 @@ export class CoinPriceChartPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public coingeckoProvider: CoingeckoProvider,
-    public coinPriceChartProvider: CoinPriceChartProvider
+    public coinPriceChartProvider: CoinPriceChartProvider,
+    public utils: UtilitiesProvider,
   ) {
     this.durations = [
       { label: '1D', value: 1 },
@@ -42,6 +44,10 @@ export class CoinPriceChartPage {
       this.selectedCoin = coin;
       this.select(this.selectedDuration);
     });
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

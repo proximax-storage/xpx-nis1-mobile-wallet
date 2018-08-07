@@ -7,6 +7,7 @@ import { WalletBackupProvider } from '../../../../providers/wallet-backup/wallet
 import { SocialSharing } from '../../../../../node_modules/@ionic-native/social-sharing';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { NemProvider } from '../../../../providers/nem/nem';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 /**
  * Generated class for the WalletBackupPage page.
  *
@@ -41,13 +42,16 @@ export class WalletBackupPage {
     private authProvider: AuthProvider,
     private walletBackupProvider: WalletBackupProvider,
     private nemProvider: NemProvider,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private utils: UtilitiesProvider,
   ) {
     this.init();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletBackupPage');
+
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLeave() {

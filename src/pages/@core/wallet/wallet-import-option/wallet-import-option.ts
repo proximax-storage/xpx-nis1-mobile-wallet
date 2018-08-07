@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 
 import { BarcodeScannerProvider } from '../../../../providers/barcode-scanner/barcode-scanner';
 import { FilePickerProvider } from '../../../../providers/file-picker/file-picker';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the WalletImportOptionPage page.
@@ -48,9 +49,14 @@ export class WalletImportOptionPage {
     public platform: Platform,
     public storage: Storage,
     private filePickerProvider: FilePickerProvider,
-    private barcodeScannerProvider: BarcodeScannerProvider
+    private barcodeScannerProvider: BarcodeScannerProvider,
+    private utils: UtilitiesProvider,
   ) {
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

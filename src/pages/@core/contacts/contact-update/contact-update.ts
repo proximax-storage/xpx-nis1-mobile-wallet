@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the ContactUpdatePage page.
@@ -26,13 +27,15 @@ export class ContactUpdatePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public contactsProvider: ContactsProvider
+    public contactsProvider: ContactsProvider,
+    public utils: UtilitiesProvider,
   ) {
     this.init();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactUpdatePage');
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   init() {

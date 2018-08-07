@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, App } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -16,7 +16,6 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private platform: Platform,
     private storage: Storage,
-    private app: App,
     private utils: UtilitiesProvider
   ) {
     platform.ready().then(() => {
@@ -62,8 +61,6 @@ export class MyApp {
 
   initOnPauseResume() {
     this.platform.pause.subscribe(() => {
-      console.log(this.app.getActiveNav());
-
       Promise.all([
         this.storage.get('pin'),
         this.storage.get('isAppPaused')

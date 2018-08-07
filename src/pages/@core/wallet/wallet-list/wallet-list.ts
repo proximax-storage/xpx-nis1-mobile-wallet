@@ -16,6 +16,7 @@ import { WalletProvider } from './../../../../providers/wallet/wallet';
 
 import sortBy from 'lodash/sortBy';
 import { AuthProvider } from '../../../../providers/auth/auth';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the WalletListPage page.
@@ -51,6 +52,7 @@ export class WalletListPage {
     public authProvider: AuthProvider,
     public walletProvider: WalletProvider,
     public storage: Storage,
+    public utils: UtilitiesProvider,
   ) {}
 
   ionViewDidLoad() {
@@ -58,6 +60,8 @@ export class WalletListPage {
   }
 
   ionViewWillEnter() {
+    this.utils.setHardwareBack();
+
     this.storage.get('showWalletsHint').then(val => {
       this.showWalletsHint = val === null ? true : val;
     });

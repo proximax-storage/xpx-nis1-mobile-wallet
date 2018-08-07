@@ -48,12 +48,14 @@ export class SendPage {
     public getBalanceProvider: GetBalanceProvider,
     public walletProvider: WalletProvider,
     public utils: UtilitiesProvider,
-    public alertProvider: AlertProvider
+    public alertProvider: AlertProvider,
   ) {
     this.init();
   }
 
   ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
+
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(

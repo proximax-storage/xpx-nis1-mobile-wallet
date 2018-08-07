@@ -34,7 +34,10 @@ export class HomePage {
   ) {
     this.fakeList = [{}, {}];
   }
+
   ionViewWillEnter() {
+    this.utils.setHardwareBackToPage('WalletListPage');
+
     this.walletProvider.getSelectedWallet().then(wallet => {
       if (!wallet) this.navCtrl.setRoot('WalletListPage');
       else {
@@ -61,7 +64,7 @@ export class HomePage {
   }
 
   gotoWalletList() {
-    this.app.getRootNav().setRoot(
+    this.app.getActiveNavs()[0].setRoot(
       'WalletListPage',
       {},
       {

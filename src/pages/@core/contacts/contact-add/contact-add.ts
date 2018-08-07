@@ -8,6 +8,7 @@ import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { AlertProvider } from '../../../../providers/alert/alert';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the ContactAddPage page.
@@ -32,9 +33,14 @@ export class ContactAddPage {
     public formBuilder: FormBuilder,
     public nemProvider: NemProvider,
     public alertProvider: AlertProvider,
-    public contactsProvider: ContactsProvider
+    public contactsProvider: ContactsProvider,
+    public utils: UtilitiesProvider,
   ) {
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {

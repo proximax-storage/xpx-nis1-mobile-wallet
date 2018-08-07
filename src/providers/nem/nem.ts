@@ -50,7 +50,7 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET);
+    NEMLibrary.bootstrap(NetworkTypes.TEST_NET);
 
     if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
       this.accountHttp = new AccountHttp(SERVER_CONFIG);
@@ -343,6 +343,19 @@ export class NemProvider {
   ): Observable<Transaction[]> {
     return this.accountHttp.allTransactions(address, {
       pageSize: 25
+    });
+  }
+
+  /**
+   * Get all confirmed transactions of an account paginated
+   * @param address account Address
+   * @return Promise with account transactions
+   */
+  public getAllTransactionsPaginated(
+    address: Address
+  ): Observable<Transaction[]> {
+    return this.accountHttp.allTransactionsPaginated(address, {
+      pageSize: 50
     });
   }
 

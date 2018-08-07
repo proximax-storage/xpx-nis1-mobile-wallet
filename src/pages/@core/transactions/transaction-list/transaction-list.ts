@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
+import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 /**
  * Generated class for the TransactionListPage page.
@@ -34,11 +35,14 @@ export class TransactionListPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private nemProvider: NemProvider,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private utils: UtilitiesProvider,
   ) { }
 
   ionViewWillEnter() {
     this.transactions = null;
+
+    this.utils.setTabIndex(0);
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {

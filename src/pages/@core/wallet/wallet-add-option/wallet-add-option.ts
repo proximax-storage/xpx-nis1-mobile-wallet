@@ -36,6 +36,10 @@ export class WalletAddOptionPage {
     this.init();
   }
 
+  ionViewWillEnter() {
+    this.utils.setHardwareBack(this.navCtrl);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletAddOptionPage');
   }
