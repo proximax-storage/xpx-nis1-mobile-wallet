@@ -11,12 +11,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { Device } from '@ionic-native/device';
-import { Clipboard } from '@ionic-native/clipboard';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
+import { Clipboard } from '@ionic-native/clipboard';
 
 import { App } from '../providers/app/app';
 import { ComponentsModule } from '../components/components.module';
@@ -72,6 +72,7 @@ import { AppState } from '../providers/app-state/app-state';
     FileChooser,
     FilePath,
     File,
+    Clipboard,
 
     DecimalPipe,
 

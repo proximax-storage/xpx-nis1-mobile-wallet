@@ -23,10 +23,23 @@ export class ToastProvider {
   ) {
     const DURATION = duration * 1000;
 
+    if (this.toast) {
+      this.toast.dismiss().then(_ => {
+        this.toast = null;
+
+        this.showToast(message, DURATION, showCloseButton, closeButtonText);
+      });
+    }
+
+    this.showToast(message, DURATION, showCloseButton, closeButtonText);
+  }
+
+  private showToast(message: string, duration: number, showCloseButton: boolean, closeButtonText: string) {
     if (!this.toast) {
       this.toast = this.toastCtrl.create({
+        cssClass: 'toast-small',
         message: message,
-        duration: DURATION,
+        duration: duration,
         showCloseButton: showCloseButton,
         position: 'top',
         closeButtonText: showCloseButton ? closeButtonText : 'Ok'

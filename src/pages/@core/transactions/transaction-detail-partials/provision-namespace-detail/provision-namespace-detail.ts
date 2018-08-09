@@ -2,6 +2,7 @@
 
 import { Component, Input } from '@angular/core';
 import { App } from '../../../../../providers/app/app';
+import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 
 @Component({
   selector: 'provision-namespace-detail',
@@ -10,4 +11,6 @@ import { App } from '../../../../../providers/app/app';
 export class ProvisionNamespaceDetailComponent {
   @Input() tx: any;
   App = App;
+
+  constructor(public utils: UtilitiesProvider) { }
 }

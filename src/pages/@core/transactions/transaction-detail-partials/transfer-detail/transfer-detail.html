@@ -49,17 +49,17 @@
       </h2>
 
       <p text-right text-left ion-text color="light">
-        <small *ngIf="mosaic.mosaicId.name === 'xpx'; else otherMosaic">
+        <small *ngIf="mosaic.mosaicId.name === 'xpx';">
           {{ mosaic.amount * 0.00837014 | currency }}
         </small>
 
-        <small *ngIf="mosaic.mosaicId.name === 'lyl'; else otherMosaic">
+        <small *ngIf="mosaic.mosaicId.name === 'lyl';">
           {{ mosaic.amount * 0.00436937 | currency }}
         </small>
 
-        <ng-template #otherMosaic>
+        <small *ngIf="mosaic.mosaicId.name !== 'lyl' || mosaic.mosaicId.name === 'xpx'">
           {{ mosaic.amount * 0.00436937 | currency }}
-        </ng-template>
+        </small>
       </p>
     </section>
   </ion-item>
@@ -85,7 +85,7 @@
 <!-- ./Date -->
 
 <!-- Sender -->
-<ion-card>
+<ion-card (click)="utils.copy(tx?.signer.address.value, 'sender')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">
@@ -99,7 +99,7 @@
 <!-- ./Sender -->
 
 <!-- Receiver -->
-<ion-card>
+<ion-card (click)="utils.copy(tx?.recipient.value, 'receiver')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">
@@ -141,7 +141,7 @@
 <!-- ./Block -->
 
 <!-- Hash -->
-<ion-card>
+<ion-card (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">Hash</h2>
@@ -155,15 +155,20 @@
 <!-- ./Hash -->
 
 <!-- Message -->
-<ion-card>
+<ion-card (click)="utils.copy(tx.message.payload, 'message')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">Message</h2>
 
       <p text-wrap ion-text color="light" *ngIf="tx.message.payload; else noMessage">
         {{ tx.message.payload }}
+
+        <span ion-text color="light" *ngIf="tx.message.isEncrypted()">
+          Encypted
+        </span>
       </p>
       <ng-template #noMessage>
+
         <p ion-text color="light">
           No message
         </p>

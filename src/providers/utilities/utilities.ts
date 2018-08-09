@@ -5,6 +5,8 @@ import { MosaicTransferable } from 'nem-library';
 import { App as AppConfig } from './../app/app';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
+import { Clipboard } from '@ionic-native/clipboard';
+import { ToastProvider } from '../toast/toast';
 
 /*
   Generated class for the UtilitiesProvider provider.
@@ -22,6 +24,8 @@ export class UtilitiesProvider {
     private platform: Platform,
     private storage: Storage,
     private events: Events,
+    private clipboard: Clipboard,
+    private toastProvider: ToastProvider,
   ) {
     console.log('Hello UtilitiesProvider Provider');
   }
@@ -54,6 +58,26 @@ export class UtilitiesProvider {
     this.app.getRootNavs()[0].setRoot(page, data, {
       animate: true,
       direction: 'backward'
+    });
+  }
+
+  copy(text: string, type: string) {
+    let message: string = '';
+
+    if (type === 'sender') {
+      message = 'Sender\'s address copied successfully';
+    } else if (type === 'receiver') {
+      message = 'Receiver\'s address copied successfully';
+    } else if (type === 'hash') {
+      message = 'Hash copied successfully';
+    } else if (type === 'message') {
+      message = 'Message copied successfully';
+    } else if (type === 'cosigner') {
+      message = 'Cosigner\'s address copied successfully';
+    }
+
+    this.clipboard.copy(text).then(_ => {
+      this.toastProvider.show(message, 3, true);
     });
   }
 

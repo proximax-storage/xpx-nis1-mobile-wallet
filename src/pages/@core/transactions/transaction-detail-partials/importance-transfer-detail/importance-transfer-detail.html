@@ -86,7 +86,7 @@
 <!-- ./Block -->
 
 <!-- Hash -->
-<ion-card>
+<ion-card (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">Hash</h2>

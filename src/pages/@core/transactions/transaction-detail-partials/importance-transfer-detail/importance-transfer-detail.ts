@@ -3,6 +3,7 @@
 import { Component, Input } from '@angular/core';
 
 import { App } from '../../../../../providers/app/app';
+import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 
 @Component({
   selector: 'importance-transfer-detail',
@@ -11,4 +12,6 @@ import { App } from '../../../../../providers/app/app';
 export class ImportanceTransferDetailComponent {
   @Input() tx: any;
   App = App;
+
+  constructor(public utils: UtilitiesProvider) {}
 }

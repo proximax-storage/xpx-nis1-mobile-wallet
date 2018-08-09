@@ -3,6 +3,7 @@
 import { Component, Input } from '@angular/core';
 
 import { App } from '../../../../../providers/app/app';
+import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 
 @Component({
   selector: 'mosaic-supply-change-detail',
@@ -11,4 +12,6 @@ import { App } from '../../../../../providers/app/app';
 export class MosaicSupplyChangeDetailComponent {
   @Input() tx: any;
   App = App;
+
+  constructor(public utils: UtilitiesProvider) {}
 }

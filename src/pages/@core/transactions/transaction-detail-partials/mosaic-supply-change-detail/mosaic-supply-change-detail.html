@@ -39,7 +39,7 @@
 </ion-card>
 <!-- ./Date -->
 
-<!-- Hash -->
+<!-- Supply change -->
 <ion-card>
   <ion-card-content no-padding>
     <ion-item>
@@ -57,10 +57,10 @@
     </ion-item>
   </ion-card-content>
 </ion-card>
-<!-- ./Hash -->
+<!-- ./Supply change -->
 
 <!-- Sender -->
-<ion-card>
+<ion-card (click)="utils.copy(tx?.signer.address.value, 'sender')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">
@@ -102,7 +102,7 @@
 <!-- ./Block -->
 
 <!-- Hash -->
-<ion-card>
+<ion-card (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">Hash</h2>

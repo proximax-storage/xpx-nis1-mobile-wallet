@@ -5,6 +5,7 @@ import { Address } from 'nem-library';
 
 import { WalletProvider } from '../../../../../providers/wallet/wallet';
 import { App } from '../../../../../providers/app/app';
+import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 
 @Component({
   selector: 'mosaic-definition-detail',
@@ -23,7 +24,7 @@ export class MosaicDefinitionDetailComponent {
     });
   }
 
-  constructor(private wallet: WalletProvider) { }
+  constructor(private wallet: WalletProvider, public utils: UtilitiesProvider) { }
 
   ngOnInit() {
     this._setOwner();
