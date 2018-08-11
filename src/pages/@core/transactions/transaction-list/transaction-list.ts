@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SimpleWallet, TransactionTypes } from 'nem-library';
-import { Observable } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, InfiniteScroll } from 'ionic-angular';
+import { SimpleWallet, TransactionTypes, Pageable, Transaction } from 'nem-library';
+import { Observable } from 'nem-library/node_modules/rxjs/Observable';
 
 import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
@@ -25,11 +25,16 @@ export class TransactionListPage {
   TransactionTypes = TransactionTypes;
 
   currentWallet: SimpleWallet;
-  transactions: Array<any>;
   fakeList: Array<any>;
+
+  unconfirmedTransactions: Array<any>;
+  confirmedTransactions: Array<any>;
   hasTransactions: boolean;
 
-  pageable: any;
+  pageable: Pageable<Transaction[]>;
+
+  @ViewChild(InfiniteScroll)
+  private infiniteScroll: InfiniteScroll;
 
   constructor(
     public navCtrl: NavController,
@@ -40,7 +45,8 @@ export class TransactionListPage {
   ) { }
 
   ionViewWillEnter() {
-    this.transactions = null;
+    this.unconfirmedTransactions = null;
+    this.confirmedTransactions = null;
 
     this.utils.setTabIndex(0);
 
@@ -59,30 +65,38 @@ export class TransactionListPage {
 
         this.fakeList = [{}, {}];
 
-        this.pageable = this.nemProvider.getAllTransactions(
+        this.pageable = this.nemProvider.getAllTransactionsPaginated(
           this.currentWallet.address
         );
 
-        Observable.zip(
-          this.nemProvider
-            .getAllTransactions(this.currentWallet.address)
-            .flatMap(_ => _)
-            .toArray(),
-          this.nemProvider
-            .getUnconfirmedTransactions(this.currentWallet.address)
-            .flatMap(_ => _)
-            .toArray()
-        ).subscribe(([confirmedTransactions, unconfirmedTransactions]) => {
-          if (this.transactions) {
-            this.transactions.push(...confirmedTransactions);
-          } else if (confirmedTransactions.length) {
-            this.transactions = [...unconfirmedTransactions, ...confirmedTransactions];
-          }
+        this.nemProvider
+          .getUnconfirmedTransactions(this.currentWallet.address)
+          .flatMap(_ => _)
+          .toArray()
+          .subscribe(result => {
+            this.unconfirmedTransactions = result;
+            this.infiniteScroll.complete();
+          });
 
-          if (!this.transactions) {
-            this.transactions = [];
-          }
-        });
+        this.pageable
+          .map((txs: any) => txs ? txs : Observable.empty())
+          .subscribe(result => {
+            if (!this.confirmedTransactions) {
+              this.confirmedTransactions = result;
+            }
+
+            if (result.length) {
+              this.hasTransactions = true;
+              this.confirmedTransactions.push(...result);
+              this.infiniteScroll.complete();
+            }
+          },
+            err => console.error(err),
+            () => {
+              this.hasTransactions = false;
+              this.infiniteScroll.complete();
+              this.infiniteScroll.enable(false);
+            });
       }
     });
   }
@@ -91,7 +105,7 @@ export class TransactionListPage {
     console.log('ionViewDidLoad TransactionListPage');
   }
 
-  // Treat the instructor name as the unique identifier for the object
+  // Track transaction by hash
   trackByHash(index, transaction) {
     // return transaction.getTransactionInfo().hash.data;
     return index;
@@ -105,8 +119,9 @@ export class TransactionListPage {
     this.navCtrl.push('TransactionDetailPage', tx);
   }
 
-  loadMore() {
+  doInfinite() {
     if (!this.hasTransactions) return;
     this.pageable.nextPage();
+    console.log('Pageable Txs: ', this.pageable);
   }
 }

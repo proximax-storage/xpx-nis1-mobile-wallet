@@ -24,12 +24,13 @@ import {
   QRWalletText,
   MosaicDefinition,
   ServerConfig,
-  ProvisionNamespaceTransaction
+  ProvisionNamespaceTransaction,
+  Pageable
 } from 'nem-library';
 
 import { Observable } from 'nem-library/node_modules/rxjs';
 
-export const SERVER_CONFIG : ServerConfig[] = [
+export const SERVER_CONFIG: ServerConfig[] = [
   { protocol: 'http', domain: '192.3.61.243', port: 7890 },
   { protocol: 'http', domain: '50.3.87.123', port: 7890 }
 ];
@@ -325,7 +326,7 @@ export class NemProvider {
               return MosaicTransferable.createWithMosaicDefinition(
                 mosaicDefinition,
                 mosaic.quantity /
-                  Math.pow(10, mosaicDefinition.properties.divisibility)
+                Math.pow(10, mosaicDefinition.properties.divisibility)
               );
             });
         }
@@ -353,9 +354,9 @@ export class NemProvider {
    */
   public getAllTransactionsPaginated(
     address: Address
-  ): Observable<Transaction[]> {
+  ): Pageable<Transaction[]> {
     return this.accountHttp.allTransactionsPaginated(address, {
-      pageSize: 50
+      pageSize: 10
     });
   }
 
@@ -365,17 +366,6 @@ export class NemProvider {
    * @return Promise with account transactions
    */
   public getUnconfirmedTransactions(
-    address: Address
-  ): Observable<Transaction[]> {
-    return this.accountHttp.unconfirmedTransactions(address);
-  }
-
-  /**
-   * Get all confirmed transactions of an account
-   * @param address account Address
-   * @return Promise with account transactions
-   */
-  public getConfirmedTransactions(
     address: Address
   ): Observable<Transaction[]> {
     return this.accountHttp.unconfirmedTransactions(address);
