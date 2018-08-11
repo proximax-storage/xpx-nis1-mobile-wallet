@@ -155,24 +155,22 @@
 <!-- ./Hash -->
 
 <!-- Message -->
-<ion-card (click)="utils.copy(tx.message.payload, 'message')">
+<ion-card (click)="utils.copy(tx.message.plain(), 'message')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="light">Message</h2>
 
-      <p text-wrap ion-text color="light" *ngIf="tx.message.payload; else noMessage">
-        {{ tx.message.payload }}
-
-        <span ion-text color="light" *ngIf="tx.message.isEncrypted()">
-          Encypted
-        </span>
+      <p text-wrap ion-text color="light" *ngIf="tx.message.isPlain()">
+        {{ tx.message.plain() }}
       </p>
-      <ng-template #noMessage>
 
-        <p ion-text color="light">
-          No message
-        </p>
-      </ng-template>
+      <p text-wrap ion-text color="light" color="light" *ngIf="tx.message.isEncrypted()">
+        Encypted
+      </p>
+
+      <p ion-text color="light" *ngIf="!tx.message.payload">
+        No message
+      </p>
     </ion-item>
   </ion-card-content>
 </ion-card>
