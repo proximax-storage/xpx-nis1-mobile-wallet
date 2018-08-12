@@ -83,6 +83,7 @@ export class TransactionListPage {
           .subscribe(result => {
             if (!this.confirmedTransactions) {
               this.confirmedTransactions = result;
+              this.infiniteScroll.enable(true);
             }
 
             if (result.length) {

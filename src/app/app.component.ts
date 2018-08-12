@@ -65,10 +65,10 @@ export class MyApp {
         this.storage.get('pin'),
         this.storage.get('isAppPaused'),
       ]).then(results => {
-        const pin = results[0];
-        const isLocked = results[1] ? false : true;
+        const pin = !!results[0];
+        const isAppPaused = !!results[1];
 
-        if (pin) this.storage.set('isLocked', isLocked);
+        if (pin) this.storage.set('isAppPaused', isAppPaused);
       });
     });
 
@@ -89,14 +89,30 @@ export class MyApp {
       const isAppPaused = results[2];
       const isModalShown = results[3];
 
+      console.log('rootPage:', this.rootPage !== 'OnboardingPage' && this.rootPage !== 'WelcomePage')
+      console.log('isModalShown:', !isModalShown)
+      console.log('isAppPaused:', !isAppPaused)
+      console.log('isLoggedIn:', isLoggedIn)
+      console.log('pin:', !!pin)
+
+      console.log('showModal:',
+        this.rootPage !== 'OnboardingPage' &&
+        this.rootPage !== 'WelcomePage' &&
+        !isModalShown &&
+        !isAppPaused &&
+        !!pin &&
+        isLoggedIn
+      )
+
       if (isAppPaused) {
         return this.storage.set('isAppPaused', false);
       } else if (
         this.rootPage !== 'OnboardingPage' &&
         this.rootPage !== 'WelcomePage' &&
         !isModalShown &&
-        isLoggedIn &&
-        pin
+        !isAppPaused &&
+        !!pin &&
+        isLoggedIn
       ) {
         return this.utils.showModal('VerificationCodePage', {
           status: 'verify',
