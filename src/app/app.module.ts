@@ -40,6 +40,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { CoinPriceChartProvider } from '../providers/coin-price-chart/coin-price-chart';
 import { DecimalPipe } from '../../node_modules/@angular/common';
 import { AppState } from '../providers/app-state/app-state';
+import { MockDataProvider } from '../providers/mock-data/mock-data';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -92,6 +93,7 @@ import { AppState } from '../providers/app-state/app-state';
     CoingeckoProvider,
     CoinPriceChartProvider,
     AppState,
+    MockDataProvider,
   ]
 })
 export class AppModule {}

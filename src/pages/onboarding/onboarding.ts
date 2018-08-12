@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { App } from '../../providers/app/app';
+import { MockDataProvider } from '../../providers/mock-data/mock-data';
 
 /**
  * Generated class for the OnboardingPage page.
@@ -31,9 +32,11 @@ export class OnboardingPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public storage: Storage
+    public storage: Storage,
+    private mockData: MockDataProvider
   ) {
     this.init();
+    this.mockData.init();
   }
 
   init() {
