@@ -36,7 +36,7 @@ export class OnboardingPage {
     private mockData: MockDataProvider
   ) {
     this.init();
-    this.mockData.init();
+    this.mockData.init(); // Uncomment to load mock data
   }
 
   init() {
