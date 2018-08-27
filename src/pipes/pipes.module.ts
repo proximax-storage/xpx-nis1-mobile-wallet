@@ -8,6 +8,7 @@ import { SearchContactPipe } from './search-contact/search-contact';
 import { GetMarketPricePipe } from './get-market-price/get-market-price';
 import { NemAddressPrettyPipe } from './nem-address-pretty/nem-address-pretty';
 import { ShortNumPipe } from './short-num/short-num';
+import { FormatImportancePipe } from './format-importance/format-importance';
 @NgModule({
   declarations: [FormatXemPipe, FormatMosaicPipe, FormatLevyPipe,
     TimeagoPipe,
@@ -15,7 +16,8 @@ import { ShortNumPipe } from './short-num/short-num';
     SearchContactPipe,
     GetMarketPricePipe,
     NemAddressPrettyPipe,
-    ShortNumPipe],
+    ShortNumPipe,
+    FormatImportancePipe],
   imports: [],
   exports: [FormatXemPipe, FormatMosaicPipe, FormatLevyPipe,
     TimeagoPipe,
@@ -23,7 +25,8 @@ import { ShortNumPipe } from './short-num/short-num';
     SearchContactPipe,
     GetMarketPricePipe,
     NemAddressPrettyPipe,
-    ShortNumPipe],
+    ShortNumPipe,
+    FormatImportancePipe],
   providers: [FormatXemPipe, FormatMosaicPipe, FormatLevyPipe]
 })
 export class PipesModule {}

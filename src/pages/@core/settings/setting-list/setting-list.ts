@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Clipboard } from '@ionic-native/clipboard';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Clipboard } from "@ionic-native/clipboard";
 
-import { SimpleWallet } from 'nem-library';
+import { SimpleWallet, AccountInfoWithMetaData } from "nem-library";
 
-import { WalletProvider } from '../../../../providers/wallet/wallet';
-import { NemProvider } from '../../../../providers/nem/nem';
-import { ToastProvider } from './../../../../providers/toast/toast';
-import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { WalletProvider } from "../../../../providers/wallet/wallet";
+import { NemProvider } from "../../../../providers/nem/nem";
+import { ToastProvider } from "./../../../../providers/toast/toast";
+import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
 
 /**
  * Generated class for the SettingListPage page.
@@ -18,11 +18,12 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
 @IonicPage()
 @Component({
-  selector: 'page-setting-list',
-  templateUrl: 'setting-list.html'
+  selector: "page-setting-list",
+  templateUrl: "setting-list.html"
 })
 export class SettingListPage {
   currentWallet: SimpleWallet;
+  accountInfo: AccountInfoWithMetaData;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +32,7 @@ export class SettingListPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
-    private utils: UtilitiesProvider,
+    private utils: UtilitiesProvider
   ) {}
 
   ionViewWillEnter() {
@@ -39,19 +40,30 @@ export class SettingListPage {
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
-        this.utils.setRoot('WalletListPage')
+        this.utils.setRoot("WalletListPage");
       } else {
         this.currentWallet = currentWallet;
       }
+
+      this.getAccountInfo();
     });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingListPage');
+    console.log("ionViewDidLoad SettingListPage");
   }
 
   goto(page) {
     this.navCtrl.push(page);
+  }
+
+  getAccountInfo() {
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        this.accountInfo = accountInfo;
+        console.log(this.accountInfo)
+      });
   }
 
   getQRCode() {
@@ -66,11 +78,11 @@ export class SettingListPage {
 
   copy(address: string) {
     this.clipboard.copy(address).then(_ => {
-      this.toastProvider.show('Copied address successfully', 3, true);
+      this.toastProvider.show("Copied address successfully", 3, true);
     });
   }
 
   showComingSoon() {
-    this.utils.showInsetModal('ComingSoonPage', {}, 'small');
+    this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
 }

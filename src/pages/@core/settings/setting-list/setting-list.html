@@ -16,12 +16,7 @@
 
 <ion-content background>
   <!-- QR code of NEM address -->
-  <ngx-kjua text-center *ngIf="currentWallet"
-    fill="#fff"
-    [label]="'Your wallet'"
-    [mSize]="100"
-    [back]="'transparent'"
-    [text]="getQRCode()">
+  <ngx-kjua text-center *ngIf="currentWallet" fill="#fff" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="getQRCode()">
   </ngx-kjua>
 
   <section text-center *ngIf="!currentWallet">
@@ -34,6 +29,33 @@
         <ion-icon item-left name="barcode"></ion-icon>
         <h2>Address</h2>
         <p text-wrap *ngIf="currentWallet">{{ currentWallet.address.pretty() }}</p>
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="accountInfo && accountInfo.publicAccount" (click)="copy(accountInfo.publicAccount.publicKey)">
+      <ion-item>
+        <ion-icon item-left name="paper"></ion-icon>
+        <h2>Public key</h2>
+        <p text-wrap *ngIf="currentWallet">{{ accountInfo.publicAccount.publicKey }}</p>
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="accountInfo" (click)="copy(accountInfo.importance)">
+      <ion-item>
+        <ion-icon item-left name="pulse"></ion-icon>
+        <h2>Importance score</h2>
+        <p text-wrap *ngIf="currentWallet">
+          {{ ((accountInfo.importance | formatImportance)[0] | number:'1.0-0') + '.' + (accountInfo.importance | formatImportance)[1] }}
+           * 10<sup>(-4)</sup>
+        </p>
+      </ion-item>
+    </ion-card>
+
+    <ion-card *ngIf="accountInfo" (click)="copy(accountInfo.balance.vestedBalance)">
+      <ion-item>
+        <ion-icon item-left name="cloud-upload"></ion-icon>
+        <h2>Vested balance</h2>
+        <p text-wrap *ngIf="currentWallet">{{ accountInfo.balance.vestedBalance | formatXEM }} XEM</p>
       </ion-item>
     </ion-card>
 

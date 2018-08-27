@@ -25,7 +25,8 @@ import {
   MosaicDefinition,
   ServerConfig,
   ProvisionNamespaceTransaction,
-  Pageable
+  Pageable,
+  AccountInfoWithMetaData
 } from 'nem-library';
 
 import { Observable } from 'nem-library/node_modules/rxjs';
@@ -126,6 +127,15 @@ export class NemProvider {
       Account.createWithPrivateKey(privateKey).address.plain() ==
       address.plain()
     );
+  }
+
+  /**
+   * Get the account info of the NEM address
+   * @param address The NEM address
+   * @return {AccountInfoWithMetaData}
+   */
+  public getAccountInfo(address: Address): Observable<AccountInfoWithMetaData> {
+    return this.accountHttp.getFromAddress(address);
   }
 
   /**
