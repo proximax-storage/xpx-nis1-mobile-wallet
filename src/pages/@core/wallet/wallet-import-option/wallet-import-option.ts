@@ -141,7 +141,7 @@ export class WalletImportOptionPage {
           // Check value based on length of properties in data.
           const hasValue = Object.keys(data).length;
 
-          console.log('barcodeScannerProvider :: data', data);
+          console.log('barcodeScannerProvider :: data', JSON.stringify(data));
 
           if (hasValue) {
             this.navCtrl.push('WalletAddPasswordConfirmationPage', data);

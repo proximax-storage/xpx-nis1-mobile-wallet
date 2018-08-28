@@ -1,5 +1,5 @@
 <!--
-  Generated template for the NamespaceListPage page.
+  Generated template for the NamespacenamespacesPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -16,7 +16,7 @@
 
 
 <ion-content fullscreen background>
-  <ion-grid empty *ngIf="list && !list.length">
+  <ion-grid empty *ngIf="namespaces && !namespaces.length">
     <ion-row>
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
@@ -33,17 +33,18 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list transparent-items radio-group [(ngModel)]="selectedData" *ngIf="selectedData && list">
-    <ion-card *ngFor="let item of list" [attr.selected]="selectedData.name === item.name ? true : null" (click)="onSelect(item)"
-      (press)="onPress(item)">
+  <ion-list transparent-items radio-group *ngIf="namespaces">
+    <ion-card *ngFor="let namespace of namespaces" [attr.selected]="selectedData.name === namespace.name ? true : null" (click)="onSelect(namespace)"
+      (press)="onPress(namespace)">
       <ion-item>
-        <h2 ion-text color="light">{{ item.name }}</h2>
+        <ion-icon item-left name="git-network"></ion-icon>
+        <h2 ion-text color="light">{{ namespace.name }}</h2>
       </ion-item>
     </ion-card>
   </ion-list>
 </ion-content>
 
-<ion-footer no-border *ngIf="list && list.length">
+<ion-footer no-border *ngIf="namespaces && namespaces.length">
   <ion-toolbar transparent text-center>
     <button gradient-button circle color-1 (click)="gotoAdd()">
       <ion-icon name="md-add"></ion-icon>

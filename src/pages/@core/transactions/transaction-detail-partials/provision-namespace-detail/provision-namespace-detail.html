@@ -51,8 +51,8 @@
       </p>
 
       <p ion-text color="light" *ngIf="tx.parent">
-        Created subnamespace {{ tx.parent }}.
-        <span ion-text color="trinary">{{ tx.newPart }}</span>
+        Created subnamespace
+        <span ion-text color="trinary">{{ tx.parent }}.{{ tx.newPart }}</span>
       </p>
     </ion-item>
   </ion-card-content>

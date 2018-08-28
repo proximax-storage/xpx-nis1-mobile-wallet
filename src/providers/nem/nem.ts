@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 import {
   NEMLibrary,
@@ -26,14 +26,15 @@ import {
   ServerConfig,
   ProvisionNamespaceTransaction,
   Pageable,
-  AccountInfoWithMetaData
-} from 'nem-library';
+  AccountInfoWithMetaData,
+  Namespace
+} from "nem-library";
 
-import { Observable } from 'nem-library/node_modules/rxjs';
+import { Observable } from "nem-library/node_modules/rxjs";
 
 export const SERVER_CONFIG: ServerConfig[] = [
-  { protocol: 'http', domain: '192.3.61.243', port: 7890 },
-  { protocol: 'http', domain: '50.3.87.123', port: 7890 }
+  { protocol: "http", domain: "192.3.61.243", port: 7890 },
+  { protocol: "http", domain: "50.3.87.123", port: 7890 }
 ];
 
 /*
@@ -52,7 +53,7 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.TEST_NET);
+    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET);
 
     if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
       this.accountHttp = new AccountHttp(SERVER_CONFIG);
@@ -136,6 +137,15 @@ export class NemProvider {
    */
   public getAccountInfo(address: Address): Observable<AccountInfoWithMetaData> {
     return this.accountHttp.getFromAddress(address);
+  }
+
+  /**
+   * Get the account info of the NEM address
+   * @param address The NEM address
+   * @return {AccountInfoWithMetaData}
+   */
+  public getNamespacesOwned(address: Address): Observable<Namespace[]> {
+    return this.accountHttp.getNamespaceOwnedByAddress(address);
   }
 
   /**
@@ -268,13 +278,30 @@ export class NemProvider {
    * @param message message
    * @return Promise containing prepared transaction
    */
-  public prepareProvisionNamespaceTransaction(
-    recipientAddress: Address,
+  public prepareNamespaceTransaction(
     namespace: string
   ): ProvisionNamespaceTransaction {
     return ProvisionNamespaceTransaction.create(
       TimeWindow.createWithDeadline(),
       namespace
+    );
+  }
+
+  /**
+   * Prepares provision namespace transaction
+   * @param recipientAddress recipientAddress
+   * @param mosaicsTransferable mosaicsTransferable
+   * @param message message
+   * @return Promise containing prepared transaction
+   */
+  public prepareSubNamespaceTransaction(
+    subNamespace: string,
+    parentNamespace: string
+  ): ProvisionNamespaceTransaction {
+    return ProvisionNamespaceTransaction.create(
+      TimeWindow.createWithDeadline(),
+      subNamespace,
+      parentNamespace
     );
   }
 
@@ -316,6 +343,23 @@ export class NemProvider {
   }
 
   /**
+   * Send transaction into the blockchain
+   * @param transferTransaction transferTransaction
+   * @param password wallet
+   * @param password password
+   * @return Promise containing sent transaction
+   */
+  public confirmNamespaceTransaction(
+    namespaceTransaction: ProvisionNamespaceTransaction,
+    wallet: SimpleWallet,
+    password: string
+  ): Observable<NemAnnounceResult> {
+    let account = wallet.open(new Password(password));
+    let signedTransaction = account.signTransaction(namespaceTransaction);
+    return this.transactionHttp.announceTransaction(signedTransaction);
+  }
+
+  /**
    * Adds to a transaction data mosaic definitions
    * @param mosaics array of mosaics
    * @return Promise with altered transaction
@@ -336,7 +380,7 @@ export class NemProvider {
               return MosaicTransferable.createWithMosaicDefinition(
                 mosaicDefinition,
                 mosaic.quantity /
-                Math.pow(10, mosaicDefinition.properties.divisibility)
+                  Math.pow(10, mosaicDefinition.properties.divisibility)
               );
             });
         }
@@ -349,9 +393,7 @@ export class NemProvider {
    * @param address account Address
    * @return Promise with account transactions
    */
-  public getAllTransactions(
-    address: Address
-  ): Observable<Transaction[]> {
+  public getAllTransactions(address: Address): Observable<Transaction[]> {
     return this.accountHttp.allTransactions(address, {
       pageSize: 25
     });

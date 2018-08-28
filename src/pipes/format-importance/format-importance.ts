@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 import nem from "nem-sdk";
 
 /**
@@ -14,12 +14,6 @@ export class FormatImportancePipe implements PipeTransform {
    * Takes an importance score and makes it formatted importance score at 10^-4
    */
   transform(value: string, ...args) {
-    const result = nem.utils.format.nemImportanceScore(value);
-
-    console.log(result);
-    console.log(result[0]);
-    console.log(result[1]);
-
-    return result;
+    return nem.utils.format.nemImportanceScore(value);
   }
 }

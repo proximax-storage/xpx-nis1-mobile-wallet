@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
-import { App } from '../../../../providers/app/app';
-import { ListStorageProvider } from '../../../../providers/list-storage/list-storage';
-import { AuthProvider } from '../../../../providers/auth/auth';
+import { App } from "../../../../providers/app/app";
+import { AuthProvider } from "../../../../providers/auth/auth";
+import { NemProvider } from "../../../../providers/nem/nem";
+import { WalletProvider } from "../../../../providers/wallet/wallet";
+import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
+import {
+  SimpleWallet,
+  Namespace,
+  ProvisionNamespaceTransaction
+} from "nem-library";
+import { AlertProvider } from "../../../../providers/alert/alert";
 
 /**
  * Generated class for the NamespaceCreatePage page.
@@ -15,44 +23,70 @@ import { AuthProvider } from '../../../../providers/auth/auth';
 
 @IonicPage()
 @Component({
-  selector: 'page-namespace-create',
-  templateUrl: 'namespace-create.html'
+  selector: "page-namespace-create",
+  templateUrl: "namespace-create.html"
 })
 export class NamespaceCreatePage {
   App = App;
   formGroup: FormGroup;
 
-  list: Array<any>;
-  PASSWORD : string;
+  currentWallet: SimpleWallet;
+  namespaceTx: ProvisionNamespaceTransaction;
+  namespaces: Namespace[];
+  PASSWORD: string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private listStorageProvider: ListStorageProvider,
     private authProvider: AuthProvider,
+    private alertProvider: AlertProvider,
+    private walletProvider: WalletProvider,
+    private utils: UtilitiesProvider,
+    private nemProvider: NemProvider
   ) {
     this.init();
   }
 
   ionViewWillEnter() {
-    this.listStorageProvider.init('namespaces');
-    this.listStorageProvider.getAll().then(value => {
-      this.list = value;
+    this.walletProvider.getSelectedWallet().then(currentWallet => {
+      if (!currentWallet) {
+        this.utils.setRoot("WalletListPage");
+      } else {
+        this.currentWallet = currentWallet;
+      }
+
+      // Create ProvisionNamespaceTransaction to get the sinkAddress, fee and rentalFee.
+      this.namespaceTx = this.nemProvider.prepareNamespaceTransaction("");
+
+      const fee = this.namespaceTx.fee / 1000000;
+      const rentalFee = this.namespaceTx.rentalFee / 1000000;
+
+      this.formGroup
+        .get("sinkAddress")
+        .setValue(this.namespaceTx.rentalFeeSink.pretty());
+      this.formGroup.get("rentalFee").setValue(rentalFee);
+      this.formGroup.get("fee").setValue(fee);
+
+      this.nemProvider
+        .getNamespacesOwned(this.currentWallet.address)
+        .subscribe(namespaces => {
+          this.namespaces = namespaces;
+        });
     });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WalletAddPage');
+    console.log("ionViewDidLoad WalletAddPage");
   }
 
   init() {
     this.formGroup = this.formBuilder.group({
-      parentNamespace: ['new', [Validators.minLength(3), Validators.required]],
-      name: ['', [Validators.minLength(3), Validators.required]],
-      sinkAddress: ['TAMESP-ACEWH4-MKFMBC-VFERDP-OOP4FK-7MTDJE-YP35', [Validators.required]],
-      fee: ['0.15', [Validators.required]],
-      rentalFee: ['100.00', [Validators.required]],
+      parentNamespace: [""],
+      name: ["", [Validators.minLength(3), Validators.required]],
+      sinkAddress: ["", [Validators.required]],
+      fee: ["", [Validators.required]],
+      rentalFee: ["", [Validators.required]]
     });
 
     this.authProvider.getPassword().then(password => {
@@ -61,9 +95,23 @@ export class NamespaceCreatePage {
   }
 
   onSubmit(form) {
-    form.name = form.parentNamespace ? `${form.parentNamespace}:${form.name}` : form.name;
-    this.listStorageProvider.push(form).then(_ => {
-      return this.navCtrl.pop();
-    });
+    let tx: ProvisionNamespaceTransaction;
+
+    if (form.parentNamespace) {
+      tx = this.nemProvider.prepareSubNamespaceTransaction(
+        form.name,
+        form.parentNamespace
+      );
+    } else {
+      tx = this.nemProvider.prepareNamespaceTransaction(form.name);
+    }
+
+    this.nemProvider
+      .confirmNamespaceTransaction(tx, this.currentWallet, this.PASSWORD)
+      .subscribe(res => {
+        this.navCtrl.pop().then(() => {
+          this.alertProvider.showMessage("New namespace created");
+        });
+      });
   }
 }

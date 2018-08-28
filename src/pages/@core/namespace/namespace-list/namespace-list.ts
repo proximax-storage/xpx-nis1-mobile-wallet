@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -6,14 +6,15 @@ import {
   ActionSheetController,
   Platform,
   AlertController
-} from 'ionic-angular';
+} from "ionic-angular";
 
-import { SimpleWallet } from 'nem-library';
+import { SimpleWallet, Namespace } from "nem-library";
 
-import { App } from '../../../../providers/app/app';
-import { WalletProvider } from './../../../../providers/wallet/wallet';
-import { BarcodeScannerProvider } from '../../../../providers/barcode-scanner/barcode-scanner';
-import { ListStorageProvider } from '../../../../providers/list-storage/list-storage';
+import { App } from "../../../../providers/app/app";
+import { WalletProvider } from "./../../../../providers/wallet/wallet";
+import { BarcodeScannerProvider } from "../../../../providers/barcode-scanner/barcode-scanner";
+import { NemProvider } from "../../../../providers/nem/nem";
+import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
 
 /**
  * Generated class for the NamespaceListPage page.
@@ -24,14 +25,16 @@ import { ListStorageProvider } from '../../../../providers/list-storage/list-sto
 
 @IonicPage()
 @Component({
-  selector: 'page-namespace-list',
-  templateUrl: 'namespace-list.html'
+  selector: "page-namespace-list",
+  templateUrl: "namespace-list.html"
 })
 export class NamespaceListPage {
   App = App;
 
-  list: SimpleWallet[];
-  selectedData: SimpleWallet;
+  currentWallet: SimpleWallet;
+  selectedData: Namespace;
+
+  namespaces: Namespace[];
 
   constructor(
     public navCtrl: NavController,
@@ -41,51 +44,61 @@ export class NamespaceListPage {
     public platform: Platform,
     public walletProvider: WalletProvider,
     public barcodeScannerProvider: BarcodeScannerProvider,
-    public listStorageProvider: ListStorageProvider
+    public nemProvider: NemProvider,
+    public utils: UtilitiesProvider,
   ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WalletListPage');
+    console.log("ionViewDidLoad WalletListPage");
   }
 
   ionViewWillEnter() {
-    this.listStorageProvider.init('namespaces');
-    this.listStorageProvider.getAll().then(value => {
-      this.list = value;
-      this.selectedData = this.list[0];
+    this.walletProvider.getSelectedWallet().then(currentWallet => {
+      if (!currentWallet) {
+        this.utils.setRoot("WalletListPage");
+      } else {
+        this.currentWallet = currentWallet;
+      }
+
+      this.nemProvider
+        .getNamespacesOwned(this.currentWallet.address)
+        .subscribe(namespaces => {
+          this.namespaces = namespaces;
+          this.selectedData = namespaces[0];
+        });
     });
   }
 
-  onSelect(wallet) {
-    this.selectedData = wallet;
+  onSelect(namespace) {
+    this.selectedData = namespace;
   }
 
   onPress(data) {
     const actionSheet = this.actionSheetCtrl.create({
       title: `Modify ${data.name}`,
-      cssClass: 'wallet-on-press',
+      cssClass: "wallet-on-press",
       buttons: [
         {
-          text: 'Change name',
-          icon: this.platform.is('ios') ? null : 'create',
+          text: "Change name",
+          icon: this.platform.is("ios") ? null : "create",
           handler: () => {
-            this.navCtrl.push('NamespaceUpdatePage', data);
+            this.navCtrl.push("NamespaceUpdatePage", data);
           }
         },
         {
-          text: 'Delete',
-          role: 'destructive',
-          icon: this.platform.is('ios') ? null : 'trash',
+          text: "Delete",
+          role: "destructive",
+          icon: this.platform.is("ios") ? null : "trash",
           handler: () => {
-            this.navCtrl.push('NamespaceDeletePage', data);
+            this.navCtrl.push("NamespaceDeletePage", data);
           }
         },
         {
-          text: 'Cancel',
-          role: 'cancel',
-          icon: this.platform.is('ios') ? null : 'close',
+          text: "Cancel",
+          role: "cancel",
+          icon: this.platform.is("ios") ? null : "close",
           handler: () => {
-            console.log('Cancel clicked');
+            console.log("Cancel clicked");
           }
         }
       ]
@@ -94,6 +107,6 @@ export class NamespaceListPage {
   }
 
   gotoAdd() {
-    this.navCtrl.push('NamespaceCreatePage');
+    this.navCtrl.push("NamespaceCreatePage");
   }
 }

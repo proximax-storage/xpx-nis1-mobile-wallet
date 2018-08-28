@@ -45,8 +45,9 @@
         <ion-icon item-left name="pulse"></ion-icon>
         <h2>Importance score</h2>
         <p text-wrap *ngIf="currentWallet">
-          {{ ((accountInfo.importance | formatImportance)[0] | number:'1.0-0') + '.' + (accountInfo.importance | formatImportance)[1] }}
-           * 10<sup>(-4)</sup>
+          {{ ((accountInfo.importance | formatImportance)[0] | number:'1.0-0') + '.' + (accountInfo.importance | formatImportance)[1]
+          }} * 10
+          <sup>(-4)</sup>
         </p>
       </ion-item>
     </ion-card>
@@ -69,7 +70,7 @@
       </ion-item>
     </ion-card>
 
-    <ion-card (click)="showComingSoon()">
+    <ion-card (click)="goto('NamespaceListPage')">
       <ion-item>
         <ion-icon item-left name="git-network"></ion-icon>
         <h2>Namespaces</h2>
