@@ -8,16 +8,15 @@ import {
   AlertController
 } from "ionic-angular";
 
-import { SimpleWallet, Namespace } from "nem-library";
+import { SimpleWallet, MosaicDefinition } from "nem-library";
 
-import { App } from "../../../../providers/app/app";
-import { WalletProvider } from "./../../../../providers/wallet/wallet";
-import { BarcodeScannerProvider } from "../../../../providers/barcode-scanner/barcode-scanner";
-import { NemProvider } from "../../../../providers/nem/nem";
-import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
+import { App } from "../../../../../providers/app/app";
+import { WalletProvider } from "../../../../../providers/wallet/wallet";
+import { NemProvider } from "../../../../../providers/nem/nem";
+import { UtilitiesProvider } from "../../../../../providers/utilities/utilities";
 
 /**
- * Generated class for the NamespaceListPage page.
+ * Generated class for the MosaicListPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -25,16 +24,16 @@ import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
 
 @IonicPage()
 @Component({
-  selector: "page-namespace-list",
-  templateUrl: "namespace-list.html"
+  selector: "page-mosaic-list",
+  templateUrl: "mosaic-list.html"
 })
-export class NamespaceListPage {
+export class MosaicListPage {
   App = App;
 
   currentWallet: SimpleWallet;
-  selectedData: Namespace;
+  selectedData: MosaicDefinition;
 
-  namespaces: Namespace[];
+  mosaics: MosaicDefinition[];
 
   constructor(
     public navCtrl: NavController,
@@ -43,9 +42,8 @@ export class NamespaceListPage {
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
     public walletProvider: WalletProvider,
-    public barcodeScannerProvider: BarcodeScannerProvider,
     public nemProvider: NemProvider,
-    public utils: UtilitiesProvider,
+    public utils: UtilitiesProvider
   ) {}
 
   ionViewDidLoad() {
@@ -61,36 +59,28 @@ export class NamespaceListPage {
       }
 
       this.nemProvider
-        .getNamespacesOwned(this.currentWallet.address)
-        .subscribe(namespaces => {
-          this.namespaces = namespaces;
-          this.selectedData = namespaces[0];
+        .getMosaicsOwned(this.currentWallet.address)
+        .subscribe(mosaics => {
+          this.mosaics = mosaics;
+          this.selectedData = mosaics[0];
         });
     });
   }
 
-  onSelect(namespace) {
-    this.selectedData = namespace;
+  onSelect(mosaics) {
+    this.selectedData = mosaics;
   }
 
   onPress(data) {
     const actionSheet = this.actionSheetCtrl.create({
-      title: `Modify ${data.name}`,
+      title: `Modify ${data.id.name}`,
       cssClass: "wallet-on-press",
       buttons: [
         {
-          text: "Change name",
+          text: "Edit supply",
           icon: this.platform.is("ios") ? null : "create",
           handler: () => {
             this.navCtrl.push("NamespaceUpdatePage", data);
-          }
-        },
-        {
-          text: "Delete",
-          role: "destructive",
-          icon: this.platform.is("ios") ? null : "trash",
-          handler: () => {
-            this.navCtrl.push("NamespaceDeletePage", data);
           }
         },
         {
@@ -107,6 +97,6 @@ export class NamespaceListPage {
   }
 
   gotoAdd() {
-    this.navCtrl.push("NamespaceCreatePage");
+    this.navCtrl.push("MosaicCreatePage");
   }
 }

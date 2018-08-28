@@ -20,10 +20,8 @@
 <ion-content background>
   <section text-center>
     <h1 price ion-text color="light" *ngIf="selectedCoin">{{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-4' }}</h1>
-    <button gradient-button tiny width-auto no-margin
-      [attr.color-1]="selectedCoin.market_data.market_cap_change_percentage_24h > 0 ? true : null"
-      [attr.color-4]="selectedCoin.market_data.market_cap_change_percentage_24h < 0 ? true : null"
-      *ngIf="selectedCoin">
+    <button gradient-button tiny width-auto no-margin [attr.color-1]="selectedCoin.market_data.market_cap_change_percentage_24h > 0 ? true : null"
+      [attr.color-4]="selectedCoin.market_data.market_cap_change_percentage_24h < 0 ? true : null" *ngIf="selectedCoin">
       {{ selectedCoin.market_data.market_cap_change_percentage_24h | number: '1.1-1' }}%
     </button>
   </section>
@@ -44,12 +42,12 @@
   <ion-grid normal>
     <ion-row>
       <ion-col text-center col-6>
-        <button full gradient-button color-1 no-margin>
+        <button full gradient-button color-1 no-margin *ngIf="this.navParams.data === 'nem'" (click)="goto('BuyXemPage')">
           Buy
         </button>
       </ion-col>
       <ion-col text-center col-6>
-        <button full gradient-button color-1 no-margin>
+        <button full gradient-button color-1 no-margin *ngIf="this.navParams.data === 'nem'" (click)="goto('SellXemPage')">
           Sell
         </button>
       </ion-col>

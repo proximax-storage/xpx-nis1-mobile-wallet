@@ -1,5 +1,5 @@
 <!--
-  Generated template for the NamespacenamespacesPage page.
+  Generated template for the MosaicListPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="light">Namespaces</span>
+      <span ion-text color="light">Mosaics</span>
     </ion-title>
   </ion-navbar>
 
@@ -16,35 +16,35 @@
 
 
 <ion-content fullscreen background>
-  <ion-grid empty *ngIf="namespaces && !namespaces.length">
+  <ion-grid empty *ngIf="mosaics && !mosaics.length">
     <ion-row>
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
 
         <p text-wrap>
-          It looks like you don't have any namespaces yet.
+          It looks like you don't have any mosaics yet.
           <br> Try adding one or two.
         </p>
 
         <button gradient-button color-1 (click)="gotoAdd()">
-          Create new namespace
+          Create new mosaic
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-list transparent-items radio-group *ngIf="namespaces">
-    <ion-card *ngFor="let namespace of namespaces" [attr.selected]="selectedData.name === namespace.name ? true : null" (click)="onSelect(namespace)"
-      (press)="onPress(namespace)">
+  <ion-list transparent-items radio-group *ngIf="mosaics">
+    <ion-card *ngFor="let mosaic of mosaics" [attr.selected]="selectedData.id.equals(mosaic.id) ? true : null" (click)="onSelect(mosaic)"
+      (press)="onPress(mosaic)">
       <ion-item>
         <ion-icon item-left name="git-network"></ion-icon>
-        <h2 ion-text color="light">{{ namespace.name }}</h2>
+        <h2 ion-text color="light">{{ mosaic.id.name }}</h2>
       </ion-item>
     </ion-card>
   </ion-list>
 </ion-content>
 
-<ion-footer no-border *ngIf="namespaces && namespaces.length">
+<ion-footer no-border *ngIf="mosaics && mosaics.length">
   <ion-toolbar transparent text-center>
     <button gradient-button circle color-1 (click)="gotoAdd()">
       <ion-icon name="md-add"></ion-icon>

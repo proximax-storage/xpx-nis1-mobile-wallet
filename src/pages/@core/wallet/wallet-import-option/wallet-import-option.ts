@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
+import { Storage } from "@ionic/storage";
 
-import { BarcodeScannerProvider } from '../../../../providers/barcode-scanner/barcode-scanner';
-import { FilePickerProvider } from '../../../../providers/file-picker/file-picker';
-import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { BarcodeScannerProvider } from "../../../../providers/barcode-scanner/barcode-scanner";
+import { FilePickerProvider } from "../../../../providers/file-picker/file-picker";
+import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
 
 /**
  * Generated class for the WalletImportOptionPage page.
@@ -26,8 +26,8 @@ export enum WalletImportOption {
 
 @IonicPage()
 @Component({
-  selector: 'page-wallet-import-option',
-  templateUrl: 'wallet-import-option.html'
+  selector: "page-wallet-import-option",
+  templateUrl: "wallet-import-option.html"
 })
 export class WalletImportOptionPage {
   options: Array<{
@@ -50,7 +50,7 @@ export class WalletImportOptionPage {
     public storage: Storage,
     private filePickerProvider: FilePickerProvider,
     private barcodeScannerProvider: BarcodeScannerProvider,
-    private utils: UtilitiesProvider,
+    private utils: UtilitiesProvider
   ) {
     this.init();
   }
@@ -60,55 +60,61 @@ export class WalletImportOptionPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WalletImportOptionPage');
+    console.log("ionViewDidLoad WalletImportOptionPage");
   }
 
   init() {
     this.options = [
       {
-        name: 'Private key',
-        icon: 'key',
+        name: "Private key",
+        icon: "key",
         value: WalletImportOption.PRIVATE_KEY
       },
       {
-        name: 'Import from nanoWallet',
+        name: "Import from NEM Wallet Pro",
         value: WalletImportOption.NANO_WALLET,
-        icon: 'barcode',
-        prompt: 'Scan QR from nanoWallet'
+        icon: "barcode",
+        prompt: "Scan QR from NEM Wallet Pro"
       },
       {
-        name: 'Import from NEM Mobile Wallet',
+        name: "Import from nanoWallet",
+        value: WalletImportOption.NANO_WALLET,
+        icon: "barcode",
+        prompt: "Scan QR from nanoWallet"
+      },
+      {
+        name: "Import from NEM Mobile Wallet",
         value: WalletImportOption.NEM_MOBILE_WALLET,
-        icon: 'barcode',
-        prompt: 'Scan QR from NEM Mobile Wallet'
+        icon: "barcode",
+        prompt: "Scan QR from NEM Mobile Wallet"
       },
       {
-        name: 'Import from NEMPay',
+        name: "Import from NEMPay",
         value: WalletImportOption.NEM_PAY,
-        icon: 'barcode',
-        prompt: 'Scan QR from NEMPay'
+        icon: "barcode",
+        prompt: "Scan QR from NEMPay"
       }
-      // {
-      //   name: 'Shelter DAO',
-      //   value: WalletImportOption.SHELTER_DAO,
-      //   prompt: 'Scan QR from NEM Shelter DAO'
-      // },
-      // {
-      //   name: 'Raccoon wallet',
-      //   value: WalletImportOption.RACCOON_WALLET,
-      //   prompt: 'Scan QR from Raccoon wallet'
-      // },
-      // {
-      //   name: 'ProximaX wallet',
-      //   value: WalletImportOption.PROXIMAX_WALLET,
-      //   prompt: 'Scan QR from ProximaX wallet'
-      // }
     ];
+    // {
+    //   name: 'Shelter DAO',
+    //   value: WalletImportOption.SHELTER_DAO,
+    //   prompt: 'Scan QR from NEM Shelter DAO'
+    // },
+    // {
+    //   name: 'Raccoon wallet',
+    //   value: WalletImportOption.RACCOON_WALLET,
+    //   prompt: 'Scan QR from Raccoon wallet'
+    // },
+    // {
+    //   name: 'ProximaX wallet',
+    //   value: WalletImportOption.PROXIMAX_WALLET,
+    //   prompt: 'Scan QR from ProximaX wallet'
+    // }
 
-    if (this.platform.is('android')) {
+    if (this.platform.is("android")) {
       this.options.splice(1, 0, {
-        name: 'Wallet file',
-        icon: 'document',
+        name: "Wallet file",
+        icon: "document",
         value: WalletImportOption.WALLET_FILE
       });
     }
@@ -124,27 +130,27 @@ export class WalletImportOptionPage {
 
   onSubmit() {
     if (this.selectedOption.value === WalletImportOption.PRIVATE_KEY) {
-      this.navCtrl.push('WalletAddPrivateKeyPage', {
-        name: '',
-        privateKey: ''
+      this.navCtrl.push("WalletAddPrivateKeyPage", {
+        name: "",
+        privateKey: ""
       });
     } else if (this.selectedOption.value === WalletImportOption.WALLET_FILE) {
-      this.storage.set('isAppPaused', true).then(_ => {
+      this.storage.set("isAppPaused", true).then(_ => {
         this.filePickerProvider.open().then(data => {
-          this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
+          this.navCtrl.push("WalletAddPasswordConfirmationPage", data);
         });
-      })
+      });
     } else {
       this.barcodeScannerProvider
-        .getData('WalletImportOption', this.selectedOption.prompt)
+        .getData("WalletImportOption", this.selectedOption.prompt)
         .then(data => {
           // Check value based on length of properties in data.
           const hasValue = Object.keys(data).length;
 
-          console.log('barcodeScannerProvider :: data', JSON.stringify(data));
+          console.log("barcodeScannerProvider :: data", JSON.stringify(data));
 
           if (hasValue) {
-            this.navCtrl.push('WalletAddPasswordConfirmationPage', data);
+            this.navCtrl.push("WalletAddPasswordConfirmationPage", data);
           }
         });
     }

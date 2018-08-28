@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CoinPriceChartProvider } from '../../providers/coin-price-chart/coin-price-chart';
-import { CoingeckoProvider } from '../../providers/coingecko/coingecko';
-import { UtilitiesProvider } from '../../providers/utilities/utilities';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { CoinPriceChartProvider } from "../../providers/coin-price-chart/coin-price-chart";
+import { CoingeckoProvider } from "../../providers/coingecko/coingecko";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -13,8 +13,8 @@ import { UtilitiesProvider } from '../../providers/utilities/utilities';
 
 @IonicPage()
 @Component({
-  selector: 'page-coin-price-chart',
-  templateUrl: 'coin-price-chart.html'
+  selector: "page-coin-price-chart",
+  templateUrl: "coin-price-chart.html"
 })
 export class CoinPriceChartPage {
   durations: Array<{ label: string; value: number }>;
@@ -28,18 +28,18 @@ export class CoinPriceChartPage {
     public navParams: NavParams,
     public coingeckoProvider: CoingeckoProvider,
     public coinPriceChartProvider: CoinPriceChartProvider,
-    public utils: UtilitiesProvider,
+    public utils: UtilitiesProvider
   ) {
     this.durations = [
-      { label: '1D', value: 1 },
-      { label: '7D', value: 7 },
-      { label: '30D', value: 30 },
-      { label: '6M', value: 182 },
-      { label: '1Y', value: 365 }
+      { label: "1D", value: 1 },
+      { label: "7D", value: 7 },
+      { label: "30D", value: 30 },
+      { label: "6M", value: 182 },
+      { label: "1Y", value: 365 }
     ];
     this.selectedDuration = this.durations[0];
 
-    console.log('navParams.data', this.navParams.data);
+    console.log("navParams.data", this.navParams.data);
     this.coingeckoProvider.getDetails(this.navParams.data).subscribe(coin => {
       this.selectedCoin = coin;
       this.select(this.selectedDuration);
@@ -51,7 +51,7 @@ export class CoinPriceChartPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CoinPriceChartPage');
+    console.log("ionViewDidLoad CoinPriceChartPage");
   }
 
   select(duration) {
@@ -59,11 +59,16 @@ export class CoinPriceChartPage {
     this.coinPriceChartProvider.load(
       this.selectedCoin,
       this.selectedDuration.value,
-      'usd'
+      "usd"
     );
   }
 
   readMore(descriptionLength) {
-    this.descriptionLength = descriptionLength === this.descriptionLength ? 450 : descriptionLength;
+    this.descriptionLength =
+      descriptionLength === this.descriptionLength ? 450 : descriptionLength;
+  }
+
+  goto(page) {
+    this.navCtrl.push(page);
   }
 }

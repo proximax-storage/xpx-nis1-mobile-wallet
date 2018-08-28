@@ -53,13 +53,13 @@ export class WalletAddOptionPage {
         description:
           'A simple wallet enables you to do a “single-signature transactions,” it requires only one signature of the owner before transaction is executed.'
       },
-      {
-        name: 'Create multisig wallet',
-        value: WalletAddOption.SHARED,
-        icon: 'ios-people-outline',
-        description:
-          'A multisig wallet has an additional security measure for cryptocurrency transactions. Rather than a single wallet signature requirement for transactions, it requires the signature of multiple people before transaction is executed.'
-      }
+      // {
+      //   name: 'Create multisig wallet',
+      //   value: WalletAddOption.SHARED,
+      //   icon: 'ios-people-outline',
+      //   description:
+      //     'A multisig wallet has an additional security measure for cryptocurrency transactions. Rather than a single wallet signature requirement for transactions, it requires the signature of multiple people before transaction is executed.'
+      // }
     ];
   }
 

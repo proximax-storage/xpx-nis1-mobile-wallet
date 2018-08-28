@@ -140,12 +140,21 @@ export class NemProvider {
   }
 
   /**
-   * Get the account info of the NEM address
+   * Get the namespaces owned by the NEM address
    * @param address The NEM address
-   * @return {AccountInfoWithMetaData}
+   * @return {Namespace[]}
    */
   public getNamespacesOwned(address: Address): Observable<Namespace[]> {
     return this.accountHttp.getNamespaceOwnedByAddress(address);
+  }
+
+  /**
+   * Get the mosaics owned by thee NEM address
+   * @param address The NEM address
+   * @return {MosaicDefinition[]}
+   */
+  public getMosaicsOwned(address: Address): Observable<MosaicDefinition[]> {
+    return this.accountHttp.getMosaicCreatedByAddress(address);
   }
 
   /**

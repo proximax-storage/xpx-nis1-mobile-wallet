@@ -2,17 +2,17 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 
-import { App } from "../../../../providers/app/app";
-import { AuthProvider } from "../../../../providers/auth/auth";
-import { NemProvider } from "../../../../providers/nem/nem";
-import { WalletProvider } from "../../../../providers/wallet/wallet";
-import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
+import { App } from "../../../../../providers/app/app";
+import { AuthProvider } from "../../../../../providers/auth/auth";
+import { NemProvider } from "../../../../../providers/nem/nem";
+import { WalletProvider } from "../../../../../providers/wallet/wallet";
+import { UtilitiesProvider } from "../../../../../providers/utilities/utilities";
 import {
   SimpleWallet,
   Namespace,
   ProvisionNamespaceTransaction
 } from "nem-library";
-import { AlertProvider } from "../../../../providers/alert/alert";
+import { AlertProvider } from "../../../../../providers/alert/alert";
 
 /**
  * Generated class for the NamespaceCreatePage page.
