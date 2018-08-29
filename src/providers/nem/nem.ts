@@ -59,7 +59,7 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.TEST_NET);
+    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET);
 
     if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
       this.accountHttp = new AccountHttp(SERVER_CONFIG);
