@@ -42,12 +42,9 @@
 </ion-content>
 
 <ion-footer no-border>
-  <ion-list transparent-items>
-    <ion-card (click)="goHome()">
-      <ion-item>
-        <h2 ion-text color="light">Proceed</h2>
-        <ion-icon item-right ion-text color="grey" name="ios-arrow-forward"></ion-icon>
-      </ion-item>
-    </ion-card>
-  </ion-list>
+  <section text-center>
+    <button gradient-button small color-1 (click)="goHome()" color="light">
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </button>
+  </section>
 </ion-footer>
