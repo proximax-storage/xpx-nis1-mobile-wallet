@@ -164,7 +164,7 @@ export class WalletListPage {
       text: 'Proceed',
       handler: data => {
         if (data === WalletCreationType.NEW.toString()) {
-          this.navCtrl.push('WalletAddOptionPage');
+          this.navCtrl.push('WalletAddPage');
         } else if (data === WalletCreationType.IMPORT.toString()) {
           this.navCtrl.push('WalletImportOptionPage');
         }
