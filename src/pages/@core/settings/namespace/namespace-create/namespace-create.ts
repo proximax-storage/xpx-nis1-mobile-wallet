@@ -107,7 +107,7 @@ export class NamespaceCreatePage {
     }
 
     this.nemProvider
-      .confirmNamespaceTransaction(tx, this.currentWallet, this.PASSWORD)
+      .confirmTransaction(tx, this.currentWallet, this.PASSWORD)
       .subscribe(res => {
         this.navCtrl.pop().then(() => {
           this.alertProvider.showMessage("New namespace created");

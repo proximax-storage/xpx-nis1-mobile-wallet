@@ -27,7 +27,13 @@ import {
   ProvisionNamespaceTransaction,
   Pageable,
   AccountInfoWithMetaData,
-  Namespace
+  Namespace,
+  MosaicDefinitionCreationTransaction,
+  PublicAccount,
+  MosaicId,
+  MosaicProperties,
+  MosaicLevy,
+  MosaicLevyType
 } from "nem-library";
 
 import { Observable } from "nem-library/node_modules/rxjs";
@@ -281,6 +287,26 @@ export class NemProvider {
   }
 
   /**
+   * Prepares mosaic transaction
+   * @param recipientAddress recipientAddress
+   * @param mosaicsTransferable mosaicsTransferable
+   * @param message message
+   * @return Promise containing prepared transaction
+   */
+  public prepareMosaicTransaction(
+    recipientAddress: Address,
+    mosaicsTransferable: MosaicTransferable[],
+    message: string
+  ): TransferTransaction {
+    return TransferTransaction.createWithMosaics(
+      TimeWindow.createWithDeadline(),
+      recipientAddress,
+      mosaicsTransferable,
+      PlainMessage.create(message)
+    );
+  }
+
+  /**
    * Prepares provision namespace transaction
    * @param recipientAddress recipientAddress
    * @param mosaicsTransferable mosaicsTransferable
@@ -315,23 +341,74 @@ export class NemProvider {
   }
 
   /**
-   * Prepares mosaic transaction
-   * @param recipientAddress recipientAddress
-   * @param mosaicsTransferable mosaicsTransferable
-   * @param message message
-   * @return Promise containing prepared transaction
+   * Prepares mosaic definition creation transaction
+   * @param account { AccountInfoWithMetaData }
+   * @param namespace { Namespace }
+   * @param mosaic { string }
+   * @param description { string }
+   * @param divisibility { number }
+   * @param supply { number }
+   * @param transferrable { boolean }
+   * @param supplyMutable { boolean }
+   * @param hasLevy { boolean }
+   * @param levyMosaic { MosaicId }
+   * @param levyFee { number }
    */
-  public prepareMosaicTransaction(
-    recipientAddress: Address,
-    mosaicsTransferable: MosaicTransferable[],
-    message: string
-  ): TransferTransaction {
-    return TransferTransaction.createWithMosaics(
-      TimeWindow.createWithDeadline(),
-      recipientAddress,
-      mosaicsTransferable,
-      PlainMessage.create(message)
-    );
+  public prepareMosaicCreationTransaction(
+      account: AccountInfoWithMetaData,
+      namespace: string,
+      mosaic: string,
+      description: string,
+      divisibility: number,
+      supply: number,
+      transferrable: boolean,
+      supplyMutable: boolean,
+      hasLevy?: boolean,
+      levyMosaic?: MosaicId,
+      levyFee?: number
+  ): MosaicDefinitionCreationTransaction {
+    let tx: MosaicDefinitionCreationTransaction;
+
+    if (!hasLevy) {
+      tx = MosaicDefinitionCreationTransaction.create(
+        TimeWindow.createWithDeadline(),
+        new MosaicDefinition(
+          PublicAccount.createWithPublicKey(account.publicAccount.publicKey),
+          new MosaicId(namespace, mosaic),
+          description,
+          new MosaicProperties(
+            divisibility,
+            supply,
+            transferrable,
+            supplyMutable
+          ),
+          null
+        )
+      );
+    } else {
+      tx = MosaicDefinitionCreationTransaction.create(
+        TimeWindow.createWithDeadline(),
+        new MosaicDefinition(
+          PublicAccount.createWithPublicKey(account.publicAccount.publicKey),
+          new MosaicId(namespace, mosaic),
+          description,
+          new MosaicProperties(
+            divisibility,
+            supply,
+            transferrable,
+            supplyMutable
+          ),
+          new MosaicLevy(
+            MosaicLevyType.Percentil,
+            account.publicAccount.address,
+            levyMosaic,
+            levyFee
+          )
+        )
+      );
+    }
+
+    return tx;
   }
 
   /**
@@ -342,29 +419,12 @@ export class NemProvider {
    * @return Promise containing sent transaction
    */
   public confirmTransaction(
-    transferTransaction: TransferTransaction,
+    transaction: any,
     wallet: SimpleWallet,
     password: string
   ): Observable<NemAnnounceResult> {
     let account = wallet.open(new Password(password));
-    let signedTransaction = account.signTransaction(transferTransaction);
-    return this.transactionHttp.announceTransaction(signedTransaction);
-  }
-
-  /**
-   * Send transaction into the blockchain
-   * @param transferTransaction transferTransaction
-   * @param password wallet
-   * @param password password
-   * @return Promise containing sent transaction
-   */
-  public confirmNamespaceTransaction(
-    namespaceTransaction: ProvisionNamespaceTransaction,
-    wallet: SimpleWallet,
-    password: string
-  ): Observable<NemAnnounceResult> {
-    let account = wallet.open(new Password(password));
-    let signedTransaction = account.signTransaction(namespaceTransaction);
+    let signedTransaction = account.signTransaction(transaction);
     return this.transactionHttp.announceTransaction(signedTransaction);
   }
 
