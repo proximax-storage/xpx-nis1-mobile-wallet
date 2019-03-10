@@ -1,7 +1,7 @@
 ion-list[transparent-items] {
   ion-card:not([no-border]) {
     border-radius: 0.5rem;
-    background: transparentize(color($colors, light), 0.9);
+    background: transparentize(color($colors, black), 0.85);
     color: color($colors, light);
   }
   ion-item {
@@ -14,14 +14,20 @@ ion-list[transparent-items] {
     ion-avatar img {
       border-radius: 0;
     }
+    
+    h2:not([ion-text]) {
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-bottom: 18px;
+    }
 
     h2:not([ion-text]),
     ion-icon {
-      color: color($colors, light);
+      color: lighten(color($colors, light), 10%);
     }
 
     p:not([ion-text]) {
-      color: darken(color($colors, light), 10%);
+      color: lighten(color($colors, trinary), 1%);
     }
 
     p[small] {
@@ -43,7 +49,8 @@ ion-list[transparent-items] {
   }
 
   p {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: bolder;
   }
 
   [selected] {

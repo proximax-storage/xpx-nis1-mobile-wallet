@@ -21,25 +21,6 @@
 </ion-header>
 
 <ion-content background>
-  <!-- Empty dataset -->
-  <ion-grid empty *ngIf="(confirmedTransactions && !confirmedTransactions.length) && (unconfirmedTransactions && !unconfirmedTransactions.length)">
-    <ion-row>
-      <ion-col>
-        <img half-width [src]="App.STICKERS.SORRY">
-
-        <p text-wrap>
-          It looks like you don't have any transactions yet.
-          <br> Try sending, recieving etc.
-        </p>
-
-        <button gradient-button color-4 (click)="gotoReceive()">
-          Receive mosaics
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!-- ./Empty dataset -->
-
   <!-- Skeleton loader -->
   <ion-list transparent-items *ngIf="isLoading">
     <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -164,8 +145,8 @@
           Transfer mosaics to your new account now
         </h6>
 
-        <button gradient-button color-5 color="light">
-          Transfer mosaic
+        <button gradient-button color-5 color="light" (click)="gotoReceive()">
+          Topup
         </button>
       </ion-col>
     </ion-row>

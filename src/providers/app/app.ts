@@ -25,9 +25,9 @@ export class App {
     SLIDE5: `${App.ASSETS}/slides/xpx-slide-5.png`
   };
   public static LOGO = {
-    NEM: `https://nem.io/wp-content/uploads/2018/03/xpx-logo-Transparent-Border-.png`,
-    XPX: `https://discourse-cdn-sjc1.com/business5/uploads/safenetwork/original/2X/3/32b90ee44d17ddf9dc89c661b00effdb46302a6e.png`,
-    LYL: `https://s2.coinmarketcap.com/static/img/coins/200x200/2841.png`
+    NEM: `assets/imgs/mosaics/xem.png`,
+    XPX: `assets/imgs/mosaics/xpx.png`,
+    LYL: `assets/imgs/mosaics/lyl.png`
   };
   public static USER = `${App.ASSETS}/user.svg`;
 

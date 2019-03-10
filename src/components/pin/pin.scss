@@ -23,13 +23,13 @@
       [ion-button] {
         height: 5rem;
         width: 4rem;
-        box-shadow: 0 0.5px 4px 0 color($colors, dark);
+        box-shadow: none;
         border: 0;
         border-radius: 0.5rem;
       }
 
       [pin] {
-        font-size: 4rem;
+        font-size: 10rem;
         letter-spacing: 16px;
         vertical-align: middle;
 

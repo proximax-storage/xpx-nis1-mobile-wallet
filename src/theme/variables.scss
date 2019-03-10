@@ -78,6 +78,9 @@ $colors: (
 
 @import "ionic.theme.default";
 
+// color of placeholder for input[text]
+$text-input-placeholder-color: lighten(color($colors, light), 0.1);
+
 .ios, .md {
   @import "dark/main";
 }
