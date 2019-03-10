@@ -29,7 +29,8 @@ export class TransactionListPage {
 
   unconfirmedTransactions: Array<any>;
   confirmedTransactions: Array<any>;
-  hasTransactions: boolean;
+  showEmptyMessage: boolean;
+  isLoading: boolean;
 
   pageable: Pageable<Transaction[]>;
 
@@ -47,6 +48,8 @@ export class TransactionListPage {
   ionViewWillEnter() {
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
+    this.showEmptyMessage = false;
+    this.isLoading = true;
 
     this.utils.setTabIndex(0);
 
@@ -86,15 +89,17 @@ export class TransactionListPage {
               this.infiniteScroll.enable(true);
             }
 
-            if (result.length) {
-              this.hasTransactions = true;
+            if (result.length > 0) {
+              this.showEmptyMessage = false;
               this.confirmedTransactions.push(...result);
               this.infiniteScroll.complete();
             }
           },
             err => console.error(err),
             () => {
-              this.hasTransactions = false;
+              this.isLoading = false;
+              this.showEmptyMessage = true;
+
               this.infiniteScroll.complete();
               this.infiniteScroll.enable(false);
             });
@@ -121,7 +126,7 @@ export class TransactionListPage {
   }
 
   doInfinite() {
-    if (!this.hasTransactions) return;
+    if (!this.showEmptyMessage) return;
     this.pageable.nextPage();
     console.log('Pageable Txs: ', this.pageable);
   }

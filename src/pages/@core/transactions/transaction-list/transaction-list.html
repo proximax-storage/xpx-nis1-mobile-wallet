@@ -32,7 +32,7 @@
           <br> Try sending, recieving etc.
         </p>
 
-        <button gradient-button color-1 (click)="gotoReceive()">
+        <button gradient-button color-4 (click)="gotoReceive()">
           Receive mosaics
         </button>
       </ion-col>
@@ -41,7 +41,7 @@
   <!-- ./Empty dataset -->
 
   <!-- Skeleton loader -->
-  <ion-list transparent-items *ngIf="!confirmedTransactions && !unconfirmedTransactions">
+  <ion-list transparent-items *ngIf="isLoading">
     <ion-card fake-card *ngFor="let fakeCard of fakeList">
       <ion-card-header>
         <p float-left> &nbsp; </p>
@@ -84,7 +84,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <ion-card no-border>
       <ion-item text-center>
         <ion-spinner name="dots"></ion-spinner>
       </ion-item>
@@ -152,9 +152,22 @@
   </ion-infinite-scroll>
   <!-- ./Infinite scroll -->
 
-  <section padding-bottom margin-bottom text-center *ngIf="hasTransactions !== undefined && !hasTransactions">
-    <button margin-bottom gradient-button color-1>
-      No more transactions
-    </button>
-  </section>
+  <ion-grid empty *ngIf="showEmptyMessage">
+    <ion-row>
+      <ion-col>
+        <img half-width [src]="App.STICKERS.SORRY">
+
+        <h4 ion-text color="lightgreen" text-wrap>
+          No transactions yet
+        </h4>
+        <h6 ion-text color="lightgreen" text-wrap>
+          Transfer mosaics to your new account now
+        </h6>
+
+        <button gradient-button color-5 color="light">
+          Transfer mosaic
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

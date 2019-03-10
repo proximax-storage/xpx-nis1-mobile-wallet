@@ -1,5 +1,5 @@
 ion-list[transparent-items] {
-  ion-card {
+  ion-card:not([no-border]) {
     border-radius: 0.5rem;
     background: transparentize(color($colors, light), 0.9);
     color: color($colors, light);

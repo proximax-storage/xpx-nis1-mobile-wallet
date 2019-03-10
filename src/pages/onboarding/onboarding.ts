@@ -42,32 +42,39 @@ export class OnboardingPage {
   init() {
     this.slides = [
       {
-        title: 'Performance',
+        title: 'BLOCKCHAIN',
         description:
-          'NEM’s blockchain platform was designed and coded from the ground up for scale and speed. NEM’s permissioned private blockchain delivers industry-leading transaction rates for internal ledgers. And its revolutionary consensus mechanism and the Supernode program ensure that NEM’s open, public blockchain can grow without ever compromising throughput or stability.',
+          'Provided for via the NEM technology, ProximaX now extends corporations and enterprises with the choice of a public and private blockchain.',
+        isSmall: true,
+        image: App.SLIDES.SLIDE1
+      },
+      {
+        title: 'STREAMING',
+        description:
+          'Leveraging from the well-developed peer-to-peer streaming protocol running on blockchain by PeerStream Inc, your enterprise system will be assured of privacy when communication takes place outside of the chain especially when in contact with crypto identities.',
+        isSmall: true,
+        image: App.SLIDES.SLIDE2
+      },
+      {
+        title: 'STORAGE',
+        description:
+          'Your data will never be lost because of ProximaX’s built-in automatic data replication and distribution capability.',
+        isSmall: true,
+        image: App.SLIDES.SLIDE3
+      },
+      {
+        title: 'CONSENSUS',
+        description:
+          'ProximaX will use multi-layered consensus protocols for voting, governance, harvesting and to reward network nodes for contributing storage and bandwidth resources on the network. ProximaX nodes, app developers, and content creators will be rewarded in XPX tokens based on their various business models on the platform.',
         isSmall: true,
         image: App.SLIDES.SLIDE4
       },
       {
-        title: 'Ease of Development',
+        title: 'DATABASE SYSTEM',
         description:
-          'NEM’s blockchain exposes its functionality through a powerful API interface that can be used with any programming language, not a specific “smart contract” language. Existing business logic code can easily mate up and use blockchain where it’s strongest: secure transactions and ledger keeping. In short, configure NEM for your business, and then deploy blockchain incrementally and without forced retooling of existing infrastructure.',
+          'Decentralised Database Technology features a high throughput, low latency, and immutable data storage including all the blockchain attributes that allow developers to build secure applications with powerful indexing and querying functionality using the underlying MongoDB database engine.',
         isSmall: true,
         image: App.SLIDES.SLIDE5
-      },
-      {
-        title: 'Deep Customization',
-        description:
-          'Unlike other blockchain technologies, NEM is built from the ground up with powerful modular customization for virtually any application. We call it our Smart Asset system. With it, NEM lets you focus on building exactly what you need, whether that’s a fintech system, tracking logistics, an ICO, document notarization, decentralized authentication, or much more.',
-        isSmall: true,
-        image: App.SLIDES.SLIDE6
-      },
-      {
-        title: 'Security',
-        description:
-          'NEM’s architecture provides an incredibly secure and stable platform through its use of Eigentrust++ and an incentivized public node network based on its two-tier architecture. The significant risks inherent in on-blockchain “smart contracts” are eliminated by providing building block customization to NEM functionality that keeps application security in your hands, not on the blockchain.',
-        isSmall: true,
-        image: App.SLIDES.SLIDE7
       }
     ];
   }
