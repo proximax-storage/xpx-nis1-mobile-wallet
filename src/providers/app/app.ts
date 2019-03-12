@@ -11,11 +11,13 @@ import { Injectable } from '@angular/core';
 export class App {
   private static ASSETS = "assets/imgs";
   public static STICKERS = {
-    SORRY: `${App.ASSETS}/stickers/ninja-cry.png`,
-    HAPPY: `${App.ASSETS}/stickers/ninja-happy.png`,
-    LOOK: `${App.ASSETS}/stickers/ninja-look.png`,
-    INFO: `${App.ASSETS}/stickers/ninja-info.png`,
-    THUMBS_UP: `${App.ASSETS}/stickers/ninja-thumbs-up.png`
+    HAPPY: `${App.ASSETS}/stickers/happy.png`,
+    INFO: `${App.ASSETS}/stickers/info.png`,
+    SORRY: `${App.ASSETS}/stickers/sorry.png`,
+    LOOK: `${App.ASSETS}/stickers/look.png`,
+    HINT: `${App.ASSETS}/stickers/idea.png`,
+    WALLET: `${App.ASSETS}/stickers/wallet.png`,
+    INVALID: `${App.ASSETS}/stickers/invalid.png`
   };
   public static SLIDES = {
     SLIDE1: `${App.ASSETS}/slides/xpx-slide-1.png`,
@@ -25,8 +27,8 @@ export class App {
     SLIDE5: `${App.ASSETS}/slides/xpx-slide-5.png`
   };
   public static LOGO = {
-    NEM: `assets/imgs/mosaics/xem.png`,
     XPX: `assets/imgs/mosaics/xpx.png`,
+    NEM: `assets/imgs/mosaics/xem.png`,
     LYL: `assets/imgs/mosaics/lyl.png`
   };
   public static USER = `${App.ASSETS}/user.svg`;

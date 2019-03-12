@@ -21,10 +21,19 @@
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
 
-        <p text-wrap>
+        <h6 ion-text color="lightgreen" text-wrap>
+          You don't have any contacts yet.
+        </h6>
+
+        <!-- <p text-wrap>
+          Start by adding one new contact or two. 
+        </p> -->
+
+
+        <!-- <p text-wrap>
           It looks like you don't have any contacts yet.
           <br> Try adding one or two.
-        </p>
+        </p> -->
 
         <button gradient-button color-5 (click)="showAddContactPrompt()">
           Add new contact

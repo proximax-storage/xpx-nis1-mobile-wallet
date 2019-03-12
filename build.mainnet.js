@@ -30,7 +30,7 @@ changeFileContent(
 
 changeFileContent(
   config,
-  'NEM Wallet Pro TN',
-  'NEM Wallet Pro MN',
-  '✓ Finished - Changing app name to "NEM Wallet Pro MN"'
+  'ProximaX Wallet TN',
+  'ProximaX Wallet MN',
+  '✓ Finished - Changing app name to "ProximaX Wallet MN"'
 );

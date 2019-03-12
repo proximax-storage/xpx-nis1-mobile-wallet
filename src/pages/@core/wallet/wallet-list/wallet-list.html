@@ -25,16 +25,16 @@
   <ion-grid empty *ngIf="wallets && !wallets.length">
     <ion-row>
       <ion-col>
-        <img half-width [src]="App.STICKERS.HAPPY">
+        <img half-width [src]="App.STICKERS.WALLET" class="small-image">
 
-        <h2 ion-text color="light">Welcome to NEM Wallet PRO!</h2>
+        <h3 ion-text color="light">Let's create your first wallet!</h3>
 
-        <p text-wrap text-center ion-text color="light">
+        <!-- <p text-wrap text-center ion-text color="light">
           Let's start by creating your new wallet.
-        </p>
+        </p> -->
 
         <button gradient-button color-5 (click)="showAddWalletPrompt()">
-          Create New Wallet
+          Continue
         </button>
       </ion-col>
     </ion-row>
@@ -43,14 +43,14 @@
   <ion-list transparent-items [hidden]="!showWalletsHint">
     <ion-card margin-bottom>
       <ion-card-header text-center>
-        <img quarter-width [src]="App.STICKERS.THUMBS_UP">
+        <img quarter-width [src]="App.STICKERS.HINT">
       </ion-card-header>
       <ion-card-content>
-        <p text-wrap text-justify ion-text color="light">
-          A NEM wallet is like a wallet with cash. If you wouldn't keep a thousand dollars in your pocket, you might want to have the
+        <h4 text-wrap text-justify ion-text color="light">
+          ProximaX Wallet is like a wallet with cash. If you wouldn't keep a thousand dollars in your pocket, you might want to have the
           same consideration for your NEM wallet. In general, it is a good practice to keep only small amounts of XEMS on
           your computer, mobile, or server for everyday uses and to keep the remaining part of your funds in a safer environment.
-        </p>
+        </h4>
 
         <section text-center>
           <button gradient-button small no-margin color-5 (click)="hideWalletsHint()">

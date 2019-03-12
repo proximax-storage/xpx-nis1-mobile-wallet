@@ -71,10 +71,10 @@ export class WalletImportOptionPage {
         value: WalletImportOption.PRIVATE_KEY
       },
       {
-        name: "Import from NEM Wallet Pro",
+        name: "Import from ProximaX Wallet",
         value: WalletImportOption.NANO_WALLET,
         icon: "barcode",
-        prompt: "Scan QR from NEM Wallet Pro"
+        prompt: "Scan QR from ProximaX Wallet"
       },
       {
         name: "Import from nanoWallet",
