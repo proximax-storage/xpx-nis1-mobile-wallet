@@ -50,7 +50,7 @@ export class ReceivePage {
       decimal: '.',
       precision: 2,
       prefix: '',
-      suffix: ' XEM',
+      suffix: ' XPX',
       thousands: ',',
       nullable: false
     };

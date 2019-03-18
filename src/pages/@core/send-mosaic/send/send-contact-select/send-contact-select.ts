@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
-import { App } from '../../../../../providers/app/app';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, App } from 'ionic-angular';
+import { App as AppConfig } from '../../../../../providers/app/app';
 import { ContactsProvider } from '../../../../../providers/contacts/contacts';
 import { BarcodeScannerProvider } from '../../../../../providers/barcode-scanner/barcode-scanner';
 
@@ -20,7 +20,7 @@ export enum ContactCreationType {
   templateUrl: 'send-contact-select.html'
 })
 export class SendContactSelectPage {
-  App = App;
+  App = AppConfig;
   title: string;
 
   selectedContact: any;
@@ -34,6 +34,7 @@ export class SendContactSelectPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public app: App,
     public viewCtrl: ViewController,
     public contactsProvider: ContactsProvider,
     private alertCtrl: AlertController,
@@ -98,10 +99,10 @@ export class SendContactSelectPage {
       text: 'Proceed',
       handler: data => {
 
-        this.viewCtrl.dismiss(undefined).then(() => {
+        this.viewCtrl.dismiss(null).then(() => {
 
           if (data === ContactCreationType.MANUAL.toString()) {
-            this.navCtrl.push('ContactAddPage', {
+            this.app.getRootNav().push('ContactAddPage', {
               name: '',
               address: '',
               telegram: ''
@@ -116,7 +117,7 @@ export class SendContactSelectPage {
                   telegram: result.data.telegram || ''
                 };
 
-                if (data) this.navCtrl.push('ContactAddPage', ACCOUNT_INFO);
+                if (data) this.app.getRootNav().push('ContactAddPage', ACCOUNT_INFO);
               });
           }
         })

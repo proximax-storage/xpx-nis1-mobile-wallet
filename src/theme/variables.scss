@@ -44,21 +44,34 @@ $colors: (
   black : #000,
   grey:       rgba(228, 230, 238, 0.59),
 
-  lightgreen: #b2e1d9
+  lightgreen: #b2e1d9,
+  tabs: #17abda
 );
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
+.ios {
+  ion-fab[fab-button-center] {
+    button[gradient-button] {
+      bottom: 7vh;
+    }
+  }
+}
 
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
+.md {
+  ion-fab[fab-button-center] {
+    button[gradient-button] {
+      bottom: 5vh;
+    }
+  }
+}
 
 
 
@@ -99,3 +112,4 @@ $text-input-placeholder-color: lighten(color($colors, light), 0.1);
 
 @import "roboto";
 @import "noto-sans";
+

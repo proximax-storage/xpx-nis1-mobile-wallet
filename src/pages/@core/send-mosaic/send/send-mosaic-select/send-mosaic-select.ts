@@ -69,6 +69,7 @@ export class SendMosaicSelectPage {
   public getBalance() {
     this.getBalanceProvider.mosaics(this.selectedWallet.address).subscribe(mosaics => {
       this.mosaics = mosaics;
+      this.selectedMosaic = this.mosaics[0];
 
       if (this.mosaics.length > 0) {
         this.selectedMosaic = this.navParams.get('selectedMosaic') || this.mosaics[0];

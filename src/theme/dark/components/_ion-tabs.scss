@@ -1,7 +1,8 @@
 ion-tabs {
   &,
   .tabbar {
-    background: transparentize(color($colors, primary), 0.03);
+    background: color($colors, tabs);
+    border-top: 0;
   }
 
   .tabbar {
@@ -26,7 +27,6 @@ ion-fab[fab-button-center] {
     height: 64px;
     width: 64px;
     margin: 0;
-    bottom: 5rem;
   }
   z-index: 999 !important;
 }

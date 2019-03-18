@@ -52,7 +52,7 @@
           <ion-option value="manual">Manual input</ion-option>
         </ion-select>
       </ion-item>
-      <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('to')">
+      <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('Select Contact')">
         <ion-item>
           <img item-left logo-small [src]="App.USER">
           <h2 ion-text color="light">{{ form.get('recipientName').value || 'None' }}</h2>
@@ -79,7 +79,7 @@
       <h6 margin-left ion-text color="light">Note</h6>
       <ion-card>
         <ion-item no-border>
-          <ion-textarea ion-text color="light" autosize ion-text color="light" formControlName="message" placeholder="Your message"></ion-textarea>
+          <ion-textarea ion-text color="light" autosize rows="5" ion-text color="light" formControlName="message" placeholder="Your message"></ion-textarea>
         </ion-item>
       </ion-card>
     </form>

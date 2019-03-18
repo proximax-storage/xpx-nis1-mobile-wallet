@@ -61,7 +61,7 @@ export class GetBalanceProvider {
           });
 
           if (XPX_INDEX < 0) {
-            mosaics.splice(1, 0, XPX);
+            mosaics.splice(0, 0, XPX);
           }
           if (LYL_INDEX < 0) {
             mosaics.splice(2, 0, LYL);
