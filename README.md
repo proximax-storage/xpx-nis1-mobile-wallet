@@ -1,6 +1,6 @@
 # The ProximaX wallet is a simple and powerful full featured ProximaX wallet that allows you to send and receive currency with anyone anywhere in the world.
-# ProximaX wallet is a secure wallet for ProximaX on top of NEM blockchain (NIS 1). 
-# It is available for iOS and android.
+## ProximaX wallet is a secure wallet for ProximaX on top of NEM blockchain (NIS 1). 
+## It is available for iOS and android.
 
 ## Wallet features:
 
