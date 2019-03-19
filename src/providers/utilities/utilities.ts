@@ -55,7 +55,7 @@ export class UtilitiesProvider {
   }
 
   setRoot(page: string, data = {}) {
-    this.app.getRootNavs()[0].setRoot(page, data, {
+    this.app.getRootNav().setRoot(page, data, {
       animate: true,
       direction: 'backward'
     });

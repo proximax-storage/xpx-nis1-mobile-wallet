@@ -96,12 +96,21 @@
     </ion-card> -->
 
     <!-- Uncomment to add multisig -->
-    <!-- <ion-card (click)="showComingSoon()">
+    <ion-card (click)="gotoMultisignInfoPage()">
       <ion-item>
         <ion-icon item-left name="people"></ion-icon>
         <h2>Multisign accounts</h2>
-        <p text-wrap>Editable on-chain contracts, the most powerful way to secure funds & enable joint accounts.</p>
+        <p text-wrap>Multisig accounts are editable on-chain contracts, the most powerful way to secure funds, enable joint accounts</p>
       </ion-item>
-    </ion-card> -->
+    </ion-card>
+
+    <ion-card (click)="gotoWalletList()">
+      <ion-item>
+        <ion-icon item-left name="swap"></ion-icon>
+        <h2>Switch wallet</h2>
+        <p text-wrap>Switch to another wallet.</p>
+      </ion-item>
+    </ion-card>
+
   </ion-list>
 </ion-content>

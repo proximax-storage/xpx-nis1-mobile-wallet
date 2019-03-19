@@ -32,6 +32,8 @@ export class TransactionListPage {
   showEmptyMessage: boolean;
   isLoading: boolean;
 
+  isLoadingInfinite: boolean = false;
+
   pageable: Pageable<Transaction[]>;
 
   @ViewChild(InfiniteScroll)
@@ -84,16 +86,19 @@ export class TransactionListPage {
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
-            if (!this.confirmedTransactions) {
-              this.confirmedTransactions = result;
-              this.infiniteScroll.enable(true);
-            }
 
-            if (result.length > 0) {
-              this.showEmptyMessage = false;
+            if(!this.confirmedTransactions) this.showEmptyMessage = false;
+
+            if (this.isLoadingInfinite) {
+              this.isLoadingInfinite = false;
+
               this.confirmedTransactions.push(...result);
               this.infiniteScroll.complete();
             }
+
+            this.isLoading = false;
+            this.confirmedTransactions = result;
+            this.infiniteScroll.enable(true);
           },
             err => console.error(err),
             () => {
@@ -127,6 +132,7 @@ export class TransactionListPage {
 
   doInfinite() {
     if (!this.showEmptyMessage) return;
+    this.isLoadingInfinite = true;
     this.pageable.nextPage();
     console.log('Pageable Txs: ', this.pageable);
   }

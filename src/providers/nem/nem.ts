@@ -59,9 +59,9 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET);
+    NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // Todo: Change to MAIN_NET for production
 
-    if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
+    if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
       this.accountHttp = new AccountHttp(SERVER_CONFIG);
       this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
       this.transactionHttp = new TransactionHttp(SERVER_CONFIG);
@@ -82,7 +82,7 @@ export class NemProvider {
    * Change the network either TESTNET or MAINNET
    * @param network The network type to set: NetworkTypes.TEST_NET || NetworkTypes.MAIN_NET
    */
-  changeNetwork(network = NetworkTypes.MAIN_NET) {
+  changeNetwork(network = NetworkTypes.TEST_NET) { // Todo: Change to MAIN_NET for production
     NEMLibrary.reset();
     NEMLibrary.bootstrap(network);
     console.log(NEMLibrary.getNetworkType());

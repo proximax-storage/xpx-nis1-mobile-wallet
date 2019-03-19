@@ -74,7 +74,7 @@
   <!-- ./Skeleton loader -->
 
   <!-- Transactions -->
-  <ion-list transparent-items>
+  <ion-list transparent-items *ngIf="!isLoading">
 
     <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;" (click)="gotoTransactionDetail(transaction)">
       <!-- if importance transfer -->

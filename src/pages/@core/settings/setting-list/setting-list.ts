@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, App } from "ionic-angular";
 import { Clipboard } from "@ionic-native/clipboard";
 
 import { SimpleWallet, AccountInfoWithMetaData } from "nem-library";
@@ -8,6 +8,7 @@ import { WalletProvider } from "../../../../providers/wallet/wallet";
 import { NemProvider } from "../../../../providers/nem/nem";
 import { ToastProvider } from "./../../../../providers/toast/toast";
 import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
+
 
 /**
  * Generated class for the SettingListPage page.
@@ -32,7 +33,7 @@ export class SettingListPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
-    private utils: UtilitiesProvider
+    private utils: UtilitiesProvider,
   ) {}
 
   ionViewWillEnter() {
@@ -85,4 +86,15 @@ export class SettingListPage {
   showComingSoon() {
     this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
+
+  gotoMultisignInfoPage(){
+    this.showComingSoon();
+    // this.navCtrl.push('MultisignAccountInfoPage'); // Todo : Implement gotoMultisignInfoPage
+  }
+
+  gotoWalletList() {
+    this.utils.setRoot('WalletListPage');
+  }
+
+  
 }
