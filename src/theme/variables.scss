@@ -34,19 +34,17 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 
-$colors: (
-  primary: #25aae1,
-  secondary: #30dd8a,
-  trinary: #c1f5ec,
-  danger:     #ECAA4F,
-  light:      #E4E6EE,
-  dark: #25aae1,
-  black : #000,
-  grey:       rgba(228, 230, 238, 0.59),
+$colors: (primary: #25aae1,
+secondary: #30dd8a,
+trinary: #c1f5ec,
+danger: #ECAA4F,
+light: #E4E6EE,
+dark: #25aae1,
+black : #000,
+grey: rgba(228, 230, 238, 0.59),
 
-  lightgreen: #b2e1d9,
-  tabbgcolor: #17abda
-);
+lightgreen: #b2e1d9,
+tabbgcolor: #17abda);
 
 
 // App iOS Variables
@@ -94,10 +92,18 @@ $colors: (
 // color of placeholder for input[text]
 $text-input-placeholder-color: lighten(color($colors, light), 0.1);
 
-.ios, .md {
+.ios,
+.md {
   @import "dark/main";
 }
 
+// Fix for overlapping back button in status bar (iPhone XS above)
+.ios {
+  body {
+    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px) env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
+  }
+
+}
 
 // Ionicons
 // --------------------------------------------------
@@ -112,4 +118,3 @@ $text-input-placeholder-color: lighten(color($colors, light), 0.1);
 
 @import "roboto";
 @import "noto-sans";
-

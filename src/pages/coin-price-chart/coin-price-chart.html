@@ -31,7 +31,7 @@
   <ion-grid normal>
     <ion-row justify-content-center>
       <ion-col text-center *ngFor="let duration of durations" (click)="select(duration)">
-        <button gradient-button no-margin tiny (click)="select(duration)" [attr.color-1]="selectedDuration.value === duration.value ? true : null"
+<button gradient-button no-margin width-auto tiny (click)="select(duration)" [attr.color-1]="selectedDuration.value === duration.value ? true : null"
           [attr.color-5]="selectedDuration.value !== duration.value ? true : null">
           {{ duration.label }}
         </button>
@@ -61,7 +61,7 @@
     <ion-card>
       <ion-item>
         <p item-left ion-text color="grey">Market rank</p>
-        <button item-right gradient-button color-5 no-margin tiny *ngIf="selectedCoin; else loading">
+        <button item-right gradient-button color-5 no-margin width-auto  tiny *ngIf="selectedCoin; else loading">
           #{{ selectedCoin.market_cap_rank }}
         </button>
       </ion-item>
