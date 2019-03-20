@@ -39,22 +39,6 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid normal>
-    <ion-row>
-      <ion-col text-center col-6>
-        <button full gradient-button color-5 no-margin *ngIf="this.navParams.data === 'nem'" (click)="goto('BuyXemPage')">
-          Buy
-        </button>
-      </ion-col>
-      <ion-col text-center col-6>
-        <button full gradient-button color-5 no-margin *ngIf="this.navParams.data === 'nem'" (click)="goto('SellXemPage')">
-          Sell
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-
   <ion-list transparent-items>
     <h2 margin-left ion-text color="light">About</h2>
     <ion-card (click)="readMore(selectedCoin.description['en'].length)">
