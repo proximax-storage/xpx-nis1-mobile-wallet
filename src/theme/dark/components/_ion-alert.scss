@@ -21,9 +21,7 @@ ion-alert.alert-ios {
     background: linear-gradient(
         transparentize(color($colors, secondary), 0.3),
         color($colors, dark)
-      ),
-      url('https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')
-        no-repeat;
+      );
     background-position: center;
     background-size: cover;
   }
