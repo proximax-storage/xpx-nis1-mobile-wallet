@@ -19,7 +19,7 @@
 
 <ion-content background>
   <section text-center>
-    <h1 price ion-text color="light" *ngIf="selectedCoin">{{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-4' }}</h1>
+    <h1 price ion-text color="light" *ngIf="selectedCoin">{{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-6' }}</h1>
     <button gradient-button tiny width-auto no-margin [attr.color-5]="selectedCoin.market_data.market_cap_change_percentage_24h > 0 ? true : null"
       [attr.color-5]="selectedCoin.market_data.market_cap_change_percentage_24h < 0 ? true : null" *ngIf="selectedCoin">
       {{ selectedCoin.market_data.market_cap_change_percentage_24h | number: '1.1-1' }}%
@@ -69,7 +69,7 @@
       <ion-item>
         <p item-left ion-text color="grey">Current Price</p>
         <button item-right gradient-button color-5 no-margin tiny width-auto *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-4' }}
+          {{ selectedCoin.market_data.current_price.usd | currency: 'USD': 'symbol': '1.2-6' }}
         </button>
       </ion-item>
     </ion-card>
@@ -87,7 +87,7 @@
       <ion-item>
         <p item-left ion-text color="grey">Highest price in 24 hours</p>
         <button item-right gradient-button color-5 no-margin tiny width-auto *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.high_24h.usd | currency: 'USD': 'symbol': '1.2-4' }}
+          {{ selectedCoin.market_data.high_24h.usd | currency: 'USD': 'symbol': '1.2-6' }}
         </button>
       </ion-item>
     </ion-card>
@@ -96,7 +96,7 @@
       <ion-item>
         <p item-left ion-text color="grey">Lowest price in 24 hours</p>
         <button item-right gradient-button color-5 no-margin tiny width-auto *ngIf="selectedCoin; else loading">
-          {{ selectedCoin.market_data.low_24h.usd | currency: 'USD': 'symbol': '1.2-4' }}
+          {{ selectedCoin.market_data.low_24h.usd | currency: 'USD': 'symbol': '1.2-6' }}
         </button>
       </ion-item>
     </ion-card>
