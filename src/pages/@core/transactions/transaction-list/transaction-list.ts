@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, InfiniteScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, InfiniteScroll, ModalController } from 'ionic-angular';
 import { SimpleWallet, TransactionTypes, Pageable, Transaction } from 'nem-library';
 import { Observable } from 'nem-library/node_modules/rxjs/Observable';
 
@@ -45,6 +45,7 @@ export class TransactionListPage {
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
+    private modalCtrl: ModalController
   ) { }
 
   ionViewWillEnter() {
@@ -123,7 +124,13 @@ export class TransactionListPage {
   }
 
   gotoReceive() {
-    this.navCtrl.push('ReceivePage');
+    // this.navCtrl.push('ReceivePage');
+    let page = "ReceivePage";
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 
   gotoTransactionDetail(tx) {

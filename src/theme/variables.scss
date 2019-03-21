@@ -100,7 +100,7 @@ $text-input-placeholder-color: lighten(color($colors, light), 0.1);
 // Fix for overlapping back button in status bar (iPhone XS above)
 .ios {
   body {
-    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px) env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
+    padding: env(safe-area-inset-top, 30px) env(safe-area-inset-right, 30px) env(safe-area-inset-bottom, 30px) env(safe-area-inset-left, 30px);
   }
 
 }

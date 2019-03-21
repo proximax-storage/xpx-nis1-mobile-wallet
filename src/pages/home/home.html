@@ -1,26 +1,12 @@
 <ion-header no-border>
-  <ion-navbar transparent>
-    <!-- <ion-buttons right>
-      <button ion-button icon-only ion-text color="light" (click)="gotoWalletList()">
-        <ion-icon name="swap"></ion-icon>
-      </button>
-    </ion-buttons> -->
+  <ion-navbar transparent padding-top >
+    <ion-title>
+      <span ion-text color="light">Mosaics</span>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content fullscreen background>
-  <!-- <section text-center>
-    <p no-margin ion-text color="light">
-      <small>Your Total Balance</small>
-    </p>
-    <h1 ion-text color="light">
-      <span symbol>$</span>
-      <span>1,632.95</span>
-    </h1>
-  </section> -->
-
-  <h6 margin-left ion-text color="light">Mosaics</h6>
-
+<ion-content fullscreen background no-margin>
   <ion-list transparent-items>
     <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
       <ion-card-header no-padding>

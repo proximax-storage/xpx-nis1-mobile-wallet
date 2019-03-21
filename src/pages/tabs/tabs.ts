@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Events, Tabs } from 'ionic-angular';
+import { IonicPage, NavController, Events, Tabs, ModalController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 import { UtilitiesProvider } from '../../providers/utilities/utilities';
@@ -19,7 +19,7 @@ export class TabsPage {
 
   @ViewChild(Tabs) public tabs: Tabs;
 
-  constructor(private navCtrl: NavController, public events: Events, private utils: UtilitiesProvider) { }
+  constructor(private navCtrl: NavController, public events: Events, private utils: UtilitiesProvider, private modalCtrl:ModalController) { }
 
   ionViewWillEnter() {
     this.utils.setHardwareBack();
@@ -34,6 +34,12 @@ export class TabsPage {
   }
 
   gotoSend() {
-    this.navCtrl.push('SendPage');
+    // this.navCtrl.push('SendPage');
+    let page = "SendPage";
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 }
