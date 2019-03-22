@@ -29,7 +29,10 @@ export class App {
   public static LOGO = {
     XPX: `assets/imgs/mosaics/xpx.png`,
     NEM: `assets/imgs/mosaics/xem.png`,
-    LYL: `assets/imgs/mosaics/lyl.png`
+    NPXS: `assets/imgs/mosaics/npxs.png`,
+    SFT: `assets/imgs/mosaics/sft.png`,
+    XAR: `assets/imgs/mosaics/xar.png`,
+    DEFAULT: `assets/imgs/mosaics/default.png`,
   };
   public static USER = `${App.ASSETS}/user.svg`;
 

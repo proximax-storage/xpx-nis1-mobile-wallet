@@ -74,8 +74,8 @@ export class HomePage {
       coinId = 'nem';
     } else if (mosaic === 'xpx') {
       coinId = 'proximax';
-    } else if (mosaic === 'lyl') {
-      coinId = 'loyalcoin';
+    } else if (mosaic === 'npxs') {
+      coinId = 'pundi-x';
     } else {
       this.alertProvider.showMessage(
         "We're sorry but we don't have any available data for this mosaic yet."

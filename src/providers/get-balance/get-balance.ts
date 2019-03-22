@@ -24,6 +24,7 @@ export class GetBalanceProvider {
   }
 
   private generateInitialMosaics(): Array<MosaicTransferable> {
+    // ProximaX
     const XPX_MOSAIC_ID = new MosaicId('prx', 'xpx');
     const XPX_MOSAIC_PROPERTIES = new MosaicProperties(
       6,
@@ -33,21 +34,45 @@ export class GetBalanceProvider {
     );
     const XPX = new MosaicTransferable(XPX_MOSAIC_ID, XPX_MOSAIC_PROPERTIES, 0);
 
-    const LYL_MOSAIC_ID = new MosaicId('appsolutely', 'lyl');
-    const LYL_MOSAIC_PROPERTIES = new MosaicProperties(
+    // PUNDIX
+    const NPXS_MOSAIC_ID = new MosaicId('pundix', 'npxs');
+    const NPXS_MOSAIC_PROPERTIES = new MosaicProperties(
       6,
       9000000000,
       true,
       false
     );
-    const LYL = new MosaicTransferable(LYL_MOSAIC_ID, LYL_MOSAIC_PROPERTIES, 0);
+    const NPXS = new MosaicTransferable(NPXS_MOSAIC_ID, NPXS_MOSAIC_PROPERTIES, 0);
 
-    return [XPX, LYL];
+    // SPORTSFIX
+    const SFT_MOSAIC_ID = new MosaicId('sportsfix', 'sft');
+    const SFT_MOSAIC_PROPERTIES = new MosaicProperties(
+      6,
+      9000000000,
+      true,
+      false
+    );
+    const SFT = new MosaicTransferable(SFT_MOSAIC_ID, SFT_MOSAIC_PROPERTIES, 0);
+
+    // XARCADE
+    const XAR_MOSAIC_ID = new MosaicId('xarcade', 'xar');
+    const XAR_MOSAIC_PROPERTIES = new MosaicProperties(
+      6,
+      9000000000,
+      true,
+      false
+    );
+    const XAR = new MosaicTransferable(XAR_MOSAIC_ID, XAR_MOSAIC_PROPERTIES, 0);
+
+    return [XPX, NPXS, SFT, XAR];
   }
 
   mosaics(address: Address): Observable<Array<MosaicTransferable>> {
     const XPX = this.generateInitialMosaics()[0];
-    const LYL = this.generateInitialMosaics()[1];
+    const NPXS = this.generateInitialMosaics()[1];
+    const SFT = this.generateInitialMosaics()[2];
+    const XAR = this.generateInitialMosaics()[3];
+
 
     return new Observable(observer => {
       this.nemProvider
@@ -56,15 +81,29 @@ export class GetBalanceProvider {
           const XPX_INDEX = findIndex(mosaics, {
             mosaicId: { namespaceId: 'prx', name: 'xpx' }
           });
-          const LYL_INDEX = findIndex(mosaics, {
-            mosaicId: { namespaceId: 'appsolutely', name: 'lyl' }
+          const NPXS_INDEX = findIndex(mosaics, {
+            mosaicId: { namespaceId: 'pundix', name: 'npxs' }
+          });
+
+          const SFT_INDEX = findIndex(mosaics, {
+            mosaicId: { namespaceId: 'sportsfix', name: 'sft' }
+          });
+
+          const XAR_INDEX = findIndex(mosaics, {
+            mosaicId: { namespaceId: 'xarcade', name: 'xar' }
           });
 
           if (XPX_INDEX < 0) {
             mosaics.splice(0, 0, XPX);
           }
-          if (LYL_INDEX < 0) {
-            mosaics.splice(2, 0, LYL);
+          if (NPXS_INDEX < 0) {
+            mosaics.splice(2, 0, NPXS);
+          }
+          if (SFT_INDEX < 0) {
+            mosaics.splice(3, 0, SFT);
+          }
+          if (XAR_INDEX < 0) {
+            mosaics.splice(4, 0, XAR);
           }
 
           observer.next(mosaics);
