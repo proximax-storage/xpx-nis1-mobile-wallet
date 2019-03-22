@@ -41,8 +41,6 @@ export class WalletListPage {
   wallets: SimpleWallet[];
   selectedWallet: SimpleWallet;
 
-  showWalletsHint: boolean = true;
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -61,10 +59,6 @@ export class WalletListPage {
 
   ionViewWillEnter() {
     this.utils.setHardwareBack();
-
-    this.storage.get('showWalletsHint').then(val => {
-      this.showWalletsHint = val === null ? true : val;
-    });
 
     this.walletProvider.getWallets().then(value => {
       this.wallets = sortBy(value, 'name');
