@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnChanges } from "@angular/core";
 
 /**
  * Generated class for the PinComponent component.
@@ -10,31 +10,52 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
   selector: 'ngx-pin',
   templateUrl: 'pin.html'
 })
-export class PinComponent {
+export class PinComponent implements OnChanges {
   @Input() title: String = 'Let\'s setup your PIN CODE';
   @Input() subtitle: String = 'PIN CODE serves as a secondary form of verification. Having a PIN CODE provides additional security capability on your wallet.';
+  @Input() previousPin = '';
+  @Input() isVerify = false;
 
-  pin: string = '';
+  inputPin: string = '';
+  maxLength: number = 6;
+
+  styleClasses = {
+    miss: false,
+  };
 
   @Output() submit: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
+  ngOnChanges(val) {
+    if ('isVerify' in val && 'previousPin' in val) {
+      this.isVerify = val['isVerify'].currentValue;
+      this.previousPin = val['previousPin'].currentValue;
+    }
+  }
+
   emitEvent() {
-    this.submit.emit(this.pin);
+    this.submit.emit(this.inputPin);
   }
 
   handleInput(pin: string) {
-    if (pin === 'clear') {
-      this.pin = '';
-      return;
-    }
+    this.styleClasses.miss = false;
+    
+    if (this.inputPin.length !== this.maxLength) this.inputPin += pin;
+    if (this.inputPin.length === this.maxLength) { 
+      if (this.isVerify && this.previousPin !== this.inputPin) {
+        this.styleClasses.miss = true;
+      }
 
-    this.pin += pin;
-    if (this.pin.length === 4) this.emitEvent();
+      console.log('PinComponent : this.isVerify', this.isVerify);
+      console.log('PinComponent : this.previousPin', this.previousPin);
+      console.log('PinComponent : his.styleClasses.miss', this.styleClasses.miss);
+      this.emitEvent(); 
+      this.inputPin = '';
+    }
   }
 
-  erase() {
-    if (this.pin.length) this.pin = this.pin.slice(0, -1);
+  public backspace() {
+    if (this.inputPin.length) this.inputPin = this.inputPin.slice(0, -1);
   }
 }
