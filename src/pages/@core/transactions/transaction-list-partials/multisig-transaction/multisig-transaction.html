@@ -1,16 +1,16 @@
 <ion-card-header>
-  <p float-left ion-text color="light">
+  <p float-left ion-text color="black">
     {{ tx.otherTransaction.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
   </p>
-  <p float-right ion-text color="light">
+  <p float-right ion-text color="black">
     {{ tx.otherTransaction.timeWindow.timeStamp.toString() | timeago }}
   </p>
 </ion-card-header>
 <ion-card-header *ngIf="tx.otherTransaction.containsMosaics && !tx.otherTransaction.containsMosaics()">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(tx.otherTransaction.xem())">
-    <h2 ion-text color="light">XEM</h2>
-    <p ion-text color="light">
+    <h2 ion-text color="black">XEM</h2>
+    <p ion-text color="black">
       <small>
         NEM
       </small>
@@ -25,7 +25,7 @@
         - {{ amount | number: '1.2-16' }}
       </h2>
 
-      <p text-right text-left ion-text color="light">
+      <p text-right text-left ion-text color="black">
         <small>
           {{ amount | currency }}
         </small>
@@ -36,8 +36,8 @@
 <ion-card-header *ngFor="let mosaic of mosaics">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(mosaic)">
-    <h2 ion-text text-uppercase color="light">{{ mosaic.mosaicId.name }}</h2>
-    <p ion-text color="light">
+    <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
+    <p ion-text color="black">
       <small>
         {{ mosaic.mosaicId.namespaceId }}
       </small>
@@ -52,7 +52,7 @@
         - {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
 
-      <p text-right text-left ion-text color="light">
+      <p text-right text-left ion-text color="black">
         <small *ngIf="mosaic.mosaicId.name === 'xpx'">
           {{ mosaic.amount * 0.00837014 | currency }}
         </small>
@@ -66,10 +66,10 @@
 </ion-card-header>
 <ion-card-content line no-padding>
   <ion-item>
-    <h3 text-wrap ion-text color="light">
+    <h3 text-wrap ion-text color="black">
       {{ tx.signer.address.value | searchContact: tx.signer.address.value | async }}
     </h3>
-    <p ion-text color="light">
+    <p ion-text color="black">
       <small *ngIf="owner?.plain() !== tx?.otherTransaction?.recipient.plain()">Sender</small>
       <small *ngIf="owner?.plain() === tx?.otherTransaction?.recipient.plain()">Receiver</small>
     </p>
@@ -80,7 +80,7 @@
         <ion-icon name="checkmark"></ion-icon>
       </button>
 
-      <p ion-text color="light">
+      <p ion-text color="black">
         <small>
           Confirmed
           <br> Multisign Transfer
@@ -94,7 +94,7 @@
         <ion-icon name="ios-more"></ion-icon>
       </button>
 
-      <p ion-text color="light">
+      <p ion-text color="black">
         <small>
           Unconfirmed
           <br> Multisign Transfer

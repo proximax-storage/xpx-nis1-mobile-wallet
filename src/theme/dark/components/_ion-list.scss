@@ -1,11 +1,11 @@
 ion-list[transparent-items] {
   ion-card:not([no-border]) {
     border-radius: 0.5rem;
-    background: transparentize(color($colors, black), 0.85);
-    color: color($colors, light);
+    background: rgba(224, 224, 224, 0.43);
+    color: color($colors, primary);
 
     &[selected] {
-      background-image: linear-gradient(45deg, #3cba92, transparentize(color($colors, dark), 0.9));
+      background-image: linear-gradient(45deg, lighten(color($colors, secondary), 15%), lighten(color($colors, primary),  25%));
       transition: all 0.4s ease-in-out;
     }
 
@@ -30,13 +30,15 @@ ion-list[transparent-items] {
       padding-bottom: 18px;
     }
 
-    h2:not([ion-text]),
-    ion-icon {
+    h2:not([ion-text]), ion-icon {
+      color: darken(color($colors, dark), 10%);
+    }
+    ion-icon:not([item-left]) {
       color: lighten(color($colors, light), 10%);
     }
 
     p:not([ion-text]) {
-      color: lighten(color($colors, trinary), 1%);
+      color: darken(color($colors, dark), 1%);
     }
 
     p[small] {
@@ -54,7 +56,7 @@ ion-list[transparent-items] {
   }
 
   ion-item-sliding {
-    background: transparentize(color($colors, light), 0.95);
+    background: transparentize(color($colors, dark), 0.95);
   }
 
   p {

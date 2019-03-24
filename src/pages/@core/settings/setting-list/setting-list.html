@@ -7,7 +7,7 @@
 <ion-header no-border>
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="light">
+      <span ion-text color="black">
         Settings
       </span>
     </ion-title>
@@ -16,7 +16,7 @@
 
 <ion-content background>
   <!-- QR code of NEM address -->
-  <ngx-kjua text-center *ngIf="currentWallet" fill="#fff" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="getQRCode()">
+  <ngx-kjua text-center *ngIf="currentWallet" fill="#000" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="getQRCode()">
   </ngx-kjua>
 
   <section text-center *ngIf="!currentWallet">
@@ -70,7 +70,7 @@
       </ion-item>
     </ion-card>
 
-    <ion-card (click)="goto('NamespaceListPage')">
+    <!-- <ion-card (click)="goto('NamespaceListPage')">
       <ion-item>
         <ion-icon item-left name="git-network"></ion-icon>
         <h2>Namespaces</h2>
@@ -84,7 +84,7 @@
         <h2>Mosaics</h2>
         <p text-wrap>Assets that expose additional properties and other features. Root namespace is required to create one.</p>
       </ion-item>
-    </ion-card>
+    </ion-card> -->
 
     <!-- Uncomment to add harvesting -->
     <!-- <ion-card (click)="showComingSoon()">
@@ -105,7 +105,7 @@
     </ion-card>
 
     <ion-card (click)="gotoWalletList()">
-      <ion-item>
+      <ion-item >
         <ion-icon item-left name="swap"></ion-icon>
         <h2>Switch wallet</h2>
         <p text-wrap>Switch to another wallet.</p>

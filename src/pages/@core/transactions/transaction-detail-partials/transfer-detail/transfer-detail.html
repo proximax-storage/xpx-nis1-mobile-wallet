@@ -3,15 +3,15 @@
   <ion-card-content no-padding>
     <ion-item>
       <img logo-small item-left [src]="App.LOGO.NEM">
-      <h2 ion-text color="light">XEM</h2>
-      <p ion-text color="light">
+      <h2 ion-text color="black">XEM</h2>
+      <p ion-text color="black">
         <small>
           NEM
         </small>
       </p>
 
       <section item-right>
-        <h2 text-right ion-text color="light" *ngIf="amount == 0">
+        <h2 text-right ion-text color="black" *ngIf="amount == 0">
           0
         </h2>
 
@@ -32,8 +32,8 @@
 <ion-card *ngFor="let mosaic of mosaics">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(mosaic)">
-    <h2 ion-text text-uppercase color="light">{{ mosaic.mosaicId.name }}</h2>
-    <p ion-text color="light">
+    <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
+    <p ion-text color="black">
       <small>
         {{ mosaic.mosaicId.namespaceId }}
       </small>
@@ -48,7 +48,7 @@
         - {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
 
-      <p text-right text-left ion-text color="light">
+      <p text-right text-left ion-text color="black">
         <small *ngIf="mosaic.mosaicId.name === 'xpx';">
           {{ mosaic.amount * 0.00837014 | currency }}
         </small>
@@ -70,9 +70,9 @@
 <ion-card>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">Date</h2>
+      <h2 ion-text color="black">Date</h2>
 
-      <p text-wrap ion-text color="light">
+      <p text-wrap ion-text color="black">
         {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
       </p>
 
@@ -88,7 +88,7 @@
 <ion-card (click)="utils.copy(tx?.signer.address.value, 'sender')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">
+      <h2 ion-text color="black">
         Sender
       </h2>
 
@@ -102,7 +102,7 @@
 <ion-card (click)="utils.copy(tx?.recipient.value, 'receiver')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">
+      <h2 ion-text color="black">
         Receiver
       </h2>
 
@@ -116,9 +116,9 @@
 <ion-card>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">Fee</h2>
+      <h2 ion-text color="black">Fee</h2>
 
-      <p text-wrap ion-text color="light">
+      <p text-wrap ion-text color="black">
         {{ tx.fee | formatXEM }} XEM
       </p>
     </ion-item>
@@ -130,9 +130,9 @@
 <ion-card>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">Block</h2>
+      <h2 ion-text color="black">Block</h2>
 
-      <p text-wrap ion-text color="light">
+      <p text-wrap ion-text color="black">
         {{ tx?.transactionInfo?.height | number }}
       </p>
     </ion-item>
@@ -144,7 +144,7 @@
 <ion-card (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">Hash</h2>
+      <h2 ion-text color="black">Hash</h2>
 
       <p text-wrap>
         {{ tx?.transactionInfo?.hash?.data }}
@@ -158,17 +158,17 @@
 <ion-card (click)="utils.copy(tx.message.plain(), 'message')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="light">Message</h2>
+      <h2 ion-text color="black">Message</h2>
 
-      <p text-wrap ion-text color="light" *ngIf="tx.message.isPlain()">
+      <p text-wrap ion-text color="black" *ngIf="tx.message.isPlain()">
         {{ tx.message.plain() }}
       </p>
 
-      <p text-wrap ion-text color="light" color="light" *ngIf="tx.message.isEncrypted()">
+      <p text-wrap ion-text color="black" color="black" *ngIf="tx.message.isEncrypted()">
         Encypted
       </p>
 
-      <p ion-text color="light" *ngIf="!tx.message.payload">
+      <p ion-text color="black" *ngIf="!tx.message.payload">
         No message
       </p>
     </ion-item>

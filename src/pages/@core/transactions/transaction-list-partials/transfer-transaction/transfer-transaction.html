@@ -1,23 +1,23 @@
 <ion-card-header>
-  <p float-left ion-text color="light">
+  <p float-left ion-text color="black">
     {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
   </p>
-  <p float-right ion-text color="light">
+  <p float-right ion-text color="black">
     {{ tx.timeWindow.timeStamp.toString() | timeago }}
   </p>
 </ion-card-header>
 <ion-card-header *ngIf="tx.containsMosaics && !tx.containsMosaics()">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(tx.xem())">
-    <h2 ion-text color="light">XEM</h2>
-    <p ion-text color="light">
+    <h2 ion-text color="black">XEM</h2>
+    <p ion-text color="black">
       <small>
         NEM
       </small>
     </p>
 
     <section item-right>
-      <h2 text-right ion-text color="light" *ngIf="amount == 0">
+      <h2 text-right ion-text color="black" *ngIf="amount == 0">
         0
       </h2>
 
@@ -34,8 +34,8 @@
 <ion-card-header *ngFor="let mosaic of mosaics">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(mosaic)">
-    <h2 ion-text text-uppercase color="light">{{ mosaic.mosaicId.name }}</h2>
-    <p ion-text color="light">
+    <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
+    <p ion-text color="black">
       <small>
         {{ mosaic.mosaicId.namespaceId }}
       </small>
@@ -50,7 +50,7 @@
         - {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
 
-      <p text-right text-left ion-text color="light">
+      <p text-right text-left ion-text color="black">
         <small *ngIf="mosaic.mosaicId.name === 'xpx'">
           {{ mosaic.amount * 0.00837014 | currency }}
         </small>
@@ -69,7 +69,7 @@
 <ion-card-content line no-padding>
   <ion-item>
     <section *ngIf="tx.signer">
-      <h3 text-wrap ion-text color="light" *ngIf="(tx?.signer.address.pretty() | searchContact: tx?.signer.address.value | async) as contact; else loading">
+      <h3 text-wrap ion-text color="black" *ngIf="(tx?.signer.address.pretty() | searchContact: tx?.signer.address.value | async) as contact; else loading">
         {{ contact }}
       </h3>
 
@@ -78,7 +78,7 @@
       </ng-template>
     </section>
 
-    <p ion-text color="light">
+    <p ion-text color="black">
       <small *ngIf="owner?.plain() === tx?.recipient.value">Sender</small>
       <small *ngIf="owner?.plain() !== tx?.recipient.value">Receiver</small>
     </p>
@@ -89,7 +89,7 @@
         <ion-icon name="checkmark"></ion-icon>
       </button>
 
-      <p ion-text color="light">
+      <p ion-text color="black">
         <small>
           Confirmed
           <br> Transfer
@@ -103,7 +103,7 @@
         <ion-icon name="ios-more"></ion-icon>
       </button>
 
-      <p ion-text color="light">
+      <p ion-text color="black">
         <small>
           Unconfirmed
           <br> Transfer

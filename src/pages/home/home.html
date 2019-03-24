@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-navbar transparent padding-top >
     <ion-title>
-      <span ion-text color="light">Mosaics</span>
+      <span ion-text color="black">Mosaics</span>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -12,12 +12,12 @@
       <ion-card-header no-padding>
         <ion-item>
           <img logo-small item-left [src]="utils.getLogo(mosaic)">
-          <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
-          <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
+          <h2 text-uppercase ion-text color="black"><strong>{{ mosaic.mosaicId.name }}</strong></h2>
+          <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
 
           <section text-right item-right>
-            <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
-            <p text-right ion-text color="light" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
+            <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
+            <p text-right ion-text color="black" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
               <small>
                 {{ mosaic.amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
               </small>
@@ -27,10 +27,10 @@
       </ion-card-header>
       <ion-card-content line no-padding>
         <ion-item>
-          <h3 ion-text color="light" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
+          <h3 ion-text color="black" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
             {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
           </h3>
-          <p ion-text color="light">
+          <p ion-text color="black">
             <small>
               Price
             </small>
@@ -77,16 +77,16 @@
       <ion-card-header no-padding>
         <ion-item>
           <img logo-small item-left src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/NEM_logo.svg/2000px-NEM_logo.svg.png">
-          <h2 ion-text color="light">XEM</h2>
-          <p ion-text color="light">
+          <h2 ion-text color="black">XEM</h2>
+          <p ion-text color="black">
             <small>
               NEM
             </small>
           </p>
 
           <section item-right>
-            <h2 ion-text color="light">{{ 85467586865 | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="light">
+            <h2 ion-text color="black">{{ 85467586865 | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="black">
               <small>
                 {{ 2583472 | currency }}
               </small>
@@ -96,8 +96,8 @@
       </ion-card-header>
       <ion-card-content line no-padding>
         <ion-item>
-          <h3 ion-text color="light">$6,762.33</h3>
-          <p ion-text color="light">
+          <h3 ion-text color="black">$6,762.33</h3>
+          <p ion-text color="black">
             <small>
               Price
             </small>
@@ -105,7 +105,7 @@
 
           <section item-right>
             <h3 text-right ion-text color="trinary">+ 2.75%</h3>
-            <p text-right text-left ion-text color="light">
+            <p text-right text-left ion-text color="black">
               <small>
                 Profit / Loss
               </small>
@@ -119,16 +119,16 @@
       <ion-card-header no-padding>
         <ion-item>
           <img logo-small item-left src="https://discourse-cdn-sjc1.com/business5/uploads/safenetwork/original/2X/3/32b90ee44d17ddf9dc89c661b00effdb46302a6e.png">
-          <h2 ion-text color="light">XPX</h2>
-          <p ion-text color="light">
+          <h2 ion-text color="black">XPX</h2>
+          <p ion-text color="black">
             <small>
               ProximaX
             </small>
           </p>
 
           <section item-right>
-            <h2 ion-text color="light">{{ 2453445 | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="light">
+            <h2 ion-text color="black">{{ 2453445 | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="black">
               <small>
                 {{ 43356 | currency }}
               </small>
@@ -138,8 +138,8 @@
       </ion-card-header>
       <ion-card-content line no-padding>
         <ion-item>
-          <h3 ion-text color="light">$7,764.33</h3>
-          <p ion-text color="light">
+          <h3 ion-text color="black">$7,764.33</h3>
+          <p ion-text color="black">
             <small>
               Price
             </small>
@@ -147,7 +147,7 @@
 
           <section item-right>
             <h3 text-right ion-text color="trinary">+ 3.55%</h3>
-            <p text-right text-left ion-text color="light">
+            <p text-right text-left ion-text color="black">
               <small>
                 Profit / Loss
               </small>
@@ -161,16 +161,16 @@
       <ion-card-header no-padding>
         <ion-item>
           <img logo-small item-left src="https://s2.coinmarketcap.com/static/img/coins/200x200/2841.png">
-          <h2 ion-text color="light">LYL</h2>
-          <p ion-text color="light">
+          <h2 ion-text color="black">LYL</h2>
+          <p ion-text color="black">
             <small>
               APPSOLUTELY
             </small>
           </p>
 
           <section item-right>
-            <h2 ion-text color="light">{{ 4137564 | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="light">
+            <h2 ion-text color="black">{{ 4137564 | number:'1.2' }}</h2>
+            <p text-right text-left ion-text color="black">
               <small>
                 {{ 245672 | currency }}
               </small>
@@ -180,8 +180,8 @@
       </ion-card-header>
       <ion-card-content line no-padding>
         <ion-item>
-          <h3 ion-text color="light">$6,762.33</h3>
-          <p ion-text color="light">
+          <h3 ion-text color="black">$6,762.33</h3>
+          <p ion-text color="black">
             <small>
               Price
             </small>
@@ -189,7 +189,7 @@
 
           <section item-right>
             <h3 text-right ion-text color="trinary">+ 2.75%</h3>
-            <p text-right text-left ion-text color="light">
+            <p text-right text-left ion-text color="black">
               <small>
                 Profit / Loss
               </small>
@@ -203,5 +203,5 @@
 
 <ng-template #loading>
   <!-- <ion-spinner name="dots"></ion-spinner> -->
-  <small ion-text color="light">N/A</small>
+  <small ion-text color="black">N/A</small>
 </ng-template>

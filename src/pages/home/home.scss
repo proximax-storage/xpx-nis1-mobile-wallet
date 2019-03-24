@@ -10,7 +10,7 @@
       }
 
       h3 + p {
-        color: darken(color($colors, light), 15%);
+        color: darken(color($colors, dark), 15%);
       }
     }
 
@@ -20,7 +20,7 @@
     }
 
     ion-card {
-      background: transparentize(color($colors, light), 0.9);
+      background: transparentize(color($colors, dark), 0.9);
       border-radius: 0.5rem;
 
       ion-item {

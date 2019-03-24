@@ -23,7 +23,7 @@
       <ion-col col-12 text-center>
 
         <ion-list transparent-items>
-          <h2 ion-text color="light">
+          <h2 ion-text color="black">
             Are you sure to send?
           </h2>
 
@@ -33,12 +33,12 @@
               <ion-avatar item-start>
                 <img [src]="utils.getLogo(data.mosaic)">
               </ion-avatar>
-              <h2 text-uppercase ion-text color="light">{{ data.mosaic.mosaicId.name }}</h2>
-              <p text-uppercase ion-text color="light">{{ data.mosaic.mosaicId.namespaceId }}</p>
+              <h2 text-uppercase ion-text color="black">{{ data.mosaic.mosaicId.name }}</h2>
+              <p text-uppercase ion-text color="black">{{ data.mosaic.mosaicId.namespaceId }}</p>
 
               <section item-right>
-                <h2 ion-text color="light">{{ data.amount | number:'1.2' }}</h2>
-                <p text-right text-left ion-text color="light">
+                <h2 ion-text color="black">{{ data.amount | number:'1.2' }}</h2>
+                <p text-right text-left ion-text color="black">
                   <small>
                     {{ data.amount * 0.19 | currency }}
                   </small>
@@ -50,8 +50,8 @@
           <!-- Note -->
           <ion-card>
             <ion-item>
-              <h2 ion-text color="light">Note</h2>
-              <p ion-text text-wrap color="light">
+              <h2 ion-text color="black">Note</h2>
+              <p ion-text text-wrap color="black">
                 <span *ngIf="data.message">
                   {{ data.message }}
                 </span>
@@ -65,35 +65,35 @@
           <!-- Note -->
           <ion-card>
             <ion-item>
-              <h2 ion-text color="light">Fee</h2>
-              <p ion-text text-wrap color="light">
+              <h2 ion-text color="black">Fee</h2>
+              <p ion-text text-wrap color="black">
                 {{ data.fee | formatXEM }} XEM
               </p>
             </ion-item>
           </ion-card>
 
           <!-- From -->
-          <h6 margin-left text-left ion-text color="light">
+          <h6 margin-left text-left ion-text color="black">
             From
           </h6>
           <ion-card>
             <ion-item>
               <img item-left logo-small [src]="App.USER">
-              <h2 ion-text color="light" *ngIf="data.senderName">{{ data.senderName }}</h2>
-              <p small ion-text color="light" [attr.text-wrap]="!data.senderName ? true : null">{{ data.senderAddress }}</p>
+              <h2 ion-text color="black" *ngIf="data.senderName">{{ data.senderName }}</h2>
+              <p small ion-text color="black" [attr.text-wrap]="!data.senderName ? true : null">{{ data.senderAddress }}</p>
             </ion-item>
           </ion-card>
 
           <!-- To -->
-          <h6 margin-left text-left ion-text color="light">
+          <h6 margin-left text-left ion-text color="black">
             To
           </h6>
           <ion-card>
             <ion-item>
               <img item-left logo-small [src]="App.USER">
 
-              <h2 ion-text color="light" *ngIf="data.recipientName">{{ data.recipientName }}</h2>
-              <p small ion-text color="light" [attr.text-wrap]="!data.recipientName ? true : null">{{ data.recipientAddress }}</p>
+              <h2 ion-text color="black" *ngIf="data.recipientName">{{ data.recipientName }}</h2>
+              <p small ion-text color="black" [attr.text-wrap]="!data.recipientName ? true : null">{{ data.recipientAddress }}</p>
             </ion-item>
           </ion-card>
         </ion-list>
@@ -101,7 +101,7 @@
 
       <ion-col buttons col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-          <button gradient-button color-5 type="submit" color="light">
+          <button gradient-button color-5 type="submit" color="black">
             Yes, send it
           </button>
         </form>

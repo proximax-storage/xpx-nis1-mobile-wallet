@@ -34,16 +34,17 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 
-$colors: (primary: #25aae1,
-secondary: #30dd8a,
+$colors: (primary: #1f6b86,
+secondary: #2ebecc,
 trinary: #c1f5ec,
 danger: #ECAA4F,
 light: #E4E6EE,
-dark: #25aae1,
+dark: #1b2d37,
 black : #000,
+white: #FFFFFF,
 grey: rgba(228, 230, 238, 0.59),
 
-lightgreen: #b2e1d9,
+darkgreen: #b2e1d9,
 tabbgcolor: #17abda);
 
 
@@ -90,7 +91,7 @@ tabbgcolor: #17abda);
 @import "ionic.theme.default";
 
 // color of placeholder for input[text]
-$text-input-placeholder-color: lighten(color($colors, light), 0.1);
+$text-input-placeholder-color: darken(color($colors, dark), 0.1);
 
 .ios,
 .md {
