@@ -31,13 +31,27 @@
     </ion-slide>
     <ion-slide>
       <ion-toolbar transparent></ion-toolbar>
-      <section content-center>
-        <img [src]="App.STICKERS.HAPPY" class="small-image" />
-        <h2 margin-top padding-top ion-text color="light">Welcome to ProximaX Wallet!</h2>
-        <button gradient-button color-5 (click)="gotoWelcome()">
-         Get started
-        </button>
-      </section>
+          <ion-grid>
+              <ion-row>
+                <ion-col col-12 align-self-center>
+                  <img  [src]="App.SLIDES.SLIDE6" class="small-image" />
+                </ion-col>
+                <ion-col col-12 align-self-start>
+                  <h2 ion-text color="light" class="slide-title">Congrats!</h2>
+                  <p text-justify ion-text color="light">Thanks for reading through our introduction, now you’re ready to dive in. If you want to know more, you can always message us through Telegram: @ProximaXio. We are here to help you have the most secure and convenient experience as possible.</p>
+                </ion-col>
+                
+              </ion-row>
+
+              <ion-row>
+                <ion-col align-self-center>
+                    <button gradient-button color-5 (click)="gotoWelcome()">
+                        Get started
+                       </button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
     </ion-slide>
   </ion-slides>
 </ion-content>
