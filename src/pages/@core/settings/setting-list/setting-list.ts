@@ -92,8 +92,8 @@ export class SettingListPage {
     // this.navCtrl.push('MultisignAccountInfoPage'); // Todo : Implement gotoMultisignInfoPage
   }
 
-  gotoWalletList() {
-    this.utils.setRoot('WalletListPage');
+  logOut() {
+    this.utils.setRoot('WelcomePage');
   }
 
   
