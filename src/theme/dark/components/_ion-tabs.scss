@@ -1,7 +1,7 @@
 ion-tabs {
   &,
   .tabbar {
-    background: color($colors, tabs);
+    background: color($colors, dark);
     border-top: 0;
   }
 
@@ -9,14 +9,16 @@ ion-tabs {
     .tab-button[aria-selected='true'] {
       &,
       .tab-button-icon {
-        color: color($colors, light);
+        color: lighten(color($colors, trinary),80%);
+        font-style: bold;
+        font-weight: 600;
       }
     }
 
     .tab-button {
       &,
       .tab-button-icon {
-        color: lighten(color($colors, primary), 15%);
+        color: lighten(color($colors, trinary), 20%);
       }
     }
   }

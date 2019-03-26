@@ -52,7 +52,7 @@ export class MyApp {
       if (isFirstAppOpen) {
         return 'OnboardingPage';
       } else if (isLoggedIn) {
-        return 'WalletListPage';
+        return 'TabsPage';
       } else {
         return 'WelcomePage';
       }

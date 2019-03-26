@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span text-capitalize ion-text color="light">{{ title }}</span>
+      <span text-capitalize ion-text color="black">{{ title }}</span>
     </ion-title>
   </ion-navbar>
 
@@ -38,8 +38,8 @@
       <ion-item text-wrap>
         <img item-left logo-small [src]="App.USER">
 
-        <h2 ion-text color="light">{{ contact.name }}</h2>
-        <p small ion-text color="light">{{ contact.address }}</p>
+        <h2 ion-text color="black">{{ contact.name }}</h2>
+        <p small ion-text color="black">{{ contact.address }}</p>
       </ion-item>
     </ion-card>
   </ion-list>
@@ -47,7 +47,7 @@
 
 <ion-footer no-border>
   <ion-toolbar transparent text-center padding-bottom>
-    <button gradient-button small color-5 type="submit" color="light" (click)="onSubmit()">
+    <button gradient-button small color-5 type="submit" color="black" (click)="onSubmit()">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
   </ion-toolbar>

@@ -65,7 +65,7 @@ export class WalletAddPasswordConfirmationPage {
 
   gotoHome() {
     this.navCtrl.setRoot(
-      'WalletListPage',
+      'TabsPage',
       {},
       {
         animate: true,

@@ -60,7 +60,7 @@ export class LoginPage {
           'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
         invalidPinMessage: 'Incorrect pin. Please try again',
         pin: pin,
-        destination: 'WalletListPage'
+        destination: 'TabsPage'
       });
     });
   }

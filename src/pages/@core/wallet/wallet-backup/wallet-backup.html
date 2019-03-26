@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="light">Backup wallet</span>
+      <span ion-text color="black">Backup wallet</span>
     </ion-title>
   </ion-navbar>
 
@@ -23,7 +23,7 @@
         <img quarter-width [src]="App.STICKERS.HINT">
       </ion-card-header>
       <ion-card-content>
-        <h4 text-wrap text-justify ion-text color="light">
+        <h4 text-wrap text-justify ion-text color="black">
             We recommend to backup your wallet. If this app is deleted, your money cannot be recovered without it.
           Make sure to store it in a safe place, a backup of your wallet can protect you against system failures and many human mistakes.
           It can also allow you to recover your wallet after your mobile phone was stolen.
@@ -33,8 +33,8 @@
 
     <ion-card *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null" (click)="onSelect(option)">
       <ion-item>
-        <ion-icon item-left ion-text color="light" [name]="option.icon"></ion-icon>
-        <h2 ion-text color="light">{{ option.name }}</h2>
+        <ion-icon item-left ion-text color="black" [name]="option.icon"></ion-icon>
+        <h2 ion-text color="black">{{ option.name }}</h2>
         <ion-icon item-right ion-text color="grey" name="ios-arrow-forward"></ion-icon>
       </ion-item>
     </ion-card>
@@ -43,7 +43,7 @@
 
 <ion-footer no-border>
   <section text-center>
-    <button gradient-button small color-5 (click)="goHome()" color="light">
+    <button gradient-button small color-5 (click)="goHome()" color="black">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
   </section>

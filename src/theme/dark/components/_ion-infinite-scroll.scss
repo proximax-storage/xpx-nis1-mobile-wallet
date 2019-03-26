@@ -1,9 +1,9 @@
 ion-infinite-scroll {
   .infinite-loading-spinner ion-spinner.spinner * {
-    fill: color($colors, light);
+    fill: color($colors, dark);
   }
 
   .infinite-loading-text {
-    color: color($colors, light);
+    color: color($colors, dark);
   }
 }

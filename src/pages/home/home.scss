@@ -1,7 +1,16 @@
+$primary: #435dac;
+$secondary: #869cd7;
+$trinary: #dee3f1;
+$quarternary: #d6bea8;
+$light: #dee3f1;
+$dark: #ab9188;
+
 .ios,
 .md {
   page-home {
-    ion-content { margin-top: -32px; }
+    ion-content {
+      margin-top: none;
+    }
 
     [padding] {
       h3 {
@@ -9,8 +18,8 @@
         font-size: x-small;
       }
 
-      h3 + p {
-        color: darken(color($colors, light), 15%);
+      h3+p {
+        color: darken(color($colors, dark), 15%);
       }
     }
 
@@ -20,12 +29,138 @@
     }
 
     ion-card {
-      background: transparentize(color($colors, light), 0.9);
+      background: transparentize(color($colors, dark), 0.9);
       border-radius: 0.5rem;
-
       ion-item {
         background-color: transparent;
       }
+      // margin: 8px;
+    }
+
+
+
+    @mixin mboxshadow($depth:1) {
+      @if $depth==1 {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+
+      @else if $depth==2 {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+
+      @else if $depth==3 {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+      }
+
+      @else if $depth==4 {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      }
+
+      @else if $depth==5 {
+        box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+      }
+
+      transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+      
+    }
+
+
+    small {
+      font-weight: bolder;
+    }
+
+    [wallets] {
+      height: 31vh;
+      // margin-top: 3em;
+
+      [title] {
+        font-size: 3.3rem;
+      }
+
+      [symbol] {
+        font-size: 2rem;
+      }
+
+      [amount] {
+        font-size: 3rem;
+      }
+    }
+
+    [balance] {
+      background: transparent;
+
+      &.item-block .item-inner {
+        border-bottom: 1px solid $trinary !important;
+      }
+
+      ion-label {
+        padding: 4rem;
+      }
+
+      p {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 4rem
+      }
+    }
+
+    ion-card[add-wallet] {
+      background: linear-gradient(transparentize(color($colors, light), .9), transparentize(color($colors, light), .4)),
+      url('../assets/imgs/background_add_wallet.jpg') no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 1rem;
+
+      @include mboxshadow(1);
+
+
+      &:hover {
+        @include mboxshadow(2);
+      }
+    }
+
+    ion-card[wallet] {
+      @include mboxshadow(2);
+
+      &:hover {
+        @include mboxshadow(2);
+      }
+
+      background: linear-gradient(transparentize(color($colors, light), .9), transparentize(color($colors, light), .4)),
+      url('../assets/imgs/background.jpg') no-repeat;
+      // background: linear-gradient( #f1feff91, #57c4ea7d),  url('../assets/imgs/background.jpg') no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 1rem;
+      ion-card-header,
+      ion-card-content p {
+        color: color($colors, dark);
+      }
+    }
+
+    ion-card[selected]{
+      // background: linear-gradient(rgba(198, 252, 255, 0.29), rgba(44, 157, 162, 0.58)), url(../assets/imgs/background.jpg) no-repeat;
+      // background: linear-gradient(180deg, rgba(198, 252, 255, 0.29), rgba(44, 157, 162, 0.58)), url(../assets/imgs/background.jpg) no-repeat;
+      background: linear-gradient(rgba(228, 230, 238, 0.1), rgba(140, 140, 140, 0.35)), url(../assets/imgs/background.jpg) no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 1rem;
+      ion-card-header,
+      ion-card-content p {
+        color: color($colors, dark);
+      }
+    }
+
+    ion-slides {
+      height: 100%;
     }
   }
 }

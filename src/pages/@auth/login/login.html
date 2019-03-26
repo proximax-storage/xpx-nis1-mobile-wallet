@@ -14,15 +14,15 @@
 
       <ion-col col-12 text-center>
         <img logo src="assets/imgs/xpx-logo.png">
-        <h3 ion-text color="light">Login</h3>
-        <p ion-text color="light">Login to your account to access your wallet.</p>
+        <h3 ion-text color="black">Login</h3>
+        <p ion-text color="black">Login to your account to access your wallet.</p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
-            <ion-label stacked>Email</ion-label>
-            <ion-input type="email" formControlName="email" placeholder="ninja@nem.io"></ion-input>
+            <ion-label stacked>Username</ion-label>
+            <ion-input type="text" formControlName="email" placeholder="blacksaber001"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
@@ -32,13 +32,13 @@
 
           <!-- <section text-right padding-bottom>
             <button small ion-button clear type="button" (click)="gotoForgotPassword()">
-              <span ion-text color="light">
+              <span ion-text color="black">
                 Forgot Password?
               </span>
             </button>
           </section> -->
 
-          <button gradient-button small color-5 [disabled]="formGroup.invalid" type="submit" color="light">
+          <button gradient-button small color-5 [disabled]="formGroup.invalid" type="submit" color="black">
               <ion-icon name="ios-arrow-forward"></ion-icon>
           </button>
         </form>

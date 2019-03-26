@@ -4,24 +4,38 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header no-border>
+<!-- <ion-header no-border>
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="light">Contacts</span>
+      <span ion-text color="black">Contacts</span>
     </ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
 <ion-content background>
+    <ion-list title>
+        <ion-item>
+            <h2 padding-left title color="dark">
+                <strong>
+                  Contacts
+                </strong>
+              </h2>
+          <button ion-button icon-only item-end clear (click)="showAddContactPrompt()">
+              <ion-icon color="dark" name="add-circle"></ion-icon>
+            </button>
+        </ion-item>
+      </ion-list>
+
+      
   <ion-grid empty *ngIf="contacts && !contacts.length">
     <ion-row>
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
 
-        <h6 ion-text color="lightgreen" text-wrap>
+        <h6 ion-text color="blackgreen" text-wrap>
           You don't have any contacts yet.
         </h6>
 
@@ -47,9 +61,9 @@
       <ion-item-sliding>
         <ion-item>
           <img item-left logo-small [src]="App.USER">
-          <h2 ion-text color="light">{{ contact.name }}</h2>
-          <p small ion-text color="light">{{ contact.address }}</p>
-          <ion-icon item-end ion-text color="light" name="information-circle"></ion-icon>
+          <h2 ion-text color="black">{{ contact.name }}</h2>
+          <p small ion-text color="black">{{ contact.address }}</p>
+          <ion-icon item-end ion-text color="black" name="information-circle"></ion-icon>
         </ion-item>
         <ion-item-options side="right">
           <button ion-button color="primary" (click)="update(contact)">
@@ -68,7 +82,7 @@
       <button no-margin gradient-button circle color-5 (click)="showAddContactPrompt()">
         <ion-icon name="md-add"></ion-icon>
       </button>
-      <p text-wrap ion-text color="light">Add contact</p>
+      <p text-wrap ion-text color="black">Add contact</p>
     </section>
   </ion-list>
 </ion-content>

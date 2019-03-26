@@ -4,31 +4,3 @@ page-wallet-list {
   }
 }
 
-.wallet-on-press {
-  .action-sheet-group,
-  .action-sheet-group-cancel {
-    background: linear-gradient(to left, color($colors, secondary), color($colors, dark));
-  }
-
-  .action-sheet-button.activated {
-    border-top: 0;
-    background: color($colors, secondary);
-  }
-
-  &.action-sheet-ios .action-sheet-cancel {
-    background: color($colors, dark);
-  }
-
-  .action-sheet-title,
-  .action-sheet-button .button-inner {
-    color: color($colors, light);
-  }
-
-  [ng-reflect-name="create"] {
-    color: color($colors, trinary);
-  }
-
-  [ng-reflect-name="trash"] {
-    color: color($colors, danger);
-  }
-}

@@ -55,6 +55,7 @@ export class UtilitiesProvider {
   }
 
   setRoot(page: string, data = {}) {
+    console.log(this.app.getActiveNav());
     this.app.getRootNavs()[0].setRoot(page, data, {
       animate: true,
       direction: 'backward'
@@ -97,12 +98,22 @@ export class UtilitiesProvider {
     ) {
       return AppConfig.LOGO.XPX;
     } else if (
-      mosaic.mosaicId.namespaceId === 'appsolutely' &&
-      mosaic.mosaicId.name === 'lyl'
+      mosaic.mosaicId.namespaceId === 'pundix' &&
+      mosaic.mosaicId.name === 'npxs'
     ) {
-      return AppConfig.LOGO.LYL;
+      return AppConfig.LOGO.NPXS;
+    } else if (
+      mosaic.mosaicId.namespaceId === 'sportsfix' &&
+      mosaic.mosaicId.name === 'sft'
+    ) {
+      return AppConfig.LOGO.SFT;
+    } else if (
+      mosaic.mosaicId.namespaceId === 'xarcade' &&
+      mosaic.mosaicId.name === 'xar'
+    ) {
+      return AppConfig.LOGO.XAR;
     } else {
-      return 'https://image.flaticon.com/icons/svg/1018/1018780.svg';
+      return AppConfig.LOGO.DEFAULT;
     }
   }
 

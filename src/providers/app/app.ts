@@ -24,12 +24,16 @@ export class App {
     SLIDE2: `${App.ASSETS}/slides/xpx-slide-2.png`,
     SLIDE3: `${App.ASSETS}/slides/xpx-slide-3.png`,
     SLIDE4: `${App.ASSETS}/slides/xpx-slide-4.png`,
-    SLIDE5: `${App.ASSETS}/slides/xpx-slide-5.png`
+    SLIDE5: `${App.ASSETS}/slides/xpx-slide-5.png`,
+    SLIDE6: `${App.ASSETS}/slides/xpx-slide-5.png`
   };
   public static LOGO = {
     XPX: `assets/imgs/mosaics/xpx.png`,
     NEM: `assets/imgs/mosaics/xem.png`,
-    LYL: `assets/imgs/mosaics/lyl.png`
+    NPXS: `assets/imgs/mosaics/npxs.png`,
+    SFT: `assets/imgs/mosaics/sft.png`,
+    XAR: `assets/imgs/mosaics/xar.png`,
+    DEFAULT: `assets/imgs/mosaics/default.png`,
   };
   public static USER = `${App.ASSETS}/user.svg`;
 

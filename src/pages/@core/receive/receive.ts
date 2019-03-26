@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {
   SimpleWallet,
   MosaicTransferable
@@ -31,6 +31,7 @@ export class ReceivePage {
   inputOptions: CurrencyMaskConfig;
 
   constructor(
+    public viewCtrl: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
@@ -107,5 +108,9 @@ export class ReceivePage {
     };
 
     this.utils.showInsetModal('ReceiveQrCodePage', data);
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

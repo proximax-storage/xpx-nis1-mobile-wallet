@@ -25,6 +25,9 @@ export class VerificationCodePage {
   pinTitle: string;
   invalidPinMessage: string;
 
+  previousPin = '';
+  isVerify = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -59,6 +62,14 @@ export class VerificationCodePage {
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
       : 'Your pin is not equal to previous one. Please try again.';
+
+    this.storage.get('pin').then(pin => {
+      console.log('VerificationCodePage : pin', pin);
+      if (this.navParams.data.status === 'verify') {
+        this.isVerify = true;
+        this.previousPin = pin;
+      }
+    });
   }
 
   onSubmit(pin) {
@@ -81,6 +92,9 @@ export class VerificationCodePage {
       this.navParams.data.status === 'verify' &&
       this.navParams.data.pin === pin
     ) {
+      this.isVerify = true;
+      this.previousPin = pin;
+
       return this.storage.set('pin', pin).then(_ => {
         return this.storage.set('isModalShown', false);
       }).then(_ => {
@@ -97,7 +111,9 @@ export class VerificationCodePage {
       this.navParams.data.status === 'verify' &&
       this.navParams.data.pin !== pin
     ) {
-      return this.alertProvider.showMessage(this.invalidPinMessage);
+      // this.isVerify = false;
+
+      // return this.alertProvider.showMessage(this.invalidPinMessage);
     }
   }
 }

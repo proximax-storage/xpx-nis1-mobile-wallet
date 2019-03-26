@@ -4,23 +4,39 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header no-border>
+<!-- <ion-header no-border>
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="light">Activity</span>
+      <span ion-text color="black">Transactions</span>
     </ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="gotoReceive()">
-        <ion-icon ion-text color="light" name="add"></ion-icon>
+        <ion-icon ion-text color="black" name="add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 <ion-content background>
+    <ion-list title>
+        <ion-item>
+            <h2 padding-left title color="dark">
+                <strong>
+                    Transactions
+                </strong>
+              </h2>
+          <button ion-button icon-only item-end clear (click)="gotoReceive()">
+              <ion-icon color="dark" name="add-circle"></ion-icon>
+            </button>
+        </ion-item>
+      </ion-list>
+
+
+
+
   <!-- Skeleton loader -->
   <ion-list transparent-items *ngIf="isLoading">
     <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -74,7 +90,7 @@
   <!-- ./Skeleton loader -->
 
   <!-- Transactions -->
-  <ion-list transparent-items>
+  <ion-list transparent-items *ngIf="!isLoading">
 
     <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;" (click)="gotoTransactionDetail(transaction)">
       <!-- if importance transfer -->
@@ -138,11 +154,11 @@
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
 <!-- 
-        <h4 ion-text color="lightgreen" text-wrap>
+        <h4 ion-text color="blackgreen" text-wrap>
           No transactions yet
         </h4> -->
 
-        <h6 ion-text color="lightgreen" text-wrap>
+        <h6 ion-text color="blackgreen" text-wrap>
           You don't have any transactions yet.
         </h6>
 
@@ -151,11 +167,11 @@
         </p> -->
 
 <!-- 
-        <h6 ion-text color="lightgreen" text-wrap>
+        <h6 ion-text color="blackgreen" text-wrap>
           Start by sending mosaics to your new wallet
         </h6> -->
 
-        <button gradient-button color-5 color="light" (click)="gotoReceive()">
+        <button gradient-button color-5 color="black" (click)="gotoReceive()">
           Topup now
         </button>
       </ion-col>

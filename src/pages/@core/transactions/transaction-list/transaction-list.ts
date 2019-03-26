@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, InfiniteScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, InfiniteScroll, ModalController } from 'ionic-angular';
 import { SimpleWallet, TransactionTypes, Pageable, Transaction } from 'nem-library';
 import { Observable } from 'nem-library/node_modules/rxjs/Observable';
 
@@ -32,6 +32,8 @@ export class TransactionListPage {
   showEmptyMessage: boolean;
   isLoading: boolean;
 
+  isLoadingInfinite: boolean = false;
+
   pageable: Pageable<Transaction[]>;
 
   @ViewChild(InfiniteScroll)
@@ -43,6 +45,7 @@ export class TransactionListPage {
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
+    private modalCtrl: ModalController
   ) { }
 
   ionViewWillEnter() {
@@ -84,16 +87,19 @@ export class TransactionListPage {
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
-            if (!this.confirmedTransactions) {
-              this.confirmedTransactions = result;
-              this.infiniteScroll.enable(true);
-            }
 
-            if (result.length > 0) {
-              this.showEmptyMessage = false;
+            if(!this.confirmedTransactions) this.showEmptyMessage = false;
+
+            if (this.isLoadingInfinite) {
+              this.isLoadingInfinite = false;
+
               this.confirmedTransactions.push(...result);
               this.infiniteScroll.complete();
             }
+
+            this.isLoading = false;
+            this.confirmedTransactions = result;
+            this.infiniteScroll.enable(true);
           },
             err => console.error(err),
             () => {
@@ -118,7 +124,13 @@ export class TransactionListPage {
   }
 
   gotoReceive() {
-    this.navCtrl.push('ReceivePage');
+    // this.navCtrl.push('ReceivePage');
+    let page = "ReceivePage";
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 
   gotoTransactionDetail(tx) {
@@ -127,6 +139,7 @@ export class TransactionListPage {
 
   doInfinite() {
     if (!this.showEmptyMessage) return;
+    this.isLoadingInfinite = true;
     this.pageable.nextPage();
     console.log('Pageable Txs: ', this.pageable);
   }

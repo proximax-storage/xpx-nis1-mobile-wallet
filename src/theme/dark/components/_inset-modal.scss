@@ -1,9 +1,10 @@
 ion-modal.inset-modal,
 .inset-modal .show-page {
   // transparent black background overlay
-  background: transparentize(darken(color($colors, primary), 100%), 0.5);
+  background: color($colors, white);
+  
   transition: opacity .25s ease-in-out;
-  padding: 10vh 10vw;
+  padding: 10vh 5vw;
 
   &.small {
     padding-top: 20vh;
@@ -22,7 +23,8 @@ ion-modal.inset-modal,
 
   ion-page.modal {
     padding: 30px;
-    background: transparentize(color($colors, primary), 0.5);
+    // background: transparentize(color($colors, primary), 0.5);
+    background: color($colors, white);
   }
   .modal-wrapper {
     border-radius: 0.5rem !important;
@@ -34,4 +36,9 @@ ion-modal.inset-modal,
   .active .modal-backdrop-bg {
     opacity: 0.5;
   }
+
+  .ios .toolbar-ios, .md .toolbar-ios {
+    min-height: 1.5em;
+    font-size: 1.8rem;
+}
 }

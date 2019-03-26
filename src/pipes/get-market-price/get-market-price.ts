@@ -22,8 +22,8 @@ export class GetMarketPricePipe implements PipeTransform {
       coinId = 'nem';
     } else if (value === 'xpx') {
       coinId = 'proximax';
-    } else if (value === 'lyl') {
-      coinId = 'loyalcoin';
+    } else if (value === 'npxs') {
+      coinId = 'pundi-x';
     } else {
       coinId = value;
     }

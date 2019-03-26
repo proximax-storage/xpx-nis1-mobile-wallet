@@ -1,7 +1,7 @@
 import { GetBalanceProvider } from './../../../../providers/get-balance/get-balance';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {
   SimpleWallet,
   MosaicTransferable,
@@ -49,12 +49,13 @@ export class SendPage {
     public walletProvider: WalletProvider,
     public utils: UtilitiesProvider,
     public alertProvider: AlertProvider,
+    public viewCtrl: ViewController
   ) {
     this.init();
   }
 
   ionViewWillEnter() {
-    this.utils.setHardwareBack(this.navCtrl);
+    // this.utils.setHardwareBack(this.navCtrl);
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
@@ -170,6 +171,8 @@ export class SendPage {
         if(data != undefined || data != null) {
           this.form.get('recipientName').setValue(data.name);
           this.form.get('recipientAddress').setValue(data.address);
+        } else {
+          this.viewCtrl.dismiss();
         }
       });
   }
@@ -255,5 +258,9 @@ export class SendPage {
         'This address does not belong to this network'
       );
     }
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

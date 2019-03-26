@@ -40,7 +40,8 @@ import { Observable } from "nem-library/node_modules/rxjs";
 
 export const SERVER_CONFIG: ServerConfig[] = [
   { protocol: "http", domain: "192.3.61.243", port: 7890 },
-  { protocol: "http", domain: "50.3.87.123", port: 7890 }
+  { protocol: "http", domain: "50.3.87.123", port: 7890 },
+  { protocol: "http", domain: "23.228.67.85", port: 7890 },
 ];
 
 /*
@@ -59,16 +60,16 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET);
+    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET); // Todo: Change to MAIN_NET for production
 
-    if (NEMLibrary.getNetworkType() === NetworkTypes.TEST_NET) {
+    if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
+      this.accountHttp = new AccountHttp;
+      this.mosaicHttp = new MosaicHttp;
+      this.transactionHttp = new TransactionHttp;
+    } else {
       this.accountHttp = new AccountHttp(SERVER_CONFIG);
       this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
       this.transactionHttp = new TransactionHttp(SERVER_CONFIG);
-    } else {
-      this.accountHttp = new AccountHttp();
-      this.mosaicHttp = new MosaicHttp();
-      this.transactionHttp = new TransactionHttp();
     }
 
     this.qrService = new QRService();
@@ -82,7 +83,7 @@ export class NemProvider {
    * Change the network either TESTNET or MAINNET
    * @param network The network type to set: NetworkTypes.TEST_NET || NetworkTypes.MAIN_NET
    */
-  changeNetwork(network = NetworkTypes.MAIN_NET) {
+  changeNetwork(network = NetworkTypes.MAIN_NET) { // Todo: Change to MAIN_NET for production
     NEMLibrary.reset();
     NEMLibrary.bootstrap(network);
     console.log(NEMLibrary.getNetworkType());

@@ -8,12 +8,12 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="light">Wallets</span>
+      <span ion-text color="black">Wallets</span>
     </ion-title>
 
     <ion-buttons right>
-      <button ion-button icon-only ion-text color="light" (click)="logout()">
-        <ion-icon name="exit"></ion-icon>
+      <button ion-button icon-only ion-text color="black" (click)="logout()">
+        <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -27,9 +27,9 @@
       <ion-col>
         <img half-width [src]="App.STICKERS.WALLET" class="small-image">
 
-        <h3 ion-text color="light">Let's create your first wallet!</h3>
+        <h3 ion-text color="black">Let's create your first wallet!</h3>
 
-        <!-- <p text-wrap text-center ion-text color="light">
+        <!-- <p text-wrap text-center ion-text color="black">
           Let's start by creating your new wallet.
         </p> -->
 
@@ -40,35 +40,14 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list transparent-items [hidden]="!showWalletsHint">
-    <ion-card margin-bottom>
-      <ion-card-header text-center>
-        <img quarter-width [src]="App.STICKERS.HINT">
-      </ion-card-header>
-      <ion-card-content>
-        <h4 text-wrap text-justify ion-text color="light">
-          ProximaX Wallet is like a wallet with cash. If you wouldn't keep a thousand dollars in your pocket, you might want to have the
-          same consideration for your NEM wallet. In general, it is a good practice to keep only small amounts of XEMS on
-          your computer, mobile, or server for everyday uses and to keep the remaining part of your funds in a safer environment.
-        </h4>
-
-        <section text-center>
-          <button gradient-button small no-margin color-5 (click)="hideWalletsHint()">
-            <ion-icon name="checkmark"></ion-icon>
-          </button>
-        </section>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-
   <ion-list transparent-items radio-group [(ngModel)]="selectedWallet">
     <ion-card *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet?.name === wallet?.name ? true : null"
       (click)="onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
       <ion-item>
-        <ion-icon item-left ion-text color="light" name="card"></ion-icon>
-        <h2 ion-text color="light">{{ wallet.name }}</h2>
+        <ion-icon item-left ion-text color="black" name="card"></ion-icon>
+        <h2 ion-text color="black">{{ wallet.name }}</h2>
 
-        <p small ion-text color="light" *ngIf="wallet.address; else loading">
+        <p small ion-text color="black" *ngIf="wallet.address; else loading">
           {{ wallet.address.plain() }}
         </p>
 

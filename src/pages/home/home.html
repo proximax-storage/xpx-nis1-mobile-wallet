@@ -1,56 +1,105 @@
-<ion-header no-border>
-  <ion-navbar transparent>
-    <ion-buttons right>
-      <button ion-button icon-only ion-text color="light" (click)="gotoWalletList()">
-        <ion-icon name="swap"></ion-icon>
-      </button>
-    </ion-buttons>
+<!-- <ion-header no-border>
+  <ion-navbar transparent padding-top>
+    <ion-title>
+      <span ion-text color="black">Home</span>
+    </ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content fullscreen background>
-  <!-- <section text-center>
-    <p no-margin ion-text color="light">
-      <small>Your Total Balance</small>
-    </p>
-    <h1 ion-text color="light">
-      <span symbol>$</span>
-      <span>1,632.95</span>
-    </h1>
-  </section> -->
+<ion-content background no-margin>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-round-up" refreshingSpinner="dots">
+    </ion-refresher-content>
+  </ion-refresher>
 
-  <h6 margin-left ion-text color="light">Mosaics</h6>
+  <ion-list title>
+      <ion-item>
+          <h2 padding-left title color="dark">
+              <strong>
+                Wallets
+              </strong>
+            </h2>
+         <button ion-button icon-only item-end clear (click)="showAddWalletPrompt()">
+            <ion-icon color="dark" name="add-circle"></ion-icon>
+          </button>
+      </ion-item>
+    </ion-list>
 
+
+  <section wallets>
+    <!-- <h2 padding-left ion-text color="dark">
+      <strong>
+        Wallets
+      </strong>
+    </h2> -->
+    
+    <ion-slides slidesPerView="1.5" spaceBetween="10">
+      <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
+        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="onWalletSelect(wallet)"
+        (press)="onWalletPress(wallet)">
+        <ion-card wallet [attr.selected]="selectedWallet?.name === wallet?.name ? true : null">
+          <ion-card-header text-left>
+            <span title>{{ wallet.name }}</span>
+          </ion-card-header>
+          <ion-card-content text-left>
+            <p>
+              <span symbol>$</span>
+              <span amount>{{ (wallet.total>0?wallet.total:0) | number : '1.2-6'}}</span>
+            </p>
+
+            <p>
+              {{ wallet.address.plain() }}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+      <ion-slide>
+        <ion-card add-wallet (click)="showAddWalletPrompt()">
+          <ion-card-header text-left>
+            <span title></span>
+          </ion-card-header>
+          <ion-card-content text-left>
+            <p>
+              <span symbol><br></span>
+              <span amount>Create a wallet</span>
+            </p>
+
+            <p>
+              It's free and you can can create as many as you like
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </section>
+
+
+
+  <h2 padding-left ion-text color="dark">
+    <strong>
+      Mosaics
+    </strong>
+  </h2>
   <ion-list transparent-items>
     <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
       <ion-card-header no-padding>
         <ion-item>
           <img logo-small item-left [src]="utils.getLogo(mosaic)">
-          <h2 text-uppercase ion-text color="light">{{ mosaic.mosaicId.name }}</h2>
-          <p text-uppercase ion-text color="light">{{ mosaic.mosaicId.namespaceId }}</p>
+          <h2 text-uppercase ion-text color="black"><strong>{{ mosaic.mosaicId.name }}</strong></h2>
+          <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
 
           <section text-right item-right>
-            <h2 ion-text color="light">{{ mosaic.amount | number:'1.2' }}</h2>
-            <p text-right ion-text color="light" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
+            <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
+            <p text-right ion-text color="black"
+              *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
               <small>
-                {{ mosaic.amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
+                {{ amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
               </small>
+              {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
             </p>
           </section>
         </ion-item>
       </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 ion-text color="light" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
-            {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
-          </h3>
-          <p ion-text color="light">
-            <small>
-              Price
-            </small>
-          </p>
-        </ion-item>
-      </ion-card-content>
     </ion-card>
 
     <section [hidden]="mosaics">
@@ -85,137 +134,9 @@
       </ion-card>
     </section>
   </ion-list>
-
-  <!-- <ion-list>
-    <ion-card no-padding>
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/NEM_logo.svg/2000px-NEM_logo.svg.png">
-          <h2 ion-text color="light">XEM</h2>
-          <p ion-text color="light">
-            <small>
-              NEM
-            </small>
-          </p>
-
-          <section item-right>
-            <h2 ion-text color="light">{{ 85467586865 | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="light">
-              <small>
-                {{ 2583472 | currency }}
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 ion-text color="light">$6,762.33</h3>
-          <p ion-text color="light">
-            <small>
-              Price
-            </small>
-          </p>
-
-          <section item-right>
-            <h3 text-right ion-text color="trinary">+ 2.75%</h3>
-            <p text-right text-left ion-text color="light">
-              <small>
-                Profit / Loss
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card no-padding>
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left src="https://discourse-cdn-sjc1.com/business5/uploads/safenetwork/original/2X/3/32b90ee44d17ddf9dc89c661b00effdb46302a6e.png">
-          <h2 ion-text color="light">XPX</h2>
-          <p ion-text color="light">
-            <small>
-              ProximaX
-            </small>
-          </p>
-
-          <section item-right>
-            <h2 ion-text color="light">{{ 2453445 | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="light">
-              <small>
-                {{ 43356 | currency }}
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 ion-text color="light">$7,764.33</h3>
-          <p ion-text color="light">
-            <small>
-              Price
-            </small>
-          </p>
-
-          <section item-right>
-            <h3 text-right ion-text color="trinary">+ 3.55%</h3>
-            <p text-right text-left ion-text color="light">
-              <small>
-                Profit / Loss
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card no-padding>
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left src="https://s2.coinmarketcap.com/static/img/coins/200x200/2841.png">
-          <h2 ion-text color="light">LYL</h2>
-          <p ion-text color="light">
-            <small>
-              APPSOLUTELY
-            </small>
-          </p>
-
-          <section item-right>
-            <h2 ion-text color="light">{{ 4137564 | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="light">
-              <small>
-                {{ 245672 | currency }}
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 ion-text color="light">$6,762.33</h3>
-          <p ion-text color="light">
-            <small>
-              Price
-            </small>
-          </p>
-
-          <section item-right>
-            <h3 text-right ion-text color="trinary">+ 2.75%</h3>
-            <p text-right text-left ion-text color="light">
-              <small>
-                Profit / Loss
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </ion-list> -->
 </ion-content>
 
 <ng-template #loading>
   <!-- <ion-spinner name="dots"></ion-spinner> -->
-  <small ion-text color="light">N/A</small>
+  <small ion-text color="black">N/A</small>
 </ng-template>
