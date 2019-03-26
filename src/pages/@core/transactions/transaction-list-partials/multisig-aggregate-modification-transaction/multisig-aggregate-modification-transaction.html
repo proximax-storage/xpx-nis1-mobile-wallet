@@ -69,7 +69,7 @@
 <ion-card-content line no-padding>
   <ion-item *ngFor="let modification of tx.modifications;">
     <section text-wrap *ngIf="modification.action === 1">
-      <p small ion-text color="trinary">{{ modification.cosignatoryAccount.address.pretty() }}</p>
+      <p small ion-text color="success">{{ modification.cosignatoryAccount.address.pretty() }}</p>
       <p>Added as a cosigner</p>
     </section>
     <section text-wrap *ngIf="modification.action === 2">

@@ -41,7 +41,7 @@ ion-list[transparent-items] {
       color: darken(color($colors, dark), 10%);
     }
     ion-icon:not([item-left]) {
-      color: darken(color($colors, dark), 10%);
+      color: lighten(color($colors, light), 10%);
     }
 
     p:not([ion-text]) {

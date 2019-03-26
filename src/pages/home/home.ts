@@ -245,7 +245,7 @@ export class HomePage {
       return;
     }
 
-    this.navCtrl.push('CoinPriceChartPage', coinId);
+    this.navCtrl.push('CoinPriceChartPage', {mosaicId: mosaic, coinId: coinId});
   }
 
   public getPriceInUSD(amount, marketPrice) {

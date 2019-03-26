@@ -24,11 +24,11 @@ export class GetMarketPricePipe implements PipeTransform {
       coinId = 'proximax';
     } else if (value === 'npxs') {
       coinId = 'pundi-x';
-    } else {
-      coinId = value;
-    }
+    } 
+    // Add more coins here
 
-    return this.coingeckoProvider
+    if(coinId != undefined) {
+      return this.coingeckoProvider
       .getDetails(coinId)
       .toPromise()
       .then(details => {
@@ -36,5 +36,7 @@ export class GetMarketPricePipe implements PipeTransform {
       }).catch(err => {
         return 0;
       })
+    }
+
   }
 }

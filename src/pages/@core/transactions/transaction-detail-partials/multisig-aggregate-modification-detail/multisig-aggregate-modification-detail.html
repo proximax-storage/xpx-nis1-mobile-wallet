@@ -89,7 +89,7 @@
   <ion-card-content no-padding text-wrap *ngIf="modification.action === 1">
     <ion-item>
       <h2>Added as a cosigner</h2>
-      <p ion-text color="trinary">{{ modification.cosignatoryAccount.address.value | nemAddressPretty | searchContact: modification.cosignatoryAccount.address.value
+      <p ion-text color="success">{{ modification.cosignatoryAccount.address.value | nemAddressPretty | searchContact: modification.cosignatoryAccount.address.value
         | async }}
       </p>
     </ion-item>
