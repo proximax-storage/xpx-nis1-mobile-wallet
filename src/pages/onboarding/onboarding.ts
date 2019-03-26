@@ -44,23 +44,35 @@ export class OnboardingPage {
       {
         title: 'What is ProximaX Wallet?',
         description:
-          `ProximaX Wallet app is a free, client-side interface which allows you to interact directly with the blockchain while you remain in full control of your keys and funds.
+          `The ProximaX Wallet app is a free, client-side interface which allows you to interact directly with
+          the blockchain while you remain in full control of your keys and funds.
           <br><br>
-          Please think about this carefully. YOU are the only one who is in control. ProximaX is not a bank or exchange. We don’t hold your keys, your funds or your information. This means we can’t access accounts, recover keys, reset passwords or reverse transactions.`,
+          At ProximaX, we are committed to helping you secure your tokens and all our wallet updates
+undergo vigorous testing in order to making sure that everything you hold in your wallet is safe.
+However, a large part of keeping your wallet and its contents safe relies on YOU.`,
         isSmall: true,
         image: App.SLIDES.SLIDE1
       },
       {
         title: 'What if I lost my keys or password?',
         description:
-          `Your tokens or coins are not in ProximaX Wallet app. Just like they’re not on your hardware wallet, on MetaMask or Blockchain Explorer. All funds are on the blockchain itself. This means that we do not control them. We are a doorway that allows you to interact with the blockchain in a convenient way.`,
+          `When you first launch the ProximaX Wallet app, it creates a private key for you. A private key is a
+          string of alpha-numeric characters that allows you to access the tokens you hold that are stored on
+          the blockchain via the ProximaX Wallet.
+          <br><br>
+          The role of the private key is to give the holder of the key unrestricted access to the tokens it
+represents on this wallet. This private key can be used to restore the contents of your wallet in the
+event that your phone is stolen, lost or does not work anymore.
+          `,
         isSmall: true,
         image: App.SLIDES.SLIDE2
       },
       {
         title: 'Where are my funds stored?',
         description:
-          `We cannot recover your information for you. If you lose your information, it’s GONE FOREVER. ProximaX Wallet doesn’t store any data. After you’ve received your keys and set up password, we strongly suggest you:
+          `All tokens actually reside on the blockchain itself and the wallet is merely a doorway that allows you to
+          interact with the blockchain in a convenient way. Therefore, we do not control your tokens in any
+          way.
           <br>
           <ul>
             <li>Write your keys or password down. Keep them safe.</li>
