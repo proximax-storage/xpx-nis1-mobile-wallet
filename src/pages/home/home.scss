@@ -34,7 +34,7 @@ $dark: #ab9188;
       ion-item {
         background-color: transparent;
       }
-      margin: 8px;
+      // margin: 8px;
     }
 
 
@@ -70,7 +70,8 @@ $dark: #ab9188;
     }
 
     [wallets] {
-      height: 30vh;
+      height: 31vh;
+      // margin-top: 3em;
 
       [title] {
         font-size: 3.3rem;
@@ -126,7 +127,7 @@ $dark: #ab9188;
       @include mboxshadow(2);
 
       &:hover {
-        @include mboxshadow(3);
+        @include mboxshadow(2);
       }
 
       background: linear-gradient(transparentize(color($colors, light), .9), transparentize(color($colors, light), .4)),
@@ -159,7 +160,7 @@ $dark: #ab9188;
     }
 
     ion-slides {
-      height: 85%;
+      height: 100%;
     }
   }
 }

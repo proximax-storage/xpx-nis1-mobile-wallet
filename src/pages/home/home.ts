@@ -50,34 +50,23 @@ export class HomePage {
     private marketPrice: GetMarketPricePipe
   ) {
     this.fakeList = [{}, {}];
-    this.data = [
-      {
-        symbol: 'NewWallet1',
-        amount: 1130.89
-      },
-      {
-        symbol: 'NewWallet2',
-        amount: 2230.89
-      }
-    ]
+    this.totalWalletBalance = 0;
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.mosaics = null; // Triggers the skeleton list loader
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.getBalance();
+      refresher.complete();
+    }, 1000);
   }
 
   ionViewWillEnter() {
-    // this.utils.setHardwareBackToPage('WalletListPage');
-
-    // this.walletProvider.getSelectedWallet().then(wallet => {
-    //   if (!wallet) this.navCtrl.setRoot('WalletListPage');
-    //   else {
-    //     this.selectedWallet = wallet;
-    //     this.getBalance();
-    //   }
-    // });
-
-    this.totalWalletBalance = 0;
-
 
     this.utils.setHardwareBack();
-
     this.walletProvider.getWallets().then(value => {
       this.wallets = sortBy(value, 'name');
 
@@ -108,6 +97,7 @@ export class HomePage {
 
   onWalletSelect(wallet) {
     console.log(wallet);
+    this.mosaics = null; // Triggers the skeleton list loader
     this.selectedWallet = wallet;
 
     this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {
@@ -233,77 +223,6 @@ export class HomePage {
           });
     });
 }
-
-    // Promise.resolve(123)
-    // .then((res) => {
-    //     // res is inferred to be of type `number`
-    //     return iReturnPromiseAfter1Second(); // We are returning `Promise<string>`
-    // })
-    // .then((res) => {
-    //     // res is inferred to be of type `string`
-    //     console.log(res); // Hello world!
-    // });
-
-
-  // const getTotalBalance() = new Promise<number>((resolve, reject) => {
-  //   this.getBalanceProvider
-  //     .mosaics(wallet.address)
-  //     .subscribe(mosaics => {
-  //       this.mosaics = mosaics;
-  //       let total = 0;
-
-  //       this.mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
-  //         this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
-  //           if (price > 0) {
-  //             total += price * mosaic.amount;
-  //             console.log(total);
-  //           }
-  //           // last loop: compute total
-  //           let lastItem = array.length - 1;
-  //           if (currentIndex == lastItem) {
-  //             console.log(accumulator, currentIndex, array.length - 1, total);
-  //             resolve(total);
-  //           }
-  //         })
-  //       });
-
-  //       console.log("Result", result);
-
-  //       return result;
-
-  //     });
-  // });
-
-
-  // async  getTotalBalance(wallet:SimpleWallet) {
-  //   this.getBalanceProvider
-  //     .mosaics(wallet.address)
-  //     .subscribe(mosaics => {
-  //       this.mosaics = mosaics;
-  //       let total = 0;
-
-  //       var result =  this.mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
-  //         this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
-  //           if (price > 0) {
-  //             total += price * mosaic.amount;
-  //             console.log(total);
-  //           }
-  //           // last loop: compute total
-  //           let lastItem = array.length - 1;
-  //           if (currentIndex == lastItem) {
-  //             console.log(accumulator, currentIndex, array.length - 1, total);
-  //             return total;
-  //           }
-  //         })
-  //       });
-
-  //       console.log("Result", result);
-
-  //       return result;
-
-  //     });
-  // }
-
   public gotoWalletList() {
     this.utils.setRoot('WalletListPage');
   }

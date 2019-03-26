@@ -1,23 +1,42 @@
-<ion-header no-border>
+<!-- <ion-header no-border>
   <ion-navbar transparent padding-top>
     <ion-title>
       <span ion-text color="black">Home</span>
     </ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content fullscreen background no-margin>
+<ion-content background no-margin>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-round-up" refreshingSpinner="dots">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list title>
+      <ion-item>
+          <h2 padding-left title color="dark">
+              <strong>
+                Wallets
+              </strong>
+            </h2>
+         <button ion-button icon-only item-end clear (click)="showAddWalletPrompt()">
+            <ion-icon color="dark" name="add-circle"></ion-icon>
+          </button>
+      </ion-item>
+    </ion-list>
 
 
   <section wallets>
-    <h2 padding-left ion-text color="dark">
+    <!-- <h2 padding-left ion-text color="dark">
       <strong>
         Wallets
       </strong>
-    </h2>
-
+    </h2> -->
+    
     <ion-slides slidesPerView="1.5" spaceBetween="10">
-      <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName" [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
+      <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
+        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="onWalletSelect(wallet)"
+        (press)="onWalletPress(wallet)">
         <ion-card wallet [attr.selected]="selectedWallet?.name === wallet?.name ? true : null">
           <ion-card-header text-left>
             <span title>{{ wallet.name }}</span>
@@ -35,7 +54,7 @@
         </ion-card>
       </ion-slide>
       <ion-slide>
-        <ion-card add-wallet (click)="showAddWalletPrompt()" >
+        <ion-card add-wallet (click)="showAddWalletPrompt()">
           <ion-card-header text-left>
             <span title></span>
           </ion-card-header>
@@ -71,7 +90,8 @@
 
           <section text-right item-right>
             <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
-            <p text-right ion-text color="black" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
+            <p text-right ion-text color="black"
+              *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
               <small>
                 {{ amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
               </small>
@@ -80,18 +100,6 @@
           </section>
         </ion-item>
       </ion-card-header>
-      <!-- <ion-card-content line no-padding>
-        <ion-item>
-          <h3 ion-text color="black" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
-            {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
-          </h3>
-          <p ion-text color="black">
-            <small>
-              Price
-            </small>
-          </p>
-        </ion-item>
-      </ion-card-content> -->
     </ion-card>
 
     <section [hidden]="mosaics">
