@@ -7,6 +7,21 @@ page-coin-price-chart {
   [price] {
     font-size: 4rem;
   }
+
+  .toolbar-title-ios {
+    margin-top: 1em;
+    font-size: 2rem;
+  }
+
+  .bar-button {
+    font-size: 1.8rem;
+  }
+
+  .item p{
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+    color: color($colors, dark);
+  }
 }
 
 tooltip-box {

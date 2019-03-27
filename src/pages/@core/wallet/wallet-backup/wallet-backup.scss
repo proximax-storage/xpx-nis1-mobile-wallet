@@ -1,3 +1,6 @@
 page-wallet-backup {
+    ion-icon:not([item-left]) {
+        color: darken(color($colors, dark), 10%);
+    }
 
 }
