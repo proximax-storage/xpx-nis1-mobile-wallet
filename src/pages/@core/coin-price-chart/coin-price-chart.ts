@@ -51,6 +51,8 @@ export class CoinPriceChartPage {
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
 
+  selectedSegment: string = "priceChart";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -61,17 +63,19 @@ export class CoinPriceChartPage {
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider
   ) {
+    this.selectedSegment = 'priceChart';
     this.durations = [
-      { label: "1D", value: 1 },
+      { label: "24H", value: 1 },
       { label: "7D", value: 7 },
+      { label: "14D", value: 365 },
       { label: "30D", value: 30 },
-      { label: "6M", value: 182 },
-      { label: "1Y", value: 365 }
+      { label: "6M", value: 182 }
+
     ];
     this.selectedDuration = this.durations[0];
 
     console.log("navParams.data", this.navParams.data);
-    this.mosaicId = this.navParams.data['mosaicId'];
+    this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
     this.coinId = this.navParams.data['coinId'];
 
     console.info(this.mosaicId, this.coinId );
@@ -117,7 +121,7 @@ export class CoinPriceChartPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            this.infiniteScroll.complete();
+            this.hideInfiniteScroll();
           });
 
         this.pageable
@@ -128,22 +132,19 @@ export class CoinPriceChartPage {
 
             if (this.isLoadingInfinite) {
               this.isLoadingInfinite = false;
-
-              this.confirmedTransactions.push(...result);
-              this.infiniteScroll.complete();
+              this.hideInfiniteScroll();
+              if(this.confirmedTransactions!=null) this.confirmedTransactions.push(...result);
             }
 
             this.isLoading = false;
             this.confirmedTransactions = result;
-            this.infiniteScroll.enable(true);
+            this.showInfiniteScroll();
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
-              this.showEmptyMessage = true;
-
-              this.infiniteScroll.complete();
-              this.infiniteScroll.enable(false);
+              if (!this.confirmedTransactions) this.showEmptyMessage = true;
+              this.hideInfiniteScroll();
             });
       }
     });
@@ -199,9 +200,27 @@ export class CoinPriceChartPage {
   }
 
   doInfinite() {
-    if (!this.showEmptyMessage) return;
+    if (this.showEmptyMessage) return;
+    
     this.isLoadingInfinite = true;
     this.pageable.nextPage();
     console.log('Pageable Txs: ', this.pageable);
+  }
+
+  showInfiniteScroll(){
+    if(this.infiniteScroll) {
+      this.infiniteScroll.enable(true);;
+    }
+  }
+
+  hideInfiniteScroll() {
+    if(this.infiniteScroll) {
+      this.infiniteScroll.complete();
+      this.infiniteScroll.enable(false);
+    }
+  }
+
+  openLink(link){
+    window.open(link,'_system', 'location=yes');
   }
 }

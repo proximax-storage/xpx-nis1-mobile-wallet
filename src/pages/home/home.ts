@@ -161,7 +161,6 @@ export class HomePage {
 
             this.isLoading = false;
             this.confirmedTransactions = result;
-            // this.infiniteScroll.enable(true);
             this.showInfiniteScroll();
           },
             err => console.error(err),
