@@ -12,10 +12,11 @@ export class TabsPage {
   tabIndex: number;
   tab1Root = HomePage;
   tab2Root = 'ContactListPage';
-  tab3Root = 'TransactionListPage';
+  tab3Root = 'NotificationPage';
   tab4Root = 'SettingListPage';
 
   selectedIndex: number;
+  notificationCount: number = 2; // To do get read count from API
 
   @ViewChild(Tabs) public tabs: Tabs;
 
@@ -41,5 +42,13 @@ export class TabsPage {
       showBackdrop: true
     });
     modal.present();
+  }
+
+  clearNotification() {
+    console.log("Clearing notification count");
+
+    this.notificationCount = 0;
+    // this.navCtrl.setRoot("NotificationPage");
+    // this.utils.setRoot("");
   }
 }

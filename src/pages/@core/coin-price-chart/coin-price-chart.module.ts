@@ -4,18 +4,22 @@ import { IonicPageModule } from 'ionic-angular';
 import { NgXtruncateModule } from 'ngx-truncate';
 import { TooltipsModule } from 'ionic-tooltips';
 
-import { PipesModule } from '../../pipes/pipes.module';
 import { CoinPriceChartPage } from './coin-price-chart';
+import { PipesModule } from '../../../pipes/pipes.module';
+import { SharedModule } from '../../../app/shared.module';
 
 @NgModule({
   declarations: [
-    CoinPriceChartPage,
+    CoinPriceChartPage
+  ],
+  entryComponents: [
   ],
   imports: [
     IonicPageModule.forChild(CoinPriceChartPage),
     NgXtruncateModule,
     TooltipsModule,
-    PipesModule
+    PipesModule,
+    SharedModule
   ],
 })
 export class CoinPriceChartPageModule {}

@@ -41,6 +41,7 @@ import { CoinPriceChartProvider } from '../providers/coin-price-chart/coin-price
 import { DecimalPipe } from '../../node_modules/@angular/common';
 import { AppState } from '../providers/app-state/app-state';
 import { MockDataProvider } from '../providers/mock-data/mock-data';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -56,7 +57,8 @@ import { MockDataProvider } from '../providers/mock-data/mock-data';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    SharedModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, AboutPage, HomePage],

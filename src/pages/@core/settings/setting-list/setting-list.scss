@@ -4,8 +4,11 @@ page-setting-list {
     font-weight: bolder;
   }
 
-  h2 + p {
-    margin-top: 16px;
+  ion-label {
+    h2 + p {
+      margin-top: 16px;
+    }
   }
+
 
 }

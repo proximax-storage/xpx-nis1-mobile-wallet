@@ -1,17 +1,16 @@
 import { Component, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll } from "ionic-angular";
-import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction } from "nem-library";
+import { CoinPriceChartProvider } from "../../../providers/coin-price-chart/coin-price-chart";
+import { CoingeckoProvider } from "../../../providers/coingecko/coingecko";
+import { UtilitiesProvider } from "../../../providers/utilities/utilities";
+import { TransactionTypes, SimpleWallet, Transaction, Pageable } from "nem-library";
+import { NemProvider } from "../../../providers/nem/nem";
+import { WalletProvider } from "../../../providers/wallet/wallet";
 import { Observable } from "rxjs";
-import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
-import { CoinPriceChartProvider } from "../../../../providers/coin-price-chart/coin-price-chart";
-import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
-import { NemProvider } from "../../../../providers/nem/nem";
-import { WalletProvider } from "../../../../providers/wallet/wallet";
-import find from 'lodash/find';
-import { App } from "../../../../providers/app/app";
+import { App } from "../../../providers/app/app";
 
 /**
- * Generated class for the TransactionListPage page.
+ * Generated class for the CoinPriceChartPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -19,11 +18,18 @@ import { App } from "../../../../providers/app/app";
 
 @IonicPage()
 @Component({
-  selector: 'page-transaction-list',
-  templateUrl: 'transaction-list.html'
+  selector: "page-coin-price-chart",
+  templateUrl: "coin-price-chart.html"
 })
-export class TransactionListPage {
-  /** Transaction list member variables */
+export class CoinPriceChartPage {
+  /** Mosaic details member variables */ 
+  durations: Array<{ label: string; value: number }>;
+  selectedDuration: { label: string; value: number };
+  selectedCoin: any;
+  descriptionLength: number = 450;
+
+
+  /** Transaction list member variables */ 
   App = App;
   TransactionTypes = TransactionTypes;
 
@@ -39,11 +45,13 @@ export class TransactionListPage {
 
   pageable: Pageable<Transaction[]>;
 
+  coinId: string;
+  mosaicId: string;
+
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
 
-  coindId: string;
-  mosaicId: string;
+  selectedSegment: string = "priceChart";
 
   constructor(
     public navCtrl: NavController,
@@ -55,18 +63,32 @@ export class TransactionListPage {
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider
   ) {
-   
-    console.info("navParams.data: ", this.navParams.data);
-    this.mosaicId = this.navParams.data['mosaicId']
-    this.coindId = this.navParams.data['coindId']
+    this.selectedSegment = 'priceChart';
+    this.durations = [
+      { label: "24H", value: 1 },
+      { label: "7D", value: 7 },
+      { label: "14D", value: 365 },
+      { label: "30D", value: 30 },
+      { label: "6M", value: 182 }
 
-    console.info(this.mosaicId, this.coindId);
+    ];
+    this.selectedDuration = this.durations[0];
+
+    console.log("navParams.data", this.navParams.data);
+    this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
+    this.coinId = this.navParams.data['coinId'];
+
+    console.info(this.mosaicId, this.coinId );
+    this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
+      this.selectedCoin = coin;
+      this.select(this.selectedDuration);
+    });
   }
 
   ionViewWillEnter() {
     this.utils.setHardwareBack(this.navCtrl);
-
-    /** Transaction list business logic */
+    
+    /** Transaction list business logic */ 
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
     this.showEmptyMessage = false;
@@ -99,35 +121,30 @@ export class TransactionListPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            this.infiniteScroll.complete();
+            this.hideInfiniteScroll();
           });
 
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
-            // filter result with mosaicId
-            // this.searchByMosaicId(this.mosaicId, result);
-            console.info("Transactions", result);
-            if (!this.confirmedTransactions) this.showEmptyMessage = false;
+
+            if(!this.confirmedTransactions) this.showEmptyMessage = false;
 
             if (this.isLoadingInfinite) {
               this.isLoadingInfinite = false;
-
-              this.confirmedTransactions.push(...result);
-              this.infiniteScroll.complete();
+              this.hideInfiniteScroll();
+              if(this.confirmedTransactions!=null) this.confirmedTransactions.push(...result);
             }
 
             this.isLoading = false;
             this.confirmedTransactions = result;
-            this.infiniteScroll.enable(true);
+            this.showInfiniteScroll();
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
-              this.showEmptyMessage = true;
-
-              this.infiniteScroll.complete();
-              this.infiniteScroll.enable(false);
+              if (!this.confirmedTransactions) this.showEmptyMessage = true;
+              this.hideInfiniteScroll();
             });
       }
     });
@@ -135,6 +152,20 @@ export class TransactionListPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad CoinPriceChartPage");
+  }
+
+  select(duration) {
+    this.selectedDuration = duration;
+    this.coinPriceChartProvider.load(
+      this.selectedCoin,
+      this.selectedDuration.value,
+      "usd"
+    );
+  }
+
+  readMore(descriptionLength) {
+    this.descriptionLength =
+      descriptionLength === this.descriptionLength ? 450 : descriptionLength;
   }
 
   goto(page) {
@@ -168,26 +199,28 @@ export class TransactionListPage {
     this.navCtrl.push('TransactionDetailPage', tx);
   }
 
-  // doInfinite() {
-  //   console.log('Do infinite. ');
-  //   if (this.showEmptyMessage) return;
-  //   this.isLoadingInfinite = true;
-  //   this.pageable.nextPage();
-  //   console.log('Pageable Txs: ', this.pageable);
-  // }
+  doInfinite() {
+    if (this.showEmptyMessage) return;
+    
+    this.isLoadingInfinite = true;
+    this.pageable.nextPage();
+    console.log('Pageable Txs: ', this.pageable);
+  }
 
-  
+  showInfiniteScroll(){
+    if(this.infiniteScroll) {
+      this.infiniteScroll.enable(true);;
+    }
+  }
 
-  // searchByMosaicId(mosaicId: string, transactions: Array<Transaction>) {
-  //   let txs = <TransferTransaction[]>transactions.filter(transaction => transaction.type == TransactionTypes.TRANSFER);
-  //   txs.filter(tx => {
-  //     try {
-  //       if(tx.mosaicIds()) {
-  //         tx.mosaicIds().filter(mosaic => { return mosaic.name == mosaicId});
-  //       }
-  //     } catch (err) {
-  //       console.info("No mosaic", err);
-  //     }
-  //   })
-  // }
+  hideInfiniteScroll() {
+    if(this.infiniteScroll) {
+      this.infiniteScroll.complete();
+      this.infiniteScroll.enable(false);
+    }
+  }
+
+  openLink(link){
+    window.open(link,'_system', 'location=yes');
+  }
 }

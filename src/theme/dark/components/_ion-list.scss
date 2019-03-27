@@ -41,7 +41,7 @@ ion-list[transparent-items] {
       color: darken(color($colors, dark), 10%);
     }
     ion-icon:not([item-left]) {
-      color: darken(color($colors, dark), 10%);
+      color: lighten(color($colors, light), 10%);
     }
 
     p:not([ion-text]) {
@@ -75,7 +75,7 @@ ion-list[transparent-items] {
 ion-list[title] {
   // height: 34vh;
   // margin-top: 3em;
-  margin: 3em 0px 0px 0px;
+  margin: 2em 0px 0px 0px;
 
   
   h2[title] {

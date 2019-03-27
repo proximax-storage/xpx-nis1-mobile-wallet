@@ -47,12 +47,12 @@
 
       <p ion-text color="black" *ngIf="!tx.parent">
         Created namespace
-        <span ion-text color="trinary">{{ tx.newPart }}</span>
+        <span ion-text color="success">{{ tx.newPart }}</span>
       </p>
 
       <p ion-text color="black" *ngIf="tx.parent">
         Created subnamespace
-        <span ion-text color="trinary">{{ tx.parent }}.{{ tx.newPart }}</span>
+        <span ion-text color="success">{{ tx.parent }}.{{ tx.newPart }}</span>
       </p>
     </ion-item>
   </ion-card-content>
