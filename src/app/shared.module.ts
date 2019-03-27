@@ -7,8 +7,6 @@ import { MultisigTransactionComponent } from '../pages/@core/transactions/transa
 import { ProvisionNamespaceTransactionComponent } from '../pages/@core/transactions/transaction-list-partials/provision-namespace-transaction/provision-namespace-transaction';
 import { TransferTransactionComponent } from '../pages/@core/transactions/transaction-list-partials/transfer-transaction/transfer-transaction';
 import { MultisigAggregateModificationTransactionComponent } from '../pages/@core/transactions/transaction-list-partials/multisig-aggregate-modification-transaction/multisig-aggregate-modification-transaction';
-import { NgXtruncateModule } from 'ngx-truncate';
-import { TooltipsModule } from 'ionic-tooltips';
 import { PipesModule } from '../pipes/pipes.module';
 import { IonicModule } from 'ionic-angular';
 

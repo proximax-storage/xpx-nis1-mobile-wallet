@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, App, InfiniteScroll } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll } from "ionic-angular";
 import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction } from "nem-library";
 import { Observable } from "rxjs";
 import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
@@ -7,6 +7,8 @@ import { CoinPriceChartProvider } from "../../../../providers/coin-price-chart/c
 import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
 import { NemProvider } from "../../../../providers/nem/nem";
 import { WalletProvider } from "../../../../providers/wallet/wallet";
+import find from 'lodash/find';
+import { App } from "../../../../providers/app/app";
 
 /**
  * Generated class for the TransactionListPage page.
@@ -104,7 +106,7 @@ export class TransactionListPage {
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
             // filter result with mosaicId
-            // result = this.searchByMosaicId(this.mosaicId, result);
+            // this.searchByMosaicId(this.mosaicId, result);
             console.info("Transactions", result);
             if (!this.confirmedTransactions) this.showEmptyMessage = false;
 
@@ -166,24 +168,22 @@ export class TransactionListPage {
     this.navCtrl.push('TransactionDetailPage', tx);
   }
 
-  doInfinite() {
-    if (!this.showEmptyMessage) return;
-    this.isLoadingInfinite = true;
-    this.pageable.nextPage();
-    console.log('Pageable Txs: ', this.pageable);
-  }
+  // doInfinite() {
+  //   console.log('Do infinite. ');
+  //   if (this.showEmptyMessage) return;
+  //   this.isLoadingInfinite = true;
+  //   this.pageable.nextPage();
+  //   console.log('Pageable Txs: ', this.pageable);
+  // }
+
+  
 
   // searchByMosaicId(mosaicId: string, transactions: Array<Transaction>) {
-  //   console.log('searchByMosaicId');
-
   //   let txs = <TransferTransaction[]>transactions.filter(transaction => transaction.type == TransactionTypes.TRANSFER);
-  //   console.clear();
-  //   console.info(txs);
-
-  //   return txs.filter(tx => {
+  //   txs.filter(tx => {
   //     try {
   //       if(tx.mosaicIds()) {
-  //         tx.mosaicIds().filter(mosaic => { return mosaic.name == 'xem'});
+  //         tx.mosaicIds().filter(mosaic => { return mosaic.name == mosaicId});
   //       }
   //     } catch (err) {
   //       console.info("No mosaic", err);

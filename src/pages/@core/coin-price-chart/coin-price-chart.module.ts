@@ -17,7 +17,8 @@ import { SharedModule } from '../../../app/shared.module';
   imports: [
     IonicPageModule.forChild(CoinPriceChartPage),
     NgXtruncateModule,
-    TooltipsModule
+    TooltipsModule,
+    PipesModule,
     SharedModule
   ],
 })

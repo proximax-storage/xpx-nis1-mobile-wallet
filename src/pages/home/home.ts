@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform } from 'ionic-angular';
-import { SimpleWallet, MosaicTransferable } from 'nem-library';
+import { Component, ViewChild } from '@angular/core';
+import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController } from 'ionic-angular';
+import { SimpleWallet, MosaicTransferable, TransactionTypes, Pageable, Transaction } from 'nem-library';
 
 import { App as AppConfig } from '../../providers/app/app';
 import { WalletProvider } from '../../providers/wallet/wallet';
@@ -9,6 +9,8 @@ import { GetBalanceProvider } from '../../providers/get-balance/get-balance';
 import { AlertProvider } from '../../providers/alert/alert';
 import sortBy from 'lodash/sortBy';
 import { GetMarketPricePipe } from '../../pipes/get-market-price/get-market-price';
+import { NemProvider } from '../../providers/nem/nem';
+import { Observable } from 'rxjs';
 
 
 export enum WalletCreationType {
@@ -22,18 +24,31 @@ export enum WalletCreationType {
   providers: [GetMarketPricePipe]
 })
 export class HomePage {
+  menu='mosaics';
   AppConfig = AppConfig;
-
   selectedMosaic: MosaicTransferable;
   mosaics: Array<MosaicTransferable>;
-
   wallets: SimpleWallet[];
   selectedWallet: SimpleWallet;
-
   fakeList: Array<any>;
-
   data: any[] = [];
   totalWalletBalance = 0;
+
+  /** Transaction list member variables */
+  App = App;
+  TransactionTypes = TransactionTypes;
+  currentWallet: SimpleWallet;
+  // TransactionfakeList: Array<any>;
+  unconfirmedTransactions: Array<any>;
+  confirmedTransactions: Array<any>;
+  showEmptyMessage: boolean;
+  isLoading: boolean;
+  isLoadingInfinite: boolean = false;
+  pageable: Pageable<Transaction[]>;
+  @ViewChild(InfiniteScroll)
+  private infiniteScroll: InfiniteScroll;
+
+  
 
   constructor(
     public app: App,
@@ -47,10 +62,15 @@ export class HomePage {
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
     public platform: Platform,
-    private marketPrice: GetMarketPricePipe
+    private marketPrice: GetMarketPricePipe,
+    // public coingeckoProvider: CoingeckoProvider,
+    // public coinPriceChartProvider: CoinPriceChartProvider,
+    private modalCtrl: ModalController,
+    private nemProvider: NemProvider
   ) {
     this.fakeList = [{}, {}];
     this.totalWalletBalance = 0;
+    this.menu="mosaics";
   }
 
   doRefresh(refresher) {
@@ -79,8 +99,6 @@ export class HomePage {
       })
 
       console.info("Wallets", wlts);
-
-
       this.walletProvider.getSelectedWallet().then(selectedWallet => {
         this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
         this.getBalance();
@@ -89,7 +107,74 @@ export class HomePage {
         this.getBalance();
       });
     });
+
+    /** Transaction list business logic */
+    this.unconfirmedTransactions = null;
+    this.confirmedTransactions = null;
+    this.showEmptyMessage = false;
+    this.isLoading = true;
+
+    // this.utils.setTabIndex(0);
+
+    this.walletProvider.getSelectedWallet().then(currentWallet => {
+      if (!currentWallet) {
+        this.navCtrl.setRoot(
+          'TabsPage',
+          {},
+          {
+            animate: true,
+            direction: 'backward'
+          }
+        );
+      } else {
+        this.currentWallet = currentWallet;
+
+        this.fakeList = [{}, {}];
+
+        this.pageable = this.nemProvider.getAllTransactionsPaginated(
+          this.currentWallet.address
+        );
+
+        this.nemProvider
+          .getUnconfirmedTransactions(this.currentWallet.address)
+          .flatMap(_ => _)
+          .toArray()
+          .subscribe(result => {
+            this.unconfirmedTransactions = result;
+            this.hideInfiniteScroll();
+          });
+
+        this.pageable
+          .map((txs: any) => txs ? txs : Observable.empty())
+          .subscribe(result => {
+            // filter result with mosaicId
+            // this.searchByMosaicId(this.mosaicId, result);
+            console.info("Transactions", result);
+            if (!this.confirmedTransactions) this.showEmptyMessage = false;
+
+            if (this.isLoadingInfinite) {
+              this.isLoadingInfinite = false;
+              this.hideInfiniteScroll();
+              if(this.confirmedTransactions!=null) this.confirmedTransactions.push(...result);
+
+            }
+
+            this.isLoading = false;
+            this.confirmedTransactions = result;
+            // this.infiniteScroll.enable(true);
+            this.showInfiniteScroll();
+          },
+            err => console.error(err),
+            () => {
+              this.isLoading = false;
+              if (!this.confirmedTransactions) this.showEmptyMessage = true;
+              this.hideInfiniteScroll();
+            });
+      }
+    });
   }
+
+
 
   trackByName(wallet) {
     return wallet.name;
@@ -167,7 +252,10 @@ export class HomePage {
         if (data === WalletCreationType.NEW.toString()) {
           this.navCtrl.push('WalletAddPage');
         } else if (data === WalletCreationType.IMPORT.toString()) {
-          this.navCtrl.push('WalletImportOptionPage');
+          this.navCtrl.push("WalletAddPrivateKeyPage", {
+            name: "",
+            privateKey: ""
+          });
         }
       }
     });
@@ -253,5 +341,44 @@ export class HomePage {
     this.totalWalletBalance += result
 
     return result;
+  }
+
+  /** Transaction list methods */
+  trackByHash(index) {
+    return index;
+  }
+
+  gotoTransactionDetail(tx) {
+    this.navCtrl.push('TransactionDetailPage', tx);
+  }
+
+  doInfinite() {
+    if (this.showEmptyMessage) return;
+    
+    this.isLoadingInfinite = true;
+    this.pageable.nextPage();
+    console.log('Pageable Txs: ', this.pageable);
+  }
+
+  showInfiniteScroll(){
+    if(this.infiniteScroll) {
+      this.infiniteScroll.enable(true);;
+    }
+  }
+
+  hideInfiniteScroll() {
+    if(this.infiniteScroll) {
+      this.infiniteScroll.complete();
+      this.infiniteScroll.enable(false);
+    }
+  }
+
+  showReceiveModal() {
+    let page = "ReceivePage";
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 }

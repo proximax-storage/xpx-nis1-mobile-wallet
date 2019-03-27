@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, App, InfiniteScroll } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll } from "ionic-angular";
 import { CoinPriceChartProvider } from "../../../providers/coin-price-chart/coin-price-chart";
 import { CoingeckoProvider } from "../../../providers/coingecko/coingecko";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
@@ -7,6 +7,7 @@ import { TransactionTypes, SimpleWallet, Transaction, Pageable } from "nem-libra
 import { NemProvider } from "../../../providers/nem/nem";
 import { WalletProvider } from "../../../providers/wallet/wallet";
 import { Observable } from "rxjs";
+import { App } from "../../../providers/app/app";
 
 /**
  * Generated class for the CoinPriceChartPage page.

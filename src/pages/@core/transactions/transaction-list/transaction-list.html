@@ -117,9 +117,12 @@
       <!-- ./Transactions -->
     
       <!-- Infinite scroll -->
-      <ion-infinite-scroll (ionInfinite)="doInfinite()">
-        <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more transactions"></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="100px">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more transactions...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       <!-- ./Infinite scroll -->
     
       <ion-grid empty *ngIf="showEmptyMessage">
