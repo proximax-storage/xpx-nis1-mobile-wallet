@@ -43,15 +43,16 @@ export class PinComponent implements OnChanges {
     
     if (this.inputPin.length !== this.maxLength) this.inputPin += pin;
     if (this.inputPin.length === this.maxLength) { 
-      if (this.isVerify && this.previousPin !== this.inputPin) {
+      if (this.isVerify && (this.previousPin !== this.inputPin)) {
         this.styleClasses.miss = true;
-      }
-
+      } 
+      this.emitEvent();
+      this.inputPin = '';
       console.log('PinComponent : this.isVerify', this.isVerify);
       console.log('PinComponent : this.previousPin', this.previousPin);
       console.log('PinComponent : his.styleClasses.miss', this.styleClasses.miss);
-      this.emitEvent(); 
-      this.inputPin = '';
+     
+      
     }
   }
 
