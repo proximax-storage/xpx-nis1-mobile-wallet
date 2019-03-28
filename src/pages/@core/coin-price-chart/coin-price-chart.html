@@ -6,7 +6,7 @@
 -->
 <ion-header no-border>
 
-  <ion-navbar transparent>
+  <ion-navbar transparent no-border-bottom>
     <ion-title *ngIf="selectedCoin">
       <span text-uppercase ion-text color="black">
         {{ selectedCoin.name }} ({{ selectedCoin.symbol }})
@@ -14,27 +14,22 @@
     </ion-title>
   </ion-navbar>
 
-
-
+  <ion-toolbar transparent no-margin no-border-top>
+          <ion-segment mode='md' [(ngModel)]="selectedSegment" color="dark">
+              <ion-segment-button value='transactions' checked>
+                  Transactions
+                </ion-segment-button>
+            <ion-segment-button value='priceChart' (ionSelect)="select('24H')">
+              Price Chart
+            </ion-segment-button>
+            <ion-segment-button value='info'>
+              Info
+            </ion-segment-button>
+          </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
-
 <ion-content background>
-
-  <ion-grid normal>
-    <ion-segment mode='md' [(ngModel)]="selectedSegment" color="dark">
-        <ion-segment-button value='transactions' checked>
-            Transactions
-          </ion-segment-button>
-      <ion-segment-button value='priceChart' (ionSelect)="select('24H')">
-        Price Chart
-      </ion-segment-button>
-      <ion-segment-button value='info'>
-        Info
-      </ion-segment-button>
-    </ion-segment>
-  </ion-grid>
-
   <!-- Price Chart -->
   <div class="" *ngIf="selectedSegment=='priceChart'">
     <section text-center>
