@@ -178,7 +178,7 @@ export class HomePage {
   slideChanged() {
     let currentIndex = this.slides.getActiveIndex();
     console.log('Current index is', currentIndex);
-    this.onWalletSelect(this.wallets[currentIndex]);
+    if(this.wallets.length!=currentIndex) this.onWalletSelect(this.wallets[currentIndex]);
   }
 
   trackByName(wallet) {
