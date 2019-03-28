@@ -78,10 +78,9 @@ export class CoinPriceChartPage {
     this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
     this.coinId = this.navParams.data['coinId'];
 
-    console.info(this.mosaicId, this.coinId );
+    // console.info(this.mosaicId, this.coinId );
     this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
       this.selectedCoin = coin;
-      this.select(this.selectedDuration);
     });
   }
 

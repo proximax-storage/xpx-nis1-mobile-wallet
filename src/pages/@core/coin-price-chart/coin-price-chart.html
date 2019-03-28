@@ -26,7 +26,7 @@
         <ion-segment-button value='transactions' checked>
             Transactions
           </ion-segment-button>
-      <ion-segment-button value='priceChart' >
+      <ion-segment-button value='priceChart' (ionSelect)="select('24H')">
         Price Chart
       </ion-segment-button>
       <ion-segment-button value='info'>
@@ -172,22 +172,7 @@
 
   <!-- Transactions -->
   <div class="" *ngIf="selectedSegment=='transactions'">
-    <ion-grid normal>
-      <ion-row>
-        <ion-col>
-          <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
-            <ion-icon name="arrow-round-down"></ion-icon>
-            Receive
-          </button>
-        </ion-col>
-        <ion-col>
-          <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
-            Send
-            <ion-icon name="arrow-round-up"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+   
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
       <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -410,6 +395,27 @@
 
 
 </ion-content>
+
+<ion-footer  *ngIf="selectedSegment=='transactions'">
+    <ion-toolbar>
+      <ion-grid normal>
+          <ion-row>
+            <ion-col>
+              <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
+                <ion-icon name="arrow-round-down"></ion-icon>
+                Receive
+              </button>
+            </ion-col>
+            <ion-col>
+              <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
+                Send
+                <ion-icon name="arrow-round-up"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
 
 <ng-template #loading>
   <ion-spinner name="dots"></ion-spinner>
