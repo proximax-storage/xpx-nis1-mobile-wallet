@@ -48,17 +48,17 @@
             </p>
 
             <p text-wrap>
-              <strong>{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</strong>
+              <strong>{{ wallet.address.plain() | ngXtruncate: 18 : '...' }}</strong>
               </p>
           </ion-card-content>
         </ion-card>
       </ion-slide>
       <ion-slide>
         <ion-card add-wallet (click)="showAddWalletPrompt()">
-          <ion-card-header text-left>
+          <!-- <ion-card-header text-left>
             <span title></span>
-          </ion-card-header>
-          <ion-card-content text-left>
+          </ion-card-header> -->
+          <ion-card-content text-center>
             <p>
               <span symbol><br></span>
               <span amount>Create a wallet</span>
