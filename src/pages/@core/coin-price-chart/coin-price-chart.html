@@ -188,12 +188,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <hr>
-
-    <!-- <h3 margin-left ion-text color="black">Recent Transactions</h3> -->
-
-
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
       <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -327,27 +321,9 @@
       <ion-row>
         <ion-col>
           <img quarter-width [src]="App.STICKERS.SORRY">
-          <!-- 
-                  <h4 ion-text color="blackgreen" text-wrap>
-                    No transactions yet
-                  </h4> -->
-
           <h6 ion-text color="blackgreen" text-wrap>
             You don't have any transactions yet.
           </h6>
-
-          <!-- <p text-wrap>
-                    Start by sending mosaics to your new wallet
-                  </p> -->
-
-          <!-- 
-                  <h6 ion-text color="blackgreen" text-wrap>
-                    Start by sending mosaics to your new wallet
-                  </h6> -->
-
-          <button gradient-button color-5 color="black" (click)="showReceiveModal()">
-            Topup now
-          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -377,8 +353,6 @@
         </ion-item>
       </ion-card>
 
-
-
       <ion-card>
         <ion-item>
           <p item-left ion-text color="dark">Explorer</p>
@@ -388,8 +362,6 @@
         </ion-item>
       </ion-card>
 
-
-
       <ion-card>
         <ion-item>
           <p item-left ion-text color="dark">Genesis Date</p>
@@ -398,15 +370,6 @@
           </h3>
         </ion-item>
       </ion-card>
-
-      <ion-card>
-          <ion-item>
-            <p item-left ion-text color="dark">Genesis Date</p>
-            <h3 item-end *ngIf="selectedCoin; else loading">
-              {{ selectedCoin.genesis_date | date:'MMM dd, yyyy'}}
-            </h3>
-          </ion-item>
-        </ion-card>
 
         <ion-card>
             <ion-item >
