@@ -332,7 +332,14 @@ export class HomePage {
       return;
     }
 
-    this.navCtrl.push('CoinPriceChartPage', {mosaicId: mosaic, coinId: coinId});
+    // this.navCtrl.push('CoinPriceChartPage', {mosaicId: mosaic, coinId: coinId});
+
+    let page = "CoinPriceChartPage";
+    const modal = this.modalCtrl.create(page, { mosaicId: mosaic, coinId: coinId}, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 
   public getPriceInUSD(amount, marketPrice) {

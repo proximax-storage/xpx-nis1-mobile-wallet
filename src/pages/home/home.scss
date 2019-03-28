@@ -8,37 +8,6 @@ $dark: #ab9188;
 .ios,
 .md {
   page-home {
-    ion-content {
-      margin-top: none;
-    }
-
-    [padding] {
-      h3 {
-        margin-top: 0;
-        font-size: x-small;
-      }
-
-      h3+p {
-        color: darken(color($colors, dark), 15%);
-      }
-    }
-
-    [symbol] {
-      font-size: 50%;
-      vertical-align: super;
-    }
-
-    ion-card {
-      background: transparentize(color($colors, dark), 0.9);
-      border-radius: 0.5rem;
-      ion-item {
-        background-color: transparent;
-      }
-      // margin: 8px;
-    }
-
-
-
     @mixin mboxshadow($depth:1) {
       @if $depth==1 {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -64,45 +33,78 @@ $dark: #ab9188;
       
     }
 
+    ion-content {
+      margin-top: none;
+      ion-refresher {
+        margin-top: 3em;
+      }
+    }
+    
+    ion-content.has-refresher > .scroll-content {
+      border-top: none !important;
+    }
+
+    [padding] {
+      h3 {
+        margin-top: 0;
+        font-size: x-small;
+      }
+
+      h3+p {
+        color: darken(color($colors, dark), 15%);
+      }
+    }
+
+    
+
+    
+
 
     small {
       font-weight: bolder;
     }
 
-    [wallets] {
+    section[wallets] {
       height: 25vh;
-      // margin-top: 3em;
 
       [title] {
         font-size: 3.3rem;
       }
 
       [symbol] {
-        font-size: 2rem;
+        font-size: 3rem;
+          vertical-align: super;
       }
 
       [amount] {
-        font-size: 2rem;
+        font-size: 4rem;
       }
     }
 
-    [balance] {
-      background: transparent;
-
-      &.item-block .item-inner {
-        border-bottom: 1px solid $trinary !important;
+    ion-card {
+      background: transparentize(color($colors, dark), 0.9);
+      border-radius: 0.5rem;
+      ion-item {
+        background-color: transparent;
       }
+    }
 
-      ion-label {
-        padding: 4rem;
+
+    ion-card[wallet] {
+      background: linear-gradient(transparentize(color($colors, light), .9), transparentize(color($colors, light), .4)),
+      url('../assets/imgs/background.jpg') no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 1rem;
+      ion-card-header,
+      ion-card-content p {
+        color: color($colors, dark);
       }
-
-      p {
-        font-size: 2rem;
-      }
-
-      h2 {
-        font-size: 4rem
+      @include mboxshadow(2);
+      &:hover {
+        @include mboxshadow(2);
       }
     }
 
@@ -112,55 +114,19 @@ $dark: #ab9188;
       background-position: center;
       background-size: cover;
       height: 100%;
-      // width: 100%;
+      width: 100%;
       border-radius: 1rem;
-
-      @include mboxshadow(1);
-
-
-      &:hover {
-        @include mboxshadow(2);
-      }
-
       ion-card-content{
         padding: 25px 16px 14px;
       }
-    }
-
-    ion-card[wallet] {
-      @include mboxshadow(2);
-
+      @include mboxshadow(1);
       &:hover {
         @include mboxshadow(2);
-      }
-
-      background: linear-gradient(transparentize(color($colors, light), .9), transparentize(color($colors, light), .4)),
-      url('../assets/imgs/background.jpg') no-repeat;
-      // background: linear-gradient( #f1feff91, #57c4ea7d),  url('../assets/imgs/background.jpg') no-repeat;
-      background-position: center;
-      background-size: cover;
-      height: 100%;
-      width: 100%;
-      border-radius: 1rem;
-      ion-card-header,
-      ion-card-content p {
-        color: color($colors, dark);
       }
     }
 
     ion-card[selected]{
-      // background: linear-gradient(rgba(198, 252, 255, 0.29), rgba(44, 157, 162, 0.58)), url(../assets/imgs/background.jpg) no-repeat;
-      // background: linear-gradient(180deg, rgba(198, 252, 255, 0.29), rgba(44, 157, 162, 0.58)), url(../assets/imgs/background.jpg) no-repeat;
       background: linear-gradient(rgba(228, 230, 238, 0.1), rgba(140, 140, 140, 0.35)), url(../assets/imgs/background.jpg) no-repeat;
-      background-position: center;
-      background-size: cover;
-      height: 100%;
-      width: 100%;
-      border-radius: 1rem;
-      ion-card-header,
-      ion-card-content p {
-        color: color($colors, dark);
-      }
     }
 
     ion-slides {
@@ -294,7 +260,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /* iPhone Portrait */
 @media screen and (max-device-width: 480px) and (orientation:portrait) {
   ion-slide{
-    width: 100%;
+    width: 80% !important;
   }
 
   ion-card[wallet] {

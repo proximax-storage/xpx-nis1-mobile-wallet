@@ -49,8 +49,9 @@
   }
 }
 
-@include makeIcon(contact, '\f100');
-@include makeIcon(home, '\f101');
-@include makeIcon(user, '\f102');
-@include makeIcon(activity, '\f103');
-@include makeIcon(settings, '\f104');
+@include makeIcon(home, '\f107');
+@include makeIcon(wallet, '\f10b');
+@include makeIcon(contact, '\f106');
+@include makeIcon(notification, '\f105');
+@include makeIcon(settings, '\f100');
+

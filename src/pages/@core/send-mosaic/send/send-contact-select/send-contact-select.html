@@ -19,11 +19,13 @@
   <ion-grid empty *ngIf="contacts && !contacts.length">
     <ion-row>
       <ion-col>
-        <img half-width [src]="App.STICKERS.SORRY">
+        <img quarter-width [src]="App.STICKERS.SORRY">
 
-        <p text-wrap>
-          No contacts yet.
-          <br> Try adding one or two.
+        <p color="grey" text-wrap>
+          <strong>
+              No contacts yet.
+              <br> Try adding one or two.
+          </strong>
         </p>
 
         <button gradient-button color-5 (click)="showAddContactPrompt()">

@@ -35,10 +35,9 @@
             <ion-label stacked>Confirm password</ion-label>
             <ion-input formControlName="confirmPassword" type="password" placeholder="Confirm your password"></ion-input>
           </ion-item>
-
-          <button gradient-button small color-5 [disabled]="formGroup.invalid">
-            <ion-icon name="ios-arrow-forward"></ion-icon>
-          </button>
+          <button gradient-button color-5 ion-button icon-end no-margin [disabled]="formGroup.invalid" type="submit" color="black">
+              Signup
+            </button>
         </form>
       </ion-col>
 

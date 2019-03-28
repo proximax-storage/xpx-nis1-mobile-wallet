@@ -16,8 +16,8 @@
 
 
 <ion-content background>
-    <ion-list title>
-        <ion-item>
+    <ion-list title transparent>
+        <ion-item transparent>
             <h2 padding-left title color="dark">
                 <strong>
                   Contacts
@@ -35,19 +35,9 @@
       <ion-col>
         <img half-width [src]="App.STICKERS.SORRY">
 
-        <h6 ion-text color="blackgreen" text-wrap>
-          You don't have any contacts yet.
+        <h6 ion-text color="grey" text-wrap>
+          <strong>Your contacts will appear here, none at the moment</strong>
         </h6>
-
-        <!-- <p text-wrap>
-          Start by adding one new contact or two. 
-        </p> -->
-
-
-        <!-- <p text-wrap>
-          It looks like you don't have any contacts yet.
-          <br> Try adding one or two.
-        </p> -->
 
         <button gradient-button color-5 (click)="showAddContactPrompt()">
           Add new contact

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
 import { CoinPriceChartProvider } from "../../../providers/coin-price-chart/coin-price-chart";
 import { CoingeckoProvider } from "../../../providers/coingecko/coingecko";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
@@ -51,7 +51,7 @@ export class CoinPriceChartPage {
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
 
-  selectedSegment: string = "priceChart";
+  selectedSegment: string = "transactions";
 
   constructor(
     public navCtrl: NavController,
@@ -61,9 +61,10 @@ export class CoinPriceChartPage {
     public utils: UtilitiesProvider,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private viewCtrl: ViewController
   ) {
-    this.selectedSegment = 'priceChart';
+    this.selectedSegment = 'transactions';
     this.durations = [
       { label: "24H", value: 1 },
       { label: "7D", value: 7 },
@@ -78,10 +79,9 @@ export class CoinPriceChartPage {
     this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
     this.coinId = this.navParams.data['coinId'];
 
-    console.info(this.mosaicId, this.coinId );
+    // console.info(this.mosaicId, this.coinId );
     this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
       this.selectedCoin = coin;
-      this.select(this.selectedDuration);
     });
   }
 
@@ -222,5 +222,9 @@ export class CoinPriceChartPage {
 
   openLink(link){
     window.open(link,'_system', 'location=yes');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

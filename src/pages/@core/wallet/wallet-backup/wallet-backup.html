@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="black">Backup wallet</span>
+      <span text-uppercase ion-text color="black">Backup wallet</span>
     </ion-title>
   </ion-navbar>
 
@@ -24,27 +24,42 @@
       </ion-card-header>
       <ion-card-content>
         <h4 text-wrap text-justify ion-text color="black">
-            We recommend to backup your wallet. If this app is deleted, your money cannot be recovered without it.
-          Make sure to store it in a safe place, a backup of your wallet can protect you against system failures and many human mistakes.
+          We recommend to backup your wallet. If this app is deleted, your money cannot be recovered without it.
+          Make sure to store it in a safe place, a backup of your wallet can protect you against system failures and
+          many human mistakes.
           It can also allow you to recover your wallet after your mobile phone was stolen.
         </h4>
       </ion-card-content>
     </ion-card>
 
-    <ion-card *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null" (click)="onSelect(option)">
+   <ion-grid>
+     <ion-row>
+       <ion-col>
+          <ion-card *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null"
+      (click)="onSelect(option)">
       <ion-item>
         <ion-icon item-left ion-text color="black" [name]="option.icon"></ion-icon>
         <h2 ion-text color="black">{{ option.name }}</h2>
-        <ion-icon item-right ion-text color="grey" name="ios-arrow-forward"></ion-icon>
+        <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
       </ion-item>
+
     </ion-card>
+       </ion-col>
+     </ion-row>
+     <ion-row>
+        <ion-col  col-12 text-center>
+            <button medium gradient-button color-5 ion-button icon-end no-margin color="black" (click)="goHome()">
+                Done
+              </button>
+        </ion-col>
+     </ion-row>
+   </ion-grid>
+    <br>
+    <br>
+
+    
+
+
   </ion-list>
 </ion-content>
 
-<ion-footer no-border>
-  <section text-center>
-    <button gradient-button small color-5 (click)="goHome()" color="black">
-      <ion-icon name="ios-arrow-forward"></ion-icon>
-    </button>
-  </section>
-</ion-footer>
