@@ -42,6 +42,7 @@ import { DecimalPipe } from '../../node_modules/@angular/common';
 import { AppState } from '../providers/app-state/app-state';
 import { MockDataProvider } from '../providers/mock-data/mock-data';
 import { SharedModule } from './shared.module';
+import { NgXtruncateModule } from 'ngx-truncate';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -58,7 +59,8 @@ import { SharedModule } from './shared.module';
     }),
     ComponentsModule,
     PipesModule,
-    SharedModule
+    SharedModule,
+    NgXtruncateModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, AboutPage, HomePage],

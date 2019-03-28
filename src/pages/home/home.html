@@ -47,9 +47,9 @@
               <span amount>{{ (wallet.total>0?wallet.total:0) | number : '1.2-6'}}</span>
             </p>
 
-            <p>
-              {{ wallet.address.plain() }}
-            </p>
+            <p text-wrap>
+              <strong>{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</strong>
+              </p>
           </ion-card-content>
         </ion-card>
       </ion-slide>
