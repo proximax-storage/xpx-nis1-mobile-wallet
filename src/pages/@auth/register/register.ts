@@ -36,31 +36,10 @@ export class RegisterPage {
   init() {
     this.formGroup = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(8)]]
-    });
-    this.formGroup.valueChanges.subscribe(form => {
-      this.checkPasswords(this.formGroup);
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
-  /**
-   * Add confirm password validator
-   * @param group { FormGroup } The form must have the following value:
-   * this.formGroup = this.formBuilder.group({
-   *  password: [ '', Validators.required ],
-   *  confirmPassword: [ '', Validators.required ]
-   *  ...
-   * });
-   */
-  checkPasswords(group: FormGroup) {
-    let pass = group.controls.password.value;
-    let confirmPass = group.controls.confirmPassword.value;
-
-    return pass === confirmPass
-      ? null
-      : this.formGroup.setErrors([{ passwordMismatch: true }]);
-  }
 
   onSubmit(form) {
     this.authProvider
