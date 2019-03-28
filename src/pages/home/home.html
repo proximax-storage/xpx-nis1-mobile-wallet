@@ -88,11 +88,6 @@
 
 
   <ion-list transparent-items *ngIf="menu=='mosaics'">
-      <h2 padding-left ion-text color="dark">
-          <strong>
-            Mosaics
-          </strong>
-        </h2>
     <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
       <ion-card-header no-padding>
         <ion-item>
@@ -148,12 +143,6 @@
   </ion-list>
 
   <div *ngIf="menu=='transactions'">
-      <h2 padding-left ion-text color="dark">
-          <strong>
-            Transactions
-          </strong>
-        </h2>
-
         <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
         <ion-card fake-card *ngFor="let fakeCard of fakeList">
