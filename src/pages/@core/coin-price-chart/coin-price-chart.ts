@@ -51,7 +51,7 @@ export class CoinPriceChartPage {
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
 
-  selectedSegment: string = "priceChart";
+  selectedSegment: string = "transactions";
 
   constructor(
     public navCtrl: NavController,
@@ -63,7 +63,7 @@ export class CoinPriceChartPage {
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider
   ) {
-    this.selectedSegment = 'priceChart';
+    this.selectedSegment = 'transactions';
     this.durations = [
       { label: "24H", value: 1 },
       { label: "7D", value: 7 },
