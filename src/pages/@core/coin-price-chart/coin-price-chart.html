@@ -14,24 +14,24 @@
     </ion-title>
 
     <ion-buttons end>
-        <button ion-button icon-only (click)="dismiss()" color="black">
-          <ion-icon name="close"></ion-icon>
-        </button>
-      </ion-buttons>
+      <button ion-button icon-only (click)="dismiss()" color="black">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar mode='md' transparent no-margin no-border-top>
-          <ion-segment mode='md' [(ngModel)]="selectedSegment" color="dark">
-              <ion-segment-button value='transactions' checked>
-                  Transactions
-                </ion-segment-button>
-            <ion-segment-button value='priceChart' (ionSelect)="select('24H')">
-              Price Chart
-            </ion-segment-button>
-            <ion-segment-button value='info'>
-              Info
-            </ion-segment-button>
-          </ion-segment>
+    <ion-segment mode='md' [(ngModel)]="selectedSegment" color="dark">
+      <ion-segment-button value='transactions' checked>
+        Transactions
+      </ion-segment-button>
+      <ion-segment-button value='priceChart' (ionSelect)="select('24H')">
+        Price Chart
+      </ion-segment-button>
+      <ion-segment-button value='info'>
+        Info
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -173,7 +173,7 @@
 
   <!-- Transactions -->
   <div class="" *ngIf="selectedSegment=='transactions'">
-   
+
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
       <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -305,10 +305,23 @@
 
     <ion-grid empty *ngIf="showEmptyMessage">
       <ion-row>
+        <ion-row>
+          <ion-col>
+            <p>
+            </p>
+          </ion-col>
+        </ion-row>
+        <br><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
         <ion-col>
           <img quarter-width [src]="App.STICKERS.SORRY">
-          <h6 ion-text color="blackgreen" text-wrap>
-            You don't have any transactions yet.
+          <h6 ion-text color="grey" text-wrap>
+            <strong>Your transactions will appear here, none at the moment</strong>
           </h6>
         </ion-col>
       </ion-row>
@@ -357,27 +370,30 @@
         </ion-item>
       </ion-card>
 
-        <ion-card>
-            <ion-item >
-              <ion-icon item-start  item-left name="logo-facebook"></ion-icon>
-              <p item-left ion-text color="dark">Facebook</p>
-              <button (click)="openLink('https:facebook.com/'+selectedCoin.links.facebook_username)" color="dark" ion-button outline item-end>Visit</button>
-            </ion-item>
-          </ion-card>
-
       <ion-card>
-        <ion-item >
-          <ion-icon item-start  item-left name="logo-twitter"></ion-icon>
-          <p item-left ion-text color="dark">Twitter</p>
-          <button (click)="openLink('https:twitter.com/'+ selectedCoin.links.twitter_screen_name)" color="dark" ion-button outline item-end>Visit</button>
+        <ion-item>
+          <ion-icon item-start item-left name="logo-facebook"></ion-icon>
+          <p item-left ion-text color="dark">Facebook</p>
+          <button (click)="openLink('https:facebook.com/'+selectedCoin.links.facebook_username)" color="dark" ion-button
+            outline item-end>Visit</button>
         </ion-item>
       </ion-card>
 
       <ion-card>
-        <ion-item >
+        <ion-item>
+          <ion-icon item-start item-left name="logo-twitter"></ion-icon>
+          <p item-left ion-text color="dark">Twitter</p>
+          <button (click)="openLink('https:twitter.com/'+ selectedCoin.links.twitter_screen_name)" color="dark"
+            ion-button outline item-end>Visit</button>
+        </ion-item>
+      </ion-card>
+
+      <ion-card>
+        <ion-item>
           <ion-icon item-start item-left name="paper-plane"></ion-icon>
           <p item-left ion-text color="dark">Telegram</p>
-          <button  (click)="openLink('https:t.me/'+selectedCoin.links.telegram_channel_identifier)" color="dark" ion-button outline item-end>Visit</button>
+          <button (click)="openLink('https:t.me/'+selectedCoin.links.telegram_channel_identifier)" color="dark"
+            ion-button outline item-end>Visit</button>
         </ion-item>
       </ion-card>
     </ion-list>
@@ -397,26 +413,26 @@
 
 </ion-content>
 
-<ion-footer  *ngIf="selectedSegment=='transactions'">
-    <ion-toolbar>
-      <ion-grid normal>
-          <ion-row>
-            <ion-col>
-              <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
-                <ion-icon name="arrow-round-down"></ion-icon>
-                Receive
-              </button>
-            </ion-col>
-            <ion-col>
-              <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
-                Send
-                <ion-icon name="arrow-round-up"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-    </ion-toolbar>
-  </ion-footer>
+<ion-footer *ngIf="selectedSegment=='transactions'">
+  <ion-toolbar>
+    <ion-grid normal>
+      <ion-row>
+        <ion-col>
+          <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
+            <ion-icon name="arrow-round-down"></ion-icon>
+            Receive
+          </button>
+        </ion-col>
+        <ion-col>
+          <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
+            Send
+            <ion-icon name="arrow-round-up"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
 
 <ng-template #loading>
   <ion-spinner name="dots"></ion-spinner>

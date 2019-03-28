@@ -27,11 +27,6 @@
 
 
   <section wallets>
-    <!-- <h2 padding-left ion-text color="dark">
-      <strong>
-        Wallets
-      </strong>
-    </h2> -->
     
     <ion-slides slidesPerView="1.5" spaceBetween="10">
       <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
@@ -44,11 +39,11 @@
           <ion-card-content text-left>
             <p>
               <span symbol>$</span>
-              <span amount>{{ (wallet.total>0?wallet.total:0) | number : '1.2-6'}}</span>
+              <span amount>{{ (wallet.total>0?wallet.total:0) | number : '1.2-2'}}</span>
             </p>
 
             <p text-wrap>
-              <strong>{{ wallet.address.plain() | ngXtruncate: 18 : '...' }}</strong>
+              <strong>{{ wallet.address.plain() | ngXtruncate: 28 : '...' }}</strong>
               </p>
           </ion-card-content>
         </ion-card>
@@ -261,10 +256,20 @@
       <ion-grid empty *ngIf="showEmptyMessage">
         <ion-row>
           <ion-col>
+              <p>
+              </p>
+          </ion-col>
+        </ion-row>
+        <br>
+        <ion-row>
+          <ion-col>
+
             <img quarter-width [src]="AppConfig.STICKERS.SORRY">
-            <h6 ion-text color="blackgreen" text-wrap>
-              You don't have any transactions yet.
+            
+            <h6 ion-text color="grey" text-wrap>
+                <strong>Your transactions will appear here, none at the moment</strong>
             </h6>
+
           </ion-col>
         </ion-row>
       </ion-grid>
