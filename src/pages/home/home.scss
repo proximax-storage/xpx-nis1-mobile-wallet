@@ -10,6 +10,15 @@ $dark: #ab9188;
   page-home {
     ion-content {
       margin-top: none;
+
+
+      ion-refresher {
+        margin-top: 15px;
+      }
+    }
+
+    ion-content.has-refresher > .scroll-content {
+      border-top: none !important;
     }
 
     [padding] {
