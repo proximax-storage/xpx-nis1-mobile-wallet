@@ -13,22 +13,22 @@
   </ion-refresher>
 
   <ion-list title transparent>
-      <ion-item transparent>
-          <h2 padding-left title color="dark">
-              <strong>
-                Wallets
-              </strong>
-            </h2>
-         <button ion-button icon-only item-end clear (click)="showAddWalletPrompt()">
-            <ion-icon color="dark" name="add-circle"></ion-icon>
-          </button>
-      </ion-item>
-    </ion-list>
+    <ion-item transparent>
+      <h2 padding-left title color="dark">
+        <strong>
+          Wallets
+        </strong>
+      </h2>
+      <button ion-button icon-only item-end clear (click)="showAddWalletPrompt()">
+        <ion-icon color="dark" name="add-circle"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
 
 
   <section wallets>
-    
-    <ion-slides slidesPerView="1.5" spaceBetween="10">
+
+    <ion-slides slidesPerView="1.3" spaceBetween="15" (ionSlideDidChange)="slideChanged()">
       <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
         [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="onWalletSelect(wallet)"
         (press)="onWalletPress(wallet)">
@@ -43,11 +43,15 @@
             </p>
 
             <p text-wrap>
-              <strong>{{ wallet.address.plain() | ngXtruncate: 28 : '...' }}</strong>
-              </p>
+              <strong>{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</strong>
+            </p>
+            <!-- <p text-wrap>
+                  &nbsp;
+                  </p> -->
           </ion-card-content>
         </ion-card>
       </ion-slide>
+
       <ion-slide>
         <ion-card add-wallet (click)="showAddWalletPrompt()">
           <!-- <ion-card-header text-left>
@@ -56,9 +60,8 @@
           <ion-card-content text-center>
             <p>
               <span symbol><br></span>
-              <span amount>Create a wallet</span>
+              <span prompt>Create a wallet</span>
             </p>
-
             <p>
               It's free and you can can create as many as you like
             </p>
@@ -71,14 +74,14 @@
 
 
   <ion-grid normal>
-      <ion-segment mode='md' [(ngModel)]="menu" color="dark">
-          <ion-segment-button value="mosaics" checked>
-            Mosaics
-          </ion-segment-button>
-          <ion-segment-button value="transactions" >
-            Transactions
-          </ion-segment-button>
-        </ion-segment>
+    <ion-segment mode='md' [(ngModel)]="menu" color="dark">
+      <ion-segment-button value="mosaics" checked>
+        Mosaics
+      </ion-segment-button>
+      <ion-segment-button value="transactions">
+        Transactions
+      </ion-segment-button>
+    </ion-segment>
   </ion-grid>
 
 
@@ -138,147 +141,164 @@
   </ion-list>
 
   <div *ngIf="menu=='transactions'">
-        <!-- Skeleton loader -->
+    <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
-        <ion-card fake-card *ngFor="let fakeCard of fakeList">
-          <ion-card-header>
-            <p float-left> &nbsp; </p>
-    
-            <p float-right> &nbsp; </p>
-          </ion-card-header>
-          <ion-card-header no-padding>
-            <ion-item>
-              <section image item-left></section>
+      <ion-card fake-card *ngFor="let fakeCard of fakeList">
+        <ion-card-header>
+          <p float-left> &nbsp; </p>
+
+          <p float-right> &nbsp; </p>
+        </ion-card-header>
+        <ion-card-header no-padding>
+          <ion-item>
+            <section image item-left></section>
+            <h2> &nbsp; </h2>
+            <p>
+              <small> &nbsp; </small>
+            </p>
+
+            <section item-right>
               <h2> &nbsp; </h2>
               <p>
                 <small> &nbsp; </small>
               </p>
-    
-              <section item-right>
-                <h2> &nbsp; </h2>
-                <p>
-                  <small> &nbsp; </small>
-                </p>
-              </section>
-            </ion-item>
-          </ion-card-header>
-          <ion-card-content line no-padding>
-            <ion-item>
-              <h2> &nbsp; </h2>
-              <p>
-                <small> &nbsp; </small>
-              </p>
-    
-              <section text-right item-right>
-                <p>
-                  <small> &nbsp; </small>
-                </p>
-    
-                <p>
-                  <small> &nbsp; </small>
-                </p>
-              </section>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-    
-        <ion-card no-border>
-          <ion-item text-center>
-            <ion-spinner name="dots"></ion-spinner>
+            </section>
           </ion-item>
-        </ion-card>
-      </ion-list>
-      <!-- ./Skeleton loader -->
-    
-      <!-- Transactions -->
-      <ion-list transparent-items *ngIf="!isLoading">
-    
-        <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;" (click)="gotoTransactionDetail(transaction)">
-          <!-- if importance transfer -->
-          <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER" [tx]="transaction"></importance-transfer-transaction>
-    
-          <!-- if mosaic definition -->
-          <mosaic-definition-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_DEFINITION_CREATION" [tx]="transaction"></mosaic-definition-transaction>
-    
-          <!-- if mosaic supply change -->
-          <mosaic-supply-change-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_SUPPLY_CHANGE" [tx]="transaction"></mosaic-supply-change-transaction>
-    
-          <!-- if multisig transaction  -->
-          <multisig-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG" [tx]="transaction"></multisig-transaction>
-    
-          <!-- if multisig aggregate modification  -->
-          <multisig-aggregate-modification-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG_AGGREGATE_MODIFICATION"
-            [tx]="transaction"></multisig-aggregate-modification-transaction>
-    
-          <!-- if provision namespace  -->
-          <provision-namespace-transaction *ngIf="transaction.type == TransactionTypes.PROVISION_NAMESPACE" [tx]="transaction"></provision-namespace-transaction>
-    
-          <!-- if transfer  -->
-          <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction"></transfer-transaction>
-        </ion-card>
-    
-        <ion-card *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash" (click)="gotoTransactionDetail(transaction)">
-          <!-- if importance transfer -->
-          <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER" [tx]="transaction"></importance-transfer-transaction>
-    
-          <!-- if mosaic definition -->
-          <mosaic-definition-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_DEFINITION_CREATION" [tx]="transaction"></mosaic-definition-transaction>
-    
-          <!-- if mosaic supply change -->
-          <mosaic-supply-change-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_SUPPLY_CHANGE" [tx]="transaction"></mosaic-supply-change-transaction>
-    
-          <!-- if multisig transaction  -->
-          <multisig-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG" [tx]="transaction"></multisig-transaction>
-    
-          <!-- if multisig aggregate modification  -->
-          <multisig-aggregate-modification-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG_AGGREGATE_MODIFICATION"
-            [tx]="transaction"></multisig-aggregate-modification-transaction>
-    
-          <!-- if provision namespace  -->
-          <provision-namespace-transaction *ngIf="transaction.type == TransactionTypes.PROVISION_NAMESPACE" [tx]="transaction"></provision-namespace-transaction>
-    
-          <!-- if transfer  -->
-          <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction"></transfer-transaction>
-        </ion-card>
-    
-      </ion-list>
-      <!-- ./Transactions -->
-    
-      <!-- Infinite scroll -->
-      <div *ngIf="!showEmptyMessage">
-        <ion-infinite-scroll (ionInfinite)="doInfinite()">
-          <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more transactions"></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </div>
+        </ion-card-header>
+        <ion-card-content line no-padding>
+          <ion-item>
+            <h2> &nbsp; </h2>
+            <p>
+              <small> &nbsp; </small>
+            </p>
 
-      <!-- ./Infinite scroll -->
-    
-      <ion-grid empty *ngIf="showEmptyMessage">
-        <ion-row>
-          <ion-col>
+            <section text-right item-right>
               <p>
+                <small> &nbsp; </small>
               </p>
-          </ion-col>
-        </ion-row>
-        <br>
-        <ion-row>
-          <ion-col>
 
-            <img quarter-width [src]="AppConfig.STICKERS.SORRY">
-            
-            <h6 ion-text color="grey" text-wrap>
-                <strong>Your transactions will appear here, none at the moment</strong>
-            </h6>
+              <p>
+                <small> &nbsp; </small>
+              </p>
+            </section>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
 
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-card no-border>
+        <ion-item text-center>
+          <ion-spinner name="dots"></ion-spinner>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+    <!-- ./Skeleton loader -->
+
+    <!-- Transactions -->
+    <ion-list transparent-items *ngIf="!isLoading">
+
+      <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
+        (click)="gotoTransactionDetail(transaction)">
+        <!-- if importance transfer -->
+        <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"
+          [tx]="transaction"></importance-transfer-transaction>
+
+        <!-- if mosaic definition -->
+        <mosaic-definition-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_DEFINITION_CREATION"
+          [tx]="transaction"></mosaic-definition-transaction>
+
+        <!-- if mosaic supply change -->
+        <mosaic-supply-change-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_SUPPLY_CHANGE"
+          [tx]="transaction"></mosaic-supply-change-transaction>
+
+        <!-- if multisig transaction  -->
+        <multisig-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
+        </multisig-transaction>
+
+        <!-- if multisig aggregate modification  -->
+        <multisig-aggregate-modification-transaction
+          *ngIf="transaction.type == TransactionTypes.MULTISIG_AGGREGATE_MODIFICATION" [tx]="transaction">
+        </multisig-aggregate-modification-transaction>
+
+        <!-- if provision namespace  -->
+        <provision-namespace-transaction *ngIf="transaction.type == TransactionTypes.PROVISION_NAMESPACE"
+          [tx]="transaction"></provision-namespace-transaction>
+
+        <!-- if transfer  -->
+        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
+        </transfer-transaction>
+      </ion-card>
+
+      <ion-card *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash"
+        (click)="gotoTransactionDetail(transaction)">
+        <!-- if importance transfer -->
+        <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"
+          [tx]="transaction"></importance-transfer-transaction>
+
+        <!-- if mosaic definition -->
+        <mosaic-definition-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_DEFINITION_CREATION"
+          [tx]="transaction"></mosaic-definition-transaction>
+
+        <!-- if mosaic supply change -->
+        <mosaic-supply-change-transaction *ngIf="transaction.type == TransactionTypes.MOSAIC_SUPPLY_CHANGE"
+          [tx]="transaction"></mosaic-supply-change-transaction>
+
+        <!-- if multisig transaction  -->
+        <multisig-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
+        </multisig-transaction>
+
+        <!-- if multisig aggregate modification  -->
+        <multisig-aggregate-modification-transaction
+          *ngIf="transaction.type == TransactionTypes.MULTISIG_AGGREGATE_MODIFICATION" [tx]="transaction">
+        </multisig-aggregate-modification-transaction>
+
+        <!-- if provision namespace  -->
+        <provision-namespace-transaction *ngIf="transaction.type == TransactionTypes.PROVISION_NAMESPACE"
+          [tx]="transaction"></provision-namespace-transaction>
+
+        <!-- if transfer  -->
+        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
+        </transfer-transaction>
+      </ion-card>
+
+    </ion-list>
+    <!-- ./Transactions -->
+
+    <!-- Infinite scroll -->
+    <div *ngIf="!showEmptyMessage">
+      <ion-infinite-scroll (ionInfinite)="doInfinite()">
+        <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more transactions">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+
+    <!-- ./Infinite scroll -->
+
+    <ion-grid empty *ngIf="showEmptyMessage">
+      <ion-row>
+        <ion-col>
+          <p>
+          </p>
+        </ion-col>
+      </ion-row>
+      <br>
+      <ion-row>
+        <ion-col>
+
+          <img quarter-width [src]="AppConfig.STICKERS.SORRY">
+
+          <h6 ion-text color="grey" text-wrap>
+            <strong>Your transactions will appear here, none at the moment</strong>
+          </h6>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
 
-   
-      </div>
 
-  
+  </div>
+
+
 
 
 </ion-content>

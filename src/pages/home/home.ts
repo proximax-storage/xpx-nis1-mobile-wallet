@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController } from 'ionic-angular';
+import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController, Slides } from 'ionic-angular';
 import { SimpleWallet, MosaicTransferable, TransactionTypes, Pageable, Transaction } from 'nem-library';
 
 import { App as AppConfig } from '../../providers/app/app';
@@ -24,6 +24,8 @@ export enum WalletCreationType {
   providers: [GetMarketPricePipe]
 })
 export class HomePage {
+  @ViewChild(Slides) slides: Slides;
+  
   menu='mosaics';
   AppConfig = AppConfig;
   selectedMosaic: MosaicTransferable;
@@ -173,7 +175,11 @@ export class HomePage {
     });
   }
 
-
+  slideChanged() {
+    let currentIndex = this.slides.getActiveIndex();
+    console.log('Current index is', currentIndex);
+    this.onWalletSelect(this.wallets[currentIndex]);
+  }
 
   trackByName(wallet) {
     return wallet.name;

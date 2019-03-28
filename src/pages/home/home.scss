@@ -55,20 +55,20 @@ $dark: #ab9188;
       }
     }
 
-    
-
-    
-
-
     small {
       font-weight: bolder;
     }
 
+    // Wallet card content
     section[wallets] {
-      height: 25vh;
+      height: 30vh;
 
       [title] {
         font-size: 3.3rem;
+      }
+
+      [prompt] {
+        font-size: 3rem;
       }
 
       [symbol] {
@@ -79,6 +79,7 @@ $dark: #ab9188;
       [amount] {
         font-size: 4rem;
       }
+      
     }
 
     ion-card {
@@ -89,6 +90,8 @@ $dark: #ab9188;
       }
     }
 
+
+    // Wallet slides
 
     ion-card[wallet] {
       background: linear-gradient(transparentize(color($colors, light), .9), transparentize(color($colors, light), .4)),
@@ -126,172 +129,18 @@ $dark: #ab9188;
     }
 
     ion-card[selected]{
-      background: linear-gradient(rgba(228, 230, 238, 0.1), rgba(140, 140, 140, 0.35)), url(../assets/imgs/background.jpg) no-repeat;
+      background: linear-gradient(transparentize(color($colors, dark), 1), transparentize(color($colors, dark), .7)),
+      url('../assets/imgs/background.jpg') no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
     }
 
     ion-slides {
-      height: 96%;
+      height: 100%;
+      width: 100%;
     }
-
-
-
- /**
- * CSS Media Query
- * ------------------------------------------
- *  Responsive Grid Media Queries - 1280, 1024, 768, 480
- *   1280-1024   - desktop (default grid)
- *   1024-768    - tablet landscape
- *   768-480     - tablet 
- *   480-less    - phone landscape & smaller
- * --------------------------------------------
- */
-// Todo: iPad Pro Responsiveness
-
-@media all and (min-width: 1024px) and (max-width: 1280px) {
-  ion-slide{
-    width: 50% !important;
-    margin-right: -50px !important;
-  }
-
-  ion-card[wallet] {
-    width: 85% !important;
-    height: 20vh !important;
-
-    ion-card-header{
-      padding: 16px 0px 5px 16px !important;
-    }
-  }
-
-  ion-card[add-wallet] {
-    width: 85% !important;
-    height: 19vh !important;
-
-    ion-card-content{
-      line-height: 1.2 !important;
-      padding: 80px 20px 14.3px !important;
-      [amount]{
-        font-size: 3rem !important;
-      }
-    }
-  }
- }
-
-@media all and (min-width: 768px) and (max-width: 1024px) {
-  ion-slide{
-    width: 50% !important;
-    margin-right: -50px !important;
-  }
-
-  ion-card[wallet] {
-    width: 85% !important;
-    height: 20vh !important;
-
-    ion-card-header{
-      padding: 16px 0px 5px 16px !important;
-    }
-  }
-
-  ion-card[add-wallet] {
-    width: 85% !important;
-    height: 19vh !important;
-
-    ion-card-content{
-      line-height: 1.2 !important;
-      padding: 50px 20px 14.3px !important;
-      [amount]{
-        font-size: 3rem !important;
-      }
-    }
-  }
-}
-
-@media all and (min-width: 480px) and (max-width: 768px) { 
-  ion-slide{
-    width: 80%;
-    margin-right: -20px !important; 
-  }
-
-  ion-card[wallet] {
-    width: 85%;
-    height: 20vh !important;
-
-    ion-card-header{
-      padding: 16px 0px 5px 16px !important;
-    }
-  }
-
-  ion-card[add-wallet] {
-    width: 75%;
-    height: 19vh !important;
-
-    ion-card-content{
-      line-height: 1.2 !important;
-      padding: 10px 10px 14.3px;
-      [amount]{
-        font-size: 2rem !important;
-      }
-    }
-  }
-
-}
-
-@media all and (max-width: 480px) { }
-
-
-/* Portrait */
-@media screen and (orientation:portrait) { /* Portrait styles here */ }
-/* Landscape */
-@media screen and (orientation:landscape) { /* Landscape styles here */ }
-
-
-/* CSS for iPhone, iPad, and Retina Displays */
-
-/* Non-Retina */
-@media screen and (-webkit-max-device-pixel-ratio: 1) {
-}
-
-/* Retina */
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-only screen and (-o-min-device-pixel-ratio: 3/2),
-only screen and (min--moz-device-pixel-ratio: 1.5),
-only screen and (min-device-pixel-ratio: 1.5) {
-}
-
-/* iPhone Portrait */
-@media screen and (max-device-width: 480px) and (orientation:portrait) {
-  ion-slide{
-    width: 80% !important;
-  }
-
-  ion-card[wallet] {
-    width: 100%;
-  }
-
-  ion-card[add-wallet] {
-    width: 100%;
-
-    ion-card-content{
-      padding: 30px 16px 14px!important;
-      line-height: 1.3 !important;
-    }
-  }
-} 
-
-/* iPhone Landscape */
-@media screen and (max-device-width: 480px) and (orientation:landscape) {
-}
-
-/* iPad Portrait */
-@media screen and (min-device-width: 481px) and (orientation:portrait) {
-  
-  
-}
-
-/* iPad Landscape */
-@media screen and (min-device-width: 481px) and (orientation:landscape) {
-}
-
-
 
 
 
