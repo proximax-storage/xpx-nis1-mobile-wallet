@@ -5,9 +5,9 @@
     </button>
   </ion-fab>
 
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="fi-home"></ion-tab>
+  <ion-tab [root]="tab1Root" tabTitle="Wallets" tabIcon="fi-wallet"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Contacts" tabIcon="fi-contact"></ion-tab>
   <ion-tab></ion-tab>
-  <ion-tab [root]="tab3Root" (ionSelect)="clearNotification()" tabTitle="Notifications" tabIcon="globe"  [tabBadge]='notificationCount' tabBadgeStyle="danger"></ion-tab>
+  <ion-tab [root]="tab3Root" (ionSelect)="clearNotification()" tabTitle="Notifications" tabIcon="fi-notification"  [tabBadge]='notificationCount' tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab4Root" tabTitle="Settings" tabIcon="fi-settings"></ion-tab>
 </ion-tabs>

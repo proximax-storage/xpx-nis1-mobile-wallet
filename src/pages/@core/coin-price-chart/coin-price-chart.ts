@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
 import { CoinPriceChartProvider } from "../../../providers/coin-price-chart/coin-price-chart";
 import { CoingeckoProvider } from "../../../providers/coingecko/coingecko";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
@@ -61,7 +61,8 @@ export class CoinPriceChartPage {
     public utils: UtilitiesProvider,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private viewCtrl: ViewController
   ) {
     this.selectedSegment = 'transactions';
     this.durations = [
@@ -221,5 +222,9 @@ export class CoinPriceChartPage {
 
   openLink(link){
     window.open(link,'_system', 'location=yes');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
