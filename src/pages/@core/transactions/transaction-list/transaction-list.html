@@ -5,11 +5,29 @@
   Ionic pages and navigation.
 -->
 
+<ion-header no-border>
+
+    <ion-navbar transparent>
+      <ion-title>
+        <span ion-text color="black">{{walletName }}</span>
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="dismiss()" color="black">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+    <!-- <ion-toolbar transparent no-margin no-border-top>
+        <ion-title>
+            <h2>$0.00</h2>
+          </ion-title>
+      </ion-toolbar> -->
+  
+  </ion-header>
+
   <ion-content background>
-  
-    <h2 margin-left ion-text color="black">Transactions</h2>
-  
-  
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
         <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -128,7 +146,7 @@
       <ion-grid empty *ngIf="showEmptyMessage">
         <ion-row>
           <ion-col>
-            <img half-width [src]="App.STICKERS.SORRY">
+            <img quarter-width [src]="App.STICKERS.SORRY">
     <!-- 
             <h4 ion-text color="blackgreen" text-wrap>
               No transactions yet
@@ -146,14 +164,35 @@
             <h6 ion-text color="blackgreen" text-wrap>
               Start by sending mosaics to your new wallet
             </h6> -->
-    
+<!--     
             <button gradient-button color-5 color="black" (click)="showReceiveModal()">
               Topup now
-            </button>
+            </button> -->
           </ion-col>
         </ion-row>
       </ion-grid>
   </ion-content>
+
+  <ion-footer>
+      <ion-toolbar>
+        <ion-grid normal>
+          <ion-row>
+            <ion-col>
+              <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
+                <ion-icon name="arrow-round-down"></ion-icon>
+                Receive
+              </button>
+            </ion-col>
+            <ion-col>
+              <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
+                Send
+                <ion-icon name="arrow-round-up"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
   
   <ng-template #loading>
     <ion-spinner name="dots"></ion-spinner>

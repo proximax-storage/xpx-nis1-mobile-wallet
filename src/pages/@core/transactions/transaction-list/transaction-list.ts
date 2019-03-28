@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
 import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction } from "nem-library";
 import { Observable } from "rxjs";
 import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
@@ -44,6 +44,7 @@ export class TransactionListPage {
 
   coindId: string;
   mosaicId: string;
+  walletName: string;
 
   constructor(
     public navCtrl: NavController,
@@ -53,14 +54,10 @@ export class TransactionListPage {
     public utils: UtilitiesProvider,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
-    private walletProvider: WalletProvider
+    private walletProvider: WalletProvider,
+    private viewCtrl: ViewController
   ) {
    
-    console.info("navParams.data: ", this.navParams.data);
-    this.mosaicId = this.navParams.data['mosaicId']
-    this.coindId = this.navParams.data['coindId']
-
-    console.info(this.mosaicId, this.coindId);
   }
 
   ionViewWillEnter() {
@@ -75,6 +72,8 @@ export class TransactionListPage {
     this.utils.setTabIndex(0);
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
+      this.walletName = currentWallet.name;
+
       if (!currentWallet) {
         this.navCtrl.setRoot(
           'WalletListPage',
@@ -167,6 +166,11 @@ export class TransactionListPage {
   gotoTransactionDetail(tx) {
     this.navCtrl.push('TransactionDetailPage', tx);
   }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
 
   // doInfinite() {
   //   console.log('Do infinite. ');

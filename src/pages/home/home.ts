@@ -189,10 +189,18 @@ export class HomePage {
     console.log(wallet);
     this.mosaics = null; // Triggers the skeleton list loader
     this.selectedWallet = wallet;
-
     this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {
       this.getBalance();
     });
+  }
+
+  showWalletDetails(){
+    let page= 'TransactionListPage';
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 
   onWalletPress(wallet) {
