@@ -17,6 +17,7 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../providers/alert/alert';
 
 import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
+import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
 
 /**
  * Generated class for the SendPage page.
@@ -36,10 +37,12 @@ export class SendPage {
   addressSourceType: { from: string; to: string };
   currentWallet: SimpleWallet;
   selectedMosaic: MosaicTransferable;
+  selectedCoin:any;
 
   form: FormGroup;
   inputOptions: CurrencyMaskConfig;
   fee: number = 0;
+  amount: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -51,10 +54,10 @@ export class SendPage {
     public utils: UtilitiesProvider,
     public alertProvider: AlertProvider,
     public viewCtrl: ViewController,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private coingeckoProvider:CoingeckoProvider
   ) {
     this.init();
-
     
   }
 
@@ -78,6 +81,26 @@ export class SendPage {
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
             this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic :  mosaics[0];
+
+
+            let mosaic = this.selectedMosaic.mosaicId.name;
+            let coinId:string='';
+
+            if (mosaic === 'xem') {
+              coinId = 'nem';
+            }
+            else if (mosaic === 'xpx') {
+              coinId = 'proximax';
+            } else if (mosaic === 'npxs') {
+              coinId = 'pundi-x';
+            } else {
+              coinId = '';
+            }
+
+                // Get coin price
+            this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
+              this.selectedCoin = coin;
+            });
           });
 
         // Set sender address to currenWallet.address
@@ -87,6 +110,8 @@ export class SendPage {
           .setValue(this.currentWallet.address.plain());
       }
     });
+
+
 
   }
 
@@ -136,6 +161,7 @@ export class SendPage {
     }
 
     this.fee = 0;
+    this.amount = 0;
   }
 
   onChangeFrom(val) {
