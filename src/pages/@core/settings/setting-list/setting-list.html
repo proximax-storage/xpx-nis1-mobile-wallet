@@ -39,13 +39,13 @@
   </section>
 
   <ion-list transparent-items>
-    <ion-card (click)="copy(currentWallet.address.plain())">
+    <!-- <ion-card (click)="copy(currentWallet.address.plain())">
       <ion-item>
         <ion-icon item-left name="barcode"></ion-icon>
         <h2>Address</h2>
         <p text-wrap *ngIf="currentWallet">{{ currentWallet.address.pretty() }}</p>
       </ion-item>
-    </ion-card>
+    </ion-card> -->
 
     <ion-card *ngIf="accountInfo && accountInfo.publicAccount" (click)="copy(accountInfo.publicAccount.publicKey)">
       <ion-item>
