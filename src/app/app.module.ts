@@ -43,6 +43,7 @@ import { AppState } from '../providers/app-state/app-state';
 import { MockDataProvider } from '../providers/mock-data/mock-data';
 import { SharedModule } from './shared.module';
 import { NgXtruncateModule } from 'ngx-truncate';
+import { QRScanner } from '@ionic-native/qr-scanner';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -98,6 +99,7 @@ import { NgXtruncateModule } from 'ngx-truncate';
     CoinPriceChartProvider,
     AppState,
     MockDataProvider,
+    QRScanner
   ]
 })
 export class AppModule {}

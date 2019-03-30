@@ -31,8 +31,8 @@
 
 
   <!-- QR code of NEM address -->
-  <ngx-kjua text-center *ngIf="currentWallet" fill="#000" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="getQRCode()">
-  </ngx-kjua>
+  <!-- <ngx-kjua text-center *ngIf="currentWallet" fill="#000" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="getQRCode()">
+  </ngx-kjua> -->
 
   <section text-center *ngIf="!currentWallet">
     <ion-spinner name="dots"></ion-spinner>
@@ -111,13 +111,13 @@
     </ion-card> -->
 
     <!-- Uncomment to add multisig -->
-    <ion-card (click)="gotoMultisignInfoPage()">
+    <!-- <ion-card (click)="gotoMultisignInfoPage()">
       <ion-item>
         <ion-icon item-left name="people"></ion-icon>
         <h2>Multisign accounts</h2>
         <p text-wrap>Multisig accounts are editable on-chain contracts, the most powerful way to secure funds, enable joint accounts</p>
       </ion-item>
-    </ion-card>
+    </ion-card> -->
 
     <ion-card (click)="logOut()">
       <ion-item >

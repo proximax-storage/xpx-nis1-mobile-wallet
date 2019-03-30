@@ -18,6 +18,8 @@ import { AlertProvider } from '../../../../providers/alert/alert';
 
 import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
 import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+
 
 /**
  * Generated class for the SendPage page.
@@ -37,7 +39,7 @@ export class SendPage {
   addressSourceType: { from: string; to: string };
   currentWallet: SimpleWallet;
   selectedMosaic: MosaicTransferable;
-  selectedCoin:any;
+  selectedCoin: any;
 
   form: FormGroup;
   inputOptions: CurrencyMaskConfig;
@@ -55,10 +57,11 @@ export class SendPage {
     public alertProvider: AlertProvider,
     public viewCtrl: ViewController,
     public modalCtrl: ModalController,
-    private coingeckoProvider:CoingeckoProvider
+    private coingeckoProvider: CoingeckoProvider,
+    private qrScanner: QRScanner
   ) {
     this.init();
-    
+
   }
 
   ionViewWillEnter() {
@@ -80,11 +83,11 @@ export class SendPage {
         this.getBalanceProvider
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
-            this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic :  mosaics[0];
+            this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic : mosaics[0];
 
 
             let mosaic = this.selectedMosaic.mosaicId.name;
-            let coinId:string='';
+            let coinId: string = '';
 
             if (mosaic === 'xem') {
               coinId = 'nem';
@@ -97,7 +100,7 @@ export class SendPage {
               coinId = '';
             }
 
-                // Get coin price
+            // Get coin price
             this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
               this.selectedCoin = coin;
             });
@@ -130,7 +133,7 @@ export class SendPage {
       decimal: '.',
       precision: 2,
       prefix: '',
-      suffix: this.selectMosaic.name? ' ' + this.selectMosaic.name : ' XPX',
+      suffix: this.selectMosaic.name ? ' ' + this.selectMosaic.name : ' XPX',
       thousands: ',',
       nullable: false
     };
@@ -207,7 +210,7 @@ export class SendPage {
     this.utils
       .showInsetModal('SendContactSelectPage', { title: title })
       .subscribe(data => {
-        if(data != undefined || data != null) {
+        if (data != undefined || data != null) {
           this.form.get('recipientName').setValue(data.name);
           this.form.get('recipientAddress').setValue(data.address);
         } else {
@@ -311,7 +314,7 @@ export class SendPage {
           'This address does not belong to this network'
         );
       } else {
-         // Prepare transaction
+        // Prepare transaction
         let transferTransaction = this._prepareTx(recipient);
 
         // Show confirm transaction
@@ -322,9 +325,9 @@ export class SendPage {
           sendTx: transferTransaction,
           currentWallet: this.currentWallet
         }, {
-          enableBackdropDismiss: false,
-          showBackdrop: true
-        });
+            enableBackdropDismiss: false,
+            showBackdrop: true
+          });
         modal.present();
 
         // this.navCtrl.push('SendMosaicConfirmationPage', {
@@ -343,5 +346,36 @@ export class SendPage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  scan() {
+    this.qrScanner.prepare()
+      .then((status: QRScannerStatus) => {
+        if (status.authorized) {
+          // camera permission was granted
+
+
+          // start scanning
+          let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            console.log('Scanned something', text);
+
+            this.form
+            .get('senderAddress')
+            .setValue(text);
+
+
+            this.qrScanner.hide(); // hide camera preview
+            scanSub.unsubscribe(); // stop scanning
+          });
+
+        } else if (status.denied) {
+          // camera permission was permanently denied
+          // you must use QRScanner.openSettings() method to guide the user to the settings page
+          // then they can grant the permission from there
+        } else {
+          // permission was denied, but not permanently. You can ask for permission again at a later time.
+        }
+      })
+      .catch((e: any) => console.log('Error is', e));
   }
 }
