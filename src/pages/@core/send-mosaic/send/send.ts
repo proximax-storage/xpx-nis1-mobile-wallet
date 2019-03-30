@@ -1,7 +1,7 @@
 import { GetBalanceProvider } from './../../../../providers/get-balance/get-balance';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import {
   SimpleWallet,
   MosaicTransferable,
@@ -39,6 +39,7 @@ export class SendPage {
 
   form: FormGroup;
   inputOptions: CurrencyMaskConfig;
+  fee: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -49,18 +50,21 @@ export class SendPage {
     public walletProvider: WalletProvider,
     public utils: UtilitiesProvider,
     public alertProvider: AlertProvider,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public modalCtrl: ModalController
   ) {
     this.init();
+
+    
   }
 
   ionViewWillEnter() {
     // this.utils.setHardwareBack(this.navCtrl);
-
+    console.log('ionViewWillEnter SendPage');
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(
-          'WalletListPage',
+          'TabsPage',
           {},
           {
             animate: true,
@@ -73,7 +77,7 @@ export class SendPage {
         this.getBalanceProvider
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
-            this.selectedMosaic = mosaics[0];
+            this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic :  mosaics[0];
           });
 
         // Set sender address to currenWallet.address
@@ -83,6 +87,7 @@ export class SendPage {
           .setValue(this.currentWallet.address.plain());
       }
     });
+
   }
 
   ionViewDidLoad() {
@@ -90,6 +95,8 @@ export class SendPage {
   }
 
   init() {
+
+    console.log('Init called');
     // Initialize input options
     this.inputOptions = {
       align: 'center',
@@ -98,7 +105,7 @@ export class SendPage {
       decimal: '.',
       precision: 2,
       prefix: '',
-      suffix: ' XPX',
+      suffix: this.selectMosaic.name? ' ' + this.selectMosaic.name : ' XPX',
       thousands: ',',
       nullable: false
     };
@@ -122,9 +129,13 @@ export class SendPage {
       to: 'contact'
     };
 
+    this.addressSourceType.to = 'manual';
+
     if (this.addressSourceType.to === 'manual') {
       this.form.get('recipientAddress').setValue('');
     }
+
+    this.fee = 0;
   }
 
   onChangeFrom(val) {
@@ -153,11 +164,13 @@ export class SendPage {
       })
       .subscribe(data => {
         if (data) {
+          console.log('Selected mosaic', data);
           this.selectedMosaic = data;
           this.inputOptions.suffix =
             ' ' + this.selectedMosaic.mosaicId.name.toUpperCase();
 
           if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
+            console.log('this.selectedMosaic.mosaicId', this.selectedMosaic.mosaicId);
             this.form.get('isMosaicTransfer').setValue(true);
           }
         }
@@ -175,6 +188,32 @@ export class SendPage {
           this.viewCtrl.dismiss();
         }
       });
+  }
+
+  calculateFee() {
+    try {
+      let recipient = new Address(
+        this.form
+          .get('recipientAddress')
+          .value.toUpperCase()
+          .replace('-', '')
+      );
+      if (!this.nemProvider.isValidAddress(recipient)) {
+        this.alertProvider.showMessage(
+          'This address does not belong to this network'
+        );
+      } else {
+        this._prepareTx(recipient);
+      }
+    } catch (err) {
+      this.alertProvider.showMessage(
+        'This address does not belong to this network'
+      );
+    }
+  }
+
+  getPrice(selectedMosaic) {
+    return 0;
   }
 
   /**
@@ -205,6 +244,8 @@ export class SendPage {
       );
 
       this.form.get('fee').setValue(transferTransaction.fee);
+      this.fee = transferTransaction.fee * 0.000001;
+
     }
 
     console.log('transferTransaction', transferTransaction);
@@ -244,14 +285,28 @@ export class SendPage {
           'This address does not belong to this network'
         );
       } else {
+         // Prepare transaction
         let transferTransaction = this._prepareTx(recipient);
 
-        this.navCtrl.push('SendMosaicConfirmationPage', {
+        // Show confirm transaction
+        let page = "SendMosaicConfirmationPage";
+        const modal = this.modalCtrl.create(page, {
           ...this.form.value,
           mosaic: this.selectedMosaic,
           sendTx: transferTransaction,
           currentWallet: this.currentWallet
+        }, {
+          enableBackdropDismiss: false,
+          showBackdrop: true
         });
+        modal.present();
+
+        // this.navCtrl.push('SendMosaicConfirmationPage', {
+        //   ...this.form.value,
+        //   mosaic: this.selectedMosaic,
+        //   sendTx: transferTransaction,
+        //   currentWallet: this.currentWallet
+        // });
       }
     } catch (err) {
       this.alertProvider.showMessage(

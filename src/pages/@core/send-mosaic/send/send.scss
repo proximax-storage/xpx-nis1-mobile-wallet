@@ -22,8 +22,32 @@ page-send {
 
       &:focus,
       &:active {
-        outline: 0;
+        outline: 0px;
       }
     }
+  }
+
+  ion-card[amount] {
+    -webkit-box-shadow: none !important;
+    box-shadow:  none !important;
+    background: none !important;
+  }
+
+  // ion-icon:not([item-left]) {
+  //   color: color($colors, dark) !important;
+  // }
+
+
+  ion-item h2 {
+
+    font-size: 1.6rem !important;
+  }
+
+
+  .list .item-inner {
+    border-bottom: none !important;
+  }
+  .item-block .item-inner {
+    border-bottom: none !important;
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { SimpleWallet } from 'nem-library';
 
@@ -39,16 +39,17 @@ export class SendMosaicConfirmationPage {
     private alertProvider: AlertProvider,
     private authProvider: AuthProvider,
     public utils: UtilitiesProvider,
+    private viewCtrl: ViewController
   ) {
     this.init();
   }
 
   ionViewWillEnter() {
-    this.utils.setHardwareBack(this.navCtrl);
+    // this.utils.setHardwareBack(this.navCtrl);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WalletDeletePage');
+    console.log('ionViewDidLoad SendMosaicConfirmationPage');
   }
 
   init() {
@@ -144,5 +145,9 @@ export class SendMosaicConfirmationPage {
       }
     }
     return false;
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
