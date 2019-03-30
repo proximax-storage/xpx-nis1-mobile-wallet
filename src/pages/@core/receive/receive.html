@@ -18,58 +18,34 @@
 </ion-header>
 
 <ion-content background>
+
   <ion-list transparent-items>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!-- Mosaic -->
-      <h6 margin-left ion-text color="black">Mosaic</h6>
-      <ion-card *ngIf="selectedMosaic" (click)="selectMosaic()">
-        <ion-item>
-          <ion-avatar item-start>
-            <img [src]="utils.getLogo(selectedMosaic)">
-          </ion-avatar>
-          <h2 text-uppercase ion-text color="black">{{ selectedMosaic.mosaicId.name }}</h2>
-          <p text-uppercase ion-text color="black">{{ selectedMosaic.mosaicId.namespaceId }}</p>
 
-          <section item-right>
-            <h2 ion-text color="black">{{ selectedMosaic.amount | number:'1.2' }}</h2>
-            <p text-right text-left ion-text color="black">
-              <small>
-                {{ selectedMosaic.amount * 0.19 | currency }}
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card>
-      <ion-card fake-card *ngIf="!selectedMosaic">
-        <ion-item text-center>
-          <ion-spinner name="dots"></ion-spinner>
-        </ion-item>
-      </ion-card>
+      <br>
+      <br>
+      <!-- QR code of NEM address -->
+  <ngx-kjua 
 
-      <!-- Amount -->
-      <h6 margin-left ion-text color="black">Amount</h6>
-      <ion-card amount>
-        <ion-item>
-          <ion-label>
-            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions">
-          </ion-label>
-        </ion-item>
-      </ion-card>
+  text-center 
+  *ngIf="currentWallet" 
+  fill="#000" 
+  [ecLevel] = "H"
+  [crisp] = "true"
+  [size]="300"
+  [mPosX]="50"
+  [mPosY]="50"
+  [mSize]="15" 
+  [fontcolor]="'#1f6b86'"
+  [mode]="'label'" 
+  [render] = "'label'"
+  [label]="'ProximaX'" 
+  [back]="'#fff'" 
+  [text]="getQRCode()">
+    </ngx-kjua>
 
-      <!-- Note -->
-      <h6 margin-left ion-text color="black">Note</h6>
-      <ion-card>
-        <ion-item no-border>
-          <ion-textarea autosize ion-text rows="8" color="black" formControlName="message" placeholder="Your message"></ion-textarea>
-        </ion-item>
-      </ion-card>
+    <br>
+    <br>
 
-      <section text-center>
-        <button gradient-button small color-5 type="submit" color="black">
-          <ion-icon name="ios-arrow-forward"></ion-icon>
-        </button>
-      </section>
-    </form>
   </ion-list>
 
 </ion-content>

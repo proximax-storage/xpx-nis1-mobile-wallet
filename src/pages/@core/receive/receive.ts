@@ -10,6 +10,9 @@ import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 import { GetBalanceProvider } from './../../../providers/get-balance/get-balance';
+import { App } from '../../../providers/app/app';
+import { NemProvider } from '../../../providers/nem/nem';
+
 
 /**
  * Generated class for the ReceivePage page.
@@ -38,6 +41,7 @@ export class ReceivePage {
     private getBalanceProvider: GetBalanceProvider,
     private walletProvider: WalletProvider,
     public utils: UtilitiesProvider,
+    private nemProvider: NemProvider
   ) {
     this.init();
   }
@@ -112,5 +116,9 @@ export class ReceivePage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  getQRCode() {
+    return this.currentWallet.address.plain().toString();
   }
 }
