@@ -5,6 +5,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { ToastProvider } from '../../../providers/toast/toast';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 import { SimpleWallet } from 'nem-library';
+import { NemProvider } from '../../../providers/nem/nem';
  /*
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -26,6 +27,7 @@ export class ReceivePage {
     private socialSharing: SocialSharing,
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
+    private nemProvider: NemProvider
   ) {
   }
   ionViewWillEnter() {
@@ -45,7 +47,7 @@ export class ReceivePage {
         );
       } else {
         this.currentWallet = currentWallet;
-        this.address = this.getQRCode();
+        this.address = this.currentWallet.address.plain();
       }
       
     });
@@ -56,11 +58,21 @@ export class ReceivePage {
   }
 
   getQRCode() {
-    return this.currentWallet.address.plain().toString();
+    // return this.currentWallet.address.plain().toString();
+
+    let QRCode: any = this.nemProvider.generateAddressQRText(
+      this.currentWallet.address
+    );
+    QRCode = JSON.parse(QRCode);
+    QRCode.data.name = this.currentWallet.name;
+
+    console.log("QRCode",QRCode);
+
+    return JSON.stringify(QRCode);
   }
 
   copy() {
-    this.clipboard.copy(this.getQRCode()).then(_ => {
+    this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
       this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
@@ -68,7 +80,7 @@ export class ReceivePage {
   share() {
     this.socialSharing
       .share(
-        this.getQRCode(),
+        this.currentWallet.address.plain(),
         null,
         null,
         null

@@ -105,7 +105,7 @@ export class SendMosaicConfirmationPage {
             console.log(error);
             if (error.toString().indexOf('FAILURE_INSUFFICIENT_BALANCE') >= 0) {
               this.alertProvider.showMessage(
-                'Insufficient balance. Please try again.'
+                'Sorry, you don\'t have enough balance to continue the transaction.'
               );
             } else if (
               error.toString().indexOf('FAILURE_MESSAGE_TOO_LARGE') >= 0

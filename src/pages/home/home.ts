@@ -371,7 +371,7 @@ export class HomePage {
   }
 
   doInfinite() {
-    if (this.showEmptyMessage) return;
+    if (this.showEmptyTransaction) return;
 
     this.isLoadingInfinite = true;
     this.pageable.nextPage();

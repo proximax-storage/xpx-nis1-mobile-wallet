@@ -351,9 +351,10 @@ export class SendPage {
 
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
-      this.form
-      .get('senderAddress')
-      .setValue(barcodeData);
+      barcodeData.format = "QR_CODE";
+      let payload = JSON.parse(barcodeData.text);
+      this.form.patchValue({ recipientName: payload.data.name})
+      this.form.patchValue({ recipientAddress: payload.data.addr })
      }).catch(err => {
          console.log('Error', err);
      });
