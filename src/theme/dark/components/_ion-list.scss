@@ -40,9 +40,9 @@ ion-list[transparent-items] {
     h2:not([ion-text]), ion-icon {
       color: darken(color($colors, dark), 10%);
     }
-    ion-icon:not([item-left]) {
-      color: lighten(color($colors, light), 10%);
-    }
+    // ion-icon:not([item-left]) {
+    //   color: lighten(color($colors, light), 10%);
+    // }
 
     p:not([ion-text]) {
       color: darken(color($colors, dark), 1%);

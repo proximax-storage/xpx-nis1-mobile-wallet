@@ -11,8 +11,8 @@ import { UtilitiesProvider } from '../../providers/utilities/utilities';
 export class TabsPage {
   tabIndex: number;
   tab1Root = HomePage;
-  tab2Root = 'ContactListPage';
-  tab3Root = 'NotificationPage';
+  tab2Root = 'NotificationPage';
+  tab3Root = 'ServicesPage';
   tab4Root = 'SettingListPage';
 
   selectedIndex: number;

@@ -24,8 +24,21 @@
   <ion-list transparent-items>
 
     <form [formGroup]="form">
+
+      <!-- Price -->
+        
+
+
+      <!-- Amount -->
+      <ion-card amount>
+        <ion-item>
+          <ion-label>
+            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions">
+          </ion-label>
+        </ion-item>
+      </ion-card>
+
       <!-- Mosaic -->
-      <h6 margin-left ion-text color="black">Mosaic</h6>
       <ion-card *ngIf="selectedMosaic" (click)="selectMosaic()">
         <ion-item>
           <ion-avatar item-start>
@@ -38,7 +51,7 @@
             <h2 ion-text color="black">{{ selectedMosaic.amount | number:'1.2' }}</h2>
             <p text-right text-left ion-text color="black">
               <small>
-                {{ selectedMosaic.amount * 0.19 | currency }}
+                {{  selectedMosaic.amount | currency }}
               </small>
             </p>
           </section>
@@ -51,50 +64,39 @@
       </ion-card>
 
       <!-- Recipient -->
-      <ion-item no-lines>
-        <ion-label ion-text color="black">To</ion-label>
-        <ion-select [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
-          <ion-option value="contact">Contacts</ion-option>
-          <ion-option value="manual">Manual input</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('Select Contact')">
-        <ion-item>
-          <img item-left logo-small [src]="App.USER">
-          <h2 ion-text color="black">{{ form.get('recipientName').value || 'None' }}</h2>
-          <p small ion-text color="black">{{ form.get('recipientAddress').value || 'Please select one' }}</p>
-        </ion-item>
-      </ion-card>
-      <ion-card *ngIf="addressSourceType.to === 'manual'">
-        <ion-item>
-          <ion-textarea ion-text color="black" autosize rows="1" placeholder="Enter NEM address" formControlName="recipientAddress"></ion-textarea>
-        </ion-item>
-      </ion-card>
-
-      <!-- Amount -->
-      <h6 margin-left ion-text color="black">Amount</h6>
-      <ion-card amount>
-        <ion-item>
-          <ion-label>
-            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions">
-          </ion-label>
-        </ion-item>
-      </ion-card>
-
-      <!-- Note -->
-      <h6 margin-left ion-text color="black">Note</h6>
       <ion-card>
-        <ion-item no-border>
-          <ion-textarea ion-text color="black" autosize rows="5" ion-text color="black" formControlName="message" placeholder="Your message"></ion-textarea>
+        <ion-item>
+          <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address" (input)="calculateFee()"></ion-input>
+          <button clear item-right ion-button icon-only>
+              <ion-icon color="white"  name="ios-barcode-outline"></ion-icon>
+            </button>
         </ion-item>
       </ion-card>
+
+       <!-- Note -->
+       <ion-card>
+         <ion-item no-border>
+           <ion-textarea ion-text color="black" autosize rows="1" ion-text color="black" formControlName="message" placeholder="Note" (input)="calculateFee()"></ion-textarea>
+         </ion-item>
+       </ion-card>
+
+       <!-- Fee -->
+       <ion-item text-center>
+          <!-- <ion-icon name="ios-cash-outline" item-start></ion-icon> -->
+          Fee
+          <ion-badge>{{fee | number:'1.6-6'}}</ion-badge>
+        </ion-item>
+
+
+        
+    
     </form>
 
   </ion-list>
 
   <section text-center>
-    <button gradient-button small color-5 (click)="onSubmit()" color="black">
-      <ion-icon name="ios-arrow-forward"></ion-icon>
+    <button gradient-button small color-5 (click)="onSubmit()">
+      <ion-icon name="fi-send"></ion-icon>
     </button>
   </section>
 </ion-content>

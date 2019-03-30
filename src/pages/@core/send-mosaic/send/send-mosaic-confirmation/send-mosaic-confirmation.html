@@ -13,7 +13,17 @@
 <ion-header no-border>
 
   <ion-navbar transparent>
+      <ion-title>
+          <span ion-text color="black">Confirm Transaction</span>
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="dismiss()" color="black">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+      
   </ion-navbar>
+
 
 </ion-header>
 
@@ -23,9 +33,6 @@
       <ion-col col-12 text-center>
 
         <ion-list transparent-items>
-          <h2 ion-text color="black">
-            Are you sure to send?
-          </h2>
 
           <!-- Mosaic -->
           <ion-card>
@@ -102,7 +109,7 @@
       <ion-col buttons col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <button gradient-button color-5 type="submit" color="black">
-            Yes, send it
+            Confirm
           </button>
         </form>
       </ion-col>

@@ -5,7 +5,8 @@ import {
   NavParams,
   AlertController,
   ActionSheetController,
-  Platform
+  Platform,
+  ViewController
 } from 'ionic-angular';
 
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
@@ -50,6 +51,8 @@ export class ContactListPage {
     private platform: Platform,
     private barcodeScannerProvider: BarcodeScannerProvider,
     private utils: UtilitiesProvider,
+    private viewCtrl: ViewController
+    
   ) {}
 
   ionViewWillEnter() {
@@ -174,5 +177,9 @@ export class ContactListPage {
         ]
       })
       .present();
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

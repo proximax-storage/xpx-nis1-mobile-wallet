@@ -1,4 +1,17 @@
 page-send-mosaic-select {
+
+  @mixin mboxshadow() {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.23);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    background: rgba(136, 136, 136, 0.43) !important;
+  }
+
+  ion-card[selected] {
+    &:hover {
+      @include mboxshadow();
+    }
+  }
+
   section[center] {
     display: flex;
     justify-content: center;
@@ -7,4 +20,7 @@ page-send-mosaic-select {
     height: 100%;
     width: 100%;
   }
+
+
+  
 }

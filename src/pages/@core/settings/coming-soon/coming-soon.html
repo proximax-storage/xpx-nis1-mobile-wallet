@@ -9,10 +9,10 @@
   <ion-grid empty>
     <ion-row>
       <ion-col>
-        <img half-width [src]="App.STICKERS.SORRY">
+        <img quarter-width [src]="App.STICKERS.SORRY">
 
-        <p text-wrap text-center ion-text color="black">
-          Sorry, This feature isn't available right now.
+        <p text-wrap text-center color="grey">
+          <strong>Sorry, This feature isn't available right now.</strong>
         </p>
 
         <button gradient-button color-5 (click)="viewCtrl.dismiss()">

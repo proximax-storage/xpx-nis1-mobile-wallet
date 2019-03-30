@@ -5,7 +5,8 @@ import {
   NavParams,
   ActionSheetController,
   Platform,
-  AlertController
+  AlertController,
+  ViewController
 } from "ionic-angular";
 
 import { SimpleWallet, MosaicDefinition } from "nem-library";
@@ -43,7 +44,8 @@ export class MosaicListPage {
     public platform: Platform,
     public walletProvider: WalletProvider,
     public nemProvider: NemProvider,
-    public utils: UtilitiesProvider
+    public utils: UtilitiesProvider,
+    private viewCtrl: ViewController
   ) {}
 
   ionViewDidLoad() {
@@ -98,5 +100,8 @@ export class MosaicListPage {
 
   gotoAdd() {
     this.navCtrl.push("MosaicCreatePage");
+  }
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

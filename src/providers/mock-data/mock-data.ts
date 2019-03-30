@@ -21,7 +21,7 @@ export class MockDataProvider {
   }
 
   private initData() {
-    this.pin = '1111';
+    this.pin = '';
 
     this.accounts = [
       {
