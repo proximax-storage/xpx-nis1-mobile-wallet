@@ -26,8 +26,23 @@
       <ion-col col-12></ion-col>
 
       <ion-col col-12 text-center>
-        <ngx-kjua text-center *ngIf="currentWallet" fill="#000" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="QRData">
-        </ngx-kjua>
+        <ngx-kjua 
+          text-center 
+          *ngIf="currentWallet" 
+          fill="#000" 
+          [ecLevel] = "H"
+          [crisp] = "true"
+          [size]="200"
+          [mPosX]="50"
+          [mPosY]="50"
+          [mSize]="15" 
+          [fontcolor]="'#1f6b86'"
+          [mode]="'label'" 
+          [render] = "'label'"
+          [label]="'ProximaX'" 
+          [back]="'#fff'" 
+          [text]="QRData">
+            </ngx-kjua>
 
         <section text-center *ngIf="!currentWallet">
           <ion-spinner name="dots"></ion-spinner>
