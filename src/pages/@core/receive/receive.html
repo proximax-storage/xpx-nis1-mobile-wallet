@@ -18,34 +18,72 @@
 </ion-header>
 
 <ion-content background>
+  <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ngx-kjua 
 
-  <ion-list transparent-items>
+          text-center 
+          *ngIf="currentWallet" 
+          fill="#000" 
+          [ecLevel] = "H"
+          [crisp] = "true"
+          [size]="200"
+          [mPosX]="50"
+          [mPosY]="50"
+          [mSize]="15" 
+          [fontcolor]="'#1f6b86'"
+          [mode]="'label'" 
+          [render] = "'label'"
+          [label]="'ProximaX'" 
+          [back]="'#fff'" 
+          [text]="getQRCode()">
+            </ngx-kjua>
 
-      <br>
-      <br>
-      <!-- QR code of NEM address -->
-  <ngx-kjua 
+        </ion-col>
+  
+        <ion-col col-12 text-center>
 
-  text-center 
-  *ngIf="currentWallet" 
-  fill="#000" 
-  [ecLevel] = "H"
-  [crisp] = "true"
-  [size]="300"
-  [mPosX]="50"
-  [mPosY]="50"
-  [mSize]="15" 
-  [fontcolor]="'#1f6b86'"
-  [mode]="'label'" 
-  [render] = "'label'"
-  [label]="'ProximaX'" 
-  [back]="'#fff'" 
-  [text]="getQRCode()">
-    </ngx-kjua>
-
-    <br>
-    <br>
-
-  </ion-list>
+          <section text-center *ngIf="!currentWallet">
+            <ion-spinner name="dots"></ion-spinner>
+          </section>
+  
+          <ion-list transparent-items>
+            <ion-card>
+              <ion-item>
+                <ion-icon item-left name="key"></ion-icon>
+                <p text-wrap *ngIf="address">{{ address }}</p>
+  
+                <section text-center>
+                  <ion-spinner *ngIf="!address"></ion-spinner>
+                </section>
+              </ion-item>
+            </ion-card>
+  
+            <ion-grid normal no-spacing>
+              <ion-row justify-content-center>
+                <ion-col col-2></ion-col>
+                <ion-col col-4 text-center>
+                  <button gradient-button small color-5 type="button" color="black" (click)="copy()">
+                    <ion-icon name="copy"></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col col-4 text-center>
+                  <button gradient-button small color-5 type="button" color="black" (click)="share()">
+                    <ion-icon name="share"></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col col-2></ion-col>
+              </ion-row>
+            </ion-grid>
+  
+          </ion-list>
+        </ion-col>
+  
+        <ion-col col-12></ion-col>
+        <ion-col col-12></ion-col>
+        <ion-col col-12></ion-col>
+      </ion-row>
+    </ion-grid>
 
 </ion-content>
