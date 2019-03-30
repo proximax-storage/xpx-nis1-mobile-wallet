@@ -44,14 +44,17 @@
   .ion-md-fi-#{$arg}:before,
   .ion-md-fi-#{$arg}-outline:before {
     content: $val;
-    font-size: 26px;
+    font-size: 24px;
     display: inline-block;
   }
 }
 
-@include makeIcon(home, '\f107');
-@include makeIcon(wallet, '\f10b');
-@include makeIcon(contact, '\f106');
-@include makeIcon(notification, '\f105');
+@include makeIcon(wallet, '\f107');
+@include makeIcon(notification, '\f101');
+@include makeIcon(contact, '\f102');
+@include makeIcon(services, '\f10d');
 @include makeIcon(settings, '\f100');
+@include makeIcon(send, '\f10c');
+@include makeIcon(recieve, '\f10b');
+@include makeIcon(continue, '\f108');
 

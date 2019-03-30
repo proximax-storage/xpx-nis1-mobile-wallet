@@ -5,7 +5,8 @@ import {
   NavParams,
   ActionSheetController,
   Platform,
-  AlertController
+  AlertController,
+  ViewController
 } from "ionic-angular";
 
 import { SimpleWallet, Namespace } from "nem-library";
@@ -44,6 +45,7 @@ export class NamespaceListPage {
     public walletProvider: WalletProvider,
     public nemProvider: NemProvider,
     public utils: UtilitiesProvider,
+    private viewCtrl: ViewController
   ) {}
 
   ionViewDidLoad() {
@@ -73,5 +75,8 @@ export class NamespaceListPage {
 
   gotoAdd() {
     this.navCtrl.push("NamespaceCreatePage");
+  }
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
