@@ -66,7 +66,7 @@ export class WalletUpdatePage {
 
   goBack() {
     return this.navCtrl.setRoot(
-      'WalletListPage',
+      'TabsPage',
       {},
       {
         animate: true,

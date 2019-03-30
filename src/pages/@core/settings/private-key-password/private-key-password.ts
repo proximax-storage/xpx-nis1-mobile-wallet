@@ -58,7 +58,7 @@ export class PrivateKeyPasswordPage {
 
   gotoHome() {
     this.navCtrl.setRoot(
-      'WalletListPage',
+      'TabsPage',
       {},
       {
         animate: true,

@@ -76,7 +76,7 @@ export class TransactionListPage {
 
       if (!currentWallet) {
         this.navCtrl.setRoot(
-          'WalletListPage',
+          'TabsPage',
           {},
           {
             animate: true,

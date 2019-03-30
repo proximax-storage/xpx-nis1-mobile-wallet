@@ -43,7 +43,7 @@ export class SendMosaicSelectPage {
   ionViewWillEnter() {
 
     this.walletProvider.getSelectedWallet().then(wallet => {
-      if (!wallet) this.navCtrl.setRoot('WalletListPage');
+      if (!wallet) this.navCtrl.setRoot('TabsPage');
       else {
         this.selectedWallet = wallet;
         this.getBalance();

@@ -48,7 +48,7 @@ export class PrivateKeyPage {
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(
-          'WalletListPage',
+          'TabsPage',
           {},
           {
             animate: true,

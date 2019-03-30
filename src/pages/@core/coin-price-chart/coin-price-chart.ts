@@ -8,6 +8,7 @@ import { NemProvider } from "../../../providers/nem/nem";
 import { WalletProvider } from "../../../providers/wallet/wallet";
 import { Observable } from "rxjs";
 import { App } from "../../../providers/app/app";
+import { Content } from 'ionic-angular';
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -50,6 +51,8 @@ export class CoinPriceChartPage {
 
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
+
+  @ViewChild(Content) content: Content;
 
   selectedSegment: string = "transactions";
 
@@ -99,7 +102,7 @@ export class CoinPriceChartPage {
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(
-          'WalletListPage',
+          'TabsPage',
           {},
           {
             animate: true,

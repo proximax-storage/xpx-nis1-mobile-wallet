@@ -30,8 +30,8 @@
 
     <ion-slides slidesPerView="1.3" spaceBetween="15" (ionSlideDidChange)="slideChanged()">
       <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
-        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="showWalletDetails();onWalletSelect(wallet)"
-        (press)="onWalletPress(wallet)">
+        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null"
+        (click)="showWalletDetails();onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
         <ion-card wallet [attr.selected]="selectedWallet?.name === wallet?.name ? true : null">
           <ion-card-header text-left>
             <span title>{{ wallet.name }}</span>
@@ -84,63 +84,87 @@
     </ion-segment>
   </ion-grid>
 
-
-  <ion-list transparent-items *ngIf="menu=='mosaics'">
-    <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left [src]="utils.getLogo(mosaic)">
-          <h2 text-uppercase ion-text color="black"><strong>{{ mosaic.mosaicId.name }}</strong></h2>
-          <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
-
-          <section text-right item-right>
-            <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
-            <p text-right ion-text color="black"
-              *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice; else loading">
-              <small>
-                {{ amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
-              </small>
-              {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
-            </p>
+  <div *ngIf="menu=='mosaics'">
+      <ion-list transparent-items >
+          <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
+            <ion-card-header no-padding>
+              <ion-item>
+                <img logo-small item-left [src]="utils.getLogo(mosaic)">
+                <h2 text-uppercase ion-text color="black"><strong>{{ mosaic.mosaicId.name }}</strong></h2>
+                <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
+      
+                <section text-right item-right>
+                  <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
+                  <p text-right ion-text color="black" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice">
+                    <small>
+                      {{ amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
+                    </small>
+                    {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
+                  </p>
+                </section>
+              </ion-item>
+            </ion-card-header>
+          </ion-card>
+      
+          <section [hidden]="mosaics">
+            <ion-card fake-card *ngFor="let fakeCard of fakeList">
+              <ion-card-header no-padding>
+                <ion-item>
+                  <section image item-left></section>
+                  <h2> &nbsp; </h2>
+                  <p> &nbsp; </p>
+      
+                  <section item-right>
+                    <h2> &nbsp; </h2>
+                    <p>
+                      <small> &nbsp; </small>
+                    </p>
+                  </section>
+                </ion-item>
+              </ion-card-header>
+              <ion-card-content line no-padding>
+                <!-- <ion-item>
+                  <h2> &nbsp; </h2>
+                  <p>
+                    <small> &nbsp; </small>
+                  </p>
+                </ion-item> -->
+              </ion-card-content>
+            </ion-card>
+            <!-- <ion-card no-border>
+              <ion-item text-center>
+                <ion-spinner name="dots"></ion-spinner>
+              </ion-item>
+            </ion-card> -->
           </section>
-        </ion-item>
-      </ion-card-header>
-    </ion-card>
+        </ion-list>
 
-    <section [hidden]="mosaics">
-      <ion-card fake-card *ngFor="let fakeCard of fakeList">
-        <ion-card-header no-padding>
-          <ion-item>
-            <section image item-left></section>
-            <h2> &nbsp; </h2>
-            <p> &nbsp; </p>
-
-            <section item-right>
-              <h2> &nbsp; </h2>
+      <ion-grid empty *ngIf="showEmptyMosaic">
+          <ion-row>
+            <ion-col>
               <p>
-                <small> &nbsp; </small>
               </p>
-            </section>
-          </ion-item>
-        </ion-card-header>
-        <ion-card-content line no-padding>
-          <!-- <ion-item>
-            <h2> &nbsp; </h2>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-          </ion-item> -->
-        </ion-card-content>
-      </ion-card>
-      <ion-card no-border>
-        <ion-item text-center>
-          <ion-spinner name="dots"></ion-spinner>
-        </ion-item>
-      </ion-card>
-    </section>
-  </ion-list>
+            </ion-col>
+          </ion-row>
+          <br>
+          <ion-row>
+            <ion-col>
+    
+              <img quarter-width [src]="AppConfig.STICKERS.SORRY">
+    
+              <h6 ion-text color="grey" text-wrap>
+                <strong>Your mosaics will appear here, none at the moment</strong>
+              </h6>
+    
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  </div>
+
+
 
   <div *ngIf="menu=='transactions'">
+  
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
       <ion-card fake-card *ngFor="let fakeCard of fakeList">
@@ -264,7 +288,7 @@
     <!-- ./Transactions -->
 
     <!-- Infinite scroll -->
-    <div *ngIf="!showEmptyMessage">
+    <div *ngIf="!showEmptyTransaction">
       <ion-infinite-scroll (ionInfinite)="doInfinite()">
         <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more transactions">
         </ion-infinite-scroll-content>
@@ -273,7 +297,7 @@
 
     <!-- ./Infinite scroll -->
 
-    <ion-grid empty *ngIf="showEmptyMessage">
+    <ion-grid empty *ngIf="showEmptyTransaction">
       <ion-row>
         <ion-col>
           <p>
@@ -303,7 +327,7 @@
 
 </ion-content>
 
-<ng-template #loading>
-  <!-- <ion-spinner name="dots"></ion-spinner> -->
+<!-- <ng-template #loading>
+  <ion-spinner name="dots"></ion-spinner>
   <small ion-text color="black">N/A</small>
-</ng-template>
+</ng-template> -->

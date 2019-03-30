@@ -41,7 +41,7 @@ export class ForgotPasswordPage {
 
   gotoHome() {
     this.navCtrl.setRoot(
-      'WalletListPage',
+      'TabsPage',
       {},
       {
         animate: true,
