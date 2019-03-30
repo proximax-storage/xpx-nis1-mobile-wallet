@@ -37,7 +37,7 @@ export class ReceiveQrCodePage {
     this.walletProvider.getSelectedWallet().then(currentWallet => {
       if (!currentWallet) {
         this.navCtrl.setRoot(
-          'WalletListPage',
+          'TabsPage',
           {},
           {
             animate: true,

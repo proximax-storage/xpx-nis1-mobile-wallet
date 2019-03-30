@@ -45,7 +45,7 @@ export class RegisterPage {
     this.authProvider
       .register(form.email, form.password)
       .then(_ => {
-        this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'WalletListPage' });
+        this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
       })
       .then(_ => {
         this.authProvider.setSelectedAccount(form.email, form.password);
