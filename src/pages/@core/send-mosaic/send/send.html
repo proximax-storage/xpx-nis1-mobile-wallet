@@ -76,7 +76,7 @@
         <ion-item>
           <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address"
             (input)="calculateFee()"></ion-input>
-          <button clear item-right ion-button icon-only>
+          <button clear item-right ion-button icon-only (click)="scan()">
             <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
           </button>
         </ion-item>
