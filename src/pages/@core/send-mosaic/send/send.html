@@ -34,7 +34,8 @@
       <ion-card amount>
         <ion-item>
           <ion-label>
-            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions" [(ngModel)]="amount">
+            <input (input)="calculateFee()" currencyMask maxlength="20" type="tel" formControlName="amount"
+              [options]="inputOptions" [(ngModel)]="amount">
           </ion-label>
         </ion-item>
       </ion-card>
@@ -75,7 +76,7 @@
       <ion-card>
         <ion-item>
           <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address"
-            (input)="calculateFee()"></ion-input>
+            (input)="calculateFee()" (focusout)="calculateFee()"></ion-input>
           <button clear item-right ion-button icon-only (click)="scan()">
             <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
           </button>
