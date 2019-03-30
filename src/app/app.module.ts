@@ -12,7 +12,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SecureStorage } from '@ionic-native/secure-storage';
 import { Device } from '@ionic-native/device';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
@@ -43,7 +42,7 @@ import { AppState } from '../providers/app-state/app-state';
 import { MockDataProvider } from '../providers/mock-data/mock-data';
 import { SharedModule } from './shared.module';
 import { NgXtruncateModule } from 'ngx-truncate';
-import { QRScanner } from '@ionic-native/qr-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -99,7 +98,7 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     CoinPriceChartProvider,
     AppState,
     MockDataProvider,
-    QRScanner
+    BarcodeScanner
   ]
 })
 export class AppModule {}
