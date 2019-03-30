@@ -4,6 +4,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 
 import { ReceivePage } from './receive';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { NgxKjuaModule } from 'ngx-kjua';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { DirectivesModule } from '../../../directives/directives.module';
   imports: [
     IonicPageModule.forChild(ReceivePage),
     NgxCurrencyModule,
-    DirectivesModule
+    DirectivesModule,
+    NgxKjuaModule,
   ],
 })
 export class ReceivePageModule {}

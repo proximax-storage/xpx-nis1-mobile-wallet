@@ -23,20 +23,28 @@
 <ion-content background padding>
   <ion-list transparent-items>
 
+
     <form [formGroup]="form">
 
       <!-- Price -->
-        
+
 
 
       <!-- Amount -->
       <ion-card amount>
         <ion-item>
           <ion-label>
-            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions">
+            <input currencyMask maxlength="20" type="tel" formControlName="amount" [options]="inputOptions" [(ngModel)]="amount">
           </ion-label>
         </ion-item>
       </ion-card>
+
+      <section total text-center>
+          <h2 price ion-text color="black" *ngIf="selectedCoin">
+            {{ selectedCoin?.market_data.current_price.usd * amount  | currency: 'USD': 'symbol': '1.2-6' }}</h2>
+        </section>
+      
+    
 
       <!-- Mosaic -->
       <ion-card *ngIf="selectedMosaic" (click)="selectMosaic()">
@@ -48,10 +56,10 @@
           <p text-uppercase ion-text color="black">{{ selectedMosaic.mosaicId.namespaceId }}</p>
 
           <section item-right>
-            <h2 ion-text color="black">{{ selectedMosaic.amount | number:'1.2' }}</h2>
+            <h2 ion-text color="black">{{ selectedMosaic?.amount | number:'1.2' }}</h2>
             <p text-right text-left ion-text color="black">
               <small>
-                {{  selectedMosaic.amount | currency }}
+                {{  selectedCoin?.market_data.current_price.usd * selectedMosaic?.amount | currency: 'USD': 'symbol': '1.2-6' }}
               </small>
             </p>
           </section>
@@ -66,30 +74,32 @@
       <!-- Recipient -->
       <ion-card>
         <ion-item>
-          <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address" (input)="calculateFee()"></ion-input>
-          <button clear item-right ion-button icon-only>
-              <ion-icon color="white"  name="ios-barcode-outline"></ion-icon>
-            </button>
+          <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address"
+            (input)="calculateFee()"></ion-input>
+          <button clear item-right ion-button icon-only (click)="scan()">
+            <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
+          </button>
         </ion-item>
       </ion-card>
 
-       <!-- Note -->
-       <ion-card>
-         <ion-item no-border>
-           <ion-textarea ion-text color="black" autosize rows="1" ion-text color="black" formControlName="message" placeholder="Note" (input)="calculateFee()"></ion-textarea>
-         </ion-item>
-       </ion-card>
-
-       <!-- Fee -->
-       <ion-item text-center>
-          <!-- <ion-icon name="ios-cash-outline" item-start></ion-icon> -->
-          Fee
-          <ion-badge>{{fee | number:'1.6-6'}}</ion-badge>
+      <!-- Note -->
+      <ion-card>
+        <ion-item no-border>
+          <ion-textarea ion-text color="black" autosize rows="1" ion-text color="black" formControlName="message"
+            placeholder="Note" (input)="calculateFee()"></ion-textarea>
         </ion-item>
+      </ion-card>
+
+      <!-- Fee -->
+      <ion-item text-center>
+        <!-- <ion-icon name="ios-cash-outline" item-start></ion-icon> -->
+        Fee
+        <ion-badge>{{fee | number:'1.6-6'}}</ion-badge>
+      </ion-item>
 
 
-        
-    
+
+
     </form>
 
   </ion-list>

@@ -17,6 +17,8 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../providers/alert/alert';
 
 import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
+import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 /**
  * Generated class for the SendPage page.
@@ -36,10 +38,12 @@ export class SendPage {
   addressSourceType: { from: string; to: string };
   currentWallet: SimpleWallet;
   selectedMosaic: MosaicTransferable;
+  selectedCoin: any;
 
   form: FormGroup;
   inputOptions: CurrencyMaskConfig;
   fee: number = 0;
+  amount: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -51,11 +55,12 @@ export class SendPage {
     public utils: UtilitiesProvider,
     public alertProvider: AlertProvider,
     public viewCtrl: ViewController,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private coingeckoProvider: CoingeckoProvider,
+    private barcodeScanner: BarcodeScanner
   ) {
     this.init();
 
-    
   }
 
   ionViewWillEnter() {
@@ -77,7 +82,27 @@ export class SendPage {
         this.getBalanceProvider
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
-            this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic :  mosaics[0];
+            this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic : mosaics[0];
+
+
+            let mosaic = this.selectedMosaic.mosaicId.name;
+            let coinId: string = '';
+
+            if (mosaic === 'xem') {
+              coinId = 'nem';
+            }
+            else if (mosaic === 'xpx') {
+              coinId = 'proximax';
+            } else if (mosaic === 'npxs') {
+              coinId = 'pundi-x';
+            } else {
+              coinId = '';
+            }
+
+            // Get coin price
+            this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
+              this.selectedCoin = coin;
+            });
           });
 
         // Set sender address to currenWallet.address
@@ -87,6 +112,8 @@ export class SendPage {
           .setValue(this.currentWallet.address.plain());
       }
     });
+
+
 
   }
 
@@ -105,7 +132,7 @@ export class SendPage {
       decimal: '.',
       precision: 2,
       prefix: '',
-      suffix: this.selectMosaic.name? ' ' + this.selectMosaic.name : ' XPX',
+      suffix: this.selectMosaic.name ? ' ' + this.selectMosaic.name : ' XPX',
       thousands: ',',
       nullable: false
     };
@@ -136,6 +163,7 @@ export class SendPage {
     }
 
     this.fee = 0;
+    this.amount = 0;
   }
 
   onChangeFrom(val) {
@@ -181,7 +209,7 @@ export class SendPage {
     this.utils
       .showInsetModal('SendContactSelectPage', { title: title })
       .subscribe(data => {
-        if(data != undefined || data != null) {
+        if (data != undefined || data != null) {
           this.form.get('recipientName').setValue(data.name);
           this.form.get('recipientAddress').setValue(data.address);
         } else {
@@ -285,7 +313,7 @@ export class SendPage {
           'This address does not belong to this network'
         );
       } else {
-         // Prepare transaction
+        // Prepare transaction
         let transferTransaction = this._prepareTx(recipient);
 
         // Show confirm transaction
@@ -296,9 +324,9 @@ export class SendPage {
           sendTx: transferTransaction,
           currentWallet: this.currentWallet
         }, {
-          enableBackdropDismiss: false,
-          showBackdrop: true
-        });
+            enableBackdropDismiss: false,
+            showBackdrop: true
+          });
         modal.present();
 
         // this.navCtrl.push('SendMosaicConfirmationPage', {
@@ -317,5 +345,19 @@ export class SendPage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  scan() {
+
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      this.form
+      .get('senderAddress')
+      .setValue(barcodeData);
+     }).catch(err => {
+         console.log('Error', err);
+     });
+
+
   }
 }

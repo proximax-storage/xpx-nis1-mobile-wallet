@@ -1,9 +1,9 @@
 <ion-tabs no-border [selectedIndex]="selectedIndex">
-  <ion-fab edge fab-button-center bottom center>
+  <!-- <ion-fab edge fab-button-center bottom center>
     <button ion-fab gradient-button circle color-5 (click)="gotoSend()">
       <ion-icon name="fi-send"></ion-icon>
     </button>
-  </ion-fab>
+  </ion-fab> -->
 
   <ion-tab [root]="tab1Root" tabTitle="Wallets" tabIcon="fi-wallet"></ion-tab>
   <ion-tab [root]="tab2Root" (ionSelect)="clearNotification()" tabTitle="Notifications" tabIcon="fi-notification"  [tabBadge]='notificationCount' tabBadgeStyle="danger"></ion-tab>

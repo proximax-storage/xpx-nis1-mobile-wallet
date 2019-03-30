@@ -30,7 +30,7 @@
 
     <ion-slides slidesPerView="1.3" spaceBetween="15" (ionSlideDidChange)="slideChanged()">
       <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
-        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="showWalletDetails()"
+        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null" (click)="showWalletDetails();onWalletSelect(wallet)"
         (press)="onWalletPress(wallet)">
         <ion-card wallet [attr.selected]="selectedWallet?.name === wallet?.name ? true : null">
           <ion-card-header text-left>

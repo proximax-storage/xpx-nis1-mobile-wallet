@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header no-border>
+<!-- <ion-header no-border>
 
   <ion-navbar transparent>
     <ion-title>
@@ -12,12 +12,12 @@
     </ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 <ion-content background>
   <ion-list transparent-items>
     <ion-card [attr.selected]="(selectedMosaic.mosaicId.name === mosaic.mosaicId.name && selectedMosaic.mosaicId.namespaceId === mosaic.mosaicId.namespaceId) ? true : null"
-      *ngFor="let mosaic of mosaics" (click)="onSelect(mosaic)">
+      *ngFor="let mosaic of mosaics" (click)="onSelect(mosaic);onSubmit()">
       <ion-item>
         <img logo-small item-left [src]="utils.getLogo(mosaic)">
         <h2 text-uppercase ion-text color="black">{{ mosaic.mosaicId.name }}</h2>
@@ -57,11 +57,3 @@
     </section>
   </ion-list>
 </ion-content>
-
-<ion-footer no-border>
-  <ion-toolbar transparent text-center padding-bottom>
-    <button gradient-button small color-5 color="black" (click)="onSubmit()">
-      <ion-icon name="ios-arrow-forward"></ion-icon>
-    </button>
-  </ion-toolbar>
-</ion-footer>

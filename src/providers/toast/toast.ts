@@ -41,7 +41,7 @@ export class ToastProvider {
         message: message,
         duration: duration,
         showCloseButton: showCloseButton,
-        position: 'top',
+        position: 'bottom',
         closeButtonText: showCloseButton ? closeButtonText : 'Ok'
       });
 
