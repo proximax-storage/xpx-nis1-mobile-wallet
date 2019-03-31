@@ -34,9 +34,9 @@
   <!-- <ngx-kjua text-center *ngIf="currentWallet" fill="#000" [label]="'Your wallet'" [mSize]="100" [back]="'transparent'" [text]="getQRCode()">
   </ngx-kjua> -->
 
-  <section text-center *ngIf="!currentWallet">
+  <!-- <section text-center *ngIf="!currentWallet">
     <ion-spinner name="dots"></ion-spinner>
-  </section>
+  </section> -->
 
   <ion-list transparent-items>
     <!-- <ion-card (click)="copy(currentWallet.address.plain())">
@@ -47,7 +47,9 @@
       </ion-item>
     </ion-card> -->
 
-    <ion-card *ngIf="accountInfo && accountInfo.publicAccount" (click)="copy(accountInfo.publicAccount.publicKey)">
+
+
+    <!-- <ion-card *ngIf="accountInfo && accountInfo.publicAccount" (click)="copy(accountInfo.publicAccount.publicKey)">
       <ion-item>
         <ion-icon item-left name="paper"></ion-icon>
         <h2>Public key</h2>
@@ -75,53 +77,37 @@
       </ion-item>
     </ion-card>
 
-    <section margin-top padding-top></section>
-
-    <ion-card (click)="goto('PrivateKeyPasswordPage')">
+     <ion-card (click)="goto('PrivateKeyPasswordPage')">
       <ion-item>
-        <ion-icon item-left name="key"></ion-icon>
+        <ion-icon item-left name="ios-key-outline"></ion-icon>
         <h2>Export Private Key</h2>
         <p text-wrap>Your private key holds all the power of your account.</p>
       </ion-item>
     </ion-card>
 
-    <!-- <ion-card (click)="goto('NamespaceListPage')">
-      <ion-item>
-        <ion-icon item-left name="git-network"></ion-icon>
-        <h2>Namespaces</h2>
-        <p text-wrap>Unique and authenticates mosaics (assets) issued on it or on its subdomains.</p>
-      </ion-item>
-    </ion-card>
 
-    <ion-card (click)="goto('MosaicListPage')">
-      <ion-item>
-        <ion-icon item-left name="apps"></ion-icon>
-        <h2>Mosaics</h2>
-        <p text-wrap>Assets that expose additional properties and other features. Root namespace is required to create one.</p>
-      </ion-item>
-    </ion-card> -->
+    <section></section> -->
 
-    <!-- Uncomment to add harvesting -->
-    <!-- <ion-card (click)="showComingSoon()">
-      <ion-item>
-        <ion-icon item-left name="leaf"></ion-icon>
-        <h2>Harvesting</h2>
-        <p text-wrap>Allows "mining" even while your account is closed.</p>
-      </ion-item>
-    </ion-card> -->
+      <ion-card (click)="showComingSoon()">
+          <ion-item>
+            <ion-icon item-left name="ios-person-outline"></ion-icon>
+            <h2>Account details</h2>
+            <p text-wrap>Manage your account details such as username, password and pin</p>
+          </ion-item>
+        </ion-card>
 
-    <!-- Uncomment to add multisig -->
-    <!-- <ion-card (click)="gotoMultisignInfoPage()">
-      <ion-item>
-        <ion-icon item-left name="people"></ion-icon>
-        <h2>Multisign accounts</h2>
-        <p text-wrap>Multisig accounts are editable on-chain contracts, the most powerful way to secure funds, enable joint accounts</p>
-      </ion-item>
-    </ion-card> -->
+
+    <ion-card (click)="gotoGuide()">
+        <ion-item>
+          <ion-icon item-left name="ios-information-circle-outline"></ion-icon>
+          <h2>Wallet Guide</h2>
+          <p text-wrap>What you need to know and take appropriate steps to secure your wallet. </p>
+        </ion-item>
+      </ion-card>
 
     <ion-card (click)="logOut()">
       <ion-item >
-        <ion-icon item-left name="unlock"></ion-icon>
+        <ion-icon item-left name="ios-unlock-outline"></ion-icon>
         <h2>Logout</h2>
         <p text-wrap>End a session of your account.</p>
       </ion-item>

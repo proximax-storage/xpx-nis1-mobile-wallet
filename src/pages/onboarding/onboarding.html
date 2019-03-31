@@ -38,7 +38,7 @@
                 </ion-col>
                 <ion-col col-12 align-self-start>
                   <h2 ion-text color="black" class="slide-title">Congrats!</h2>
-                  <p text-justify ion-text color="black">Thanks for reading through our introduction, now you’re ready to dive in. If you want to know more, you can always message us through Telegram: @ProximaXio. We are here to help you have the most secure and convenient experience as possible.</p>
+                  <p text-justify ion-text color="black">Thanks for reading through our guide, now you’re ready to dive in. If you want to know more, you can always message us through Telegram: @ProximaXio. We are here to help you have the most secure and convenient experience as possible.</p>
                 </ion-col>
                 
               </ion-row>
@@ -46,7 +46,7 @@
               <ion-row>
                 <ion-col align-self-center>
                     <button gradient-button color-5 (click)="gotoWelcome()">
-                        Get started
+                        {{this.isPreview? 'Done' : 'Get started' }}  
                        </button>
                 </ion-col>
               </ion-row>

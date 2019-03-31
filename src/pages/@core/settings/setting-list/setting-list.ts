@@ -37,18 +37,29 @@ export class SettingListPage {
   ) {}
 
   ionViewWillEnter() {
-    this.utils.setTabIndex(0);
+    // this.utils.setTabIndex(0);
 
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (!currentWallet) {
-        this.utils.setRoot("WalletListPage");
-      } else {
-        this.currentWallet = currentWallet;
-      }
+    // this.walletProvider.getSelectedWallet().then(currentWallet => {
+    //   if (!currentWallet) {
+    //     this.utils.setRoot("WalletListPage");
+    //   } else {
+    //     this.currentWallet = currentWallet;
+    //     this.getAccountInfo();
+    //   }
 
-      this.getAccountInfo();
-    });
+
+    // });
   }
+
+  // getAccountInfo() {
+  //   this.nemProvider
+  //     .getAccountInfo(this.currentWallet.address)
+  //     .subscribe(accountInfo => {
+  //       this.accountInfo = accountInfo;
+  //       console.log(this.accountInfo)
+  //     });
+  // }
+
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SettingListPage");
@@ -58,38 +69,18 @@ export class SettingListPage {
     this.navCtrl.push(page);
   }
 
-  getAccountInfo() {
-    this.nemProvider
-      .getAccountInfo(this.currentWallet.address)
-      .subscribe(accountInfo => {
-        this.accountInfo = accountInfo;
-        console.log(this.accountInfo)
-      });
+  gotoGuide() {
+    this.navCtrl.push('OnboardingPage', {preview: true});
   }
-
-  getQRCode() {
-    let QRCode: any = this.nemProvider.generateAddressQRText(
-      this.currentWallet.address
-    );
-    QRCode = JSON.parse(QRCode);
-    QRCode.data.name = this.currentWallet.name;
-
-    return JSON.stringify(QRCode);
-  }
-
-  copy(address: string) {
-    this.clipboard.copy(address).then(_ => {
-      this.toastProvider.show("Copied address successfully", 3, true);
-    });
-  }
-
-  showComingSoon() {
-    this.utils.showInsetModal("ComingSoonPage", {}, "small");
-  }
+  
 
   gotoMultisignInfoPage(){
     this.showComingSoon();
     // this.navCtrl.push('MultisignAccountInfoPage'); // Todo : Implement gotoMultisignInfoPage
+  }
+
+  showComingSoon() {
+    this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
 
   logOut() {
