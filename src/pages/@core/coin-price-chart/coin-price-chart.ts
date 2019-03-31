@@ -186,7 +186,7 @@ export class CoinPriceChartPage {
 
   showSendModal() {
     let page = "SendPage";
-    const modal = this.modalCtrl.create(page, {
+    const modal = this.modalCtrl.create(page, {mosaicSelectedName: this.mosaicId}, {
       enableBackdropDismiss: false,
       showBackdrop: true
     });
