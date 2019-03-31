@@ -19,6 +19,7 @@ import { MockDataProvider } from '../../providers/mock-data/mock-data';
 })
 export class OnboardingPage {
   App = App;
+  isPreview: boolean = false;
 
   @ViewChild(Slides) ionSlide: Slides;
 
@@ -35,6 +36,8 @@ export class OnboardingPage {
     public storage: Storage,
     private mockData: MockDataProvider
   ) {
+
+    this.isPreview = this.navParams.get('preview');
     this.init();
     this.mockData.init(); // Uncomment to load mock data
   }
@@ -119,16 +122,23 @@ event that your phone is stolen, lost or does not work anymore.
   }
 
   gotoWelcome() {
-    this.storage.set('isFirstAppOpen', false).then(_ => {
-      this.navCtrl.setRoot(
-        'WelcomePage',
-        {},
-        {
-          animate: true,
-          direction: 'forward'
-        }
-      );
-    })
+
+    if(this.isPreview) {
+      this.navCtrl.pop();
+    } else {
+      this.storage.set('isFirstAppOpen', false).then(_ => {
+        this.navCtrl.setRoot(
+          'RegisterPage',
+          {},
+          {
+            animate: true,
+            direction: 'forward'
+          }
+        );
+      })
+    }
+   
 
   }
+
 }
