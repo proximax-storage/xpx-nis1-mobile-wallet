@@ -100,6 +100,7 @@ export class HomePage {
         this.confirmedTransactions = null;
         this.showEmptyMosaic = false;
         this.isLoading = true;
+        this.showEmptyTransaction = false;
 
         var wlts = this.wallets.map((wallet) => {
           this.getTotalBalance(wallet).then(total => {

@@ -44,6 +44,7 @@ export class SendPage {
   inputOptions: CurrencyMaskConfig;
   fee: number = 0;
   amount: number = 0;
+  mosaicSelectedName: string;
 
   constructor(
     public navCtrl: NavController,
@@ -59,7 +60,16 @@ export class SendPage {
     private coingeckoProvider: CoingeckoProvider,
     private barcodeScanner: BarcodeScanner
   ) {
+    this.mosaicSelectedName = this.navParams.get('mosaicSelectedName');
+    console.log(this.mosaicSelectedName);
+
+
+
+
+
+    
     this.init();
+
 
   }
 
@@ -82,8 +92,11 @@ export class SendPage {
         this.getBalanceProvider
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
-            this.selectedMosaic = this.selectedMosaic ? this.selectedMosaic : mosaics[0];
-
+            if(this.selectedMosaic) {
+              this.selectedMosaic = this.selectedMosaic;
+            } else {
+              this.selectedMosaic = this.mosaicSelectedName? mosaics.filter(m=>m.mosaicId.name==this.mosaicSelectedName)[0] : mosaics[0];
+            }
 
             let mosaic = this.selectedMosaic.mosaicId.name;
             let coinId: string = '';
@@ -132,7 +145,7 @@ export class SendPage {
       decimal: '.',
       precision: 2,
       prefix: '',
-      suffix: this.selectMosaic.name ? ' ' + this.selectMosaic.name : ' XPX',
+      suffix: this.mosaicSelectedName ? ' ' + this.mosaicSelectedName.toUpperCase() : ' XPX',
       thousands: ',',
       nullable: false
     };
@@ -194,6 +207,7 @@ export class SendPage {
         if (data) {
           console.log('Selected mosaic', data);
           this.selectedMosaic = data;
+          console.log(this.selectedMosaic);
           this.inputOptions.suffix =
             ' ' + this.selectedMosaic.mosaicId.name.toUpperCase();
 
