@@ -14,7 +14,7 @@
 
 </ion-header> -->
 
-<ion-content background>
+<ion-content background select-mosaic>
   <ion-list transparent-items>
     <ion-card [attr.selected]="(selectedMosaic.mosaicId.name === mosaic.mosaicId.name && selectedMosaic.mosaicId.namespaceId === mosaic.mosaicId.namespaceId) ? true : null"
       *ngFor="let mosaic of mosaics" (click)="onSelect(mosaic);onSubmit()">
