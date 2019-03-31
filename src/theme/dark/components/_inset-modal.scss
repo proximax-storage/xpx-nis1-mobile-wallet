@@ -2,7 +2,7 @@ ion-modal.inset-modal,
 .inset-modal .show-page {
   // transparent black background overlay
   background: color($colors, white);
-  
+
   transition: opacity .25s ease-in-out;
   padding: 10vh 5vw;
 
@@ -41,4 +41,10 @@ ion-modal.inset-modal,
     min-height: 1.5em;
     font-size: 1.8rem;
 }
+}
+
+ion-modal.inset-modal,
+.inset-modal .show-page[select-mosaic]{
+  padding: 17vh 5vw;
+  background: transparent;
 }
