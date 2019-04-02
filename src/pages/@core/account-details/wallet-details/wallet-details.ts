@@ -59,6 +59,11 @@ copy() {
   });
 }
 
+showExportPrivateKeyModal() {
+    let page = "PrivateKeyPasswordPage";
+    this.showModal(page, {})
+  }
+
 dismiss() {
   this.viewCtrl.dismiss();
 }
