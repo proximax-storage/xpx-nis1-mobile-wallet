@@ -11,12 +11,8 @@ import { Injectable } from '@angular/core';
 export class App {
   private static ASSETS = "assets/imgs";
   public static STICKERS = {
-    HAPPY: `${App.ASSETS}/stickers/happy.png`,
-    INFO: `${App.ASSETS}/stickers/info.png`,
     SORRY: `${App.ASSETS}/stickers/sorry.png`,
-    LOOK: `${App.ASSETS}/stickers/look.png`,
     HINT: `${App.ASSETS}/stickers/idea.png`,
-    WALLET: `${App.ASSETS}/stickers/wallet.png`,
     INVALID: `${App.ASSETS}/stickers/invalid.png`
   };
   public static SLIDES = {
