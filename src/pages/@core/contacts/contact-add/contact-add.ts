@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { Address } from 'nem-library';
 
@@ -35,6 +35,7 @@ export class ContactAddPage {
     public alertProvider: AlertProvider,
     public contactsProvider: ContactsProvider,
     public utils: UtilitiesProvider,
+    private viewCtrl: ViewController
   ) {
     this.init();
   }
@@ -55,7 +56,8 @@ export class ContactAddPage {
     });
 
     if (this.navParams.data) {
-      this.formGroup.setValue(this.navParams.data);
+      console.log(this.navParams.get('data'));
+      this.formGroup.setValue(this.navParams.get('data'));
     }
   }
 
@@ -76,5 +78,9 @@ export class ContactAddPage {
         this.gotoHome();
       });
     }
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
