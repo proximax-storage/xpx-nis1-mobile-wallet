@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
 
   <ion-navbar transparent>
     <ion-title>Wallet Details</ion-title>
@@ -75,13 +75,13 @@
             <ion-col>
               <button (click)="showExportPrivateKeyModal()" ion-button icon-start clear small>
                 <ion-icon name="ios-share-outline"></ion-icon>
-                <div>Export Private Key</div>
+                <span text-wrap>Export Private Key</span>
               </button>
             </ion-col>
             <ion-col>
               <button (click)="showWalletUpdate()" ion-button icon-start clear small>
                 <ion-icon name="ios-create-outline"></ion-icon>
-                <div>Edit Wallet</div>
+                <span text-wrap>Edit Wallet</span>
               </button>
             </ion-col>
         </ion-row>
