@@ -88,13 +88,21 @@
 
     <section></section> -->
 
-      <ion-card (click)="showComingSoon()">
+      <!-- <ion-card (click)="gotoAccountDetails()">
           <ion-item>
             <ion-icon item-left name="ios-person-outline"></ion-icon>
             <h2>Account details</h2>
             <p text-wrap>Manage your account details such as username, password and pin</p>
           </ion-item>
-        </ion-card>
+        </ion-card> -->
+
+        <ion-card (click)="showResetPINPrompt()">
+            <ion-item>
+              <ion-icon item-left name="ios-key-outline"></ion-icon>
+              <h2>Reset PIN</h2>
+              <p text-wrap>Manage your account details such as username, password and pin</p>
+            </ion-item>
+          </ion-card>
 
 
     <ion-card (click)="gotoGuide()">

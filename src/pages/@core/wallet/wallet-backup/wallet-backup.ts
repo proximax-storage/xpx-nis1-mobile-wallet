@@ -89,8 +89,7 @@ export class WalletBackupPage {
       'TabsPage',
       {},
       {
-        animate: true,
-        direction: 'forward'
+        animate: false
       }
     );
   }

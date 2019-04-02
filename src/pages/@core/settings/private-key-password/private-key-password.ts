@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
@@ -29,6 +29,8 @@ export class PrivateKeyPasswordPage {
     public authProvider: AuthProvider,
     public alertProvider: AlertProvider,
     public utils: UtilitiesProvider,
+    private viewCtrl: ViewController,
+    private modalCtrl: ModalController
   ) {
     this.init();
   }
@@ -53,7 +55,7 @@ export class PrivateKeyPasswordPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ForgotPasswordPage');
+    console.log('ionViewDidLoad PrivateKeyPasswordPage');
   }
 
   gotoHome() {
@@ -69,9 +71,18 @@ export class PrivateKeyPasswordPage {
 
   onSubmit(form) {
     if (form.password === this.credentials.password) {
-      this.navCtrl.push('PrivateKeyPage', form.password);
+      let page = "PrivateKeyPage";
+      const modal = this.modalCtrl.create(page, {password: form.password}, {
+        enableBackdropDismiss: false,
+        showBackdrop: true
+      });
+      modal.present();
     } else {
       this.alertProvider.showMessage('Incorrect password. Please try again.');
     }
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

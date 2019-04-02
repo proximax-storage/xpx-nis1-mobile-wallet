@@ -126,6 +126,25 @@ export class AuthProvider {
       });
   }
 
+  edit(oldUsername:string, newUsername:string, newPassword:string) {
+      return this.storage.get('accounts').then(data => {
+        const ACCOUNTS = data ? data : [];
+
+        console.log(ACCOUNTS);
+  
+        if (findIndex(ACCOUNTS, oldUsername) === -1) {
+          let _newAccounts = ACCOUNTS.filter(res=>{
+            return res.email != oldUsername;
+          })
+          console.log(_newAccounts);
+          _newAccounts.push({email: newUsername, password: newPassword});
+          console.log(_newAccounts);
+          return _newAccounts;
+        }
+  
+      });
+  }
+
   /**
    * Removes the email and password of the logged in user.
    */

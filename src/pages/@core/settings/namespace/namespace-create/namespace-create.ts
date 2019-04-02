@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
 
 import { App } from "../../../../../providers/app/app";
 import { AuthProvider } from "../../../../../providers/auth/auth";
@@ -43,7 +43,8 @@ export class NamespaceCreatePage {
     private alertProvider: AlertProvider,
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
-    private nemProvider: NemProvider
+    private nemProvider: NemProvider,
+    private viewController: ViewController
   ) {
     this.init();
   }
@@ -113,5 +114,9 @@ export class NamespaceCreatePage {
           this.alertProvider.showMessage("New namespace created");
         });
       });
+  }
+
+  dismiss(){
+    this.viewController.dismiss();
   }
 }

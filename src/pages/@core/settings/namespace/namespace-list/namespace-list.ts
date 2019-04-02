@@ -6,7 +6,8 @@ import {
   ActionSheetController,
   Platform,
   AlertController,
-  ViewController
+  ViewController,
+  ModalController
 } from "ionic-angular";
 
 import { SimpleWallet, Namespace } from "nem-library";
@@ -45,7 +46,8 @@ export class NamespaceListPage {
     public walletProvider: WalletProvider,
     public nemProvider: NemProvider,
     public utils: UtilitiesProvider,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private modalCtrl: ModalController
   ) {}
 
   ionViewDidLoad() {
@@ -74,7 +76,12 @@ export class NamespaceListPage {
   }
 
   gotoAdd() {
-    this.navCtrl.push("NamespaceCreatePage");
+    let page = 'NamespaceCreatePage';
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
   dismiss() {
     this.viewCtrl.dismiss();

@@ -5,4 +5,16 @@ page-transaction-list {
     margin-top: 1rem;
     font-size: 2rem;
    }
+
+   .list > .item-block:first-child {
+      border-top: none !important;
+   }
+
+  .list > .item-block:last-child {
+      border-bottom: none !important;
+   }
+
+   .scroll-content {
+      margin-top: 10rem !important;
+   }
 }

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ViewController } from "ionic-angular";
 
 import { App } from "../../../../../providers/app/app";
 import { AuthProvider } from "../../../../../providers/auth/auth";
@@ -43,7 +43,8 @@ export class MosaicCreatePage {
     private alertProvider: AlertProvider,
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
-    private nemProvider: NemProvider
+    private nemProvider: NemProvider,
+    private viewCtrl: ViewController
   ) {
     this.init();
   }
@@ -145,5 +146,9 @@ export class MosaicCreatePage {
             });
           });
       });
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
