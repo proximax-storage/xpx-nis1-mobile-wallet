@@ -3,6 +3,7 @@ ion-tabs {
   .tabbar {
     background: color($colors, dark);
     border-top: 0;
+    bottom: -2px;
   }
 
   .tabbar {
@@ -16,6 +17,7 @@ ion-tabs {
     }
 
     .tab-button {
+      min-height: 6.6rem;
       &,
       .tab-button-icon {
         color: lighten(color($colors, trinary), 20%);
