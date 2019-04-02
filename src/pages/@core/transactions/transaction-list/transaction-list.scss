@@ -1,20 +1,24 @@
 page-transaction-list {
-    
 
-   h2{
+
+  h2 {
     margin-top: 1rem;
     font-size: 2rem;
-   }
+  }
 
-   .list > .item-block:first-child {
-      border-top: none !important;
-   }
+  .list>.item-block:first-child {
+    border-top: none !important;
+  }
 
-  .list > .item-block:last-child {
-      border-bottom: none !important;
-   }
+  .list>.item-block:last-child {
+    border-bottom: none !important;
+  }
 
-   .scroll-content {
-      margin-top: 32rem !important;
-   }
+  .scroll-content {
+    margin-top: 32rem !important;
+  }
+
+  ion-grid[reduce-margin-top] {
+    margin-top: -6em
+  }
 }

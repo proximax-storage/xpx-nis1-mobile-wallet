@@ -39,8 +39,8 @@ import {
 import { Observable } from "nem-library/node_modules/rxjs";
 
 export const SERVER_CONFIG: ServerConfig[] = [
-  { protocol: "http", domain: "192.3.61.243", port: 7890 },
-  { protocol: "http", domain: "50.3.87.123", port: 7890 },
+  // { protocol: "http", domain: "192.3.61.243", port: 7890 },
+  // { protocol: "http", domain: "50.3.87.123", port: 7890 },
   { protocol: "http", domain: "23.228.67.85", port: 7890 },
 ];
 
@@ -60,7 +60,7 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET); // Todo: Change to MAIN_NET for production
+    NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // Todo: Change to MAIN_NET for production
 
     if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
       this.accountHttp = new AccountHttp;
