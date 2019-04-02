@@ -6,7 +6,8 @@ import {
   AlertController,
   ActionSheetController,
   Platform,
-  ViewController
+  ViewController,
+  ModalController
 } from 'ionic-angular';
 
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
@@ -51,7 +52,8 @@ export class ContactListPage {
     private platform: Platform,
     private barcodeScannerProvider: BarcodeScannerProvider,
     private utils: UtilitiesProvider,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private modalCtrl:ModalController
     
   ) {}
 
@@ -134,7 +136,8 @@ export class ContactListPage {
       text: 'Proceed',
       handler: data => {
         if (data === ContactCreationType.MANUAL.toString()) {
-          this.navCtrl.push('ContactAddPage', {
+          let page = "ContactAddPage";
+          this.showModal(page, {
             name: '',
             address: '',
             telegram: ''
@@ -149,7 +152,10 @@ export class ContactListPage {
                 telegram: result.data.telegram || ''
               };
 
-              if (data) this.navCtrl.push('ContactAddPage', ACCOUNT_INFO);
+              if (data) {
+                let page = "ContactAddPage";
+                this.showModal(page, ACCOUNT_INFO);
+              } 
             });
         }
       }
@@ -181,5 +187,14 @@ export class ContactListPage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, {data:params}, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 }
