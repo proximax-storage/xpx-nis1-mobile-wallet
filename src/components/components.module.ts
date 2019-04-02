@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { PinComponent } from './pin/pin';
+import { ModalHeaderComponent } from './modal-header/modal-header';
 @NgModule({
   declarations: [
-    PinComponent
+    PinComponent,
+    ModalHeaderComponent
   ],
   imports: [IonicModule],
   exports: [
-    PinComponent
+    PinComponent,
+    ModalHeaderComponent
   ]
 })
 export class ComponentsModule { }

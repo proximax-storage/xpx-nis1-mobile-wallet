@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, App } from "ionic-angular";
+import { IonicPage, NavController, NavParams, App, ModalController, AlertController } from "ionic-angular";
 import { Clipboard } from "@ionic-native/clipboard";
 
 import { SimpleWallet, AccountInfoWithMetaData } from "nem-library";
@@ -34,6 +34,8 @@ export class SettingListPage {
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) {}
 
   ionViewWillEnter() {
@@ -69,6 +71,35 @@ export class SettingListPage {
     this.navCtrl.push(page);
   }
 
+  gotoAccountDetails() {
+    let page = 'AccountDetailsPage';
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
+  }
+
+  resetPIN()  {
+    // Reset pin first.
+    this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
+  }
+
+  showResetPINPrompt() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Reset PIN');
+    alert.setSubTitle('Are you sure you want to reset your PIN?');
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Yes',
+      handler: data => {
+       this.resetPIN();
+      }
+    });
+
+    alert.present();
+  }
+
   gotoGuide() {
     this.navCtrl.push('OnboardingPage', {preview: true});
   }
@@ -86,6 +117,7 @@ export class SettingListPage {
   logOut() {
     this.utils.setRoot('WelcomePage');
   }
+  
 
   
 }
