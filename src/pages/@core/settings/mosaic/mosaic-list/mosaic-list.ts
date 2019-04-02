@@ -6,7 +6,8 @@ import {
   ActionSheetController,
   Platform,
   AlertController,
-  ViewController
+  ViewController,
+  ModalController
 } from "ionic-angular";
 
 import { SimpleWallet, MosaicDefinition } from "nem-library";
@@ -45,7 +46,8 @@ export class MosaicListPage {
     public walletProvider: WalletProvider,
     public nemProvider: NemProvider,
     public utils: UtilitiesProvider,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private modalCtrl: ModalController
   ) {}
 
   ionViewDidLoad() {
@@ -99,7 +101,12 @@ export class MosaicListPage {
   }
 
   gotoAdd() {
-    this.navCtrl.push("MosaicCreatePage");
+    let page = 'MosaicCreatePage';
+    const modal = this.modalCtrl.create(page, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
   dismiss() {
     this.viewCtrl.dismiss();

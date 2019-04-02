@@ -5,7 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <ion-navbar transparent></ion-navbar>
+    <ion-navbar transparent>
+        <ion-title>
+          <span ion-text color="black">Namespaces</span>
+        </ion-title>
+    
+        <ion-buttons end>
+          <button ion-button icon-only (click)="dismiss()" color="black">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+    
 </ion-header>
 <ion-content fullscreen background>
   <ion-grid>
