@@ -1,4 +1,4 @@
-import { NavParams, IonicPage, NavController } from 'ionic-angular';
+import { NavParams, IonicPage, NavController, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 
 import { TransactionTypes } from 'nem-library';
@@ -20,11 +20,15 @@ export class TransactionDetailPage {
   TransactionTypes = TransactionTypes;
   tx: any;
 
-  constructor(private navParams: NavParams, private navCtrl: NavController, private utils: UtilitiesProvider) {
+  constructor(private navParams: NavParams, private navCtrl: NavController, private utils: UtilitiesProvider, private viewCtrl: ViewController) {
     this.tx = this.navParams.data;
   }
 
   ionViewWillEnter() {
     this.utils.setHardwareBack(this.navCtrl);
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss();
   }
 }

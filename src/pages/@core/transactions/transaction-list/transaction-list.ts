@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
-import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction } from "nem-library";
+import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData } from "nem-library";
 import { Observable } from "rxjs";
 import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
 import { CoinPriceChartProvider } from "../../../../providers/coin-price-chart/coin-price-chart";
@@ -9,6 +9,11 @@ import { NemProvider } from "../../../../providers/nem/nem";
 import { WalletProvider } from "../../../../providers/wallet/wallet";
 import find from 'lodash/find';
 import { App } from "../../../../providers/app/app";
+import { ToastProvider } from "../../../../providers/toast/toast";
+import { Clipboard } from "@ionic-native/clipboard";
+import sortBy from 'lodash/sortBy';
+import { GetBalanceProvider } from "../../../../providers/get-balance/get-balance";
+import { GetMarketPricePipe } from "../../../../pipes/get-market-price/get-market-price";
 
 /**
  * Generated class for the TransactionListPage page.
@@ -20,7 +25,8 @@ import { App } from "../../../../providers/app/app";
 @IonicPage()
 @Component({
   selector: 'page-transaction-list',
-  templateUrl: 'transaction-list.html'
+  templateUrl: 'transaction-list.html',
+  providers: [GetMarketPricePipe]
 })
 export class TransactionListPage {
   /** Transaction list member variables */
@@ -46,6 +52,9 @@ export class TransactionListPage {
   mosaicId: string;
   walletName: string;
 
+  accountInfo: AccountInfoWithMetaData;
+  totalBalance: number;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -55,7 +64,11 @@ export class TransactionListPage {
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private clipboard: Clipboard,
+    private toastProvider: ToastProvider,
+    private getBalanceProvider: GetBalanceProvider,
+    private marketPrice: GetMarketPricePipe,
   ) {
    
   }
@@ -84,8 +97,9 @@ export class TransactionListPage {
           }
         );
       } else {
+        this.getTotalBalance(currentWallet);
         this.currentWallet = currentWallet;
-
+        this.getAccountInfo();
         this.fakeList = [{}, {}];
 
         this.pageable = this.nemProvider.getAllTransactionsPaginated(
@@ -132,8 +146,48 @@ export class TransactionListPage {
     });
   }
 
+  getAccountInfo() {
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        this.accountInfo = accountInfo;
+        console.log(this.accountInfo)
+      });
+  }
+
   ionViewDidLoad() {
-    console.log("ionViewDidLoad CoinPriceChartPage");
+    console.log("ionViewDidLoad TransactionListPage");
+
+  }
+
+  getTotalBalance(wallet: SimpleWallet): Promise<number> {
+    return new Promise((resolve) => {
+      this.getBalanceProvider
+        .mosaics(wallet.address)
+        .subscribe(mosaics => {
+          let total = 0;
+
+          mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
+            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
+              if (price > 0) {
+                total += price * mosaic.amount;
+                console.log(total);
+              }
+              // last loop: compute total
+              let lastItem = array.length - 1;
+              if (currentIndex == lastItem) {
+                console.log(accumulator, currentIndex, array.length - 1, total);
+                resolve(total);
+                this.totalBalance=total;
+              }
+            })
+
+            return accumulator;
+          });
+          // console.log("Result", result);
+          // return result;
+        });
+    });
   }
 
   goto(page) {
@@ -150,8 +204,22 @@ export class TransactionListPage {
   }
 
   showSendModal() {
-    let page = "SendPage";
-    const modal = this.modalCtrl.create(page, {
+    let page = "SendPage"; 
+    this.showModal(page,{})
+  }
+
+  showExportPrivateKeyModal(){
+    let page = "PrivateKeyPasswordPage";
+    this.showModal(page, {})
+  }
+
+  moreDetails(){
+    let page = "WalletDetailsPage";
+    this.showModal(page, { totalBalance: this.totalBalance });
+  }
+
+  showModal(page,params) {
+    const modal = this.modalCtrl.create(page, params ,{
       enableBackdropDismiss: false,
       showBackdrop: true
     });
@@ -164,11 +232,18 @@ export class TransactionListPage {
   }
 
   gotoTransactionDetail(tx) {
-    this.navCtrl.push('TransactionDetailPage', tx);
+    let page = "TransactionDetailPage";
+    this.showModal(page, tx);
   }
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  copy() {
+    this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
+      this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
+    });
   }
 
 

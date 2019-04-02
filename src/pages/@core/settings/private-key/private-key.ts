@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 
 import { Clipboard } from '@ionic-native/clipboard';
@@ -38,8 +38,9 @@ export class PrivateKeyPage {
     private socialSharing: SocialSharing,
     private toastProvider: ToastProvider,
     private utils: UtilitiesProvider,
+    private viewController: ViewController
   ) {
-    this.password = this.navParams.data;
+    this.password = this.navParams.get('password');
   }
 
   ionViewWillEnter() {
@@ -92,5 +93,9 @@ export class PrivateKeyPage {
         null
       )
       .then(_ => { });
+  }
+
+  dismiss(){
+    this.viewController.dismiss();
   }
 }

@@ -368,7 +368,8 @@ export class HomePage {
   }
 
   gotoTransactionDetail(tx) {
-    this.navCtrl.push('TransactionDetailPage', tx);
+    let page = "TransactionDetailPage";
+    this.showModal(page, tx);
   }
 
   doInfinite() {
@@ -394,7 +395,12 @@ export class HomePage {
 
   showReceiveModal() {
     let page = "ReceivePage";
-    const modal = this.modalCtrl.create(page, {
+
+    this.showModal(page, {});
+  }
+
+  showModal(page,params) {
+    const modal = this.modalCtrl.create(page, params ,{
       enableBackdropDismiss: false,
       showBackdrop: true
     });
