@@ -79,24 +79,15 @@ export class TransactionListPage {
     /** Transaction list business logic */
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
-    this.showEmptyMessage = false;
-    this.isLoading = true;
+    this.showEmptyMessage = true;
 
     this.utils.setTabIndex(0);
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
-      this.walletName = currentWallet.name;
+      
 
-      if (!currentWallet) {
-        this.navCtrl.setRoot(
-          'TabsPage',
-          {},
-          {
-            animate: true,
-            direction: 'backward'
-          }
-        );
-      } else {
+      if (currentWallet) {
+        this.walletName = currentWallet.name;
         this.getTotalBalance(currentWallet);
         this.currentWallet = currentWallet;
         this.getAccountInfo();
@@ -118,11 +109,13 @@ export class TransactionListPage {
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
+
+            this.isLoading = true;
+
             // filter result with mosaicId
             // this.searchByMosaicId(this.mosaicId, result);
             console.info("Transactions", result);
             if (!this.confirmedTransactions) this.showEmptyMessage = false;
-
             if (this.isLoadingInfinite) {
               this.isLoadingInfinite = false;
 
