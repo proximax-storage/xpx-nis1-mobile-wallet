@@ -27,6 +27,8 @@ export class WalletAddPage {
 
   PASSWORD: string;
 
+  walletColor:string = "wallet-1";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -38,6 +40,11 @@ export class WalletAddPage {
     private utils: UtilitiesProvider,
   ) {
     this.init();
+    this.walletColor = "wallet-1";
+  }
+
+  changeWalletColor(color){
+    this.walletColor = color;
   }
 
   ionViewWillEnter() {
@@ -69,7 +76,7 @@ export class WalletAddPage {
       if (value) {
         this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
-        this.walletProvider.storeWallet(newWallet).then(value => {
+        this.walletProvider.storeWallet(newWallet, this.walletColor).then(value => {
           return this.walletProvider.setSelectedWallet(newWallet);
         }).then(() => {
           this.gotoBackup(newWallet);

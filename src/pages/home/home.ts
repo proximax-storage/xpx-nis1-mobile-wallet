@@ -92,6 +92,7 @@ export class HomePage {
     this.walletProvider.getWallets().then(value => {
       this.wallets = sortBy(value, 'name');
 
+
       if (this.wallets.length > 0) {
         // Show loader
         this.fakeList = [{}, {}];
@@ -102,17 +103,29 @@ export class HomePage {
         this.isLoading = true;
         this.showEmptyTransaction = false;
 
-        var wlts = this.wallets.map((wallet) => {
+        var wlts = this.wallets.map((wallet,index) => {
           this.getTotalBalance(wallet).then(total => {
             // return Object.assign(wallet, {total:total});
+
+            if(wallet.name==this.currentWallet.name) {
+              console.log("Index",index);
+              this.slides.slideTo(index);
+            }
             wallet.total = total;
             return wallet;
           })
         })
 
         console.info("Wallets", wlts);
+        
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
+          console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
+
+          //get wallet index
+
+          // set slide to wallet index
+
           this.getBalance();
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;

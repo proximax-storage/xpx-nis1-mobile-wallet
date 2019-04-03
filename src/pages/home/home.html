@@ -25,51 +25,66 @@
     </ion-item>
   </ion-list>
 
-
-  <section wallets>
-
-    <ion-slides slidesPerView="1.3" spaceBetween="15" (ionSlideDidChange)="slideChanged()">
+  <ion-slides  slidesPerView="1.1" spaceBetween="0.5" (ionSlideDidChange)="slideChanged()">
       <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
-        [attr.selected]="selectedWallet?.name === wallet?.name ? true : null"
-        (click)="showWalletDetails();onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
-        <ion-card wallet [attr.selected]="selectedWallet?.name === wallet?.name ? true : null">
-          <ion-card-header text-left>
-            <span title>{{ wallet.name }}</span>
-          </ion-card-header>
-          <ion-card-content text-left>
-            <p>
-              <span symbol>$</span>
-              <span amount>{{ (wallet.total>0?wallet.total:0) | number : '1.2-2'}}</span>
-            </p>
-
-            <p text-wrap>
-              <strong>{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</strong>
-            </p>
-            <!-- <p text-wrap>
-                  &nbsp;
-                  </p> -->
-          </ion-card-content>
-        </ion-card>
+      [attr.selected]="selectedWallet?.name === wallet?.name ? true : null"
+      (click)="showWalletDetails();onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
+          <div class="wallet">
+              <div class="wallet-content" [ngClass]="wallet.walletColor" >
+                <img class="wallet-front-logo wallet-logo"
+                  src="https://proximax.io/wp-content/uploads/2018/03/ProximaX-White.png">
+                <p class="wallet-number">{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</p>
+                <div class="wallet-space-75">
+                  <span class="wallet-label">Wallet Name</span>
+                  <p class="wallet-info">{{ wallet.name }}</p>
+                </div>
+                <div class="wallet-space-25">
+                  <span class="wallet-label">Balance</span>
+                  <p class="wallet-info">${{ (wallet.total>0?wallet.total:0) | number : '1.2-2'}} USD</p>
+                </div>
+              </div>
+            </div>
+      </ion-slide>
+  
+  
+      <!-- <ion-slide>
+          <div class="wallet">
+              <div class="wallet-content" [ngClass]="'wallet-3'">
+                <img class="wallet-front-logo wallet-logo"
+                  src="https://proximax.io/wp-content/uploads/2018/03/ProximaX-White.png">
+                <p class="wallet_numer">TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH</p>
+                <div class="wallet-space-75">
+                  <span class="wallet-label">Wallet Name</span>
+                  <p class="wallet-info">My Wallet</p>
+                </div>
+                <div class="wallet-space-25">
+                  <span class="wallet-label">Balance</span>
+                  <p class="wallet-info">100.00 USD</p>
+                </div>
+              </div>
+            </div>
       </ion-slide>
 
       <ion-slide>
-        <ion-card add-wallet (click)="showAddWalletPrompt()">
-          <!-- <ion-card-header text-left>
-            <span title></span>
-          </ion-card-header> -->
-          <ion-card-content text-center>
-            <p>
-              <span symbol><br></span>
-              <span prompt>Create a wallet</span>
-            </p>
-            <p>
-              It's free and you can can create as many as you like
-            </p>
-          </ion-card-content>
-        </ion-card>
-      </ion-slide>
+          <div class="wallet">
+              <div class="wallet__part" [ngClass]="'wallet-4'">
+                <img class="wallet__front-logo wallet__logo"
+                  src="https://proximax.io/wp-content/uploads/2018/03/ProximaX-White.png">
+                <p class="wallet_numer">TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH</p>
+                <div class="wallet__space-75">
+                  <span class="wallet__label">Wallet Name</span>
+                  <p class="wallet__info">My Wallet</p>
+                </div>
+                <div class="wallet__space-25">
+                  <span class="wallet__label">Balance</span>
+                  <p class="wallet__info">100.00 USD</p>
+                </div>
+              </div>
+            </div>
+      </ion-slide> -->
     </ion-slides>
-  </section>
+
+
 
 
 
@@ -85,86 +100,87 @@
   </ion-grid>
 
   <div *ngIf="menu=='mosaics'">
-      <ion-list transparent-items >
-          <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
-            <ion-card-header no-padding>
-              <ion-item>
-                <img logo-small item-left [src]="utils.getLogo(mosaic)">
-                <h2 text-uppercase ion-text color="black"><strong>{{ mosaic.mosaicId.name }}</strong></h2>
-                <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
-      
-                <section text-right item-right>
-                  <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
-                  <p text-right ion-text color="black" *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice">
-                    <small>
-                      {{ amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
-                    </small>
-                    {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
-                  </p>
-                </section>
-              </ion-item>
-            </ion-card-header>
-          </ion-card>
-      
-          <section [hidden]="mosaics">
-            <ion-card fake-card *ngFor="let fakeCard of fakeList">
-              <ion-card-header no-padding>
-                <ion-item>
-                  <section image item-left></section>
-                  <h2> &nbsp; </h2>
-                  <p> &nbsp; </p>
-      
-                  <section item-right>
-                    <h2> &nbsp; </h2>
-                    <p>
-                      <small> &nbsp; </small>
-                    </p>
-                  </section>
-                </ion-item>
-              </ion-card-header>
-              <ion-card-content line no-padding>
-                <!-- <ion-item>
+    <ion-list transparent-items>
+      <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
+        <ion-card-header no-padding>
+          <ion-item>
+            <img logo-small item-left [src]="utils.getLogo(mosaic)">
+            <h2 text-uppercase ion-text color="black"><strong>{{ mosaic.mosaicId.name }}</strong></h2>
+            <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
+
+            <section text-right item-right>
+              <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
+              <p text-right ion-text color="black"
+                *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice">
+                <small>
+                  {{ amount * marketPrice | currency : 'USD' : 'symbol' : '1.2-6' }}
+                </small>
+                {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
+              </p>
+            </section>
+          </ion-item>
+        </ion-card-header>
+      </ion-card>
+
+      <section [hidden]="mosaics">
+        <ion-card fake-card *ngFor="let fakeCard of fakeList">
+          <ion-card-header no-padding>
+            <ion-item>
+              <section image item-left></section>
+              <h2> &nbsp; </h2>
+              <p> &nbsp; </p>
+
+              <section item-right>
+                <h2> &nbsp; </h2>
+                <p>
+                  <small> &nbsp; </small>
+                </p>
+              </section>
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content line no-padding>
+            <!-- <ion-item>
                   <h2> &nbsp; </h2>
                   <p>
                     <small> &nbsp; </small>
                   </p>
                 </ion-item> -->
-              </ion-card-content>
-            </ion-card>
-            <!-- <ion-card no-border>
+          </ion-card-content>
+        </ion-card>
+        <!-- <ion-card no-border>
               <ion-item text-center>
                 <ion-spinner name="dots"></ion-spinner>
               </ion-item>
             </ion-card> -->
-          </section>
-        </ion-list>
+      </section>
+    </ion-list>
 
-      <ion-grid empty *ngIf="showEmptyMosaic">
-          <ion-row>
-            <ion-col>
-              <p>
-              </p>
-            </ion-col>
-          </ion-row>
-          <br>
-          <ion-row>
-            <ion-col>
-    
-              <img quarter-width [src]="AppConfig.STICKERS.SORRY">
-    
-              <h6 ion-text color="grey" text-wrap>
-                <strong>Your mosaics will appear here, none at the moment</strong>
-              </h6>
-    
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+    <ion-grid empty *ngIf="showEmptyMosaic">
+      <ion-row>
+        <ion-col>
+          <p>
+          </p>
+        </ion-col>
+      </ion-row>
+      <br>
+      <ion-row>
+        <ion-col>
+
+          <img quarter-width [src]="AppConfig.STICKERS.SORRY">
+
+          <h6 ion-text color="grey" text-wrap>
+            <strong>Your mosaics will appear here, none at the moment</strong>
+          </h6>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 
 
   <div *ngIf="menu=='transactions'">
-  
+
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
       <ion-card fake-card *ngFor="let fakeCard of fakeList">

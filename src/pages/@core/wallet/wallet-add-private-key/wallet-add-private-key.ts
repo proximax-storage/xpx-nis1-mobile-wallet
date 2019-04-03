@@ -26,6 +26,8 @@ export class WalletAddPrivateKeyPage {
 
   PASSWORD: string;
 
+  walletColor:string = "wallet-1";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,7 +38,12 @@ export class WalletAddPrivateKeyPage {
     private authProvider: AuthProvider,
     private utils: UtilitiesProvider,
   ) {
+    this.walletColor = 'wallet-1';
     this.init();
+  }
+
+  changeWalletColor(color){
+    this.walletColor = color;
   }
 
   ionViewWillEnter() {
@@ -78,7 +85,7 @@ export class WalletAddPrivateKeyPage {
         this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider
-          .storeWallet(newWallet)
+          .storeWallet(newWallet, this.walletColor)
           .then(_ => {
             return this.walletProvider.setSelectedWallet(newWallet);
           }).then(_ => {

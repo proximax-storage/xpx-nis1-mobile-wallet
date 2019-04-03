@@ -4,6 +4,7 @@ import { SendPage } from './send';
 
 import { NgxCurrencyModule } from "ngx-currency";
 import { DirectivesModule } from '../../../../directives/directives.module';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { DirectivesModule } from '../../../../directives/directives.module';
   imports: [
     IonicPageModule.forChild(SendPage),
     NgxCurrencyModule,
-    DirectivesModule
+    DirectivesModule,
+    PipesModule
   ],
 })
 export class SendPageModule {}

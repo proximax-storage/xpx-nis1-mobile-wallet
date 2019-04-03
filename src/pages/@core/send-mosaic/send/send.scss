@@ -1,60 +1,70 @@
 page-send {
-  ion-input {
-    color: color($colors, dark);
-  }
-
-  [amount] {
-    ion-label {
-      margin: 8px 0;
+    ion-input {
+        color: color($colors, dark);
     }
 
-    input {
-      display: block;
-      width: 100%;
-      font-size: 3.5rem;
-      font-family: $font-family-base;
-      background: transparent;
-      border: 0;
-      color: transparent;
-      text-shadow: 0 0 0 #000;
-      text-align: center !important;
+    [amount] {
+        ion-label {
+            margin: 8px 0;
+        }
 
-      &:focus,
-      &:active {
-        outline: 0px;
-      }
+        input {
+            display: block;
+            width: 100%;
+            font-size: 3.5rem;
+            font-family: $font-family-base;
+            background: transparent;
+            border: 0;
+            color: transparent;
+            text-shadow: 0 0 0 #000;
+            text-align: center !important;
+
+            &:focus,
+            &:active {
+                outline: 0px;
+            }
+        }
     }
-  }
 
-  ion-card[amount] {
-    -webkit-box-shadow: none !important;
-    box-shadow:  none !important;
-    background: none !important;
-    // margin-top: -2rem;
-  }
+    ion-card[amount] {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        background: none !important;
+        // margin-top: -2rem;
+    }
 
-  // ion-icon:not([item-left]) {
-  //   color: color($colors, dark) !important;
-  // }
-
-
-  ion-item h2 {
-    font-size: 1.6rem !important;
-  }
-section[total] {
-  h2 {
-    margin-top: -2.3rem !important;
-    color: #222 !important;
-    font-size: 2rem !important;
-    margin-bottom: 4rem;
-  }
-}
+    // ion-icon:not([item-left]) {
+    //   color: color($colors, dark) !important;
+    // }
 
 
-  .list .item-inner {
-    border-bottom: none !important;
-  }
-  .item-block .item-inner {
-    border-bottom: none !important;
-  }
+    ion-item h2 {
+        font-size: 1.6rem !important;
+    }
+
+    section[total] {
+        h2 {
+            margin-top: -2.3rem !important;
+            color: #222 !important;
+            font-size: 2rem !important;
+            margin-bottom: 4rem;
+        }
+    }
+
+
+    .list .item-inner {
+        border-bottom: none !important;
+    }
+
+    .item-block .item-inner {
+        border-bottom: none !important;
+    }
+
+    // End - Multisig select
+    ion-label[title] {
+      font-size: 1.8rem !important;
+      color: #000 !important;
+    }
+
+
 }

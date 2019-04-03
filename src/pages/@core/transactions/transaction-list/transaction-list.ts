@@ -90,7 +90,6 @@ export class TransactionListPage {
         this.walletName = currentWallet.name;
         this.getTotalBalance(currentWallet);
         this.currentWallet = currentWallet;
-        this.getAccountInfo();
         this.fakeList = [{}, {}];
 
         this.pageable = this.nemProvider.getAllTransactionsPaginated(
@@ -137,15 +136,6 @@ export class TransactionListPage {
             });
       }
     });
-  }
-
-  getAccountInfo() {
-    this.nemProvider
-      .getAccountInfo(this.currentWallet.address)
-      .subscribe(accountInfo => {
-        this.accountInfo = accountInfo;
-        console.log(this.accountInfo)
-      });
   }
 
   ionViewDidLoad() {

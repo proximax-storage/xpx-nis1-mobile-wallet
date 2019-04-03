@@ -84,7 +84,8 @@ export class WalletUpdatePage {
         this.walletProvider
           .updateWalletName(this.selectedWallet, form.name)
           .then(selectedWallet => {
-            return this.walletProvider.setSelectedWallet(selectedWallet);
+            console.log(selectedWallet);
+            return this.walletProvider.setSelectedWallet(selectedWallet.wallet);
           })
           .then(selectedWallet => {
             this.goBack();

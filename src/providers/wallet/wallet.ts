@@ -25,17 +25,22 @@ export class WalletProvider {
    * @param wallet
    * @return Promise with stored wallet
    */
-  public storeWallet(wallet: SimpleWallet): Promise<SimpleWallet> {
+  public storeWallet(wallet: SimpleWallet, walletColor): Promise<SimpleWallet> {
     let result = [];
     return this.authProvider.getEmail().then(email => {
       return this.getAccounts().then(value => {
         let accounts = value;
-
         result = accounts[email];
-        result.push(wallet);
-        result = result.map(_ => _.writeWLTFile());
+        result.push({wallet: wallet, walletColor: walletColor});
+        result = result.map(_ => {
+          return {
+            wallet: _.wallet.writeWLTFile(),
+            walletColor: _.walletColor
+          }
+        });
 
         accounts[email] = result;
+
 
         this.storage.set('wallets', accounts);
         return wallet;
@@ -54,18 +59,24 @@ export class WalletProvider {
    */
   public updateWalletName(wallet: SimpleWallet, newWalletName: string) {
     return this.authProvider.getEmail().then(email => {
-      return this.getAccounts().then(value => {
-        let result: any = value[email];
+      return this.getAccounts().then(accounts => {
+        let wallets: any = accounts[email];
+        let walletIndex: number;
+        for(let i=0; i<wallets.length; i++) {
+          if(wallets[i].wallet.name == wallet.name) walletIndex = i;
+        }
+        let selectedWallet: any = wallets[walletIndex];
+        selectedWallet.wallet.name = newWalletName;
 
-        const walletIndex = findIndex(result, wallet);
-
-        let selectedWallet: any = result[walletIndex];
-        selectedWallet.name = newWalletName;
-
-        result = result.map(_ => _.writeWLTFile());
+        wallets = wallets.map(_ => {
+          return {
+            wallet: _.wallet.writeWLTFile(),
+            walletColor: _.walletColor
+          }
+        });
 
         let ACCOUNT = {};
-        ACCOUNT[email] = result;
+        ACCOUNT[email] = wallets;
 
         return this.storage.set('wallets', ACCOUNT).then(value => {
           return selectedWallet;
@@ -82,7 +93,12 @@ export class WalletProvider {
         const walletIndex = findIndex(result, wallet);
         result.splice(walletIndex, 1);
 
-        result = result.map(_ => _.writeWLTFile());
+        result = result.map(_ => {
+          return {
+            wallet: _.wallet.writeWLTFile(),
+            walletColor: _.walletColor
+          }
+        });
 
         let ACCOUNT = {};
         ACCOUNT[email] = result;
@@ -104,7 +120,7 @@ export class WalletProvider {
       return this.getAccounts().then(value => {
         let wallets = value[email];
         for (var i = 0; i < wallets.length; i++) {
-          if (wallets[i].name == walletName) {
+          if (wallets[i].name === walletName) {
             exists = true;
             break;
           }
@@ -120,12 +136,11 @@ export class WalletProvider {
    */
   public getSelectedWallet(): Promise<SimpleWallet> {
     return this.authProvider.getEmail().then(email => {
-      return this.storage.get('selectedWallet').then(data => {
+      return this.storage.get('selectedWallet').then(wallets => {
         let result = null;
-        const ACCOUNT = data[email];
-
-        if (data) {
-          result = SimpleWallet.readFromWLT(ACCOUNT);
+        if (wallets) {
+          const selectedWallet = wallets[email];
+          result = SimpleWallet.readFromWLT(selectedWallet);
         } else {
           result = {};
         }
@@ -147,9 +162,9 @@ export class WalletProvider {
         if (data) {
           const wallets = ACCOUNT_WALLETS.map(walletFile => {
             if (walletFile.name) {
-              return this.convertJSONWalletToFileWallet(walletFile);
+              return this.convertJSONWalletToFileWallet(walletFile, walletFile.walletColor);
             } else {
-              return SimpleWallet.readFromWLT(walletFile);
+              return { wallet:SimpleWallet.readFromWLT(walletFile.wallet), walletColor: walletFile.walletColor};
             }
           });
 
@@ -175,9 +190,11 @@ export class WalletProvider {
         if (data) {
           const wallets = ACCOUNT_WALLETS.map(walletFile => {
             if (walletFile.name) {
-              return this.convertJSONWalletToFileWallet(walletFile);
+              return this.convertJSONWalletToFileWallet(walletFile, walletFile.walletColor);
             } else {
-              return SimpleWallet.readFromWLT(walletFile);
+              let wallet = SimpleWallet.readFromWLT(walletFile.wallet);
+              wallet.walletColor = walletFile.walletColor;
+              return wallet ;
             }
           });
 
@@ -191,7 +208,7 @@ export class WalletProvider {
     });
   }
 
-  private convertJSONWalletToFileWallet(wallet): SimpleWallet {
+  private convertJSONWalletToFileWallet(wallet, walletColor): SimpleWallet {
     let walletString = Base64.encode(
       JSON.stringify({
         address: wallet.accounts[0].address,
@@ -204,10 +221,12 @@ export class WalletProvider {
             : NetworkTypes.MAIN_NET,
         name: wallet.name,
         type: 'simple',
-        schema: 1
+        schema: 1,
       })
     );
-    return SimpleWallet.readFromWLT(walletString);
+    let importedWallet = SimpleWallet.readFromWLT(walletString);
+    importedWallet.walletColor = walletColor;
+    return importedWallet;
   }
 
   /**
@@ -220,7 +239,6 @@ export class WalletProvider {
     ]).then(results => {
       const EMAIL = results[0];
       const SELECTED_WALLET = results[1] ? results[1] : {};
-
       SELECTED_WALLET[EMAIL] = wallet.writeWLTFile();
 
       return this.storage.set('selectedWallet', SELECTED_WALLET);

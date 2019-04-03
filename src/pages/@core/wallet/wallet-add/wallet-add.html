@@ -7,16 +7,56 @@
 <ion-header no-border>
   <ion-navbar transparent></ion-navbar>
 </ion-header>
-<ion-content fullscreen background>
+<ion-content fullscreen background padding>
   <ion-grid>
     <ion-row>
-      <ion-col col-12></ion-col>
-
       <ion-col col-12 text-center>
         <h3 ion-text color="black">Create new wallet</h3>
         <p ion-text color="black">
           To create new wallet fill up the name below.
         </p>
+      </ion-col>
+
+      <ion-col>
+          <div class="wallet">
+              <div class="wallet-content" [ngClass]="walletColor">
+                <img class="wallet-front-logo wallet-logo"
+                  src="https://proximax.io/wp-content/uploads/2018/03/ProximaX-White.png">
+                <p class="wallet-number">TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH</p>
+                <div class="wallet-space-75">
+                  <span class="wallet-label">Wallet Name</span>
+                  <p class="wallet-info">MyWallet</p>
+                </div>
+                <div class="wallet-space-25">
+                  <span class="wallet-label">Balance</span>
+                  <p class="wallet-info">100.00 USD</p>
+                </div>
+              </div>
+            </div>
+      </ion-col>
+      <ion-col col-12 text-center>
+          <h3 ion-text color="black" >Choose wallet color</h3>
+      </ion-col>
+      <ion-col>
+        <div class="color-palette">
+          <div class="color-box ">
+            <!-- <div class="color" style="background:#1f6b86;"></div> -->
+            <button one (click)="changeWalletColor('wallet-1')"></button>
+          </div>
+          <div class="color-box">
+            <!-- <div class="color" style="background:#5c9ebb;"></div> -->
+            <button two (click)="changeWalletColor('wallet-2')"></button>
+          </div>
+          <div class="color-box">
+              <!-- <div class="color" style="background:#f2962f;"></div> -->
+              <button four (click)="changeWalletColor('wallet-4')"></button>
+            </div>
+          <div  class="color-box ">
+            <!-- <div class="color" style="background:#c6f8ff;"></div> -->
+            <button three (click)="changeWalletColor('wallet-3')"></button>
+          </div>
+
+        </div>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
@@ -28,12 +68,12 @@
           </ion-item>
           <br>
           <br>
-          
 
-            <button gradient-button color-5 ion-button no-margin [disabled]="formGroup.invalid" type="submit"
-              color="black">
-              Next
-            </button>
+
+          <button gradient-button color-5 ion-button no-margin [disabled]="formGroup.invalid" type="submit"
+            color="black">
+            Next
+          </button>
 
 
         </form>
@@ -44,4 +84,5 @@
       <ion-col col-12></ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>
