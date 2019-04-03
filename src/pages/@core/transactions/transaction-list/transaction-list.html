@@ -186,13 +186,13 @@
   <!-- ./Transactions -->
 
   <!-- Infinite scroll -->
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="100px">
+  <ion-infinite-scroll *ngIf="!showEmptyMessage"  (ionInfinite)="doInfinite($event)" threshold="100px">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more transactions...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
   <!-- ./Infinite scroll -->
 
-  <ion-grid empty *ngIf="showEmptyMessage">
+  <ion-grid empty *ngIf="showEmptyMessage" reduce-margin-top>
     <ion-row>
       <ion-col>
         <img quarter-width [src]="App.STICKERS.SORRY">
@@ -227,7 +227,7 @@
     <ion-grid normal>
       <ion-row>
         <ion-col>
-          <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
+          <button (click)="showReceiveModal()" gradient-button full color-5 ion-button icon-start no-margin>
             <ion-icon name="arrow-round-down"></ion-icon>
             Receive
           </button>

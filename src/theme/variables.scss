@@ -92,7 +92,7 @@ tabbgcolor: #17abda);
 @import "ionic.theme.default";
 
 // color of placeholder for input[text]
-$text-input-placeholder-color: darken(color($colors, dark), 0.1);
+$text-input-placeholder-color: lighten(color($colors, grey), 20%);
 
 .ios,
 .md {

@@ -39,6 +39,11 @@ import {
 import { Observable } from "nem-library/node_modules/rxjs";
 
 export const SERVER_CONFIG: ServerConfig[] = [
+<<<<<<< HEAD
+=======
+  // { protocol: "http", domain: "192.3.61.243", port: 7890 },
+  // { protocol: "http", domain: "50.3.87.123", port: 7890 },
+>>>>>>> 1e3e5d17488024821c77eb7a14d8d3a2101cd99e
   { protocol: "http", domain: "23.228.67.85", port: 7890 },
   // { protocol: "http", domain: "192.3.61.243", port: 7890 },
   // { protocol: "http", domain: "50.3.87.123", port: 7890 },
