@@ -61,8 +61,8 @@
     </section>
 
     <p ion-text color="black">
-      <small *ngIf="owner?.plain() === tx?.recipient.value">Sender</small>
-      <small *ngIf="owner?.plain() !== tx?.recipient.value">Receiver</small>
+      <small *ngIf="owner?.plain() === tx?.recipient.value">Receive</small>
+      <small *ngIf="owner?.plain() !== tx?.recipient.value">Send</small>
     </p>
 
     <!-- Confirmed transfer -->

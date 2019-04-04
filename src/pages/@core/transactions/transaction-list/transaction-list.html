@@ -64,7 +64,7 @@
   <ion-list transparent-items *ngIf="isLoading">
     <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
 
-    <ion-card fake-card *ngFor="let fakeCard of fakeList">
+    <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
       <ion-card-header>
         <p float-left> &nbsp; </p>
 
@@ -118,7 +118,7 @@
   <ion-list transparent-items *ngIf="!isLoading">
     <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
 
-    <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
+    <ion-card no-margin-bottom *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
       (click)="gotoTransactionDetail(transaction)">
       <!-- if importance transfer -->
       <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"
@@ -150,7 +150,7 @@
       </transfer-transaction>
     </ion-card>
 
-    <ion-card *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash"
+    <ion-card no-margin-bottom *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash"
       (click)="gotoTransactionDetail(transaction)">
       <!-- if importance transfer -->
       <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"
