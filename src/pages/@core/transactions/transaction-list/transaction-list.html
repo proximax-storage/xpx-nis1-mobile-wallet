@@ -22,12 +22,12 @@
   <section wallets>
 
 
-    <ion-card>
+    <ion-card balance>
         <!-- <ion-card-header>
             Wallet name: {{walletName }}
         </ion-card-header> -->
         <ion-card-content>
-            <ion-list>
+            <ion-list transparent-items>
                 <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
                     <ion-icon name='ios-cash-outline' item-start></ion-icon>
                     Balance:

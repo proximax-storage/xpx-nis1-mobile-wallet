@@ -177,20 +177,25 @@ export class CoinPriceChartPage {
 
   showReceiveModal() {
     let page = "ReceivePage";
-    const modal = this.modalCtrl.create(page, {
+    this.showModal(page, {});
+  }
+
+  showSendModal() {
+    let page = "SendPage";
+    this.showModal(page, this.mosaicId);
+  }
+
+  showModal(page,params) {
+    const modal = this.modalCtrl.create(page, params ,{
       enableBackdropDismiss: false,
       showBackdrop: true
     });
     modal.present();
   }
 
-  showSendModal() {
-    let page = "SendPage";
-    const modal = this.modalCtrl.create(page, {mosaicSelectedName: this.mosaicId}, {
-      enableBackdropDismiss: false,
-      showBackdrop: true
-    });
-    modal.present();
+  gotoTransactionDetail(tx) {
+    let page = "TransactionDetailPage";
+    this.showModal(page, tx);
   }
 
   /** Transaction list methods */
@@ -198,9 +203,7 @@ export class CoinPriceChartPage {
     return index;
   }
 
-  gotoTransactionDetail(tx) {
-    this.navCtrl.push('TransactionDetailPage', tx);
-  }
+
 
   doInfinite() {
     if (this.showEmptyMessage) return;

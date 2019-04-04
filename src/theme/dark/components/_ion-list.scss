@@ -95,3 +95,9 @@ ion-list[title] {
     border-bottom: none;
   }
 }
+
+ion-card[balance] {
+  border-radius: 0.5rem;
+  background: rgba(224, 224, 224, 0.43);
+  color: #1f6b86;
+}
