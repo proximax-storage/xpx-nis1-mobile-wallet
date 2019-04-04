@@ -31,7 +31,7 @@
                 <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
                     <ion-icon name='ios-cash-outline' item-start></ion-icon>
                     Balance:
-                    <span>${{ (totalBalance? totalBalance:0) | number : '1.2-2'}}</span>
+                    <span>${{ (totalBalance? totalBalance:0) | number : '1.2-2'}} USD</span>
                 </ion-item>
 
                 <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
@@ -40,21 +40,11 @@
                     <p text-justify  *ngIf="currentWallet">{{ currentWallet?.address.value }} </p>
                 </ion-item>
               </ion-list>
+              <button gradient-button quarter-width color-5 medium (click)="moreDetails()">
+                More Details
+              </button>
         </ion-card-content>
-        <ion-row>
-            <ion-col>
-              <button (click)="showExportPrivateKeyModal()" ion-button icon-start clear small>
-                <ion-icon name="ios-share-outline"></ion-icon>
-                <span text-wrap>Export Private Key</span>
-              </button>
-            </ion-col>
-            <ion-col>
-              <button (click)="moreDetails()" ion-button icon-start clear small>
-                <ion-icon name="ios-more-outline"></ion-icon>
-                <span text-wrap>More Details</span>
-              </button>
-            </ion-col>
-        </ion-row>
+       
 
       </ion-card>
 
@@ -67,9 +57,13 @@
 
 <ion-content background>
 
+  
+
 
   <!-- Skeleton loader -->
   <ion-list transparent-items *ngIf="isLoading">
+    <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
+
     <ion-card fake-card *ngFor="let fakeCard of fakeList">
       <ion-card-header>
         <p float-left> &nbsp; </p>
@@ -122,6 +116,7 @@
 
   <!-- Transactions -->
   <ion-list transparent-items *ngIf="!isLoading">
+    <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
 
     <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
       (click)="gotoTransactionDetail(transaction)">
@@ -191,13 +186,13 @@
   <!-- ./Transactions -->
 
   <!-- Infinite scroll -->
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="100px">
+  <ion-infinite-scroll *ngIf="!showEmptyMessage"  (ionInfinite)="doInfinite($event)" threshold="100px">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more transactions...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
   <!-- ./Infinite scroll -->
 
-  <ion-grid empty *ngIf="showEmptyMessage">
+  <ion-grid empty *ngIf="showEmptyMessage" reduce-margin-top>
     <ion-row>
       <ion-col>
         <img quarter-width [src]="App.STICKERS.SORRY">
@@ -232,7 +227,7 @@
     <ion-grid normal>
       <ion-row>
         <ion-col>
-          <button (click)="showReceiveModal()" gradient-button full color-6 ion-button icon-start no-margin>
+          <button (click)="showReceiveModal()" gradient-button full color-5 ion-button icon-start no-margin>
             <ion-icon name="arrow-round-down"></ion-icon>
             Receive
           </button>

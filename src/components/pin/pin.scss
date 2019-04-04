@@ -87,8 +87,14 @@
   }
   
   #fields .numberfield.active span {
-    background-color: color($colors, secondary);
+    background-color: color($colors, grey);
   }
+
+  #pincode button:active {
+    background-color: rgba(194, 194, 194, 0.6);
+    outline: 0;
+  }
+  
   
   .miss {
     -webkit-animation: miss .8s ease-out 1;
