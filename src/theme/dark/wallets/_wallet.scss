@@ -1,107 +1,135 @@
 ion-slides {
     height: auto;
     padding: 16px;
-
-    
+}
+ion-slide {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
-  .wallet {
-      width: 96%;
-      height: 190px;
-  }
+.wallet {
+    width: 96%;
+    height: 190px;
+}
 
-  .wallet-content {
-      padding: 18px;
-      // box-shadow: 1px 1px #aaa3a3;
-      top: 0;
-      position: absolute;
-      z-index: 1000;
-      left: 0;
-      display: inline-block;
-      width: 96%;
-      height: 190px;
+.wallet-content {
+    padding: 18px;
+    // box-shadow: 1px 1px #aaa3a3;
+    top: 0;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    display: inline-block;
+    width: 96%;
+    height: 190px;
     //   background-image: url('https://image.ibb.co/bVnMrc/g3095.png'),
     //       linear-gradient(to right bottom, #C86F97, lighten(#C86F97, 1%), darken(#C86F97, 10%), darken(#C86F97, 15%), darken(#C86F97, 20%));
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      border-radius: 8px;
-  }
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+}
 
-  .wallet-logo {
-      height: 16px;
-  }
+.wallet-logo {
+    height: 16px;
+}
 
-  .wallet-front-logo {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-  }
+.wallet-front-logo {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
 
-  .wallet-number {
-      display: block;
-      width: 100%;
-      word-spacing: 1px;
-      font-size: 0.8em;
-      letter-spacing: 1px;
-      color: #fff;
-      text-align: center;
-      margin-bottom: 20px;
-      margin-top: 60px;
-  }
+.wallet-number {
+    display: block;
+    width: 100%;
+    word-spacing: 1px;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 60px;
+}
 
-  .wallet-space-75 {
-      width: 6em;
-      float: left;
-  }
+.wallet-space-75 {
+    width: 6em;
+    float: left;
+}
 
-  .wallet-space-25 {
-      //       width: 3em;
-      // float: right;
+.wallet-space-25 {
+    //       width: 3em;
+    // float: right;
 
 
-      position: absolute;
-      right: 10px;
-  }
+    position: absolute;
+    right: 10px;
+}
 
-  .wallet-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.8);
-      letter-spacing: 1px;
-  }
+.wallet-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 1px;
+}
 
-  .wallet-info {
-      margin-bottom: 0;
-      margin-top: 5px;
-      font-size: 16px;
-      line-height: 18px;
-      color: #fff;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-  }
+.wallet-info {
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 18px;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
-  .wallet-secret-last {
-      color: #303030;
-      text-align: right;
-      margin: 0;
-      font-size: 14px;
-  }
+//   Create wallet
 
-  .wallet-secret {
-      padding: 5px 12px;
-      background-color: #fff;
-      position: relative;
-  }
+.wallet-logo {
+    height: 24px;
+}
 
-  .wallet-secret:before {
-      content: '';
-      position: absolute;
-      top: -3px;
-      left: -3px;
-      height: calc(100% + 6px);
-      width: calc(100% - 42px);
-      border-radius: 4px;
-      background: repeating-linear-gradient(45deg, #ededed, #ededed 5px, #f9f9f9 5px, #f9f9f9 10px);
-  }
 
+.wallet-create-front-logo {
+    position: initial;
+    top: 24px;
+    right: 24px;
+    margin-bottom: -1.8em;
+}
+
+.wallet-create-title {
+    color: #333;
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+    margin-top: 33px;
+}
+
+.wallet-create-subtitle {
+    color: #333;
+    margin-top: inherit;
+    font-size: 1.5rem;
+}
+
+//   .wallet-secret-last {
+//       color: #303030;
+//       text-align: right;
+//       margin: 0;
+//       font-size: 14px;
+//   }
+
+//   .wallet-secret {
+//       padding: 5px 12px;
+//       background-color: #fff;
+//       position: relative;
+//   }
+
+//   .wallet-secret:before {
+//       content: '';
+//       position: absolute;
+//       top: -3px;
+//       left: -3px;
+//       height: calc(100% + 6px);
+//       width: calc(100% - 42px);
+//       border-radius: 4px;
+//       background: repeating-linear-gradient(45deg, #ededed, #ededed 5px, #f9f9f9 5px, #f9f9f9 10px);
+//   }
