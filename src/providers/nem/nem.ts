@@ -61,7 +61,7 @@ export class NemProvider {
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
 
   constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // Todo: Change to MAIN_NET for production
+    NEMLibrary.bootstrap(NetworkTypes.MAIN_NET); // TEST_NET Note: Change to MAIN_NET for production
 
     if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
       this.accountHttp = new AccountHttp;

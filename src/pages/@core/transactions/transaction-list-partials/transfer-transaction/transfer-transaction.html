@@ -6,7 +6,7 @@
     {{ tx.timeWindow.timeStamp.toString() | timeago }}
   </p>
 </ion-card-header>
-<ion-card-header *ngIf="tx.containsMosaics && !tx.containsMosaics()">
+<ion-card-header transaction *ngIf="tx.containsMosaics && !tx.containsMosaics()">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(tx.xem())">
     <h2 ion-text color="black">XEM</h2>
@@ -31,7 +31,7 @@
     </section>
   </ion-item>
 </ion-card-header>
-<ion-card-header *ngFor="let mosaic of mosaics">
+<ion-card-header transaction *ngFor="let mosaic of mosaics">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(mosaic)">
     <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
@@ -49,38 +49,20 @@
       <h2 text-right ion-text color="danger" [hidden]="!mosaics" *ngIf="owner?.plain() != tx?.recipient.value">
         - {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
-
-      <p text-right text-left ion-text color="black">
-        <small *ngIf="mosaic.mosaicId.name === 'xpx'">
-          {{ mosaic.amount * 0.00837014 | currency }}
-        </small>
-
-        <small *ngIf="mosaic.mosaicId.name === 'lyl'">
-          {{ mosaic.amount * 0.00436937 | currency }}
-        </small>
-
-        <small *ngIf="mosaic.mosaicId.name !== 'xpx' || mosaic.mosaicId.name !== 'lyl'">
-          {{ mosaic.amount * 0.00436937 | currency }}
-        </small>
-      </p>
     </section>
   </ion-item>
 </ion-card-header>
 <ion-card-content line no-padding>
   <ion-item>
     <section *ngIf="tx.signer">
-      <h3 text-wrap ion-text color="black" *ngIf="(tx?.signer.address.pretty() | searchContact: tx?.signer.address.value | async) as contact; else loading">
-        {{ contact }}
-      </h3>
-
       <ng-template #loading>
         <ion-spinner name="dots"></ion-spinner>
       </ng-template>
     </section>
 
     <p ion-text color="black">
-      <small *ngIf="owner?.plain() === tx?.recipient.value">Sender</small>
-      <small *ngIf="owner?.plain() !== tx?.recipient.value">Receiver</small>
+      <small *ngIf="owner?.plain() === tx?.recipient.value">Receive</small>
+      <small *ngIf="owner?.plain() !== tx?.recipient.value">Send</small>
     </p>
 
     <!-- Confirmed transfer -->
@@ -92,7 +74,6 @@
       <p ion-text color="black">
         <small>
           Confirmed
-          <br> Transfer
         </small>
       </p>
     </section>
@@ -106,7 +87,6 @@
       <p ion-text color="black">
         <small>
           Unconfirmed
-          <br> Transfer
         </small>
       </p>
     </section>

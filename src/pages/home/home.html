@@ -94,7 +94,7 @@
 
   <div *ngIf="menu=='mosaics'">
     <ion-list transparent-items>
-      <ion-card *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
+      <ion-card no-margin-bottom *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
         <ion-card-header no-padding>
           <ion-item>
             <img logo-small item-left [src]="utils.getLogo(mosaic)">
@@ -116,7 +116,7 @@
       </ion-card>
 
       <section [hidden]="mosaics">
-        <ion-card fake-card *ngFor="let fakeCard of fakeList">
+        <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
           <ion-card-header no-padding>
             <ion-item>
               <section image item-left></section>
@@ -176,7 +176,7 @@
 
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
-      <ion-card fake-card *ngFor="let fakeCard of fakeList">
+      <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
         <ion-card-header>
           <p float-left> &nbsp; </p>
 
@@ -229,7 +229,7 @@
     <!-- Transactions -->
     <ion-list transparent-items *ngIf="!isLoading">
 
-      <ion-card *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
+      <ion-card no-margin-bottom *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
         (click)="gotoTransactionDetail(transaction)">
         <!-- if importance transfer -->
         <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"
@@ -261,7 +261,7 @@
         </transfer-transaction>
       </ion-card>
 
-      <ion-card *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash"
+      <ion-card no-margin-bottom *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash"
         (click)="gotoTransactionDetail(transaction)">
         <!-- if importance transfer -->
         <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"
@@ -297,12 +297,12 @@
     <!-- ./Transactions -->
 
     <!-- Infinite scroll -->
-    <div *ngIf="!showEmptyTransaction">
+    <!-- <div *ngIf="!showEmptyTransaction">
       <ion-infinite-scroll (ionInfinite)="doInfinite()">
         <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more transactions">
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    </div>
+    </div> -->
 
     <!-- ./Infinite scroll -->
 

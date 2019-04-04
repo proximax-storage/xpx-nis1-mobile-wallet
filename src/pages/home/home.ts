@@ -43,9 +43,9 @@ export class HomePage {
   // TransactionfakeList: Array<any>;
   unconfirmedTransactions: Array<any>;
   confirmedTransactions: Array<any>;
-  showEmptyTransaction: boolean=false;
-  showEmptyMosaic: boolean=false;
-  isLoading: boolean=false;
+  showEmptyTransaction: boolean = false;
+  showEmptyMosaic: boolean = false;
+  isLoading: boolean = false;
   isLoadingInfinite: boolean = false;
   pageable: Pageable<Transaction[]>;
   @ViewChild(InfiniteScroll)
@@ -78,12 +78,12 @@ export class HomePage {
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     this.mosaics = null; // Triggers the skeleton list loader
-
     setTimeout(() => {
       console.log('Async operation has ended');
-      this.getBalance();
+      this.getBalance(this.selectedWallet);
+      this.getTransactions(this.selectedWallet);
       refresher.complete();
-    }, 1000);
+    }, 0);
   }
 
   ionViewWillEnter() {
@@ -103,80 +103,17 @@ export class HomePage {
         this.isLoading = true;
         this.showEmptyTransaction = false;
 
-        var wlts = this.wallets.map((wallet,index) => {
-          this.getTotalBalance(wallet).then(total => {
-            // return Object.assign(wallet, {total:total});
+        this.computeTotalWalletBalance(this.wallets);
 
-            if(wallet.name==this.currentWallet.name) {
-              console.log("Index",index);
-              this.slides.slideTo(index);
-            }
-            wallet.total = total;
-            return wallet;
-          })
-        })
-
-        console.info("Wallets", wlts);
-        
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-
-          //get wallet index
-
-          // set slide to wallet index
-
-          this.getBalance();
+          this.getBalance(this.selectedWallet);
+          this.getTransactions(this.selectedWallet);
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
-          this.getBalance();
-        });
-
-
-        // this.utils.setTabIndex(0);
-
-        this.walletProvider.getSelectedWallet().then(currentWallet => {
-          console.log("Current wallet:", currentWallet);
-          if (currentWallet) {
-            this.currentWallet = currentWallet;
-            this.fakeList = [{}, {}];
-            this.pageable = this.nemProvider.getAllTransactionsPaginated(
-              this.currentWallet.address
-            );
-
-            this.nemProvider
-              .getUnconfirmedTransactions(this.currentWallet.address)
-              .flatMap(_ => _)
-              .toArray()
-              .subscribe(result => {
-                this.unconfirmedTransactions = result;
-                this.hideInfiniteScroll();
-              });
-
-            this.pageable
-              .map((txs: any) => txs ? txs : Observable.empty())
-              .subscribe(result => {
-                console.info("Transactions", result);
-                if (!this.confirmedTransactions) this.showEmptyTransaction = false;
-
-                if (this.isLoadingInfinite) {
-                  this.isLoadingInfinite = false;
-                  this.hideInfiniteScroll();
-                  if (this.confirmedTransactions != null) this.confirmedTransactions.push(...result);
-
-                }
-
-                this.isLoading = false;
-                this.confirmedTransactions = result;
-                this.showInfiniteScroll();
-              },
-                err => console.error(err),
-                () => {
-                  this.isLoading = false;
-                  if (!this.confirmedTransactions) this.showEmptyTransaction = true;
-                  this.hideInfiniteScroll();
-                });
-          }
+          this.getBalance(this.selectedWallet);
+          this.getTransactions(this.selectedWallet);
         });
       } else {
         this.showEmptyTransaction = true;
@@ -185,6 +122,97 @@ export class HomePage {
     });
 
 
+  }
+  computeTotalWalletBalance(wallets: any) {
+    wallets.map((wallet, index) => {
+      this.getTotalBalance(wallet).then(total => {
+        if (wallet.name == this.selectedWallet.name) {
+          console.log("Index", index);
+          this.slides.slideTo(index);
+        }
+        wallet.total = total;
+        return wallet;
+      })
+    })
+  }
+  getTransactions(selectedWallet: SimpleWallet) {
+    console.log("getTransactions",selectedWallet);
+    this.confirmedTransactions=null;
+    this.unconfirmedTransactions=null;
+    this.isLoading = true;
+
+    this.pageable = this.nemProvider.getAllTransactionsPaginated(
+      selectedWallet.address
+    );
+
+    this.nemProvider
+      .getUnconfirmedTransactions(selectedWallet.address)
+      .flatMap(_ => _)
+      .toArray()
+      .subscribe(result => {
+        this.unconfirmedTransactions = result;
+      });
+
+    this.pageable
+      .map((txs: any) => txs ? txs : Observable.empty())
+      .subscribe(result => {
+        console.info("Transactions", result);
+        this.isLoading = false;
+        this.confirmedTransactions = result;
+        if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
+      },
+        err => console.error(err),
+        () => {
+          this.isLoading = false;
+          if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
+        });
+  }
+
+  /**
+   * Retrieves current account owned mosaics  into this.mosaics
+   */
+  public getBalance(selectedWallet: SimpleWallet) {
+    this.getBalanceProvider
+      .mosaics(selectedWallet.address)
+      .subscribe(mosaics => {
+        this.mosaics = mosaics;
+        if (this.mosaics.length > 0) {
+          this.showEmptyMosaic = false;
+          this.selectedMosaic =
+            this.navParams.get('selectedMosaic') || this.mosaics[0];
+        }
+      });
+  }
+
+  getTotalBalance(wallet: SimpleWallet): Promise<number> {
+    return new Promise((resolve) => {
+      this.getBalanceProvider
+        .mosaics(wallet.address)
+        .subscribe(mosaics => {
+          this.mosaics = mosaics;
+          let total = 0;
+
+          this.mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
+            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
+              if (price > 0) {
+                total += price * mosaic.amount;
+               
+              }
+              // last loop: compute total
+              let lastItem = array.length - 1;
+              if (currentIndex == lastItem) {
+                // console.log(accumulator, currentIndex, array.length - 1, total);
+                // console.log(total);
+                resolve(total);
+              }
+            })
+
+            return accumulator;
+          });
+          // console.log("Result", result);
+          // return result;
+        });
+    });
   }
 
   slideChanged() {
@@ -202,7 +230,8 @@ export class HomePage {
     this.mosaics = null; // Triggers the skeleton list loader
     this.selectedWallet = wallet;
     this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {
-      this.getBalance();
+      this.getBalance(this.selectedWallet);
+      this.getTransactions(this.selectedWallet);
     });
   }
 
@@ -288,54 +317,6 @@ export class HomePage {
     alert.present();
   }
 
-
-
-
-  /**
-   * Retrieves current account owned mosaics  into this.mosaics
-   */
-  public getBalance() {
-    this.getBalanceProvider
-      .mosaics(this.selectedWallet.address)
-      .subscribe(mosaics => {
-        this.mosaics = mosaics;
-        if (this.mosaics.length > 0) {
-          this.showEmptyMosaic = false;
-          this.selectedMosaic =
-            this.navParams.get('selectedMosaic') || this.mosaics[0];
-        }
-      });
-  }
-
-  getTotalBalance(wallet: SimpleWallet): Promise<number> {
-    return new Promise((resolve) => {
-      this.getBalanceProvider
-        .mosaics(wallet.address)
-        .subscribe(mosaics => {
-          this.mosaics = mosaics;
-          let total = 0;
-
-          this.mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
-            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
-              if (price > 0) {
-                total += price * mosaic.amount;
-                console.log(total);
-              }
-              // last loop: compute total
-              let lastItem = array.length - 1;
-              if (currentIndex == lastItem) {
-                console.log(accumulator, currentIndex, array.length - 1, total);
-                resolve(total);
-              }
-            })
-
-            return accumulator;
-          });
-          // console.log("Result", result);
-          // return result;
-        });
-    });
-  }
   public gotoWalletList() {
     this.utils.setRoot('TabsPage');
   }
@@ -385,26 +366,26 @@ export class HomePage {
     this.showModal(page, tx);
   }
 
-  doInfinite() {
-    if (this.showEmptyTransaction) return;
+  // doInfinite() {
+  //   if (this.showEmptyTransaction) return;
 
-    this.isLoadingInfinite = true;
-    this.pageable.nextPage();
-    console.log('Pageable Txs: ', this.pageable);
-  }
+  //   this.isLoadingInfinite = true;
+  //   this.pageable.nextPage();
+  //   console.log('Pageable Txs: ', this.pageable);
+  // }
 
-  showInfiniteScroll() {
-    if (this.infiniteScroll) {
-      this.infiniteScroll.enable(true);;
-    }
-  }
+  // showInfiniteScroll() {
+  //   if (this.infiniteScroll) {
+  //     this.infiniteScroll.enable(true);;
+  //   }
+  // }
 
-  hideInfiniteScroll() {
-    if (this.infiniteScroll) {
-      this.infiniteScroll.complete();
-      this.infiniteScroll.enable(false);
-    }
-  }
+  // hideInfiniteScroll() {
+  //   if (this.infiniteScroll) {
+  //     this.infiniteScroll.complete();
+  //     this.infiniteScroll.enable(false);
+  //   }
+  // }
 
   showReceiveModal() {
     let page = "ReceivePage";
@@ -412,8 +393,8 @@ export class HomePage {
     this.showModal(page, {});
   }
 
-  showModal(page,params) {
-    const modal = this.modalCtrl.create(page, params ,{
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, params, {
       enableBackdropDismiss: false,
       showBackdrop: true
     });

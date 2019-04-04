@@ -22,6 +22,34 @@ page-coin-price-chart {
     line-height: 2.2rem;
     color: color($colors, dark);
   }
+
+  h2 {
+    margin-top: 1rem;
+    font-size: 2rem;
+  }
+
+  .list>.item-block:first-child {
+    border-top: none !important;
+  }
+
+  .list>.item-block:last-child {
+    border-bottom: none !important;
+  }
+
+  ion-list[big-margin-top] {
+    // margin-top: 1rem !important;
+  }
+
+  ion-grid[reduce-margin-top] {
+    margin-top: -6em
+  }
+
+  .big-margin-top {
+     > .scroll-content{
+      margin-top: 281px !important;
+    }
+  }
+
 }
 
 tooltip-box {
@@ -33,3 +61,6 @@ tooltip-box {
 .has-arrow.arrow-bottom:before {
   border-top: 5px solid color($colors, secondary) !important;
 }
+
+
+

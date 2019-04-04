@@ -22,7 +22,7 @@
 
 <ion-content background>
 
-    <ion-card>
+    <ion-card balance>
         <!-- <ion-card-header>
             Wallet name: {{walletName }}
         </ion-card-header> -->
@@ -31,7 +31,7 @@
           <h2><strong>Address: </strong>{{currentWallet?.address.value}}</h2>
         </ion-card-content> -->
 
-        <ion-list>
+        <ion-list transparent-items>
 
             <ion-item *ngIf="currentWallet">
                 <ion-icon name='fi-wallet' item-start></ion-icon>

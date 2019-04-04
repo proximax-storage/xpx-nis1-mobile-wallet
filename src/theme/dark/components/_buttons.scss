@@ -24,7 +24,11 @@
   height: 20px;
   font-size: 1.2rem;
   margin: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.1rem;
+
+  ion-icon {
+    color:white !important;
+  }
 }
 
 [width-auto] {

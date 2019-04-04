@@ -102,7 +102,7 @@ export class TransactionListPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            this.infiniteScroll.complete();
+            // this.infiniteScroll.complete();
           });
 
         this.pageable
@@ -116,23 +116,23 @@ export class TransactionListPage {
             console.info("Transactions", result);
             if (!this.confirmedTransactions) this.showEmptyMessage = false;
             if (this.isLoadingInfinite) {
-              this.isLoadingInfinite = false;
+              // this.isLoadingInfinite = false;
 
               this.confirmedTransactions.push(...result);
-              this.infiniteScroll.complete();
+              // this.infiniteScroll.complete();
             }
 
             this.isLoading = false;
             this.confirmedTransactions = result;
-            this.infiniteScroll.enable(true);
+            // this.infiniteScroll.enable(true);
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
               this.showEmptyMessage = true;
 
-              this.infiniteScroll.complete();
-              this.infiniteScroll.enable(false);
+              // this.infiniteScroll.complete();
+              // this.infiniteScroll.enable(false);
             });
       }
     });
@@ -230,13 +230,13 @@ export class TransactionListPage {
   }
 
 
-  doInfinite() {
-    console.log('Do infinite. ');
-    if (this.showEmptyMessage) return;
-    this.isLoadingInfinite = true;
-    this.pageable.nextPage();
-    console.log('Pageable Txs: ', this.pageable);
-  }
+  // doInfinite() {
+  //   console.log('Do infinite. ');
+  //   if (this.showEmptyMessage) return;
+  //   this.isLoadingInfinite = true;
+  //   this.pageable.nextPage();
+  //   console.log('Pageable Txs: ', this.pageable);
+  // }
 
   
 
