@@ -150,7 +150,7 @@ export class HomePage {
               .toArray()
               .subscribe(result => {
                 this.unconfirmedTransactions = result;
-                this.hideInfiniteScroll();
+                // this.hideInfiniteScroll();
               });
 
             this.pageable
@@ -161,20 +161,20 @@ export class HomePage {
 
                 if (this.isLoadingInfinite) {
                   this.isLoadingInfinite = false;
-                  this.hideInfiniteScroll();
+                  // this.hideInfiniteScroll();
                   if (this.confirmedTransactions != null) this.confirmedTransactions.push(...result);
 
                 }
 
                 this.isLoading = false;
                 this.confirmedTransactions = result;
-                this.showInfiniteScroll();
+                // this.showInfiniteScroll();
               },
                 err => console.error(err),
                 () => {
                   this.isLoading = false;
                   if (!this.confirmedTransactions) this.showEmptyTransaction = true;
-                  this.hideInfiniteScroll();
+                  // this.hideInfiniteScroll();
                 });
           }
         });
@@ -385,26 +385,26 @@ export class HomePage {
     this.showModal(page, tx);
   }
 
-  doInfinite() {
-    if (this.showEmptyTransaction) return;
+  // doInfinite() {
+  //   if (this.showEmptyTransaction) return;
 
-    this.isLoadingInfinite = true;
-    this.pageable.nextPage();
-    console.log('Pageable Txs: ', this.pageable);
-  }
+  //   this.isLoadingInfinite = true;
+  //   this.pageable.nextPage();
+  //   console.log('Pageable Txs: ', this.pageable);
+  // }
 
-  showInfiniteScroll() {
-    if (this.infiniteScroll) {
-      this.infiniteScroll.enable(true);;
-    }
-  }
+  // showInfiniteScroll() {
+  //   if (this.infiniteScroll) {
+  //     this.infiniteScroll.enable(true);;
+  //   }
+  // }
 
-  hideInfiniteScroll() {
-    if (this.infiniteScroll) {
-      this.infiniteScroll.complete();
-      this.infiniteScroll.enable(false);
-    }
-  }
+  // hideInfiniteScroll() {
+  //   if (this.infiniteScroll) {
+  //     this.infiniteScroll.complete();
+  //     this.infiniteScroll.enable(false);
+  //   }
+  // }
 
   showReceiveModal() {
     let page = "ReceivePage";

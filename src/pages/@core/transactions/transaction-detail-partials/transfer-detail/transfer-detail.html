@@ -15,7 +15,7 @@
           0
         </h2>
 
-        <h2 text-right ion-text color="trinary" *ngIf="owner?.plain() == tx?.recipient.value && amount !== 0">
+        <h2 text-right ion-text color="sucess" *ngIf="owner?.plain() == tx?.recipient.value && amount !== 0">
           + {{ amount | number: '1.2-16' }}
         </h2>
 
@@ -40,7 +40,7 @@
     </p>
 
     <section item-right>
-      <h2 text-right ion-text color="trinary" [hidden]="!mosaics" *ngIf="owner?.plain() == tx?.recipient.value">
+      <h2 text-right ion-text color="sucess" [hidden]="!mosaics" *ngIf="owner?.plain() == tx?.recipient.value">
         + {{ mosaic.amount?.toString() | number: '1.2-16' }}
       </h2>
 

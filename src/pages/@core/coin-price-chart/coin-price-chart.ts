@@ -124,7 +124,7 @@ export class CoinPriceChartPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            this.hideInfiniteScroll();
+            // this.hideInfiniteScroll();
           });
 
         this.pageable
@@ -135,19 +135,19 @@ export class CoinPriceChartPage {
 
             if (this.isLoadingInfinite) {
               this.isLoadingInfinite = false;
-              this.hideInfiniteScroll();
+              // this.hideInfiniteScroll();
               if(this.confirmedTransactions!=null) this.confirmedTransactions.push(...result);
             }
 
             this.isLoading = false;
             this.confirmedTransactions = result;
-            this.showInfiniteScroll();
+            // this.showInfiniteScroll();
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
               if (!this.confirmedTransactions) this.showEmptyMessage = true;
-              this.hideInfiniteScroll();
+              // this.hideInfiniteScroll();
             });
       }
     });
@@ -205,26 +205,26 @@ export class CoinPriceChartPage {
 
 
 
-  doInfinite() {
-    if (this.showEmptyMessage) return;
+  // doInfinite() {
+  //   if (this.showEmptyMessage) return;
     
-    this.isLoadingInfinite = true;
-    this.pageable.nextPage();
-    console.log('Pageable Txs: ', this.pageable);
-  }
+  //   this.isLoadingInfinite = true;
+  //   this.pageable.nextPage();
+  //   console.log('Pageable Txs: ', this.pageable);
+  // }
 
-  showInfiniteScroll(){
-    if(this.infiniteScroll) {
-      this.infiniteScroll.enable(true);;
-    }
-  }
+  // showInfiniteScroll(){
+  //   if(this.infiniteScroll) {
+  //     this.infiniteScroll.enable(true);;
+  //   }
+  // }
 
-  hideInfiniteScroll() {
-    if(this.infiniteScroll) {
-      this.infiniteScroll.complete();
-      this.infiniteScroll.enable(false);
-    }
-  }
+  // hideInfiniteScroll() {
+  //   if(this.infiniteScroll) {
+  //     this.infiniteScroll.complete();
+  //     this.infiniteScroll.enable(false);
+  //   }
+  // }
 
   openLink(link){
     window.open(link,'_system', 'location=yes');
