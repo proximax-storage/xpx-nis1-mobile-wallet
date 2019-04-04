@@ -1,5 +1,5 @@
 <!-- XEM -->
-<ion-card *ngIf="tx.containsMosaics && !tx.containsMosaics()">
+<ion-card no-margin-bottom *ngIf="tx.containsMosaics && !tx.containsMosaics()">
   <ion-card-content no-padding>
     <ion-item>
       <img logo-small item-left [src]="App.LOGO.NEM">
@@ -29,7 +29,7 @@
 <!-- ./XEM -->
 
 <!-- Mosaic/s -->
-<ion-card *ngFor="let mosaic of mosaics">
+<ion-card no-margin-bottom *ngFor="let mosaic of mosaics">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(mosaic)">
     <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
@@ -67,7 +67,7 @@
 <!-- ./Mosaic/s -->
 
 <!-- Date -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Date</h2>
@@ -85,7 +85,7 @@
 <!-- ./Date -->
 
 <!-- Sender -->
-<ion-card (click)="utils.copy(tx?.signer.address.value, 'sender')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.signer.address.value, 'sender')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
@@ -99,7 +99,7 @@
 <!-- ./Sender -->
 
 <!-- Receiver -->
-<ion-card (click)="utils.copy(tx?.recipient.value, 'receiver')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.recipient.value, 'receiver')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
@@ -113,7 +113,7 @@
 <!-- ./Receiver -->
 
 <!-- Fee -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Fee</h2>
@@ -127,7 +127,7 @@
 <!-- ./Fee -->
 
 <!-- Block -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Block</h2>
@@ -141,7 +141,7 @@
 <!-- ./Block -->
 
 <!-- Hash -->
-<ion-card (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Hash</h2>
@@ -155,7 +155,7 @@
 <!-- ./Hash -->
 
 <!-- Message -->
-<ion-card (click)="utils.copy(tx.message.plain(), 'message')">
+<ion-card no-margin-bottom (click)="utils.copy(tx.message.plain(), 'message')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Message</h2>
