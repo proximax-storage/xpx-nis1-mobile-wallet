@@ -57,16 +57,24 @@ export class WalletProvider {
    * @param wallet The wallet to change the name.
    * @param newWalletName The new name for the wallet.
    */
-  public updateWalletName(wallet: SimpleWallet, newWalletName: string) {
+  public updateWalletName(wallet: SimpleWallet, newWalletName: string, walletColor:string) {
+    console.log(walletColor);
+    // return;
     return this.authProvider.getEmail().then(email => {
       return this.getAccounts().then(accounts => {
         let wallets: any = accounts[email];
-        let walletIndex: number;
+        let walletIndex:number;
+        let updateWallet :any;
         for(let i=0; i<wallets.length; i++) {
-          if(wallets[i].wallet.name == wallet.name) walletIndex = i;
+          if(wallets[i].wallet.name == wallet.name) {
+            wallets[i].wallet.name = newWalletName;
+            wallets[i].walletColor = walletColor;
+            updateWallet= wallets[i];
+          };
+
         }
-        let selectedWallet: any = wallets[walletIndex];
-        selectedWallet.wallet.name = newWalletName;
+
+        
 
         wallets = wallets.map(_ => {
           return {
@@ -79,7 +87,7 @@ export class WalletProvider {
         ACCOUNT[email] = wallets;
 
         return this.storage.set('wallets', ACCOUNT).then(value => {
-          return selectedWallet;
+          return updateWallet;
         });
       });
     });

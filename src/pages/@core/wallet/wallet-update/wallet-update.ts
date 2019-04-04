@@ -29,6 +29,11 @@ export class WalletUpdatePage {
 
   PASSWORD: string;
 
+  walletColor:string = "wallet-1";
+  walletName: string = "MyWallet";
+  walletAddress: string = "TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH";
+  walletTotal:number = 0;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -39,7 +44,12 @@ export class WalletUpdatePage {
     private utils: UtilitiesProvider,
     private viewCtrl: ViewController,
   ) {
+    //this.walletColor = "wallet-1"; // to be change with current wallet color
     this.init();
+  }
+
+  changeWalletColor(color){
+    this.walletColor = color;
   }
 
   ionViewWillEnter() {
@@ -52,6 +62,12 @@ export class WalletUpdatePage {
 
   init() {
     this.selectedWallet = this.navParams.get('wallet');
+    this.walletColor = this.selectedWallet.walletColor;
+    this.walletName = this.selectedWallet.name;
+    this.walletAddress = this.selectedWallet.address.plain()
+    this.walletTotal = this.selectedWallet.total;
+
+    console.log("Total", this.walletTotal);
 
     this.formGroup = this.formBuilder.group({
       name: [
@@ -82,7 +98,7 @@ export class WalletUpdatePage {
         this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider
-          .updateWalletName(this.selectedWallet, form.name)
+          .updateWalletName(this.selectedWallet, form.name, this.walletColor)
           .then(selectedWallet => {
             console.log(selectedWallet);
             return this.walletProvider.setSelectedWallet(selectedWallet.wallet);
