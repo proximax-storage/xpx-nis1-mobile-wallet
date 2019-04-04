@@ -33,18 +33,46 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+
+  <section *ngIf="selectedSegment=='transactions'">
+
+
+    <ion-card balance>
+        <!-- <ion-card-header>
+            Wallet name: {{walletName }}
+        </ion-card-header> -->
+        <ion-card-content>
+            <ion-list transparent-items>
+                <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
+                    <ion-icon name='ios-cash-outline' item-start></ion-icon>
+                    Balance:
+                    <span>${{ (totalBalance? totalBalance:0) | number : '1.2-2'}} USD</span>
+                </ion-item>
+
+                <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
+                    <ion-icon name='ios-paper-outline' item-start></ion-icon>
+                    Address:
+                    <p text-justify  *ngIf="currentWallet">{{ currentWallet?.address.value }} </p>
+                </ion-item>
+              </ion-list>
+        </ion-card-content>
+      </ion-card>
+  </section>
+
+
+
 </ion-header>
 
-<ion-content background>
+<ion-content background [ngClass]="(selectedSegment=='transactions')?'big-margin-top':''">
 
   
 
   <!-- Transactions -->
-  <div class="" *ngIf="selectedSegment=='transactions'">
+  <div *ngIf="selectedSegment=='transactions'">
 
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
-      <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
+      <ion-card    no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
         <ion-card-header>
           <p float-left> &nbsp; </p>
 
@@ -97,7 +125,7 @@
     <!-- Transactions -->
     <ion-list transparent-items *ngIf="!isLoading">
 
-      <ion-card no-margin-bottom *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
+        <ion-card  no-margin-bottom *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
         (click)="gotoTransactionDetail(transaction)">
         <!-- if importance transfer -->
         <importance-transfer-transaction *ngIf="transaction.type == TransactionTypes.IMPORTANCE_TRANSFER"

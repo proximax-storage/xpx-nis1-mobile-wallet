@@ -104,13 +104,16 @@ export class LocalCacheProvider {
    */
   private expiryToDate(expires:number|string|Date):Date{
     if(isNumber(expires)){
+      console.log("isNumber", expires);
       return new Date(Date.now() + Math.abs(Number(expires))*1000);
     }
     if(isString(expires)){
+      console.log("isString", expires);
       return new Date(expires);
     }
     if(isDate(expires)){
-      return new Date(expires);
+      console.log("isDate", expires);
+      return new Date(new Date(expires));
     }
 
     return new Date();

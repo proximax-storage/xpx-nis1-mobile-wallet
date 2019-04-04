@@ -9,6 +9,10 @@ import { WalletProvider } from "../../../providers/wallet/wallet";
 import { Observable } from "rxjs";
 import { App } from "../../../providers/app/app";
 import { Content } from 'ionic-angular';
+import { GetBalanceProvider } from "../../../providers/get-balance/get-balance";
+import { GetMarketPricePipe } from "../../../pipes/get-market-price/get-market-price";
+import { Clipboard } from "@ionic-native/clipboard";
+import { ToastProvider } from "../../../providers/toast/toast";
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -20,7 +24,8 @@ import { Content } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: "page-coin-price-chart",
-  templateUrl: "coin-price-chart.html"
+  templateUrl: "coin-price-chart.html",
+  providers: [GetMarketPricePipe]
 })
 export class CoinPriceChartPage {
   /** Mosaic details member variables */ 
@@ -56,6 +61,9 @@ export class CoinPriceChartPage {
 
   selectedSegment: string = "transactions";
 
+  totalBalance: number;
+
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -65,7 +73,11 @@ export class CoinPriceChartPage {
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
     private walletProvider: WalletProvider,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private getBalanceProvider: GetBalanceProvider,
+    private marketPrice: GetMarketPricePipe,
+    private clipboard: Clipboard,
+    private toastProvider: ToastProvider
   ) {
     this.selectedSegment = 'transactions';
     this.durations = [
@@ -85,6 +97,42 @@ export class CoinPriceChartPage {
     // console.info(this.mosaicId, this.coinId );
     this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
       this.selectedCoin = coin;
+    });
+  }
+
+  copy() {
+    this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
+      this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
+    });
+  }
+
+  getTotalBalance(wallet: SimpleWallet): Promise<number> {
+    return new Promise((resolve) => {
+      this.getBalanceProvider
+        .mosaics(wallet.address)
+        .subscribe(mosaics => {
+          let total = 0;
+
+          mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
+            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
+              if (price > 0) {
+                total += price * mosaic.amount;
+                console.log(total);
+              }
+              // last loop: compute total
+              let lastItem = array.length - 1;
+              if (currentIndex == lastItem) {
+                console.log(accumulator, currentIndex, array.length - 1, total);
+                resolve(total);
+                this.totalBalance=total;
+              }
+            })
+
+            return accumulator;
+          });
+          // console.log("Result", result);
+          // return result;
+        });
     });
   }
 
@@ -111,7 +159,7 @@ export class CoinPriceChartPage {
         );
       } else {
         this.currentWallet = currentWallet;
-
+        this.getTotalBalance(currentWallet);
         this.fakeList = [{}, {}];
 
         this.pageable = this.nemProvider.getAllTransactionsPaginated(
