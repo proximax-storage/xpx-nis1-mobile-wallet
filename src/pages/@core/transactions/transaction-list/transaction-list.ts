@@ -230,13 +230,13 @@ export class TransactionListPage {
   }
 
 
-  // doInfinite() {
-  //   console.log('Do infinite. ');
-  //   if (this.showEmptyMessage) return;
-  //   this.isLoadingInfinite = true;
-  //   this.pageable.nextPage();
-  //   console.log('Pageable Txs: ', this.pageable);
-  // }
+  doInfinite() {
+    console.log('Do infinite. ');
+    if (this.showEmptyMessage) return;
+    this.isLoadingInfinite = true;
+    this.pageable.nextPage();
+    console.log('Pageable Txs: ', this.pageable);
+  }
 
   
 
