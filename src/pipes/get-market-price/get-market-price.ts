@@ -16,7 +16,7 @@ export class GetMarketPricePipe implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(value: string, ...args) {
-    let coinId = '';
+    let coinId:string;
 
     if (value === 'xem') {
       coinId = 'nem';
@@ -26,17 +26,27 @@ export class GetMarketPricePipe implements PipeTransform {
       coinId = 'pundi-x';
     } 
     // Add more coins here
-
+    
     if(coinId != undefined) {
+      console.log("CoinId",coinId)
       return this.coingeckoProvider
       .getDetails(coinId)
       .toPromise()
       .then(details => {
         return details.market_data.current_price.usd;
       }).catch(err => {
-        return 0;
+        return returnZero();
       })
+    } else {
+      return returnZero();
     }
 
   }
+}
+
+async function returnZero() {
+  // Wait one second
+  await new Promise(r => setTimeout(r, 1000));
+  // Toss a coin
+  return 0;
 }

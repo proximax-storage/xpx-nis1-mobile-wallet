@@ -43,6 +43,8 @@ import { MockDataProvider } from '../providers/mock-data/mock-data';
 import { SharedModule } from './shared.module';
 import { NgXtruncateModule } from 'ngx-truncate';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { LocalCacheProvider } from '../providers/local-cache/local-cache';
+import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -98,7 +100,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     CoinPriceChartProvider,
     AppState,
     MockDataProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    LocalCacheProvider,
+    LocalStorageProvider
   ]
 })
 export class AppModule {}

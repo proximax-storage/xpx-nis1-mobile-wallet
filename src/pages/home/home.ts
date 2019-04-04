@@ -80,8 +80,8 @@ export class HomePage {
     this.mosaics = null; // Triggers the skeleton list loader
     setTimeout(() => {
       console.log('Async operation has ended');
-      this.getTransactions(this.selectedWallet);
       this.getBalance(this.selectedWallet);
+      this.getTransactions(this.selectedWallet);
       refresher.complete();
     }, 0);
   }
@@ -108,12 +108,12 @@ export class HomePage {
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-          this.getTransactions(this.selectedWallet);
           this.getBalance(this.selectedWallet);
+          this.getTransactions(this.selectedWallet);
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
-          this.getTransactions(this.selectedWallet);
           this.getBalance(this.selectedWallet);
+          this.getTransactions(this.selectedWallet);
         });
       } else {
         this.showEmptyTransaction = true;
@@ -196,12 +196,13 @@ export class HomePage {
             this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
               if (price > 0) {
                 total += price * mosaic.amount;
-                console.log(total);
+               
               }
               // last loop: compute total
               let lastItem = array.length - 1;
               if (currentIndex == lastItem) {
-                console.log(accumulator, currentIndex, array.length - 1, total);
+                // console.log(accumulator, currentIndex, array.length - 1, total);
+                // console.log(total);
                 resolve(total);
               }
             })
@@ -229,8 +230,8 @@ export class HomePage {
     this.mosaics = null; // Triggers the skeleton list loader
     this.selectedWallet = wallet;
     this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {
-      this.getTransactions(this.selectedWallet);
       this.getBalance(this.selectedWallet);
+      this.getTransactions(this.selectedWallet);
     });
   }
 

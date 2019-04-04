@@ -99,7 +99,7 @@ export class SendPage {
             }
 
             let mosaic = this.selectedMosaic.mosaicId.name;
-            let coinId: string = '';
+            let coinId: string;
 
             if (mosaic === 'xem') {
               coinId = 'nem';
@@ -108,14 +108,14 @@ export class SendPage {
               coinId = 'proximax';
             } else if (mosaic === 'npxs') {
               coinId = 'pundi-x';
-            } else {
-              coinId = '';
-            }
+            } 
 
             // Get coin price
-            this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
-              this.selectedCoin = coin;
-            });
+            if(coinId) {
+              this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
+                this.selectedCoin = coin;
+              });
+            }
           });
 
         // Set sender address to currenWallet.address
