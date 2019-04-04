@@ -29,8 +29,6 @@ ion-list[transparent-items] {
       border-radius: 0;
     }
 
-    
-    
     h2:not([ion-text]) {
       font-size: 1.5rem;
       font-weight: bold;
@@ -52,6 +50,12 @@ ion-list[transparent-items] {
       font-size: 0.7rem;
     }
   }
+  ion-card-header[transaction] {
+    margin-bottom: -20px !important;
+  }
+  ion-card[no-margin-bottom] {
+    margin-bottom: .5rem !important;
+  }
   ion-card-header {
     padding-bottom: 0;
   }
@@ -60,6 +64,7 @@ ion-list[transparent-items] {
   }
   ion-card-content {
     border-top: 0;
+
   }
 
   ion-item-sliding {

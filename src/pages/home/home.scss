@@ -11,6 +11,10 @@
     ion-content.has-refresher > .scroll-content {
       border-top: none !important;
     }
+
+    ion-card[transaction] {
+      margin-bottom: 0.5rem !important;
+    }
    
   }
 }

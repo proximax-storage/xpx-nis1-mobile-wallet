@@ -159,6 +159,7 @@ export class HomePage {
         console.info("Transactions", result);
         this.isLoading = false;
         this.confirmedTransactions = result;
+        if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
       },
         err => console.error(err),
         () => {
