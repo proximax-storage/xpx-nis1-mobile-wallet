@@ -1,40 +1,40 @@
 .wallet-1 {
     
-      background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), 
+      background-image: url('../assets/imgs/map.png'), 
       linear-gradient(to right bottom, #da4d59, lighten(#da4d59, 1%), darken(#da4d59, 10%), darken(#da4d59, 15%), darken(#da4d59, 20%));
     
 }
 
 .wallet-2 {
     
-        background-image: url('https://image.ibb.co/bVnMrc/g3095.png'),
+        background-image: url('../assets/imgs/map.png'),
             linear-gradient(to right bottom, #5C9EBB, lighten(#5C9EBB, 1%), darken(#5C9EBB, 10%), darken(#5C9EBB, 15%), darken(#5C9EBB, 20%));
     
 }
 
 .wallet-3 {
     
-        background-image: url('https://image.ibb.co/bVnMrc/g3095.png'),
+        background-image: url('../assets/imgs/map.png'),
             linear-gradient(to right bottom, #F2962F, lighten(#F2962F, 1%), darken(#F2962F, 10%), darken(#F2962F, 15%), darken(#F2962F, 20%));
     
 }
 
 .wallet-4 {
   
-    background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), 
+    background-image: url('../assets/imgs/map.png'), 
     linear-gradient(to right bottom, #00A48B, lighten(#00A48B, 1%), darken(#00A48B, 10%), darken(#00A48B, 15%), darken(#00A48B, 20%));
   
 }
 
 .wallet-content[selected] {
-  // background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), 
+  // background-image: url('../assets/imgs/map.png'), 
   // linear-gradient(to right bottom, #1F6B86, lighten(#1F6B86, 1%), darken(#1F6B86, 10%), darken(#1F6B86, 15%), darken(#1F6B86, 20%));
-  background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), 
+  background-image: url('../assets/imgs/map.png'), 
   linear-gradient(to right bottom, darken(#98AFBA, 40%), darken(#98AFBA, 35%), darken(#98AFBA, 45%), darken(#98AFBA, 35%), darken(#98AFBA, 45%)) !important;
 }
 
 .wallet-create{
-  // background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), 
+  // background-image: url('../assets/imgs/map.png'), 
   // linear-gradient(to right bottom, #1F6B86, lighten(#1F6B86, 1%), darken(#1F6B86, 10%), darken(#1F6B86, 15%), darken(#1F6B86, 20%));
   background-image: url(''), 
   linear-gradient(to right bottom, lighten(#f5f9fa, 1%), lighten(#f5f9fa, 3%), lighten(#f5f9fa, 1%), lighten(#f5f9fa, 3%), lighten(#f5f9fa, 1%)) !important;
