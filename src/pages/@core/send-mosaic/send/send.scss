@@ -33,6 +33,11 @@ page-send {
         // margin-top: -2rem;
     }
 
+    ion-item[mosaic] {
+        margin-bottom: -7px;
+        margin-top: -2px;
+    }
+
     // ion-icon:not([item-left]) {
     //   color: color($colors, dark) !important;
     // }
@@ -42,14 +47,25 @@ page-send {
         font-size: 1.6rem !important;
     }
 
+    section[title] {
+        h2 {
+            // margin-top: -2.3rem !important;
+            color: #6d6d6d !important;
+            font-size: 1.9rem !important;
+            margin-bottom: -2rem;
+        }
+    }
+
     section[total] {
         h2 {
-            margin-top: -2.3rem !important;
-            color: #666 !important;
-            font-size: 2rem !important;
+            margin-top: -2rem !important;
+            color: #6d6d6d !important;
+            font-size: 1.8rem !important;
             margin-bottom: 4rem;
         }
     }
+
+
 
 
     .list .item-inner {

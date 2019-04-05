@@ -27,7 +27,10 @@
     <form [formGroup]="form">
 
       <!-- Price -->
-
+      <section title text-center>
+          <h2 price ion-text color="black" *ngIf="selectedCoin">
+            Amount</h2>
+        </section>
 
 
       <!-- Amount -->
@@ -49,8 +52,8 @@
     
 
       <!-- Mosaic -->
-      <ion-card *ngIf="selectedMosaic" (click)="selectMosaic()">
-        <ion-item>
+      <ion-card no-margin-bottom *ngIf="selectedMosaic" (click)="selectMosaic()">
+        <ion-item mosaic>
           <ion-avatar item-start>
             <img [src]="utils.getLogo(selectedMosaic)">
           </ion-avatar>
@@ -67,14 +70,14 @@
           </section>
         </ion-item>
       </ion-card>
-      <ion-card fake-card *ngIf="!selectedMosaic">
+      <ion-card no-margin-bottom fake-card *ngIf="!selectedMosaic">
         <ion-item text-center>
           <ion-spinner name="dots"></ion-spinner>
         </ion-item>
       </ion-card>
 
       <!-- Recipient -->
-      <ion-card>
+      <ion-card no-margin-bottom>
         <ion-item>
           <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address"
             (input)="calculateFee()" (focusout)="calculateFee()"></ion-input>
@@ -87,8 +90,8 @@
       <!-- Note -->
       <ion-card>
         <ion-item no-border>
-          <ion-textarea ion-text color="black" autosize rows="1" ion-text color="black" formControlName="message"
-            placeholder="Note" (input)="calculateFee()" (focus)="calculateFee()"></ion-textarea>
+          <ion-textarea ion-text color="black" autosize rows="2" ion-text color="black" formControlName="message"
+            placeholder="Notes(Optional)" (input)="calculateFee()" (focus)="calculateFee()"></ion-textarea>
         </ion-item>
       </ion-card>
 
