@@ -109,11 +109,11 @@ export class LocalCacheProvider {
     }
     if(isString(expires)){
       console.log("isString", expires);
-      return new Date(expires);
+      return new Date(expires.toString());
     }
     if(isDate(expires)){
       console.log("isDate", expires);
-      return new Date(new Date(expires));
+      return new Date(expires.toString());
     }
 
     return new Date();

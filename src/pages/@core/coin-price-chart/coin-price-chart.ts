@@ -230,7 +230,7 @@ export class CoinPriceChartPage {
 
   showSendModal() {
     let page = "SendPage";
-    this.showModal(page, this.mosaicId);
+    this.showModal(page, { mosaicSelectedName: this.mosaicId});
   }
 
   showModal(page,params) {
