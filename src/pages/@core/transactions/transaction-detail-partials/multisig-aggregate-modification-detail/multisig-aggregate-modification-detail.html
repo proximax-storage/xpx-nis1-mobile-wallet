@@ -1,5 +1,5 @@
 <!-- XEM -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <img logo-small item-left [src]="App.LOGO.NEM">
@@ -24,7 +24,7 @@
 <!-- ./XEM -->
 
 <!-- Date -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Date</h2>
@@ -42,7 +42,7 @@
 <!-- ./Date -->
 
 <!-- Sender -->
-<ion-card (click)="utils.copy(tx?.signer.address.value, 'sender')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.signer.address.value, 'sender')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
@@ -56,7 +56,7 @@
 <!-- ./Sender -->
 
 <!-- Block -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Block</h2>
@@ -70,7 +70,7 @@
 <!-- ./Block -->
 
 <!-- Hash -->
-<ion-card (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Hash</h2>
@@ -85,7 +85,7 @@
 
 <h2 margin-left ion-text color="black">Cosigners</h2>
 
-<ion-card *ngFor="let modification of tx.modifications;" (click)="utils.copy(modification.cosignatoryAccount.address.value, 'cosigner')">
+<ion-card no-margin-bottom *ngFor="let modification of tx.modifications;" (click)="utils.copy(modification.cosignatoryAccount.address.value, 'cosigner')">
   <ion-card-content no-padding text-wrap *ngIf="modification.action === 1">
     <ion-item>
       <h2>Added as a cosigner</h2>

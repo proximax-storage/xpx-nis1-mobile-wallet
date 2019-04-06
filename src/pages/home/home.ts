@@ -106,7 +106,7 @@ export class HomePage {
         this.computeTotalWalletBalance(this.wallets);
 
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
-          console.log("Selected wallet:", selectedWallet);
+          // console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
           this.getBalance(this.selectedWallet);
           this.getTransactions(this.selectedWallet);
@@ -136,7 +136,7 @@ export class HomePage {
     })
   }
   getTransactions(selectedWallet: SimpleWallet) {
-    console.log("getTransactions",selectedWallet);
+    // console.log("getTransactions",selectedWallet);
     this.confirmedTransactions=null;
     this.unconfirmedTransactions=null;
     this.isLoading = true;
@@ -156,7 +156,7 @@ export class HomePage {
     this.pageable
       .map((txs: any) => txs ? txs : Observable.empty())
       .subscribe(result => {
-        console.info("Transactions", result);
+        // console.info("Transactions", result);
         this.isLoading = false;
         this.confirmedTransactions = result;
         if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
@@ -226,7 +226,7 @@ export class HomePage {
   }
 
   onWalletSelect(wallet) {
-    console.log(wallet);
+    // console.log(wallet);
     this.mosaics = null; // Triggers the skeleton list loader
     this.selectedWallet = wallet;
     this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {

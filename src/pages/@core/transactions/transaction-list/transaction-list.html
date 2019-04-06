@@ -22,7 +22,7 @@
   <section wallets>
 
 
-    <ion-card balance>
+    <ion-card no-margin-bottom balance>
         <!-- <ion-card-header>
             Wallet name: {{walletName }}
         </ion-card-header> -->
@@ -64,7 +64,7 @@
   <ion-list transparent-items *ngIf="isLoading">
     <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
 
-    <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
+    <ion-card  no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
       <ion-card-header>
         <p float-left> &nbsp; </p>
 

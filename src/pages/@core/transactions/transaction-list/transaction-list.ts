@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController, ActionSheetController } from "ionic-angular";
 import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData, AccountInfo } from "nem-library";
 import { Observable } from "rxjs";
 import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
@@ -73,6 +73,7 @@ export class TransactionListPage {
     private toastProvider: ToastProvider,
     private getBalanceProvider: GetBalanceProvider,
     private marketPrice: GetMarketPricePipe,
+    private actionSheetCtrl: ActionSheetController
   ) {
    
   }
@@ -214,11 +215,41 @@ export class TransactionListPage {
 
   showSendModal() {
     console.log(this.accountInfo);
-    // let page = "SendPage"; 
 
     if(this.isMultisig) {
       let page = 'SendMultisigPage';
-      this.showModal(page,{})
+
+      const actionSheet = this.actionSheetCtrl.create({
+        title: `Selecte transaction type`,
+        cssClass: 'wallet-on-press',
+        buttons: [
+          {
+            text: 'Normal Transaction',
+            handler: () => {
+              let page = 'SendPage';
+              this.showModal(page,{})
+            }
+          },
+          {
+            text: 'Multisig Transaction',
+            handler: () => {
+              this.showModal(page,{})
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              // this.showModal(page,{})
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+      // this.showModal(page,{})
+    } else {
+       let page = "SendPage"; 
+       this.showModal(page,{})
     }
   }
 

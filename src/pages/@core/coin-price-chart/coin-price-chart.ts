@@ -1,9 +1,9 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController, ActionSheetController } from "ionic-angular";
 import { CoinPriceChartProvider } from "../../../providers/coin-price-chart/coin-price-chart";
 import { CoingeckoProvider } from "../../../providers/coingecko/coingecko";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
-import { TransactionTypes, SimpleWallet, Transaction, Pageable } from "nem-library";
+import { TransactionTypes, SimpleWallet, Transaction, Pageable, AccountInfoWithMetaData } from "nem-library";
 import { NemProvider } from "../../../providers/nem/nem";
 import { WalletProvider } from "../../../providers/wallet/wallet";
 import { Observable } from "rxjs";
@@ -63,6 +63,9 @@ export class CoinPriceChartPage {
 
   totalBalance: number;
 
+  accountInfo: AccountInfoWithMetaData;
+  isMultisig: boolean;
+
 
   constructor(
     public navCtrl: NavController,
@@ -77,7 +80,8 @@ export class CoinPriceChartPage {
     private getBalanceProvider: GetBalanceProvider,
     private marketPrice: GetMarketPricePipe,
     private clipboard: Clipboard,
-    private toastProvider: ToastProvider
+    private toastProvider: ToastProvider,
+    private actionSheetCtrl: ActionSheetController
   ) {
     this.selectedSegment = 'transactions';
     this.durations = [
@@ -98,6 +102,27 @@ export class CoinPriceChartPage {
     this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
       this.selectedCoin = coin;
     });
+
+    
+  }
+
+  getAccountInfo() {
+    console.info("Getting account information.", this.currentWallet.address)
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        if (accountInfo) {
+          this.accountInfo = accountInfo;
+          console.log("accountInfo", this.accountInfo)
+          // Check if account is a cosignatory of multisig account(s)
+          if(this.accountInfo.cosignatoryOf) {
+            console.clear();
+            console.log("This is a multisig account");
+            this.isMultisig = true;
+          }
+
+        } 
+      });
   }
 
   copy() {
@@ -148,17 +173,9 @@ export class CoinPriceChartPage {
     this.utils.setTabIndex(0);
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (!currentWallet) {
-        this.navCtrl.setRoot(
-          'TabsPage',
-          {},
-          {
-            animate: true,
-            direction: 'backward'
-          }
-        );
-      } else {
+      if (currentWallet) {
         this.currentWallet = currentWallet;
+        this.getAccountInfo();
         this.getTotalBalance(currentWallet);
         this.fakeList = [{}, {}];
 
@@ -229,8 +246,43 @@ export class CoinPriceChartPage {
   }
 
   showSendModal() {
-    let page = "SendPage";
-    this.showModal(page, { mosaicSelectedName: this.mosaicId});
+    console.log(this.accountInfo);
+
+    if(this.isMultisig) {
+      let page = 'SendMultisigPage';
+
+      const actionSheet = this.actionSheetCtrl.create({
+        title: `Selecte transaction type`,
+        cssClass: 'wallet-on-press',
+        buttons: [
+          {
+            text: 'Normal Transaction',
+            handler: () => {
+              let page = 'SendPage';
+              this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+            }
+          },
+          {
+            text: 'Multisig Transaction',
+            handler: () => {
+              this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              // this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+      // this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+    } else {
+       let page = "SendPage"; 
+       this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+    }
   }
 
   showModal(page,params) {
@@ -281,4 +333,6 @@ export class CoinPriceChartPage {
   dismiss() {
     this.viewCtrl.dismiss();
   }
+
+  
 }

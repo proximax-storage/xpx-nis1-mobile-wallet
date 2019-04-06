@@ -89,9 +89,6 @@ export class SendMultisigPage {
         if (accountInfo) {
           this.accountInfo = accountInfo;
 
-
-          // Make index[0] account as default
-
           if (this.accountInfo.cosignatoryOf) {
             console.clear();
             console.log("This is a multisig account");
@@ -105,8 +102,6 @@ export class SendMultisigPage {
               this.selectedAccountAddress = this.multisigAccounts[0].publicAccount.address.plain();
               this.multisigAccountAddress = this.multisigAccounts[0].publicAccount.address;
             }
-
-
 
             console.log("accountInfo", this.accountInfo)
             console.log("Multisig accounts", this.multisigAccounts)
@@ -128,7 +123,6 @@ export class SendMultisigPage {
       if (currentWallet) {
         this.currentWallet = currentWallet;
         this.getAccountInfo(); // Get multisig account info
-
       }
     });
 
