@@ -198,9 +198,13 @@
 </ion-card>
 <!-- ./Message -->
 
-
-<section text-center>
-    <button *ngIf="showSignButton" gradient-button half color-5 ion-button icon-end no-margin (click)="sign()">
+ &nbsp;
+<section padding text-center>
+    <button *ngIf="showSignButton; else loading" gradient-button full color-5 ion-button icon-end no-margin (click)="sign()">
         Cosign transaction
     </button>
 </section>
+
+<ng-template #loading>
+    <ion-spinner name="ios"></ion-spinner>
+  </ng-template>
