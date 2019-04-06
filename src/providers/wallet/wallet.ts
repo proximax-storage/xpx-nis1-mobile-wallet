@@ -94,24 +94,36 @@ export class WalletProvider {
   }
 
   deleteWallet(wallet: SimpleWallet) {
+    
     return this.authProvider.getEmail().then(email => {
       return this.getAccounts().then(value => {
-        let result: any = value[email];
+        let result: Array<any> = value[email];
 
-        const walletIndex = findIndex(result, wallet);
-        result.splice(walletIndex, 1);
+        console.log(result, wallet);
+        result.map((res,index)=> {
+          if (res.wallet.name == wallet.name) {
+            // const walletIndex = findIndex(result, wallet);
+            result.splice(index, 1);
 
-        result = result.map(_ => {
-          return {
-            wallet: _.wallet.writeWLTFile(),
-            walletColor: _.walletColor
+            result = result.map(_ => {
+              return {
+                wallet: _.wallet.writeWLTFile(),
+                walletColor: _.walletColor
+              }
+            });
+
+            let ACCOUNT = {};
+            ACCOUNT[email] = result;
+
+            return this.storage.set('wallets', ACCOUNT);
           }
-        });
+        })
+        result
+        return;
 
-        let ACCOUNT = {};
-        ACCOUNT[email] = result;
+        
 
-        return this.storage.set('wallets', ACCOUNT);
+        
       });
     });
   }
