@@ -1,27 +1,18 @@
-import { GetBalanceProvider } from './../../../../providers/get-balance/get-balance';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
-import {
-  SimpleWallet,
-  MosaicTransferable,
-  XEM,
-  Address,
-  TransferTransaction
-} from 'nem-library';
-
-import { App } from '../../../../providers/app/app';
-import { NemProvider } from './../../../../providers/nem/nem';
-import { WalletProvider } from './../../../../providers/wallet/wallet';
+import { SimpleWallet, MosaicTransferable, XEM, Address, TransferTransaction, AccountInfo, AccountInfoWithMetaData, Transaction } from 'nem-library';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
+import { NemProvider } from '../../../../providers/nem/nem';
+import { GetBalanceProvider } from '../../../../providers/get-balance/get-balance';
+import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../providers/alert/alert';
-
-import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
 import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
+import { App } from '../../../../providers/app/app';
 /**
- * Generated class for the SendPage page.
+ * Generated class for the SendMultisigPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -29,10 +20,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @IonicPage()
 @Component({
-  selector: 'page-send',
-  templateUrl: 'send.html'
+  selector: 'page-send-multisig',
+  templateUrl: 'send-multisig.html',
 })
-export class SendPage {
+export class SendMultisigPage {
   App = App;
 
   addressSourceType: { from: string; to: string };
@@ -45,6 +36,14 @@ export class SendPage {
   fee: number = 0;
   amount: number = 0;
   mosaicSelectedName: string;
+
+  // Multisig
+  multisigAccounts: AccountInfo[];
+  selectedAccount: AccountInfo;
+  selectedAccountAddress: string;
+  accountInfo: AccountInfoWithMetaData;
+  isMultisig: boolean;
+  multisigAccountAddress: Address;
 
   constructor(
     public navCtrl: NavController,
@@ -60,79 +59,119 @@ export class SendPage {
     private coingeckoProvider: CoingeckoProvider,
     private barcodeScanner: BarcodeScanner
   ) {
-    console.log("Nav params",this.navParams.data);
-    
+    console.log("Nav params", this.navParams.data);
+
     this.mosaicSelectedName = this.navParams.get('mosaicSelectedName');
     console.log(this.mosaicSelectedName);
 
     // If no mosaic selected, fallback to xpx
-    if(!this.mosaicSelectedName) {
+    if (!this.mosaicSelectedName) {
       this.mosaicSelectedName = 'xpx';
     }
-
 
     this.init();
   }
 
+  onAccountSelected() {
+    if (this.multisigAccounts) {
+      this.selectedAccount = this.multisigAccounts.find(multisigAccount => multisigAccount.publicAccount.address.plain() === this.selectedAccountAddress);
+      console.log("Selected account", this.selectedAccount);
+
+      this.getMosaics();
+    }
+  }
+
+  getAccountInfo() {
+    console.info("Getting account information.", this.currentWallet.address)
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        if (accountInfo) {
+          this.accountInfo = accountInfo;
+
+          if (this.accountInfo.cosignatoryOf) {
+            console.clear();
+            console.log("This is a multisig account");
+            this.isMultisig = true;
+
+            
+            this.multisigAccounts = [... this.accountInfo.cosignatoryOf]; // get multisig accounts the user has
+
+            if(!this.selectedAccount) {
+              this.selectedAccount = this.multisigAccounts[0]; // select first account as default
+              this.selectedAccountAddress = this.multisigAccounts[0].publicAccount.address.plain();
+              this.multisigAccountAddress = this.multisigAccounts[0].publicAccount.address;
+            }
+
+            console.log("accountInfo", this.accountInfo)
+            console.log("Multisig accounts", this.multisigAccounts)
+
+            // Get Mosaic list + balance
+            this.getMosaics();
+
+
+          }
+
+        }
+      });
+  }
+
   ionViewWillEnter() {
     // this.utils.setHardwareBack(this.navCtrl);
-    console.log('ionViewWillEnter SendPage');
+    console.log('ionViewWillEnter SendMultisigPage');
     this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (!currentWallet) {
-        this.navCtrl.setRoot(
-          'TabsPage',
-          {},
-          {
-            animate: true,
-            direction: 'backward'
-          }
-        );
-      } else {
+      if (currentWallet) {
         this.currentWallet = currentWallet;
-
-        this.getBalanceProvider
-          .mosaics(this.currentWallet.address)
-          .subscribe(mosaics => {
-            if(this.selectedMosaic) {
-              this.selectedMosaic = this.selectedMosaic;
-            } else {
-              this.selectedMosaic = this.mosaicSelectedName? mosaics.filter(m=>m.mosaicId.name==this.mosaicSelectedName)[0] : mosaics[0];
-            }
-
-            let mosaic = this.selectedMosaic.mosaicId.name;
-            let coinId: string;
-
-            if (mosaic === 'xem') {
-              coinId = 'nem';
-            }
-            else if (mosaic === 'xpx') {
-              coinId = 'proximax';
-            } else if (mosaic === 'npxs') {
-              coinId = 'pundi-x';
-            } 
-
-            // Get coin price
-            if(coinId) {
-              this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
-                this.selectedCoin = coin;
-              });
-            }
-          });
-
-        // Set sender address to currenWallet.address
-        this.form.get('senderName').setValue(this.currentWallet.name);
-        this.form
-          .get('senderAddress')
-          .setValue(this.currentWallet.address.plain());
+        this.getAccountInfo(); // Get multisig account info
       }
     });
 
 
 
   }
+  getMosaics() {
+
+    if (this.selectedAccount.publicAccount.address) {
+      this.getBalanceProvider
+        .mosaics(this.selectedAccount.publicAccount.address)
+        .subscribe(mosaics => {
+
+          console.log("Multisig mosaic", mosaics);
+          if (this.selectedMosaic) {
+            this.selectedMosaic = this.selectedMosaic;
+          } else {
+            this.selectedMosaic = this.mosaicSelectedName ? mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0] : mosaics[0];
+          }
+
+          let mosaic = this.selectedMosaic.mosaicId.name;
+          let coinId: string;
+
+          if (mosaic === 'xem') {
+            coinId = 'nem';
+          }
+          else if (mosaic === 'xpx') {
+            coinId = 'proximax';
+          } else if (mosaic === 'npxs') {
+            coinId = 'pundi-x';
+          }
+
+          // Get coin price
+          if (coinId) {
+            this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
+              this.selectedCoin = coin;
+            });
+          }
+        });
+
+      // Set sender address to currenWallet.address
+      this.form.get('senderName').setValue(this.currentWallet.name);
+      this.form.get('senderAddress').setValue(this.multisigAccountAddress.plain());
+    }
+
+  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SendPage');
+    console.log('ionViewDidLoad SendMultisigPage');
   }
 
   init() {
@@ -161,7 +200,9 @@ export class SendPage {
       isMosaicTransfer: [false, Validators.required],
       message: ['', Validators.required],
       amount: ['', Validators.required],
-      fee: ['', Validators.required]
+      fee: ['', Validators.required],
+
+      selectedAccountAddress: '',
     });
 
     // Initialize source type of NEM address in from and to
@@ -203,6 +244,7 @@ export class SendPage {
   selectMosaic() {
     this.utils
       .showInsetModal('SendMosaicSelectPage', {
+        walletAddress: this.selectedAccount.publicAccount.address,
         selectedMosaic: this.selectedMosaic
       })
       .subscribe(data => {
@@ -266,6 +308,7 @@ export class SendPage {
    */
   private _prepareTx(recipient: Address): TransferTransaction {
     let transferTransaction: TransferTransaction;
+
     if (this.form.get('isMosaicTransfer').value) {
       const MOSAIC_TRANSFERRABLE = [
         new MosaicTransferable(
@@ -292,10 +335,12 @@ export class SendPage {
       this.fee = transferTransaction.fee * 0.000001;
 
     }
-
     console.log('transferTransaction', transferTransaction);
 
     return transferTransaction;
+
+    
+
   }
 
   /**
@@ -344,19 +389,14 @@ export class SendPage {
           mosaic: this.selectedMosaic,
           sendTx: transferTransaction,
           currentWallet: this.currentWallet,
-          total: total
+          total: total,
+          transactionType: 'multisig',
+          publicKey: this.selectedAccount.publicAccount.publicKey
         }, {
             enableBackdropDismiss: false,
             showBackdrop: true
           });
         modal.present();
-
-        // this.navCtrl.push('SendMosaicConfirmationPage', {
-        //   ...this.form.value,
-        //   mosaic: this.selectedMosaic,
-        //   sendTx: transferTransaction,
-        //   currentWallet: this.currentWallet
-        // });
       }
     } catch (err) {
       this.alertProvider.showMessage(
@@ -375,11 +415,11 @@ export class SendPage {
       console.log('Barcode data', barcodeData);
       barcodeData.format = "QR_CODE";
       let payload = JSON.parse(barcodeData.text);
-      this.form.patchValue({ recipientName: payload.data.name})
+      this.form.patchValue({ recipientName: payload.data.name })
       this.form.patchValue({ recipientAddress: payload.data.addr })
-     }).catch(err => {
-         console.log('Error', err);
-     });
+    }).catch(err => {
+      console.log('Error', err);
+    });
 
 
   }

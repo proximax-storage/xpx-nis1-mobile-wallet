@@ -37,9 +37,9 @@ export class CoingeckoProvider {
     let requestObservable = this.http.get(url);
     // console.log(requestObservable);
     
-    this.cache.observable(coin_id, requestObservable, 60*30).subscribe(result => {
-      console.log("getDetailsPrice",result)
-    });
+    // this.cache.observable(coin_id, requestObservable, 60*30).subscribe(result => {
+    //   console.log("getDetailsPrice",result)
+    // });
     return this.cache.observable(coin_id, requestObservable, 60*30)
     // return this.http.get(`${this.url}/coins/${coin_id}`);
   }

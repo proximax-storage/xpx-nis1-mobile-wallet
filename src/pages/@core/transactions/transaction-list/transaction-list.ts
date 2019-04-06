@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
-import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData } from "nem-library";
+import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController, ActionSheetController } from "ionic-angular";
+import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData, AccountInfo } from "nem-library";
 import { Observable } from "rxjs";
 import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
 import { CoinPriceChartProvider } from "../../../../providers/coin-price-chart/coin-price-chart";
@@ -52,8 +52,12 @@ export class TransactionListPage {
   mosaicId: string;
   walletName: string;
 
-  accountInfo: AccountInfoWithMetaData;
+  
   totalBalance: number;
+
+  // Multisignature
+  isMultisig: boolean;
+  accountInfo: AccountInfoWithMetaData;
 
   constructor(
     public navCtrl: NavController,
@@ -69,9 +73,30 @@ export class TransactionListPage {
     private toastProvider: ToastProvider,
     private getBalanceProvider: GetBalanceProvider,
     private marketPrice: GetMarketPricePipe,
+    private actionSheetCtrl: ActionSheetController
   ) {
    
   }
+
+  getAccountInfo() {
+    console.info("Getting account information.", this.currentWallet.address)
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        if (accountInfo) {
+          this.accountInfo = accountInfo;
+          console.log("accountInfo", this.accountInfo)
+          // Check if account is a cosignatory of multisig account(s)
+          if(this.accountInfo.cosignatoryOf) {
+            console.clear();
+            console.log("This is a multisig account");
+            this.isMultisig = true;
+          }
+
+        } 
+      });
+  }
+
 
   ionViewWillEnter() {
     this.utils.setHardwareBack(this.navCtrl);
@@ -92,6 +117,8 @@ export class TransactionListPage {
         this.currentWallet = currentWallet;
         this.fakeList = [{}, {}];
 
+        this.getAccountInfo();
+
         this.pageable = this.nemProvider.getAllTransactionsPaginated(
           this.currentWallet.address
         );
@@ -102,37 +129,22 @@ export class TransactionListPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            // this.infiniteScroll.complete();
           });
 
+        this.isLoading = true;
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
-
-            this.isLoading = true;
-
-            // filter result with mosaicId
-            // this.searchByMosaicId(this.mosaicId, result);
             console.info("Transactions", result);
-            if (!this.confirmedTransactions) this.showEmptyMessage = false;
-            if (this.isLoadingInfinite) {
-              // this.isLoadingInfinite = false;
-
-              this.confirmedTransactions.push(...result);
-              // this.infiniteScroll.complete();
-            }
-
             this.isLoading = false;
+            this.showEmptyMessage = false;
             this.confirmedTransactions = result;
-            // this.infiniteScroll.enable(true);
+            if (!this.confirmedTransactions) this.showEmptyMessage = false;
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
               this.showEmptyMessage = true;
-
-              // this.infiniteScroll.complete();
-              // this.infiniteScroll.enable(false);
             });
       }
     });
@@ -187,8 +199,43 @@ export class TransactionListPage {
   }
 
   showSendModal() {
-    let page = "SendPage"; 
-    this.showModal(page,{})
+    console.log(this.accountInfo);
+
+    if(this.isMultisig) {
+      let page = 'SendMultisigPage';
+
+      const actionSheet = this.actionSheetCtrl.create({
+        title: `Selecte transaction type`,
+        cssClass: 'wallet-on-press',
+        buttons: [
+          {
+            text: 'Normal Transaction',
+            handler: () => {
+              let page = 'SendPage';
+              this.showModal(page,{})
+            }
+          },
+          {
+            text: 'Multisig Transaction',
+            handler: () => {
+              this.showModal(page,{})
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              // this.showModal(page,{})
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+      // this.showModal(page,{})
+    } else {
+       let page = "SendPage"; 
+       this.showModal(page,{})
+    }
   }
 
   showExportPrivateKeyModal(){
@@ -228,17 +275,6 @@ export class TransactionListPage {
       this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
-
-
-  // doInfinite() {
-  //   console.log('Do infinite. ');
-  //   if (this.showEmptyMessage) return;
-  //   this.isLoadingInfinite = true;
-  //   this.pageable.nextPage();
-  //   console.log('Pageable Txs: ', this.pageable);
-  // }
-
-  
 
   // searchByMosaicId(mosaicId: string, transactions: Array<Transaction>) {
   //   let txs = <TransferTransaction[]>transactions.filter(transaction => transaction.type == TransactionTypes.TRANSFER);

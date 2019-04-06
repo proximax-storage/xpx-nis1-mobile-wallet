@@ -56,7 +56,7 @@
         </ng-template>
 
         <section text-right item-right *ngIf="(wallet.address.plain() | getWalletType | async) as walletType; else walletLoading">
-          <button gradient-button pill color-5>
+          <button gradient-button pill color-1>
             <ion-icon *ngIf="walletType === 'Personal'" name="person"></ion-icon>
             <ion-icon *ngIf="walletType === 'Shared'" name="people"></ion-icon>
           </button>

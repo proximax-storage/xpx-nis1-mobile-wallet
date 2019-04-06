@@ -1,7 +1,7 @@
 import { GetBalanceProvider } from './../../../../../providers/get-balance/get-balance';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { SimpleWallet, MosaicTransferable } from 'nem-library';
+import { SimpleWallet, MosaicTransferable, Address } from 'nem-library';
 
 import { App } from '../../../../../providers/app/app';
 import { WalletProvider } from '../../../../../providers/wallet/wallet';
@@ -28,6 +28,7 @@ export class SendMosaicSelectPage {
   selectedWallet: SimpleWallet;
 
   fakeList: Array<any>;
+  walletAddress: Address;
 
   constructor(
     public navCtrl: NavController,
@@ -38,17 +39,24 @@ export class SendMosaicSelectPage {
     public utils: UtilitiesProvider,
   ) {
     this.fakeList = [{}, {}];
+    this.walletAddress = this.navParams.get('walletAddress');
+
   }
 
   ionViewWillEnter() {
+    if(this.walletAddress) {
+      this.getBalance(this.walletAddress);
+    } else {
+      this.walletProvider.getSelectedWallet().then(wallet => {
+        if (!wallet) this.navCtrl.setRoot('TabsPage');
+        else {
+          this.selectedWallet = wallet;
+          this.getBalance(this.selectedWallet.address);
+        }
+      });
+    }
 
-    this.walletProvider.getSelectedWallet().then(wallet => {
-      if (!wallet) this.navCtrl.setRoot('TabsPage');
-      else {
-        this.selectedWallet = wallet;
-        this.getBalance();
-      }
-    });
+
   }
 
   ionViewDidLoad() {
@@ -66,8 +74,8 @@ export class SendMosaicSelectPage {
   /**
    * Retrieves current account owned mosaics  into this.mosaics
    */
-  public getBalance() {
-    this.getBalanceProvider.mosaics(this.selectedWallet.address).subscribe(mosaics => {
+  public getBalance(address: Address) {
+    this.getBalanceProvider.mosaics(address).subscribe(mosaics => {
       this.mosaics = mosaics;
       this.selectedMosaic = this.mosaics[0];
 

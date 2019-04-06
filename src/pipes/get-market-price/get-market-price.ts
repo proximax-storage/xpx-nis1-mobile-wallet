@@ -28,7 +28,7 @@ export class GetMarketPricePipe implements PipeTransform {
     // Add more coins here
     
     if(coinId != undefined) {
-      console.log("CoinId",coinId)
+      // console.log("CoinId",coinId)
       return this.coingeckoProvider
       .getDetails(coinId)
       .toPromise()

@@ -1,5 +1,5 @@
 <!-- XEM -->
-<ion-card *ngIf="tx.otherTransaction.containsMosaics && !tx.otherTransaction.containsMosaics()">
+<ion-card no-margin-bottom *ngIf="tx.otherTransaction.containsMosaics && !tx.otherTransaction.containsMosaics()">
   <ion-card-content no-padding>
     <ion-item>
       <img logo-small item-left [src]="App.LOGO.NEM">
@@ -35,7 +35,7 @@
 <!-- ./XEM -->
 
 <!-- Mosaic/s -->
-<ion-card *ngFor="let mosaic of mosaics">
+<ion-card no-margin-bottom *ngFor="let mosaic of mosaics">
   <ion-item>
     <img logo-small item-left [src]="utils.getLogo(mosaic)">
     <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
@@ -73,7 +73,7 @@
 <!-- ./Mosaic/s -->
 
 <!-- Date -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Date</h2>
@@ -91,11 +91,11 @@
 <!-- ./Date -->
 
 <!-- Sender -->
-<ion-card (click)="utils.copy(tx?.otherTransaction.signer.address.value, 'sender')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.otherTransaction.signer.address.value, 'sender')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
-        Sender
+        From multisig
       </h2>
 
       <p text-wrap> {{ tx?.otherTransaction.signer.address.value | nemAddressPretty | searchContact: tx?.otherTransaction.signer.address.value
@@ -105,8 +105,23 @@
 </ion-card>
 <!-- ./Sender -->
 
+<!-- Issuer -->
+<ion-card no-margin-bottom (click)="utils.copy(tx?.otherTransaction.signer.address.value, 'sender')">
+    <ion-card-content no-padding>
+      <ion-item>
+        <h2 ion-text color="black">
+            Issuer
+        </h2>
+  
+        <p text-wrap>{{ tx?.signer.address.value | nemAddressPretty }} - ({{ tx?.signer.address.value | nemAddressPretty | searchContact: tx?.signer.address.value
+            | async }})</p>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!-- ./Issuer -->
+
 <!-- Receiver -->
-<ion-card (click)="utils.copy(tx?.otherTransaction.recipient.value, 'receiver')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.otherTransaction.recipient.value, 'receiver')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
@@ -122,7 +137,7 @@
 <!-- ./Receiver -->
 
 <!-- Fee -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Fee</h2>
@@ -136,13 +151,14 @@
 <!-- ./Fee -->
 
 <!-- Block -->
-<ion-card>
+<ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Block</h2>
 
       <p text-wrap ion-text color="black">
-        {{ tx?.otherTransaction.transactionInfo?.height | number }}
+        {{ (tx?.otherTransaction?.transactionInfo?.height != undefined) ? (tx?.otherTransaction.transactionInfo?.height | number) :  'Transaction waiting to be included - Needs cosignatories signatures'}}
+        
       </p>
     </ion-item>
   </ion-card-content>
@@ -150,7 +166,7 @@
 <!-- ./Block -->
 
 <!-- Hash -->
-<ion-card (click)="utils.copy(tx?.otherTransaction.transactionInfo?.hash?.data, 'hash')">
+<ion-card no-margin-bottom (click)="utils.copy(tx?.otherTransaction.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Hash</h2>
@@ -164,7 +180,7 @@
 <!-- ./Hash -->
 
 <!-- Message -->
-<ion-card (click)="utils.copy(tx.otherTransaction.message.payload, 'message')">
+<ion-card no-margin-bottom (click)="utils.copy(tx.otherTransaction.message.payload, 'message')">
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">Message</h2>
@@ -181,3 +197,10 @@
   </ion-card-content>
 </ion-card>
 <!-- ./Message -->
+
+
+<section text-center>
+    <button *ngIf="showSignButton" gradient-button half color-5 ion-button icon-end no-margin (click)="sign()">
+        Cosign transaction
+    </button>
+</section>

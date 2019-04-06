@@ -1,4 +1,4 @@
-page-send {
+page-send-multisig {
     ion-input {
         color: color($colors, dark);
     }
@@ -76,11 +76,18 @@ page-send {
         border-bottom: none !important;
     }
 
-    // End - Multisig select
-    ion-label[title] {
-      font-size: 1.8rem !important;
-      color: #000 !important;
+    // Multisig select
+    ion-select[account] {
+        text-align-last:right;
+        padding-right: none;
+        direction: ltr;
+        display: flex;
+        overflow: hidden;
+        max-width: 100%;
+        width: 100%;
+        padding-left: 0px;
     }
+
 
 
 }

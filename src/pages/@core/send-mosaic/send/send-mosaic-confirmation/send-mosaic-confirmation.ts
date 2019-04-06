@@ -57,6 +57,7 @@ export class SendMosaicConfirmationPage {
     this.formGroup = this.formBuilder.group({});
 
     // Get NavParams data
+    console.log(this.navParams.data);
     this.data = this.navParams.data;
     this.currentWallet = <SimpleWallet>this.data.currentWallet;
 
@@ -75,58 +76,86 @@ export class SendMosaicConfirmationPage {
   }
 
   onSubmit() {
-    if (this._allowedToSendTx()) {
-      this.nemProvider
-        .confirmTransaction(
+    if (this.data.transactionType = 'multisig') {
+      const multisigAccountPublicKey: string = this.data.publicKey;
+      if (this._allowedToSendTx()) {
+        this.nemProvider.confirmMultisigTransaction(
           this.data.sendTx,
+          multisigAccountPublicKey,
           this.data.currentWallet,
           this.credentials.password
         )
-        .subscribe(
-          value => {
-            this.alertProvider.showMessage(
-              `You have successfully sent ${
-                this.data.amount
-              } ${this.data.mosaic.mosaicId.name.toUpperCase()} to ${
-                this.data.recipientName || this.data.recipientAddress
-              }`
-            );
-            this.utils.setTabIndex(2);
-            this.navCtrl.setRoot(
-              'TabsPage',
-              {},
-              {
-                animate: true,
-                direction: 'backward'
-              }
-            );
-          },
-          error => {
-            console.log(error);
-            if (error.toString().indexOf('FAILURE_INSUFFICIENT_BALANCE') >= 0) {
-              this.alertProvider.showMessage(
-                'Sorry, you don\'t have enough balance to continue the transaction.'
-              );
-            } else if (
-              error.toString().indexOf('FAILURE_MESSAGE_TOO_LARGE') >= 0
-            ) {
-              this.alertProvider.showMessage(
-                'The note you entered is too long. Please try again.'
-              );
-            } else if (error.statusCode == 404) {
-              this.alertProvider.showMessage(
-                'This address does not belong to this network'
-              );
-            } else {
-              this.alertProvider.showMessage(
-                'An error occured. Please try again.'
-              );
+          .subscribe(
+            value => {
+              this.showSuccessMessage()
+            },
+            error => {
+              this.showErrorMessage(error)
             }
-          }
-        );
+          );
+      } else {
+        this.alertProvider.showMessage('Invalid password. Please try again.');
+      }
     } else {
-      this.alertProvider.showMessage('Invalid password. Please try again.');
+      if (this._allowedToSendTx()) {
+        this.nemProvider
+          .confirmTransaction(
+            this.data.sendTx,
+            this.data.currentWallet,
+            this.credentials.password
+          )
+          .subscribe(
+            value => {
+              this.showSuccessMessage()
+            },
+            error => {
+              this.showErrorMessage(error)
+            }
+          );
+      } else {
+        this.alertProvider.showMessage('Invalid password. Please try again.');
+      }
     }
+  }
+  showErrorMessage(error) {
+    console.log(error);
+              if (error.toString().indexOf('FAILURE_INSUFFICIENT_BALANCE') >= 0) {
+                this.alertProvider.showMessage(
+                  'Sorry, you don\'t have enough balance to continue the transaction.'
+                );
+              } else if (
+                error.toString().indexOf('FAILURE_MESSAGE_TOO_LARGE') >= 0
+              ) {
+                this.alertProvider.showMessage(
+                  'The note you entered is too long. Please try again.'
+                );
+              } else if (error.statusCode == 404) {
+                this.alertProvider.showMessage(
+                  'This address does not belong to this network'
+                );
+              } else {
+                this.alertProvider.showMessage(
+                  'An error occured. Please try again.'
+                );
+              }
+  }
+  showSuccessMessage() {
+    this.alertProvider.showMessage(
+      `You have successfully sent ${
+      this.data.amount
+      } ${this.data.mosaic.mosaicId.name.toUpperCase()} to ${
+      this.data.recipientName || this.data.recipientAddress
+      }`
+    );
+    this.utils.setTabIndex(2);
+    this.navCtrl.setRoot(
+      'TabsPage',
+      {},
+      {
+        animate: true,
+        direction: 'backward'
+      }
+    );
   }
 
   /**

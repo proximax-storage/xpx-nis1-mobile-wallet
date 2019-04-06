@@ -63,17 +63,17 @@ export class WalletBackupPage {
       {
         name: 'Export as file',
         value: WalletBackupType.EXPORT_AS_FILE,
-        icon: 'folder'
+        icon: 'ios-folder-outline'
       },
       {
         name: 'Copy to clipboard',
         value: WalletBackupType.COPY_TO_CLIPBOARD,
-        icon: 'copy'
+        icon: 'ios-copy-outline'
       },
       {
         name: 'Share',
         value: WalletBackupType.SHARE,
-        icon: 'share'
+        icon: 'ios-share-outline'
       }
     ];
   }

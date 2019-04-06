@@ -20,7 +20,7 @@
 }
 
 [gradient-button][pill] {
-  width: 32px;
+  width: 20px;
   height: 20px;
   font-size: 1.2rem;
   margin: 0;
@@ -94,10 +94,10 @@
 [gradient-button][color-1] {
   background-image: linear-gradient(
     to right,
-    #25aae1,
-    #40e495,
-    #30dd8a,
-    #2bb673
+    #00735f,
+    #00735f,
+    #00735f,
+    #00735f
   );
   box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
