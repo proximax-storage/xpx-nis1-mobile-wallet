@@ -95,7 +95,7 @@
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
-        Sender
+        From multisig
       </h2>
 
       <p text-wrap> {{ tx?.otherTransaction.signer.address.value | nemAddressPretty | searchContact: tx?.otherTransaction.signer.address.value
@@ -104,6 +104,21 @@
   </ion-card-content>
 </ion-card>
 <!-- ./Sender -->
+
+<!-- Issuer -->
+<ion-card (click)="utils.copy(tx?.otherTransaction.signer.address.value, 'sender')">
+    <ion-card-content no-padding>
+      <ion-item>
+        <h2 ion-text color="black">
+            Issuer
+        </h2>
+  
+        <p text-wrap>{{ tx?.signer.address.value | nemAddressPretty }} - ({{ tx?.signer.address.value | nemAddressPretty | searchContact: tx?.signer.address.value
+            | async }})</p>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!-- ./Issuer -->
 
 <!-- Receiver -->
 <ion-card (click)="utils.copy(tx?.otherTransaction.recipient.value, 'receiver')">
@@ -142,7 +157,8 @@
       <h2 ion-text color="black">Block</h2>
 
       <p text-wrap ion-text color="black">
-        {{ tx?.otherTransaction.transactionInfo?.height | number }}
+        {{ (tx?.otherTransaction?.transactionInfo?.height != undefined) ? (tx?.otherTransaction.transactionInfo?.height | number) :  'Transaction waiting to be included - Needs cosignatories signatures'}}
+        
       </p>
     </ion-item>
   </ion-card-content>
@@ -181,3 +197,10 @@
   </ion-card-content>
 </ion-card>
 <!-- ./Message -->
+
+
+<section text-center>
+    <button *ngIf="showSignButton" gradient-button half color-5 ion-button icon-end no-margin (click)="sign()">
+        Sign
+    </button>
+</section>

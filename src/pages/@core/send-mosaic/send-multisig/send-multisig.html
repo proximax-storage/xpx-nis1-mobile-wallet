@@ -1,5 +1,5 @@
 <!--
-  Generated template for the SendPage page.
+  Generated template for the SendMultisigPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -48,6 +48,29 @@
           <h2 price ion-text color="black" *ngIf="selectedCoin">
             ≈ {{ selectedCoin?.market_data.current_price.usd * amount  | currency: 'USD': 'symbol': '1.2-6' }}</h2>
         </section>
+
+        <!-- Multisig accounts -->
+        <ion-card no-margin-bottom>
+
+            <ion-item>
+                <!-- <ion-label title stacked>
+                  <h3><strong>Account:</strong></h3>
+                </ion-label> -->
+                <ion-avatar item-start>
+                    <img src="assets/imgs/multisig3.svg">
+                  </ion-avatar>
+                  <!-- <ion-icon name="ios-contacts-outline" item-start></ion-icon> -->
+                <ion-select account formControlName="selectedAccountAddress" [(ngModel)]="selectedAccountAddress"
+                  (ngModelChange)="onAccountSelected()">
+                  <ion-option disabled>Select a multisig account</ion-option>
+                  <ion-option *ngFor="let multisigAccount of multisigAccounts"
+                    [value]="multisigAccount.publicAccount.address.plain()">{{multisigAccount.publicAccount.address.plain()}}
+                  </ion-option>
+                </ion-select>
+      
+              </ion-item>
+
+        </ion-card>
       
     
 

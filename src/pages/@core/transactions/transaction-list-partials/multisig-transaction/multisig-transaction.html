@@ -76,11 +76,11 @@
 
     <!-- Confirmed transfer -->
     <section text-right item-right *ngIf="tx.isConfirmed()">
-      <button gradient-button pill color-5>
+      <button gradient-button pill color-1>
         <ion-icon name="checkmark"></ion-icon>
       </button>
 
-      <p ion-text color="black">
+      <p ion-text color="success">
         <small>
           Confirmed
           <br> Multisign Transfer
@@ -94,9 +94,10 @@
         <ion-icon name="ios-more"></ion-icon>
       </button>
 
-      <p ion-text color="black">
+      <p ion-text color="danger">
         <small>
-          Unconfirmed
+            
+           {{getStatus()}}
           <br> Multisign Transfer
         </small>
       </p>

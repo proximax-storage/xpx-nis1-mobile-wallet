@@ -33,7 +33,10 @@ import {
   MosaicId,
   MosaicProperties,
   MosaicLevy,
-  MosaicLevyType
+  MosaicLevyType,
+  MultisigTransaction,
+  MultisigSignatureTransaction,
+  HashData
 } from "nem-library";
 
 import { Observable } from "nem-library/node_modules/rxjs";
@@ -357,17 +360,17 @@ export class NemProvider {
    * @param levyFee { number }
    */
   public prepareMosaicCreationTransaction(
-      account: AccountInfoWithMetaData,
-      namespace: string,
-      mosaic: string,
-      description: string,
-      divisibility: number,
-      supply: number,
-      transferrable: boolean,
-      supplyMutable: boolean,
-      hasLevy?: boolean,
-      levyMosaic?: MosaicId,
-      levyFee?: number
+    account: AccountInfoWithMetaData,
+    namespace: string,
+    mosaic: string,
+    description: string,
+    divisibility: number,
+    supply: number,
+    transferrable: boolean,
+    supplyMutable: boolean,
+    hasLevy?: boolean,
+    levyMosaic?: MosaicId,
+    levyFee?: number
   ): MosaicDefinitionCreationTransaction {
     let tx: MosaicDefinitionCreationTransaction;
 
@@ -416,7 +419,7 @@ export class NemProvider {
   /**
    * Send transaction into the blockchain
    * @param transferTransaction transferTransaction
-   * @param password wallet
+   * @param wallet wallet
    * @param password password
    * @return Promise containing sent transaction
    */
@@ -429,6 +432,59 @@ export class NemProvider {
     let signedTransaction = account.signTransaction(transaction);
     return this.transactionHttp.announceTransaction(signedTransaction);
   }
+
+  /**
+  * Send multisig transaction into the blockchain
+  * @param transferTransaction transferTransaction
+  * @param publickKey string
+  * @param wallet wallet
+  * @param password password
+  * @return Promise containing sent transaction
+  */
+  public confirmMultisigTransaction(
+    transaction: any,
+    publickKey: string,
+    wallet: SimpleWallet,
+    password: string
+  ): Observable<NemAnnounceResult> {
+    const multisigAccountPublicKey: string = publickKey;
+
+    const multisigTransaction: MultisigTransaction = MultisigTransaction.create(
+      TimeWindow.createWithDeadline(),
+      transaction,
+      PublicAccount.createWithPublicKey(multisigAccountPublicKey)
+    );
+
+    let account = wallet.open(new Password(password));
+    let signedTransaction = account.signTransaction(multisigTransaction);
+    return this.transactionHttp.announceTransaction(signedTransaction);
+  }
+
+   /**
+  * Sign multisig transaction into the blockchain
+  * @param address address
+  * @param hash hash
+  * @param wallet wallet
+  * @param password password
+  * @return Promise containing sent transaction
+  */
+ public signMultisigTransaction(
+  address: Address,
+  hash: HashData,
+  wallet: SimpleWallet,
+  password: string
+): Observable<NemAnnounceResult> {
+
+  const multisigTransaction: MultisigSignatureTransaction = MultisigSignatureTransaction.create(
+    TimeWindow.createWithDeadline(), 
+    address, 
+    hash
+  )
+
+  let account = wallet.open(new Password(password));
+  let signedTransaction = account.signTransaction(multisigTransaction);
+  return this.transactionHttp.announceTransaction(signedTransaction);
+}
 
   /**
    * Adds to a transaction data mosaic definitions
@@ -451,7 +507,7 @@ export class NemProvider {
               return MosaicTransferable.createWithMosaicDefinition(
                 mosaicDefinition,
                 mosaic.quantity /
-                  Math.pow(10, mosaicDefinition.properties.divisibility)
+                Math.pow(10, mosaicDefinition.properties.divisibility)
               );
             });
         }

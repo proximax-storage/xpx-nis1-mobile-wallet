@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController } from "ionic-angular";
-import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData } from "nem-library";
+import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData, AccountInfo } from "nem-library";
 import { Observable } from "rxjs";
 import { CoingeckoProvider } from "../../../../providers/coingecko/coingecko";
 import { CoinPriceChartProvider } from "../../../../providers/coin-price-chart/coin-price-chart";
@@ -52,8 +52,12 @@ export class TransactionListPage {
   mosaicId: string;
   walletName: string;
 
-  accountInfo: AccountInfoWithMetaData;
+  
   totalBalance: number;
+
+  // Multisignature
+  isMultisig: boolean;
+  accountInfo: AccountInfoWithMetaData;
 
   constructor(
     public navCtrl: NavController,
@@ -73,6 +77,26 @@ export class TransactionListPage {
    
   }
 
+  getAccountInfo() {
+    console.info("Getting account information.", this.currentWallet.address)
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        if (accountInfo) {
+          this.accountInfo = accountInfo;
+          console.log("accountInfo", this.accountInfo)
+          // Check if account is a cosignatory of multisig account(s)
+          if(this.accountInfo.cosignatoryOf) {
+            console.clear();
+            console.log("This is a multisig account");
+            this.isMultisig = true;
+          }
+
+        } 
+      });
+  }
+
+
   ionViewWillEnter() {
     this.utils.setHardwareBack(this.navCtrl);
 
@@ -91,6 +115,8 @@ export class TransactionListPage {
         this.getTotalBalance(currentWallet);
         this.currentWallet = currentWallet;
         this.fakeList = [{}, {}];
+
+        this.getAccountInfo();
 
         this.pageable = this.nemProvider.getAllTransactionsPaginated(
           this.currentWallet.address
@@ -187,8 +213,13 @@ export class TransactionListPage {
   }
 
   showSendModal() {
-    let page = "SendPage"; 
-    this.showModal(page,{})
+    console.log(this.accountInfo);
+    // let page = "SendPage"; 
+
+    if(this.isMultisig) {
+      let page = 'SendMultisigPage';
+      this.showModal(page,{})
+    }
   }
 
   showExportPrivateKeyModal(){
