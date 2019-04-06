@@ -171,7 +171,10 @@ export class MultisigDetailComponent {
         this.showSignButton = false;
       } else {
         // get user multisig accounts
-        this._getAccountInfo(this.owner);
+        if((this.tx as MultisigTransaction).isPendingToSign()) {
+          this._getAccountInfo(this.owner);
+        }
+
       }
 
     }

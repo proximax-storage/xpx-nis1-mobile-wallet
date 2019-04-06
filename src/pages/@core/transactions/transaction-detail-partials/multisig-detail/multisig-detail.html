@@ -200,11 +200,11 @@
 
  &nbsp;
 <section padding text-center>
-    <button *ngIf="showSignButton; else loading" gradient-button full color-5 ion-button icon-end no-margin (click)="sign()">
+    <button *ngIf="showSignButton" gradient-button full color-5 ion-button icon-end no-margin (click)="sign()">
         Cosign transaction
     </button>
 </section>
 
-<ng-template #loading>
+<ng-template #loading >
     <ion-spinner name="ios"></ion-spinner>
   </ng-template>
