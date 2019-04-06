@@ -158,12 +158,14 @@ export class HomePage {
       .subscribe(result => {
         // console.info("Transactions", result);
         this.isLoading = false;
+        this.showEmptyTransaction = false;
         this.confirmedTransactions = result;
         if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
       },
         err => console.error(err),
         () => {
           this.isLoading = false;
+          this.showEmptyTransaction = false;
           if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
         });
   }

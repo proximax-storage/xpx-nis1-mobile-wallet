@@ -129,37 +129,22 @@ export class TransactionListPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            // this.infiniteScroll.complete();
           });
 
+        this.isLoading = true;
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
-
-            this.isLoading = true;
-
-            // filter result with mosaicId
-            // this.searchByMosaicId(this.mosaicId, result);
             console.info("Transactions", result);
-            if (!this.confirmedTransactions) this.showEmptyMessage = false;
-            if (this.isLoadingInfinite) {
-              // this.isLoadingInfinite = false;
-
-              this.confirmedTransactions.push(...result);
-              // this.infiniteScroll.complete();
-            }
-
             this.isLoading = false;
+            this.showEmptyMessage = false;
             this.confirmedTransactions = result;
-            // this.infiniteScroll.enable(true);
+            if (!this.confirmedTransactions) this.showEmptyMessage = false;
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
               this.showEmptyMessage = true;
-
-              // this.infiniteScroll.complete();
-              // this.infiniteScroll.enable(false);
             });
       }
     });
@@ -290,17 +275,6 @@ export class TransactionListPage {
       this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
-
-
-  // doInfinite() {
-  //   console.log('Do infinite. ');
-  //   if (this.showEmptyMessage) return;
-  //   this.isLoadingInfinite = true;
-  //   this.pageable.nextPage();
-  //   console.log('Pageable Txs: ', this.pageable);
-  // }
-
-  
 
   // searchByMosaicId(mosaicId: string, transactions: Array<Transaction>) {
   //   let txs = <TransferTransaction[]>transactions.filter(transaction => transaction.type == TransactionTypes.TRANSFER);

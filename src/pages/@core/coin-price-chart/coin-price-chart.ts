@@ -189,30 +189,21 @@ export class CoinPriceChartPage {
           .toArray()
           .subscribe(result => {
             this.unconfirmedTransactions = result;
-            // this.hideInfiniteScroll();
           });
 
         this.pageable
           .map((txs: any) => txs ? txs : Observable.empty())
           .subscribe(result => {
-
-            if(!this.confirmedTransactions) this.showEmptyMessage = false;
-
-            if (this.isLoadingInfinite) {
-              this.isLoadingInfinite = false;
-              // this.hideInfiniteScroll();
-              if(this.confirmedTransactions!=null) this.confirmedTransactions.push(...result);
-            }
-
             this.isLoading = false;
+            this.showEmptyMessage = false;
             this.confirmedTransactions = result;
-            // this.showInfiniteScroll();
+
+            if(!this.confirmedTransactions) this.showEmptyMessage = true;
           },
             err => console.error(err),
             () => {
               this.isLoading = false;
               if (!this.confirmedTransactions) this.showEmptyMessage = true;
-              // this.hideInfiniteScroll();
             });
       }
     });
@@ -302,29 +293,6 @@ export class CoinPriceChartPage {
   trackByHash(index) {
     return index;
   }
-
-
-
-  // doInfinite() {
-  //   if (this.showEmptyMessage) return;
-    
-  //   this.isLoadingInfinite = true;
-  //   this.pageable.nextPage();
-  //   console.log('Pageable Txs: ', this.pageable);
-  // }
-
-  // showInfiniteScroll(){
-  //   if(this.infiniteScroll) {
-  //     this.infiniteScroll.enable(true);;
-  //   }
-  // }
-
-  // hideInfiniteScroll() {
-  //   if(this.infiniteScroll) {
-  //     this.infiniteScroll.complete();
-  //     this.infiniteScroll.enable(false);
-  //   }
-  // }
 
   openLink(link){
     window.open(link,'_system', 'location=yes');
