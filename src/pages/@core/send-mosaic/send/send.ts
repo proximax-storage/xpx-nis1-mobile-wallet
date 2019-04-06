@@ -60,17 +60,18 @@ export class SendPage {
     private coingeckoProvider: CoingeckoProvider,
     private barcodeScanner: BarcodeScanner
   ) {
+    console.log("Nav params",this.navParams.data);
+    
     this.mosaicSelectedName = this.navParams.get('mosaicSelectedName');
     console.log(this.mosaicSelectedName);
 
+    // If no mosaic selected, fallback to xpx
+    if(!this.mosaicSelectedName) {
+      this.mosaicSelectedName = 'xpx';
+    }
 
 
-
-
-    
     this.init();
-
-
   }
 
   ionViewWillEnter() {
@@ -169,6 +170,7 @@ export class SendPage {
       to: 'contact'
     };
 
+    // Defaults to manual contact input
     this.addressSourceType.to = 'manual';
 
     if (this.addressSourceType.to === 'manual') {
@@ -240,6 +242,7 @@ export class SendPage {
           .value.toUpperCase()
           .replace('-', '')
       );
+      console.log(recipient);
       if (!this.nemProvider.isValidAddress(recipient)) {
         this.alertProvider.showMessage(
           'This address does not belong to this network'
@@ -330,13 +333,18 @@ export class SendPage {
         // Prepare transaction
         let transferTransaction = this._prepareTx(recipient);
 
+        // Compute total
+        console.log(this.selectedCoin.market_data.current_price.usd, this.form.get('amount').value);
+        let total = this.selectedCoin.market_data.current_price.usd * Number(this.form.get('amount').value);
+
         // Show confirm transaction
         let page = "SendMosaicConfirmationPage";
         const modal = this.modalCtrl.create(page, {
           ...this.form.value,
           mosaic: this.selectedMosaic,
           sendTx: transferTransaction,
-          currentWallet: this.currentWallet
+          currentWallet: this.currentWallet,
+          total: total
         }, {
             enableBackdropDismiss: false,
             showBackdrop: true

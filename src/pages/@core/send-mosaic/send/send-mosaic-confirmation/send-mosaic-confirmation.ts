@@ -57,6 +57,7 @@ export class SendMosaicConfirmationPage {
     this.formGroup = this.formBuilder.group({});
 
     // Get NavParams data
+    console.log(this.navParams.data);
     this.data = this.navParams.data;
     this.currentWallet = <SimpleWallet>this.data.currentWallet;
 
