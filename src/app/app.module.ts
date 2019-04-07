@@ -46,6 +46,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { LocalCacheProvider } from '../providers/local-cache/local-cache';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { OneSignal } from '@ionic-native/onesignal';
+import { PostsProvider } from '../providers/posts/posts';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -102,7 +103,9 @@ import { OneSignal } from '@ionic-native/onesignal';
     BarcodeScanner,
     LocalCacheProvider,
     LocalStorageProvider,
-    OneSignal
+    OneSignal,
+    PostsProvider,
+    PostsProvider
   ]
 })
 export class AppModule {}
