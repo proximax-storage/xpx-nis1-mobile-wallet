@@ -106,7 +106,6 @@ import { MarkdownModule } from 'ngx-markdown';
     LocalCacheProvider,
     LocalStorageProvider,
     OneSignal,
-    PostsProvider,
     PostsProvider
   ]
 })
