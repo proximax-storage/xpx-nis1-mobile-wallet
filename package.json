@@ -30,6 +30,7 @@
     "@ionic-native/file": "^4.10.1",
     "@ionic-native/file-chooser": "^4.10.1",
     "@ionic-native/file-path": "^4.10.1",
+    "@ionic-native/onesignal": "^4.20.0",
     "@ionic-native/qr-scanner": "^4.20.0",
     "@ionic-native/secure-storage": "^4.8.0",
     "@ionic-native/social-sharing": "^4.9.2",
@@ -62,6 +63,7 @@
     "ngx-currency": "^1.2.0",
     "ngx-kjua": "^1.1.3",
     "ngx-truncate": "0.0.1",
+    "onesignal-cordova-plugin": "2.4.6",
     "phonegap-plugin-barcodescanner": "^8.0.1",
     "rxjs": "5.5.11",
     "short-num": "^0.2.0",
@@ -94,7 +96,8 @@
       "cordova-plugin-filechooser": {},
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      },
+      "onesignal-cordova-plugin": {}
     },
     "platforms": [
       "ios",
