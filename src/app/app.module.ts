@@ -47,6 +47,7 @@ import { LocalCacheProvider } from '../providers/local-cache/local-cache';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { OneSignal } from '@ionic-native/onesignal';
 import { PostsProvider } from '../providers/posts/posts';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -65,6 +66,7 @@ import { PostsProvider } from '../providers/posts/posts';
     PipesModule,
     SharedModule,
     NgXtruncateModule,
+    MarkdownModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, AboutPage, HomePage],

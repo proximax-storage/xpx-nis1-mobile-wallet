@@ -32,7 +32,7 @@
         <ion-card-title>{{post.title}}</ion-card-title>
         <p *ngIf="!post.expanded" text-justify-start [innerHTML]="post.description" ></p>
 
-        <p *ngIf="post.expanded" text-justify-start [innerHTML]="post.content"></p>
+        <p *ngIf="post.expanded" text-justify-start [innerHTML]="post.content | markdown"></p>
 
 
 
