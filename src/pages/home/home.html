@@ -47,9 +47,9 @@
       </ion-slide>
   
   
-      <ion-slide>
+      <ion-slide  (click)="showAddWalletPrompt()">
           <div class="wallet" >
-              <div class="wallet-content" [ngClass]="'wallet-create'" (click)="showAddWalletPrompt()">
+              <div class="wallet-content" [ngClass]="'wallet-create'">
                 <img class="wallet-create-front-logo wallet-logo"
                   src="assets/imgs/wallet-add.svg">
                 <h2 class="wallet-create-title">Create a wallet</h2>

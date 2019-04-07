@@ -24,7 +24,7 @@
     </ion-item>
 
 
-    <ion-card *ngFor="let post of posts" (click)="showMore(post)">
+    <ion-card *ngFor="let post of posts" (click)="showMore(post);seenPost(post._id)">
 
       <img [src]="post.thumbnail">
 
@@ -32,21 +32,11 @@
         <ion-card-title>{{post.title}}</ion-card-title>
         <p *ngIf="!post.expanded" text-justify-start [innerHTML]="post.description" ></p>
 
-        <p *ngIf="post.expanded" text-justify-start [innerHTML]="post.content | markdown"></p>
-
-
-
-        <ion-item>
-          <!-- <ion-icon name='musical-notes' item-start style="color: #d03e84"></ion-icon> -->
-
-          <ion-badge item-start>{{post.category}}</ion-badge>
+        <p *ngIf="post.expanded" text-justify-start [ngxmarkdown]="post.content"></p>
+        <ion-item >
+          <ion-badge *ngFor="let tag of post.tags" item-start>{{tag.name}}</ion-badge>
           <ion-note item-end>{{post.readTime}} MIN READ</ion-note>
         </ion-item>
-
-        <!-- <expandable [expandHeight]="100" [expanded]="post.expanded">
-            Hello people
-        </expandable> -->
-
 
       </ion-card-content>
 

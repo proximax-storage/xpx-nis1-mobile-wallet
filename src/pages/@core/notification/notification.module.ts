@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { NotificationPage } from './notification';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule } from '@ngx-markdown/core';
 
 @NgModule({
   declarations: [
