@@ -55,9 +55,9 @@ export class LoginPage {
     this.storage.get('pin').then(pin => {
       this.utils.showModal('VerificationCodePage', {
         status: 'verify',
-        title: 'Verify your PIN CODE',
+        title: 'Wallet is secured',
         subtitle:
-          'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+          'Please enter your PIN',
         invalidPinMessage: 'Incorrect pin. Please try again',
         pin: pin,
         destination: 'TabsPage'

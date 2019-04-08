@@ -27,6 +27,7 @@ export class VerificationCodePage {
 
   previousPin = '';
   isVerify = false;
+  pinSubtitle: any;
 
   constructor(
     public navCtrl: NavController,
@@ -55,13 +56,21 @@ export class VerificationCodePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VerificationCodePage');
+    console.log(this.navParams.data, this.navParams.data.title, this.navParams.data.subtitle, this.navParams.data.invalidPinMessage);
+
     this.pinTitle = this.navParams.data.title
       ? this.navParams.data.title
-      : "Let's setup your PIN CODE";
+      : "Setup PIN";
+     
+    this.pinSubtitle = this.navParams.data.subtitle
+    ? this.navParams.data.subtitle
+    : "The following 6 PIN number is used to access your wallet. Please don't forget it: we won't be able to access your account.";
 
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
       : 'Your pin is not equal to previous one. Please try again.';
+
+
 
     this.storage.get('pin').then(pin => {
       console.log('VerificationCodePage : pin', pin);
@@ -75,9 +84,8 @@ export class VerificationCodePage {
   onSubmit(pin) {
     let data: any = {
       status: 'verify',
-      title: 'Verify your PIN CODE',
-      subtitle:
-        'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+      title: 'Repeat PIN',
+      subtitle: 'Let\'s double check',
       pin: pin
     };
     data.destination = this.navParams.data.destination

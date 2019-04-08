@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../../../providers/auth/auth';
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, App, ModalController, AlertController } from "ionic-angular";
 import { Clipboard } from "@ionic-native/clipboard";
@@ -35,7 +36,8 @@ export class SettingListPage {
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private authProvider: AuthProvider
   ) {}
 
   ionViewWillEnter() {
@@ -115,7 +117,17 @@ export class SettingListPage {
   }
 
   logOut() {
-    this.utils.setRoot('WelcomePage');
+    
+    this.authProvider.logout().then(_=> {
+      console.log("Logging out", _);
+      // this.utils.setTabIndex(0);
+      this.utils.setHardwareBackToPage("WelcomePage");
+      this.utils.setHardwareBack();
+      this.utils.setRoot('WelcomePage');
+    })
+    
+
+    
   }
   
 
