@@ -25,7 +25,7 @@ export class PinComponent implements OnChanges {
 
   inputPin: string = "";
   maxLength: number = 6;
-  keypadNums: number[] = [2, 3, 0, 8, 1, 6, 7, 9, 4, 5];
+  keypadNums: number[];
 
   styleClasses = {
     miss: false
@@ -59,25 +59,48 @@ export class PinComponent implements OnChanges {
   }
 
   handleInput(pin: string) {
-    console.log("PinComponent : Pin :", pin);
-
-    console.log("PinComponent : this.isVerify", this.isVerify);
-    console.log("PinComponent : this.previousPin", this.previousPin);
-    console.log(
-      "PinComponent : this.styleClasses.miss",
-      this.styleClasses.miss
-    );
-    this.inputPin.length;
-
     this.styleClasses.miss = false;
 
     if (this.inputPin.length !== this.maxLength) {
       this.inputPin += pin;
-      console.log("PinComponent : Pin length!==", this.inputPin.length);
+      console.log("PinComponent : this.inputPin", this.inputPin);
+      console.log("PinComponent : this.inputPin.length", this.inputPin.length);
+
+      console.log("PinComponent : this.previousPin", this.previousPin);
+      console.log(
+        "PinComponent : this.previousPin.length :",
+        this.previousPin.length
+      );
+
+      console.log(
+        "PinComponent : this.styleClasses.miss",
+        this.styleClasses.miss
+      );
+      console.log("PinComponent : this.isVerify", this.isVerify);
+
+      this.inputPin.length;
 
       if (this.inputPin.length === this.maxLength) {
         console.log("PinComponent : Pin length===", this.inputPin.length);
         if (this.isVerify && this.previousPin !== this.inputPin) {
+          console.log("PinComponent : this.inputPin", this.inputPin.length);
+          console.log(
+            "PinComponent : this.inputPin.length",
+            this.inputPin.length
+          );
+
+          console.log("PinComponent : this.previousPin", this.previousPin);
+          console.log(
+            "PinComponent : this.previousPin.length :",
+            this.previousPin.length
+          );
+
+          console.log(
+            "PinComponent : this.styleClasses.miss",
+            this.styleClasses.miss
+          );
+          console.log("PinComponent : this.isVerify", this.isVerify);
+
           this.styleClasses.miss = true;
         }
 

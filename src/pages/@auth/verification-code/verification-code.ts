@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import {
   IonicPage,
   NavController,
   NavParams,
   ViewController
-} from 'ionic-angular';
-import { Storage } from '@ionic/storage';
-import { AlertProvider } from '../../../providers/alert/alert';
-import { UtilitiesProvider } from '../../../providers/utilities/utilities';
+} from "ionic-angular";
+import { Storage } from "@ionic/storage";
+import { AlertProvider } from "../../../providers/alert/alert";
+import { UtilitiesProvider } from "../../../providers/utilities/utilities";
 
 /**
  * Generated class for the VerificationCodePage page.
@@ -18,14 +18,14 @@ import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 
 @IonicPage()
 @Component({
-  selector: 'page-verification-code',
-  templateUrl: 'verification-code.html'
+  selector: "page-verification-code",
+  templateUrl: "verification-code.html"
 })
 export class VerificationCodePage {
   pinTitle: string;
   invalidPinMessage: string;
 
-  previousPin = '';
+  previousPin = "";
   isVerify = false;
   pinSubtitle: any;
 
@@ -36,17 +36,18 @@ export class VerificationCodePage {
     public storage: Storage,
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider
-  ) { }
+  ) {}
 
   ionViewWillEnter() {
-    console.log('VerificationCodePage :: ionViewWillEnter',
+    console.log(
+      "VerificationCodePage :: ionViewWillEnter",
       !this.navParams.data.destination &&
-      this.navParams.data.status === 'verify'
+        this.navParams.data.status === "verify"
     );
 
     if (
       !this.navParams.data.destination &&
-      this.navParams.data.status === 'verify'
+      this.navParams.data.status === "verify"
     ) {
       this.utils.setHardwareBack();
     } else {
@@ -55,26 +56,29 @@ export class VerificationCodePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VerificationCodePage');
-    console.log(this.navParams.data, this.navParams.data.title, this.navParams.data.subtitle, this.navParams.data.invalidPinMessage);
+    console.log("ionViewDidLoad VerificationCodePage");
+    console.log(
+      this.navParams.data,
+      this.navParams.data.title,
+      this.navParams.data.subtitle,
+      this.navParams.data.invalidPinMessage
+    );
 
     this.pinTitle = this.navParams.data.title
       ? this.navParams.data.title
-      : "Setup PIN";
-     
+      : "Setup your 6-digit PIN";
+
     this.pinSubtitle = this.navParams.data.subtitle
-    ? this.navParams.data.subtitle
-    : "The following 6 PIN number is used to access your wallet. Please don't forget it: we won't be able to access your account.";
+      ? this.navParams.data.subtitle
+      : "The following 6 PIN number is used to access your wallet. Please don't forget it: you won't be able to access your account.";
 
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
-      : 'Your pin is not equal to previous one. Please try again.';
+      : "Your pin is not equal to previous one. Please try again.";
 
-
-
-    this.storage.get('pin').then(pin => {
-      console.log('VerificationCodePage : pin', pin);
-      if (this.navParams.data.status === 'verify') {
+    this.storage.get("pin").then(pin => {
+      console.log("VerificationCodePage : pin", pin);
+      if (this.navParams.data.status === "verify") {
         this.isVerify = true;
         this.previousPin = pin;
       }
@@ -82,46 +86,71 @@ export class VerificationCodePage {
   }
 
   onSubmit(pin) {
-    let data: any = {
-      status: 'verify',
-      title: 'Repeat PIN',
-      subtitle: 'Let\'s double check',
-      pin: pin
-    };
-    data.destination = this.navParams.data.destination
-      ? this.navParams.data.destination
-      : null;
 
-    if (this.navParams.data.status === 'confirm') {
-      return this.utils.showModal('VerificationCodePage', data);
-    }
+    let status:string = this.navParams.data.status;
+    let pinParams = this.navParams.data.pin;
+    let destination = this.navParams.data.destination;
+    
+    console.log(`status ${status}`)
 
-    if (
-      this.navParams.data.status === 'verify' &&
-      this.navParams.data.pin === pin
-    ) {
+    if (status === 'confirm') {
+      console.log("status === 'confirm'");
+
+      this.storage.set("pin", pin).then(pin => {
+        console.log("VerificationCodePage : pin", pin);
+
+        let page = "VerificationCodePage";
+        let data: any = {
+          status: "verify",
+          title: "Repeat PIN",
+          subtitle: "Let's double check",
+          pin: pin,
+          destination: 'TabsPage'
+        };
+
+        data.destination = destination ? destination   : null;
+        
+        return this.utils.showModal(page, data);
+      });
+
+    } 
+    
+    if (status === "verify" && pinParams === pin) {
+      console.log("status === 'verify && pinParams === pin");
+
+      console.log(`status ${status}`);
+      console.log(`isVerify ${this.isVerify}`);
+      console.log(`previousPin ${this.previousPin}`);
+      console.log(`pin ${pin}`);
+      console.log(`destination ${destination}`,);
+
+      let page = "TabsPage";
+      let data: any = {
+        status: "verify",
+        title: "Repeat PIN",
+        subtitle: "Let's double check",
+        pin: pin,
+        destination: 'TabsPage'
+      };
+
       this.isVerify = true;
       this.previousPin = pin;
 
-      return this.storage.set('pin', pin).then(_ => {
-        return this.storage.set('isModalShown', false);
-      }).then(_ => {
-        if (this.navParams.data.destination) {
-          return this.navCtrl.setRoot(this.navParams.data.destination, data, {
-            animate: true,
-            direction: 'forward'
-          });
-        } else {
-          this.viewCtrl.dismiss();
-        }
-      });
-    } else if (
-      this.navParams.data.status === 'verify' &&
-      this.navParams.data.pin !== pin
-    ) {
-      // this.isVerify = false;
-
-      // return this.alertProvider.showMessage(this.invalidPinMessage);
+      return this.storage
+        .set("pin", pin)
+        .then(_ => {
+          return this.storage.set("isModalShown", false);
+        })
+        .then(_ => {
+          if (page) {
+            return this.navCtrl.setRoot(page, data, {
+              animate: true,
+              direction: "forward"
+            });
+          } else {
+            this.viewCtrl.dismiss();
+          }
+        });
     }
   }
 }
