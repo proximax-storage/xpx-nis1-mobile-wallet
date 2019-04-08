@@ -70,7 +70,7 @@ export class VerificationCodePage {
 
     this.pinSubtitle = this.navParams.data.subtitle
       ? this.navParams.data.subtitle
-      : "The following 6 PIN number is used to access your wallet. Please don't forget it: you won't be able to access your account.";
+      : "The following  6-digit PIN  is used to access your wallet. Please don't forget it: you won't be able to access your account.";
 
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
