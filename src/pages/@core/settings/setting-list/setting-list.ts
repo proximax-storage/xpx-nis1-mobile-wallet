@@ -43,17 +43,12 @@ export class SettingListPage {
   ionViewWillEnter() {
     // this.utils.setTabIndex(0);
 
-    // this.walletProvider.getSelectedWallet().then(currentWallet => {
-    //   if (!currentWallet) {
-    //     this.utils.setRoot("WalletListPage");
-    //   } else {
-    //     this.currentWallet = currentWallet;
-    //     this.getAccountInfo();
-    //   }
-
-
-    // });
-  }
+  //   this.walletProvider.getSelectedWallet().then(currentWallet => {
+  //     if (currentWallet) {
+  //       this.currentWallet = currentWallet;
+  //     } 
+  //   });
+  // }
 
   // getAccountInfo() {
   //   this.nemProvider
@@ -114,6 +109,10 @@ export class SettingListPage {
 
   showComingSoon() {
     this.utils.showInsetModal("ComingSoonPage", {}, "small");
+  }
+
+  async backupWallet() {
+    this.navCtrl.push('WalletBackupPage', await this.walletProvider.getSelectedWallet);
   }
 
   logOut() {
