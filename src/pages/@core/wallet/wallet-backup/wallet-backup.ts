@@ -61,7 +61,7 @@ export class WalletBackupPage {
   init() {
     this.options = [
       {
-        name: 'Export as file',
+        name: 'Export as file', // TODO
         value: WalletBackupType.EXPORT_AS_FILE,
         icon: 'ios-folder-outline'
       },
