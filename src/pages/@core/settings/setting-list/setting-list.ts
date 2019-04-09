@@ -57,7 +57,7 @@ export class SettingListPage {
   //       this.accountInfo = accountInfo;
   //       console.log(this.accountInfo)
   //     });
-  // }
+  }
 
 
   ionViewDidLoad() {
