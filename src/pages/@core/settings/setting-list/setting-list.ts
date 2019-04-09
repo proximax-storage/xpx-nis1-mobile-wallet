@@ -9,6 +9,7 @@ import { WalletProvider } from "../../../../providers/wallet/wallet";
 import { NemProvider } from "../../../../providers/nem/nem";
 import { ToastProvider } from "./../../../../providers/toast/toast";
 import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
+import { TapticEngine } from '@ionic-native/taptic-engine';
 
 
 /**
@@ -37,18 +38,19 @@ export class SettingListPage {
     private utils: UtilitiesProvider,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private authProvider: AuthProvider
-  ) {}
+    private authProvider: AuthProvider,
+    private haptic: TapticEngine
+  ) { }
 
   ionViewWillEnter() {
     // this.utils.setTabIndex(0);
 
-  //   this.walletProvider.getSelectedWallet().then(currentWallet => {
-  //     if (currentWallet) {
-  //       this.currentWallet = currentWallet;
-  //     } 
-  //   });
-  // }
+    this.walletProvider.getSelectedWallet().then(currentWallet => {
+      if (currentWallet) {
+        this.currentWallet = currentWallet;
+      }
+    });
+  }
 
   // getAccountInfo() {
   //   this.nemProvider
@@ -57,7 +59,7 @@ export class SettingListPage {
   //       this.accountInfo = accountInfo;
   //       console.log(this.accountInfo)
   //     });
-  }
+  // }
 
 
   ionViewDidLoad() {
@@ -77,7 +79,7 @@ export class SettingListPage {
     modal.present();
   }
 
-  resetPIN()  {
+  resetPIN() {
     // Reset pin first.
     this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
   }
@@ -90,7 +92,7 @@ export class SettingListPage {
     alert.addButton({
       text: 'Yes',
       handler: data => {
-       this.resetPIN();
+        this.resetPIN();
       }
     });
 
@@ -98,11 +100,11 @@ export class SettingListPage {
   }
 
   gotoGuide() {
-    this.navCtrl.push('OnboardingPage', {preview: true});
+    this.navCtrl.push('OnboardingPage', { preview: true });
   }
-  
 
-  gotoMultisignInfoPage(){
+
+  gotoMultisignInfoPage() {
     this.showComingSoon();
     // this.navCtrl.push('MultisignAccountInfoPage'); // Todo : Implement gotoMultisignInfoPage
   }
@@ -111,24 +113,18 @@ export class SettingListPage {
     this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
 
-  async backupWallet() {
-    this.navCtrl.push('WalletBackupPage', await this.walletProvider.getSelectedWallet);
+  backupWallet() {
+    this.navCtrl.push('WalletBackupPage', this.currentWallet);
   }
 
   logOut() {
-    
-    this.authProvider.logout().then(_=> {
+    this.authProvider.logout().then(_ => {
+      this.haptic.selection();
       console.log("Logging out", _);
       // this.utils.setTabIndex(0);
       this.utils.setHardwareBackToPage("WelcomePage");
       this.utils.setHardwareBack();
       this.utils.setRoot('WelcomePage');
     })
-    
-
-    
   }
-  
-
-  
 }

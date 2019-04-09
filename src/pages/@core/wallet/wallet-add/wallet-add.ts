@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -38,6 +39,7 @@ export class WalletAddPage {
     private authProvider: AuthProvider,
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
+    private haptic: TapticEngine
   ) {
     this.init();
     this.walletColor = "wallet-1";
@@ -79,6 +81,7 @@ export class WalletAddPage {
         this.walletProvider.storeWallet(newWallet, this.walletColor).then(value => {
           return this.walletProvider.setSelectedWallet(newWallet);
         }).then(() => {
+          this.haptic.notification({ type: 'success' });
           this.gotoBackup(newWallet);
         });
       }

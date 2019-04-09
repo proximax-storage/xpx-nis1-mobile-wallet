@@ -9,6 +9,7 @@ import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { TapticEngine } from '@ionic-native/taptic-engine';
 
 /**
  * Generated class for the WalletUpdatePage page.
@@ -43,6 +44,7 @@ export class WalletUpdatePage {
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
     private viewCtrl: ViewController,
+    private haptic: TapticEngine
   ) {
     //this.walletColor = "wallet-1"; // to be change with current wallet color
     this.init();
@@ -87,7 +89,7 @@ export class WalletUpdatePage {
       {},
       {
         animate: true,
-        direction: 'forward'
+        // direction: 'forward'
       }
     );
   }
@@ -104,6 +106,7 @@ export class WalletUpdatePage {
             return this.walletProvider.setSelectedWallet(selectedWallet.wallet);
           })
           .then(selectedWallet => {
+            this.haptic.notification({ type: 'success' });
             this.goBack();
           });
       }

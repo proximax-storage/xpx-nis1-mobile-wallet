@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import {
   Component,
   Input,
@@ -33,7 +34,7 @@ export class PinComponent implements OnChanges {
 
   @Output() submit: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() {
+  constructor(private haptic: TapticEngine) {
     console.log(this.random9DigitNumberNotStartingWithZero());
     console.log(
       this.random9DigitNumberNotStartingWithZero()
@@ -102,6 +103,7 @@ export class PinComponent implements OnChanges {
           console.log("PinComponent : this.isVerify", this.isVerify);
 
           this.styleClasses.miss = true;
+          this.haptic.notification({ type: 'error' });
         }
 
         this.emitEvent();
