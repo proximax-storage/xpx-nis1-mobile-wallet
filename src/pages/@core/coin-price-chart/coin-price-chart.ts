@@ -295,7 +295,7 @@ export class CoinPriceChartPage {
   }
 
   openLink(link){
-    window.open(link,'_system', 'location=yes');
+    window.open(link, "_system");
   }
 
   dismiss() {
