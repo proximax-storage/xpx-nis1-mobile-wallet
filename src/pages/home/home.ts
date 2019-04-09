@@ -71,7 +71,8 @@ export class HomePage {
     // public coinPriceChartProvider: CoinPriceChartProvider,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
-    private storage: Storage
+    private storage: Storage,
+    private vibration: Vibration
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
@@ -257,6 +258,7 @@ export class HomePage {
   }
 
   onWalletPress(wallet) {
+    this.vibration.vibrate(200);
     this.selectedWallet = wallet;
 
     const actionSheet = this.actionSheetCtrl.create({
