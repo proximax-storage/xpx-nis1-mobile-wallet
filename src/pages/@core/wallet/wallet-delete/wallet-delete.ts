@@ -62,16 +62,14 @@ export class WalletDeletePage {
       {},
       {
         animate: true,
-        direction: 'forward'
+        // direction: 'forward'
       }
     );
   }
 
-  onSubmit() {
-    this.walletProvider
+  async onSubmit() {
+    await this.walletProvider
       .deleteWallet(this.selectedWallet)
-      .then(selectedWallet => {
-        return this.goBack();
-      });
+    return this.goBack();
   }
 }
