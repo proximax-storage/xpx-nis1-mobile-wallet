@@ -29,20 +29,20 @@
           <div id="numbers">
             <ion-grid>
               <ion-row>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('1')">1</button> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('2')">2</button> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('3')">3</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[0])">{{keypadNums[0]}}</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[1])">{{keypadNums[1]}}</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[2])">{{keypadNums[2]}}</button> </ion-col>
 
-                <ion-col col-4> <button ion-button clear (click)="handleInput('4')">4</button> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('5')">5</button> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('6')">6</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[3])">{{keypadNums[3]}}</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[4])">{{keypadNums[4]}}</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[5])">{{keypadNums[5]}}</button> </ion-col>
 
-                <ion-col col-4> <button ion-button clear (click)="handleInput('7')">7</button> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('8')">8</button> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('9')">9</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[6])">{{keypadNums[6]}}</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[7])">{{keypadNums[7]}}</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[8])">{{keypadNums[8]}}</button> </ion-col>
 
                 <ion-col col-4> <span></span> </ion-col>
-                <ion-col col-4> <button ion-button clear (click)="handleInput('0')">0</button> </ion-col>
+                <ion-col col-4> <button ion-button clear (click)="handleInput(keypadNums[9])">{{keypadNums[9]}}</button> </ion-col>
                 <ion-col col-4>
                   <button ion-button clear icon-only small (click)="backspace()">
                     <ion-icon name="arrow-round-back"></ion-icon>

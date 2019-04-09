@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { UtilitiesProvider } from '../providers/utilities/utilities';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,8 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private platform: Platform,
     private storage: Storage,
-    private utils: UtilitiesProvider
+    private utils: UtilitiesProvider,
+    private oneSignal: OneSignal
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -32,6 +34,22 @@ export class MyApp {
       });
       this.initOnPauseResume();
       this.showPin();
+
+
+      this.oneSignal.startInit('440ee37e-cfc8-4a61-8df8-87dfff255ce5', '1031485430046');
+
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+      this.oneSignal.handleNotificationReceived().subscribe((data) => {
+        // do something when notification is received
+        alert(data);
+      });
+
+      this.oneSignal.handleNotificationOpened().subscribe(() => {
+        // do something when a notification is opened
+      });
+
+      this.oneSignal.endInit();
     });
   }
 
@@ -93,7 +111,7 @@ export class MyApp {
       console.log('isModalShown:', !isModalShown)
       console.log('isAppPaused:', !isAppPaused)
       console.log('isLoggedIn:', isLoggedIn)
-      console.log('pin:', !!pin)
+      console.log('pin:', pin)
 
       console.log('showModal:',
         this.rootPage !== 'OnboardingPage' &&
@@ -103,6 +121,10 @@ export class MyApp {
         !!pin &&
         isLoggedIn
       )
+
+      if(pin == false) {
+        this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
+       }
 
       if (isAppPaused) {
         return this.storage.set('isAppPaused', false);
@@ -116,9 +138,8 @@ export class MyApp {
       ) {
         return this.utils.showModal('VerificationCodePage', {
           status: 'verify',
-          title: 'Verify your PIN CODE',
-          subtitle:
-            'Similar to a password, your PIN CODE should be kept secret because it allows access to important services like the ability to withdraw, change personal information, and more.',
+          title: 'Wallet is secured',
+          subtitle: 'Please enter your PIN',
           invalidPinMessage: 'Incorrect pin. Please try again',
           pin: pin
         });

@@ -3,6 +3,7 @@ import { IonicPage, NavController, Events, Tabs, ModalController } from 'ionic-a
 
 import { HomePage } from '../home/home';
 import { UtilitiesProvider } from '../../providers/utilities/utilities';
+import { PostsProvider } from '../../providers/posts/posts';
 
 @IonicPage()
 @Component({
@@ -16,11 +17,16 @@ export class TabsPage {
   tab4Root = 'SettingListPage';
 
   selectedIndex: number;
-  notificationCount: number = 2; // To do get read count from API
+  notificationCount: number = 0; // To do get read count from API
 
   @ViewChild(Tabs) public tabs: Tabs;
 
-  constructor(private navCtrl: NavController, public events: Events, private utils: UtilitiesProvider, private modalCtrl:ModalController) { }
+  constructor(private navCtrl: NavController, public events: Events, private utils: UtilitiesProvider, private modalCtrl: ModalController, private articles: PostsProvider) {
+    this.articles.getUnreadCount().then(count => {
+      console.log("Unread count", count);
+      this.notificationCount = count;
+    })
+   }
 
   ionViewWillEnter() {
     this.utils.setHardwareBack();

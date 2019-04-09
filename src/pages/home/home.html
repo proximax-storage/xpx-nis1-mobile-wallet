@@ -25,61 +25,37 @@
     </ion-item>
   </ion-list>
 
-  <ion-slides  slidesPerView="1.1" spaceBetween="0.5" (ionSlideDidChange)="slideChanged()">
-      <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
+  <ion-slides slidesPerView="1.1" spaceBetween="0.5" (ionSlideDidChange)="slideChanged()">
+    <ion-slide *ngFor="let wallet of wallets; trackBy: trackByName"
       [attr.selected]="selectedWallet?.name === wallet?.name ? true : null"
       (click)="showWalletDetails();onWalletSelect(wallet)" (press)="onWalletPress(wallet)">
-          <div class="wallet">
-              <div class="wallet-content" [ngClass]="wallet.walletColor" >
-                <img class="wallet-front-logo wallet-logo"
-                  src="assets/imgs/xpx-logo-white.png">
-                <p class="wallet-number">{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</p>
-                <div class="wallet-space-75">
-                  <span class="wallet-label">Wallet Name</span>
-                  <p class="wallet-info">{{ wallet.name }}</p>
-                </div>
-                <div class="wallet-space-25">
-                  <span class="wallet-label">Balance</span>
-                  <p class="wallet-info">${{ (wallet.total>0?wallet.total:0) | number : '1.2-2'}} USD</p>
-                </div>
-              </div>
-            </div>
-      </ion-slide>
-  
-  
-      <ion-slide>
-          <div class="wallet" >
-              <div class="wallet-content" [ngClass]="'wallet-create'" (click)="showAddWalletPrompt()">
-                <img class="wallet-create-front-logo wallet-logo"
-                  src="assets/imgs/wallet-add.svg">
-                <h2 class="wallet-create-title">Create a wallet</h2>
-                <p class="wallet-create-subtitle">It's free and you can create as many as you like.</p>
-                </div>
-            </div>
-      </ion-slide>
-
-      <!-- <ion-slide>
-          <div class="wallet">
-              <div class="wallet__part" [ngClass]="'wallet-4'">
-                <img class="wallet__front-logo wallet__logo"
-                  src="assets/imgs/xpx-logo-white.png">
-                <p class="wallet_numer">TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH</p>
-                <div class="wallet__space-75">
-                  <span class="wallet__label">Wallet Name</span>
-                  <p class="wallet__info">My Wallet</p>
-                </div>
-                <div class="wallet__space-25">
-                  <span class="wallet__label">Balance</span>
-                  <p class="wallet__info">100.00 USD</p>
-                </div>
-              </div>
-            </div>
-      </ion-slide> -->
-    </ion-slides>
+      <div class="wallet">
+        <div class="wallet-content" [ngClass]="wallet.walletColor">
+          <img class="wallet-front-logo wallet-logo" src="assets/imgs/xpx-logo-white.png">
+          <p class="wallet-number">{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</p>
+          <div class="wallet-space-75">
+            <span class="wallet-label">Wallet Name</span>
+            <p class="wallet-info">{{ wallet.name }}</p>
+          </div>
+          <div class="wallet-space-25">
+            <span class="wallet-label">Balance</span>
+            <p class="wallet-info">${{ (wallet.total>0?wallet.total:0) | number : '1.2-2'}} USD</p>
+          </div>
+        </div>
+      </div>
+    </ion-slide>
 
 
-
-
+    <ion-slide (click)="showAddWalletPrompt()">
+      <div class="wallet">
+        <div class="wallet-content" [ngClass]="'wallet-create'">
+          <img class="wallet-create-front-logo wallet-logo" src="assets/imgs/wallet-add.svg">
+          <h2 class="wallet-create-title">Create a wallet</h2>
+          <p class="wallet-create-subtitle">It's free and you can create as many as you like.</p>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
 
   <ion-grid normal>
     <ion-segment mode='md' [(ngModel)]="menu" color="dark">
@@ -115,36 +91,15 @@
         </ion-card-header>
       </ion-card>
 
-      <section [hidden]="mosaics">
+      <section *ngIf="!mosaics && isLoading">
         <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
-          <ion-card-header no-padding>
-            <ion-item>
-              <section image item-left></section>
-              <h2> &nbsp; </h2>
-              <p> &nbsp; </p>
-
-              <section item-right>
-                <h2> &nbsp; </h2>
-                <p>
-                  <small> &nbsp; </small>
-                </p>
-              </section>
-            </ion-item>
-          </ion-card-header>
-          <ion-card-content line no-padding>
-            <!-- <ion-item>
-                  <h2> &nbsp; </h2>
-                  <p>
-                    <small> &nbsp; </small>
-                  </p>
-                </ion-item> -->
-          </ion-card-content>
+          <skeleton-loader></skeleton-loader>
         </ion-card>
-        <!-- <ion-card no-border>
-              <ion-item text-center>
-                <ion-spinner name="dots"></ion-spinner>
-              </ion-item>
-            </ion-card> -->
+        <ion-card no-border>
+          <ion-item text-center>
+            <ion-spinner name="dots"></ion-spinner>
+          </ion-item>
+        </ion-card>
       </section>
     </ion-list>
 
@@ -162,7 +117,7 @@
           <img quarter-width [src]="AppConfig.STICKERS.SORRY">
 
           <h6 ion-text color="grey" text-wrap>
-            <strong>Your mosaics will appear here, none at the moment</strong>
+            <strong>Your mosaics will appear here. There are none at the moment.</strong>
           </h6>
 
         </ion-col>
@@ -177,47 +132,8 @@
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
       <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
-        <ion-card-header>
-          <p float-left> &nbsp; </p>
-
-          <p float-right> &nbsp; </p>
-        </ion-card-header>
-        <ion-card-header no-padding>
-          <ion-item>
-            <section image item-left></section>
-            <h2> &nbsp; </h2>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-
-            <section item-right>
-              <h2> &nbsp; </h2>
-              <p>
-                <small> &nbsp; </small>
-              </p>
-            </section>
-          </ion-item>
-        </ion-card-header>
-        <ion-card-content line no-padding>
-          <ion-item>
-            <h2> &nbsp; </h2>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-
-            <section text-right item-right>
-              <p>
-                <small> &nbsp; </small>
-              </p>
-
-              <p>
-                <small> &nbsp; </small>
-              </p>
-            </section>
-          </ion-item>
-        </ion-card-content>
+        <skeleton-loader></skeleton-loader>
       </ion-card>
-
       <ion-card no-border>
         <ion-item text-center>
           <ion-spinner name="dots"></ion-spinner>
@@ -294,17 +210,7 @@
       </ion-card>
 
     </ion-list>
-    <!-- ./Transactions -->
 
-    <!-- Infinite scroll -->
-    <!-- <div *ngIf="!showEmptyTransaction">
-      <ion-infinite-scroll (ionInfinite)="doInfinite()">
-        <ion-infinite-scroll-content loadingSpinner="dots" loadingText="Loading more transactions">
-        </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </div> -->
-
-    <!-- ./Infinite scroll -->
 
     <ion-grid empty *ngIf="showEmptyTransaction">
       <ion-row>
@@ -320,7 +226,7 @@
           <img quarter-width [src]="AppConfig.STICKERS.SORRY">
 
           <h6 ion-text color="grey" text-wrap>
-            <strong>Your transactions will appear here, none at the moment</strong>
+            <strong>Your transactions will appear here. There are none at the moment.</strong>
           </h6>
 
         </ion-col>

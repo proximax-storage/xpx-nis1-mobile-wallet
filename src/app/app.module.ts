@@ -45,6 +45,9 @@ import { NgXtruncateModule } from 'ngx-truncate';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { LocalCacheProvider } from '../providers/local-cache/local-cache';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
+import { OneSignal } from '@ionic-native/onesignal';
+import { PostsProvider } from '../providers/posts/posts';
+import { MarkdownModule } from '@ngx-markdown/core';
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -63,6 +66,7 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
     PipesModule,
     SharedModule,
     NgXtruncateModule,
+    MarkdownModule.forRoot()    
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, AboutPage, HomePage],
@@ -80,9 +84,7 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
     FilePath,
     File,
     Clipboard,
-
     DecimalPipe,
-
     App,
     AuthProvider,
     NemProvider,
@@ -102,7 +104,9 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
     MockDataProvider,
     BarcodeScanner,
     LocalCacheProvider,
-    LocalStorageProvider
+    LocalStorageProvider,
+    OneSignal,
+    PostsProvider
   ]
 })
 export class AppModule {}

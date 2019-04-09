@@ -16,18 +16,18 @@
 
 <ion-content background>
 
-    <ion-list title transparent>
-        <ion-item transparent>
-            <h2 padding-left title color="dark">
-                <strong>
-                    Settings
-                </strong>
-              </h2>
-        </ion-item>
-      </ion-list>
+  <ion-list title transparent>
+    <ion-item transparent>
+      <h2 padding-left title color="dark">
+        <strong>
+          Settings
+        </strong>
+      </h2>
+    </ion-item>
+  </ion-list>
 
-      <br>
-      <br>
+  <br>
+  <br>
 
 
   <!-- QR code of NEM address -->
@@ -88,33 +88,33 @@
 
     <section></section> -->
 
-      <!-- <ion-card (click)="gotoAccountDetails()">
+    <ion-card (click)="backupWallet()">
           <ion-item>
-            <ion-icon item-left name="ios-person-outline"></ion-icon>
-            <h2>Account details</h2>
-            <p text-wrap>Manage your account details such as username, password and pin</p>
+            <ion-icon item-left name="ios-download-outline"></ion-icon>
+            <h2>Backup Wallet</h2>
+            <p text-wrap>A wallet backup protects your digital assets against software failure. It may also help you retrieve your account after your device was stolen or lost.</p>
           </ion-item>
-        </ion-card> -->
+        </ion-card>
 
-        <ion-card (click)="showResetPINPrompt()">
-            <ion-item>
-              <ion-icon item-left name="ios-key-outline"></ion-icon>
-              <h2>Reset PIN</h2>
-              <p text-wrap>Manage your account details such as username, password and pin</p>
-            </ion-item>
-          </ion-card>
+    <ion-card (click)="showResetPINPrompt()">
+      <ion-item>
+        <ion-icon item-left name="ios-key-outline"></ion-icon>
+        <h2>Reset PIN</h2>
+        <p text-wrap>Manage your account details such as username, password and pin</p>
+      </ion-item>
+    </ion-card>
 
 
     <ion-card (click)="gotoGuide()">
-        <ion-item>
-          <ion-icon item-left name="ios-information-circle-outline"></ion-icon>
-          <h2>Wallet Guide</h2>
-          <p text-wrap>What you need to know and take appropriate steps to secure your wallet. </p>
-        </ion-item>
-      </ion-card>
+      <ion-item>
+        <ion-icon item-left name="ios-information-circle-outline"></ion-icon>
+        <h2>Wallet Guide</h2>
+        <p text-wrap>What you need to know and take appropriate steps to secure your wallet. </p>
+      </ion-item>
+    </ion-card>
 
     <ion-card (click)="logOut()">
-      <ion-item >
+      <ion-item>
         <ion-icon item-left name="ios-unlock-outline"></ion-icon>
         <h2>Logout</h2>
         <p text-wrap>End a session of your account.</p>

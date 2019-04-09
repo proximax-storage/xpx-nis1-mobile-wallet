@@ -21,28 +21,28 @@ export class MockDataProvider {
   }
 
   private initData() {
-    this.pin = '';
+    this.pin = '1111';
 
     this.accounts = [
       {
-        email: 'ninja@nem.io',
+        email: 'apps@proximax.io',
         password: '123qweasd'
       }
     ];
 
     this.wallets = {
-      'ninja@nem.io': [
+      'apps@proximax.io': [
         'eyJuYW1lIjoiVGVzdCB3YWxsZXQiLCJuZXR3b3JrIjoiMTA0IiwiYWRkcmVzcyI6Ik5CRFVMT0VIRVhaUVFLSFZITFVPTk81NlJKREZCNTNQSlJUWEtXMzUiLCJjcmVhdGlvbkRhdGUiOiIyMDE4LTA4LTEyVDIwOjQ0OjE2Ljk4NiIsInNjaGVtYSI6MSwidHlwZSI6InNpbXBsZSIsImVuY3J5cHRlZFByaXZhdGVLZXkiOiJiY2Q1NWY4NTJmNmJmNGNmYTJhMzFlMGQ1MzQwM2IyZDk4NDc3NDQ0NTM0NDNhODUyYmRmZDM4ZTVmY2E4MWZjMjgwMDM3NWVmNWVjYTAyNWUyYzBjMjQ1ZjkyZTliM2QiLCJpdiI6ImJlZjhlMGIyNjEzYTE3YjRhYzMxYWNjZWNkMzNmOWI5In0='
       ]
     };
 
     this.selectedAccount = {
-      email: 'ninja@nem.io',
+      email: 'apps@proximax.io',
       password: '123qweasd'
     };
 
     this.selectedWallet = {
-      'ninja@nem.io': 'eyJuYW1lIjoiVGVzdCB3YWxsZXQiLCJuZXR3b3JrIjoiMTA0IiwiYWRkcmVzcyI6Ik5CRFVMT0VIRVhaUVFLSFZITFVPTk81NlJKREZCNTNQSlJUWEtXMzUiLCJjcmVhdGlvbkRhdGUiOiIyMDE4LTA4LTEyVDIwOjQ0OjE2Ljk4NiIsInNjaGVtYSI6MSwidHlwZSI6InNpbXBsZSIsImVuY3J5cHRlZFByaXZhdGVLZXkiOiJiY2Q1NWY4NTJmNmJmNGNmYTJhMzFlMGQ1MzQwM2IyZDk4NDc3NDQ0NTM0NDNhODUyYmRmZDM4ZTVmY2E4MWZjMjgwMDM3NWVmNWVjYTAyNWUyYzBjMjQ1ZjkyZTliM2QiLCJpdiI6ImJlZjhlMGIyNjEzYTE3YjRhYzMxYWNjZWNkMzNmOWI5In0='
+      'apps@proximax.io': 'eyJuYW1lIjoiVGVzdCB3YWxsZXQiLCJuZXR3b3JrIjoiMTA0IiwiYWRkcmVzcyI6Ik5CRFVMT0VIRVhaUVFLSFZITFVPTk81NlJKREZCNTNQSlJUWEtXMzUiLCJjcmVhdGlvbkRhdGUiOiIyMDE4LTA4LTEyVDIwOjQ0OjE2Ljk4NiIsInNjaGVtYSI6MSwidHlwZSI6InNpbXBsZSIsImVuY3J5cHRlZFByaXZhdGVLZXkiOiJiY2Q1NWY4NTJmNmJmNGNmYTJhMzFlMGQ1MzQwM2IyZDk4NDc3NDQ0NTM0NDNhODUyYmRmZDM4ZTVmY2E4MWZjMjgwMDM3NWVmNWVjYTAyNWUyYzBjMjQ1ZjkyZTliM2QiLCJpdiI6ImJlZjhlMGIyNjEzYTE3YjRhYzMxYWNjZWNkMzNmOWI5In0='
     };
   }
 
@@ -63,7 +63,8 @@ export class MockDataProvider {
       const SELECTED_ACCOUNT = results[3];
       const SELECTED_WALLET = results[4];
 
-      if (!PIN) this.storage.set('pin', this.pin);
+      // if (!PIN) this.storage.set('pin', this.pin); // TODO Enable during testing by ios
+      if (!PIN) this.storage.set('pin', false); // TODO Disable during production
       if (!ACCOUNTS) this.storage.set('accounts', this.accounts);
       if (!WALLETS) this.storage.set('wallets', this.wallets);
       if (!SELECTED_ACCOUNT) this.storage.set('selectedAccount', this.selectedAccount);

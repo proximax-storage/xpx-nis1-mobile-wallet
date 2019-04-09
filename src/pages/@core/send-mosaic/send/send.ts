@@ -344,6 +344,7 @@ export class SendPage {
           mosaic: this.selectedMosaic,
           sendTx: transferTransaction,
           currentWallet: this.currentWallet,
+          transactionType: 'normal',
           total: total
         }, {
             enableBackdropDismiss: false,

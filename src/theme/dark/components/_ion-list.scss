@@ -50,38 +50,70 @@ ion-list[transparent-items] {
       font-size: 0.7rem;
     }
   }
+
+  
   
   ion-card[no-margin-bottom] {
     margin-bottom: .5rem !important;
   }
+  
+  ion-card[notification] {
+    margin-bottom: .5rem !important;
+    ion-item[notification] {
+     margin: 8px -24px -20px 12px !important;
+
+
+     ion-avatar[notification]{
+      margin: 8px 0px 0px 5px !important;
+      min-width: 80px;
+      min-height: 80px;
+      img{
+        width: 64px;
+        height: 64px;
+        border-radius: 1%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        box-shadow: 1px 1px 8px 0.1px rgba(0.1,0.1,0.1,0.4);
+     }
+    }
+
+     .item-inner > .input-wrapper {
+      ion-label {
+        // margin-top: -12px !important;
+        margin: -12px 21px 11px 0px;
+        h3 {
+          font-weight: bold;    
+        }
+      }
+    }
+   } 
+ }
+
   ion-card-header {
-    padding-bottom: 0;
+    padding: 0;
+    &[reduce-transfer-tx-header] {
+      margin: -5px 0 -5px 0;
+    }
+    &[reduce-multisig-tx-header] {
+      margin: -10px 0 -5px 0;
+    }
+    &[time-stamp-header] {
+      margin: 6px 15px 0px 16px;
+    }
+    > ion-item[multisig-status]{
+      margin: -25px 0 -8px 0px;
+    }
   }
   ion-card-header:nth-child(n+2) {
     padding: 0;
   }
-
-  ion-card-header[transaction-header] {
-    padding-top: 7px !important;
-    margin-bottom: -17px !important;
-    >p {
-      padding-bottom: 4px;
-    }
-  }
-  ion-card-header[transaction] {
-    margin-bottom: -20px !important;
-  }
-
-  ion-card-content[transaction-footer]{
-    border-top: 0;
-    margin-top: -24px;
-    ion-item{
-      margin-bottom: -2px !important;
-    }
-  }
-
   ion-card-content {
     border-top: 0;
+
+    ion-item[cosigners] {
+      margin: -12px 0 -5px 0;
+    } 
   }
 
   ion-item-sliding {

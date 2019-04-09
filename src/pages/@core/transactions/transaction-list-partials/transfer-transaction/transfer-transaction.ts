@@ -33,7 +33,7 @@ export class TransferTransactionComponent {
   private _getMosaics() {
     try {
       this.nemProvider.getMosaicsDefinition(this.tx.mosaics()).subscribe(mosaics => {
-        this.mosaics = mosaics;
+        console.log(mosaics);
         this.hasLevy = this.mosaics.filter(mosaic => mosaic.levy).length
           ? true
           : false;

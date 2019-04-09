@@ -68,6 +68,8 @@ export class AuthProvider {
         message: ''
       };
       let accountExists = findIndex(ACCOUNTS, accountFromInput);
+      console.log("Accounts", ACCOUNTS);
+      console.log("accountExists", accountExists);
 
       if (accountExists === -1) {
         response = {

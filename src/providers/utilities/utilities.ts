@@ -55,11 +55,14 @@ export class UtilitiesProvider {
   }
 
   setRoot(page: string, data = {}) {
-    console.log(this.app.getActiveNav());
+    console.log(this.app.getActiveNavs());
     this.app.getRootNavs()[0].setRoot(page, data, {
       animate: true,
-      direction: 'backward'
-    });
+      // direction: 'backward'
+    }).then(() =>{
+      this.app.navPop();
+      //....
+  });;
   }
 
   copy(text: string, type: string) {

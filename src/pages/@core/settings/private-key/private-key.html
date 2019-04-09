@@ -67,21 +67,22 @@
           </ion-card>
 
           <ion-grid normal no-spacing>
-            <ion-row justify-content-center>
-              <ion-col col-3></ion-col>
-              <ion-col col-3 text-center>
-                <button gradient-button small color-5 type="button" color="black" (click)="copy()">
-                  <ion-icon name="copy"></ion-icon>
-                </button>
-              </ion-col>
-              <ion-col col-3 text-center>
-                <button gradient-button small color-5 type="button" color="black" (click)="share()">
-                  <ion-icon name="share"></ion-icon>
-                </button>
-              </ion-col>
-              <ion-col col-3></ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-row justify-content-center>
+                <ion-col col-6>
+                  <button gradient-button medium color-5 ion-button icon-end no-margin (click)="copy()">
+                      Copy
+                    <ion-icon name="ios-copy-outline"></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col col-6>
+                  <button gradient-button medium color-5 ion-button icon-end no-margin (click)="share()">
+                      Share
+                    <ion-icon name="ios-share-outline"></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col col-2></ion-col>
+              </ion-row>
+            </ion-grid>
 
         </ion-list>
       </ion-col>

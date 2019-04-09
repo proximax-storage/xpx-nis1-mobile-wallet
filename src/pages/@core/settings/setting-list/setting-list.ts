@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../../../providers/auth/auth';
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, App, ModalController, AlertController } from "ionic-angular";
 import { Clipboard } from "@ionic-native/clipboard";
@@ -35,23 +36,19 @@ export class SettingListPage {
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private authProvider: AuthProvider
   ) {}
 
   ionViewWillEnter() {
     // this.utils.setTabIndex(0);
 
-    // this.walletProvider.getSelectedWallet().then(currentWallet => {
-    //   if (!currentWallet) {
-    //     this.utils.setRoot("WalletListPage");
-    //   } else {
-    //     this.currentWallet = currentWallet;
-    //     this.getAccountInfo();
-    //   }
-
-
-    // });
-  }
+  //   this.walletProvider.getSelectedWallet().then(currentWallet => {
+  //     if (currentWallet) {
+  //       this.currentWallet = currentWallet;
+  //     } 
+  //   });
+  // }
 
   // getAccountInfo() {
   //   this.nemProvider
@@ -60,7 +57,7 @@ export class SettingListPage {
   //       this.accountInfo = accountInfo;
   //       console.log(this.accountInfo)
   //     });
-  // }
+  }
 
 
   ionViewDidLoad() {
@@ -114,8 +111,22 @@ export class SettingListPage {
     this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
 
+  async backupWallet() {
+    this.navCtrl.push('WalletBackupPage', await this.walletProvider.getSelectedWallet);
+  }
+
   logOut() {
-    this.utils.setRoot('WelcomePage');
+    
+    this.authProvider.logout().then(_=> {
+      console.log("Logging out", _);
+      // this.utils.setTabIndex(0);
+      this.utils.setHardwareBackToPage("WelcomePage");
+      this.utils.setHardwareBack();
+      this.utils.setRoot('WelcomePage');
+    })
+    
+
+    
   }
   
 

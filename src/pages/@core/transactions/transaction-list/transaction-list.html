@@ -56,61 +56,18 @@
 </ion-header>
 
 <ion-content background>
-
-  
-
-
   <!-- Skeleton loader -->
   <ion-list transparent-items *ngIf="isLoading">
     <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
 
-    <ion-card  no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
-      <ion-card-header>
-        <p float-left> &nbsp; </p>
-
-        <p float-right> &nbsp; </p>
-      </ion-card-header>
-      <ion-card-header no-padding>
-        <ion-item>
-          <section image item-left></section>
-          <h2> &nbsp; </h2>
-          <p>
-            <small> &nbsp; </small>
-          </p>
-
-          <section item-right>
-            <h2> &nbsp; </h2>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h2> &nbsp; </h2>
-          <p>
-            <small> &nbsp; </small>
-          </p>
-
-          <section text-right item-right>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-
-            <p>
-              <small> &nbsp; </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card no-border>
-      <ion-item text-center>
-        <ion-spinner name="dots"></ion-spinner>
-      </ion-item>
-    </ion-card>
+    <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
+      <skeleton-loader></skeleton-loader>
+  </ion-card>
+  <ion-card no-border>
+    <ion-item text-center>
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-item>
+  </ion-card>
   </ion-list>
   <!-- ./Skeleton loader -->
 
@@ -202,7 +159,7 @@
             </h4> -->
 
         <h6 ion-text color="grey" text-wrap>
-          <strong>Your transactions will appear here, none at the moment</strong>
+          <strong>Your transactions will appear here. There are none at the moment.</strong>
         </h6>
 
         <!-- <p text-wrap>

@@ -212,29 +212,29 @@ export class TransactionListPage {
             text: 'Normal Transaction',
             handler: () => {
               let page = 'SendPage';
-              this.showModal(page,{})
+              this.showModal(page,{ mosaicSelectedName: 'xpx'})
             }
           },
           {
             text: 'Multisig Transaction',
             handler: () => {
-              this.showModal(page,{})
+              this.showModal(page,{ mosaicSelectedName: 'xpx'})
             }
           },
           {
             text: 'Cancel',
             role: 'cancel',
             handler: () => {
-              // this.showModal(page,{})
+              // this.showModal(page,{ mosaicSelectedName: 'xpx'})
             }
           }
         ]
       });
       actionSheet.present();
-      // this.showModal(page,{})
+      // this.showModal(page,{ mosaicSelectedName: 'xpx'})
     } else {
        let page = "SendPage"; 
-       this.showModal(page,{})
+       this.showModal(page,{ mosaicSelectedName: 'xpx'})
     }
   }
 

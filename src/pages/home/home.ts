@@ -11,6 +11,7 @@ import sortBy from 'lodash/sortBy';
 import { GetMarketPricePipe } from '../../pipes/get-market-price/get-market-price';
 import { NemProvider } from '../../providers/nem/nem';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 
 export enum WalletCreationType {
@@ -69,10 +70,16 @@ export class HomePage {
     // public coingeckoProvider: CoingeckoProvider,
     // public coinPriceChartProvider: CoinPriceChartProvider,
     private modalCtrl: ModalController,
-    private nemProvider: NemProvider
+    private nemProvider: NemProvider,
+    private storage: Storage
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
+
+    // Check if pin is not setup
+    let pin = this.storage.get("pin");
+    console.log("PIN", pin)
+   
   }
 
   doRefresh(refresher) {
@@ -108,12 +115,12 @@ export class HomePage {
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           // console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-          this.getBalance(this.selectedWallet);
           this.getTransactions(this.selectedWallet);
+          this.getBalance(this.selectedWallet);
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
-          this.getBalance(this.selectedWallet);
           this.getTransactions(this.selectedWallet);
+          this.getBalance(this.selectedWallet);
         });
       } else {
         this.showEmptyTransaction = true;
@@ -137,9 +144,9 @@ export class HomePage {
   }
   getTransactions(selectedWallet: SimpleWallet) {
     // console.log("getTransactions",selectedWallet);
-    this.confirmedTransactions=null;
-    this.unconfirmedTransactions=null;
-    this.isLoading = true;
+    // this.confirmedTransactions=null;
+    // this.unconfirmedTransactions=null;
+    // this.isLoading = true;
 
     this.pageable = this.nemProvider.getAllTransactionsPaginated(
       selectedWallet.address
@@ -156,10 +163,10 @@ export class HomePage {
     this.pageable
       .map((txs: any) => txs ? txs : Observable.empty())
       .subscribe(result => {
+        this.confirmedTransactions = result;
         // console.info("Transactions", result);
         this.isLoading = false;
         this.showEmptyTransaction = false;
-        this.confirmedTransactions = result;
         if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
       },
         err => console.error(err),

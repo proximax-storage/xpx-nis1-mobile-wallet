@@ -37,7 +37,7 @@
       <ion-card amount>
         <ion-item>
           <ion-label>
-            <input (input)="calculateFee()" (focusout)="calculateFee()" currencyMask maxlength="20" type="tel"
+            <input currencyMask maxlength="20" type="tel"
               formControlName="amount"
               [options]="inputOptions" [(ngModel)]="amount">
           </ion-label>
@@ -79,8 +79,7 @@
       <!-- Recipient -->
       <ion-card no-margin-bottom>
         <ion-item>
-          <ion-input formControlName="recipientAddress" type="text" value="" placeholder="Address"
-            (input)="calculateFee()" (focusout)="calculateFee()"></ion-input>
+          <ion-input (input)="calculateFee()" formControlName="recipientAddress" type="text" value="" placeholder="Address"></ion-input>
           <button clear item-right ion-button icon-only (click)="scan()">
             <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
           </button>
@@ -91,19 +90,9 @@
       <ion-card>
         <ion-item no-border>
           <ion-textarea ion-text color="black" autosize rows="2" ion-text color="black" formControlName="message"
-            placeholder="Notes(Optional)" (input)="calculateFee()" (focus)="calculateFee()"></ion-textarea>
+            placeholder="Notes(Optional)"></ion-textarea>
         </ion-item>
       </ion-card>
-
-      <!-- Fee -->
-      <ion-item text-center>
-        <!-- <ion-icon name="ios-cash-outline" item-start></ion-icon> -->
-        Fee
-        <ion-badge>{{fee | number:'1.6-6'}}</ion-badge>
-      </ion-item>
-
-
-
 
     </form>
 
