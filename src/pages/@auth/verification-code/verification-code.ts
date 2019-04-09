@@ -80,7 +80,11 @@ export class VerificationCodePage {
       console.log("VerificationCodePage : pin", pin);
       if (this.navParams.data.status === "verify") {
         this.isVerify = true;
-        this.previousPin = pin;
+        if(pin) {
+          this.previousPin = pin;
+        } else {
+          this.previousPin = this.navParams.data.pin;
+        }
       }
     });
   }
