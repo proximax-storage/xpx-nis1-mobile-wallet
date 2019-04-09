@@ -76,9 +76,11 @@ export class SendMosaicConfirmationPage {
   }
 
   onSubmit() {
-    if (this.data.transactionType = 'multisig') {
-      const multisigAccountPublicKey: string = this.data.publicKey;
+    console.log(this.data.transactionType);
+    if (this.data.transactionType == 'multisig') {
+      console.log("Multisig transfer");
       if (this._allowedToSendTx()) {
+        const multisigAccountPublicKey: string = this.data.publicKey;
         this.nemProvider.confirmMultisigTransaction(
           this.data.sendTx,
           multisigAccountPublicKey,
@@ -96,7 +98,9 @@ export class SendMosaicConfirmationPage {
       } else {
         this.alertProvider.showMessage('Invalid password. Please try again.');
       }
-    } else {
+    } else if (this.data.transactionType = 'normal'){
+      console.log("Normal transfer");
+
       if (this._allowedToSendTx()) {
         this.nemProvider
           .confirmTransaction(
