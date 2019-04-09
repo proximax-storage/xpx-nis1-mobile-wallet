@@ -257,6 +257,8 @@ export class HomePage {
   }
 
   onWalletPress(wallet) {
+    window.navigator.vibrate(200); // vibrate for 200ms
+    
     this.selectedWallet = wallet;
 
     const actionSheet = this.actionSheetCtrl.create({
