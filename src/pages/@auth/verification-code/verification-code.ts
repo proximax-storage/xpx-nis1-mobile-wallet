@@ -95,10 +95,7 @@ export class VerificationCodePage {
 
     if (status === 'confirm') {
       console.log("status === 'confirm'");
-
-      this.storage.set("pin", pin).then(pin => {
         console.log("VerificationCodePage : pin", pin);
-
         let page = "VerificationCodePage";
         let data: any = {
           status: "verify",
@@ -107,12 +104,7 @@ export class VerificationCodePage {
           pin: pin,
           destination: 'TabsPage'
         };
-
-        // data.destination = destination ? destination   : null;
-        
         return this.utils.showModal(page, data);
-      });
-
     } 
     
     if (status === "verify" && pinParams === pin) {

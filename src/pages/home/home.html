@@ -91,7 +91,7 @@
         </ion-card-header>
       </ion-card>
 
-      <section [hidden]="mosaics">
+      <section *ngIf="!mosaics && isLoading">
         <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
           <skeleton-loader></skeleton-loader>
         </ion-card>

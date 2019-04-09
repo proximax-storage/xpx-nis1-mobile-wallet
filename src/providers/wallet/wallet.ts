@@ -102,7 +102,7 @@ export class WalletProvider {
         console.log(result, wallet);
         result.map((res,index)=> {
           if (res.wallet.name == wallet.name) {
-            // const walletIndex = findIndex(result, wallet);
+            console.log("Deleting your wallet: ", wallet.name)
             result.splice(index, 1);
 
             result = result.map(_ => {

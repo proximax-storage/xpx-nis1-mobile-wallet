@@ -63,7 +63,8 @@ export class MockDataProvider {
       const SELECTED_ACCOUNT = results[3];
       const SELECTED_WALLET = results[4];
 
-      if (!PIN) this.storage.set('pin', this.pin);
+      // if (!PIN) this.storage.set('pin', this.pin); // TODO Enable during testing by ios
+      if (!PIN) this.storage.set('pin', false); // TODO Disable during production
       if (!ACCOUNTS) this.storage.set('accounts', this.accounts);
       if (!WALLETS) this.storage.set('wallets', this.wallets);
       if (!SELECTED_ACCOUNT) this.storage.set('selectedAccount', this.selectedAccount);

@@ -11,6 +11,7 @@ import sortBy from 'lodash/sortBy';
 import { GetMarketPricePipe } from '../../pipes/get-market-price/get-market-price';
 import { NemProvider } from '../../providers/nem/nem';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 
 export enum WalletCreationType {
@@ -69,10 +70,16 @@ export class HomePage {
     // public coingeckoProvider: CoingeckoProvider,
     // public coinPriceChartProvider: CoinPriceChartProvider,
     private modalCtrl: ModalController,
-    private nemProvider: NemProvider
+    private nemProvider: NemProvider,
+    private storage: Storage
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
+
+    // Check if pin is not setup
+    let pin = this.storage.get("pin");
+    console.log("PIN", pin)
+   
   }
 
   doRefresh(refresher) {

@@ -111,7 +111,7 @@ export class MyApp {
       console.log('isModalShown:', !isModalShown)
       console.log('isAppPaused:', !isAppPaused)
       console.log('isLoggedIn:', isLoggedIn)
-      console.log('pin:', !!pin)
+      console.log('pin:', pin)
 
       console.log('showModal:',
         this.rootPage !== 'OnboardingPage' &&
@@ -121,6 +121,10 @@ export class MyApp {
         !!pin &&
         isLoggedIn
       )
+
+      if(pin == false) {
+        this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
+       }
 
       if (isAppPaused) {
         return this.storage.set('isAppPaused', false);
