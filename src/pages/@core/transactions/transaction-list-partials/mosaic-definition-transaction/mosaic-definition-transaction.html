@@ -6,7 +6,7 @@
     {{ tx.timeWindow.timeStamp.toString() | timeago }}
   </p>
 </ion-card-header>
-<ion-card-header no-padding>
+<ion-card-header no-padding transaction-header>
   <ion-item>
     <img logo-small item-left [src]="App.LOGO.NEM">
     <h2 ion-text color="black">XEM</h2>
@@ -37,9 +37,9 @@
     </p>
 
     <section text-right item-right>
-      <button gradient-button pill color-1>
+      <!-- <button gradient-button pill color-1>
         <ion-icon name="checkmark"></ion-icon>
-      </button>
+      </button> -->
 
       <p ion-text color="black">
         <small>

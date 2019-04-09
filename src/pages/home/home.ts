@@ -108,12 +108,12 @@ export class HomePage {
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           // console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-          this.getBalance(this.selectedWallet);
           this.getTransactions(this.selectedWallet);
+          this.getBalance(this.selectedWallet);
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
-          this.getBalance(this.selectedWallet);
           this.getTransactions(this.selectedWallet);
+          this.getBalance(this.selectedWallet);
         });
       } else {
         this.showEmptyTransaction = true;
@@ -137,9 +137,9 @@ export class HomePage {
   }
   getTransactions(selectedWallet: SimpleWallet) {
     // console.log("getTransactions",selectedWallet);
-    this.confirmedTransactions=null;
-    this.unconfirmedTransactions=null;
-    this.isLoading = true;
+    // this.confirmedTransactions=null;
+    // this.unconfirmedTransactions=null;
+    // this.isLoading = true;
 
     this.pageable = this.nemProvider.getAllTransactionsPaginated(
       selectedWallet.address
@@ -156,10 +156,10 @@ export class HomePage {
     this.pageable
       .map((txs: any) => txs ? txs : Observable.empty())
       .subscribe(result => {
+        this.confirmedTransactions = result;
         // console.info("Transactions", result);
         this.isLoading = false;
         this.showEmptyTransaction = false;
-        this.confirmedTransactions = result;
         if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
       },
         err => console.error(err),

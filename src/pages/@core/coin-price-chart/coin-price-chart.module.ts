@@ -7,6 +7,7 @@ import { TooltipsModule } from 'ionic-tooltips';
 import { CoinPriceChartPage } from './coin-price-chart';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { SharedModule } from '../../../app/shared.module';
+import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from '../../../app/shared.module';
     NgXtruncateModule,
     TooltipsModule,
     PipesModule,
-    SharedModule
+    SharedModule,
+    ComponentsModule
   ],
 })
 export class CoinPriceChartPageModule {}

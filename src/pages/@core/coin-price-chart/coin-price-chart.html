@@ -38,9 +38,6 @@
 
 
     <ion-card balance>
-        <!-- <ion-card-header>
-            Wallet name: {{walletName }}
-        </ion-card-header> -->
         <ion-card-content>
             <ion-list transparent-items>
                 <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
@@ -72,53 +69,14 @@
 
     <!-- Skeleton loader -->
     <ion-list transparent-items *ngIf="isLoading">
-      <ion-card    no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
-        <ion-card-header>
-          <p float-left> &nbsp; </p>
-
-          <p float-right> &nbsp; </p>
-        </ion-card-header>
-        <ion-card-header no-padding>
-          <ion-item>
-            <section image item-left></section>
-            <h2> &nbsp; </h2>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-
-            <section item-right>
-              <h2> &nbsp; </h2>
-              <p>
-                <small> &nbsp; </small>
-              </p>
-            </section>
-          </ion-item>
-        </ion-card-header>
-        <ion-card-content line no-padding>
-          <ion-item>
-            <h2> &nbsp; </h2>
-            <p>
-              <small> &nbsp; </small>
-            </p>
-
-            <section text-right item-right>
-              <p>
-                <small> &nbsp; </small>
-              </p>
-
-              <p>
-                <small> &nbsp; </small>
-              </p>
-            </section>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card no-border>
-        <ion-item text-center>
-          <ion-spinner name="dots"></ion-spinner>
-        </ion-item>
-      </ion-card>
+      <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
+        <skeleton-loader></skeleton-loader>
+    </ion-card>
+    <ion-card no-border>
+      <ion-item text-center>
+        <ion-spinner name="dots"></ion-spinner>
+      </ion-item>
+    </ion-card>
     </ion-list>
     <!-- ./Skeleton loader -->
 

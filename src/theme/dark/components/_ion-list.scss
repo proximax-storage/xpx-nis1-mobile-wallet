@@ -55,33 +55,29 @@ ion-list[transparent-items] {
     margin-bottom: .5rem !important;
   }
   ion-card-header {
-    padding-bottom: 0;
+    padding: 0;
+    &[reduce-transfer-tx-header] {
+      margin: -5px 0 -5px 0;
+    }
+    &[reduce-multisig-tx-header] {
+      margin: -10px 0 -5px 0;
+    }
+    &[time-stamp-header] {
+      margin: 6px 15px 0px 16px;
+    }
+    > ion-item[multisig-status]{
+      margin: -25px 0 -8px 0px;
+    }
   }
   ion-card-header:nth-child(n+2) {
     padding: 0;
   }
-
-  ion-card-header[transaction-header] {
-    padding-top: 7px !important;
-    margin-bottom: -17px !important;
-    >p {
-      padding-bottom: 4px;
-    }
-  }
-  ion-card-header[transaction] {
-    margin-bottom: -20px !important;
-  }
-
-  ion-card-content[transaction-footer]{
-    border-top: 0;
-    margin-top: -24px;
-    ion-item{
-      margin-bottom: -2px !important;
-    }
-  }
-
   ion-card-content {
     border-top: 0;
+
+    ion-item[cosigners] {
+      margin: -12px 0 -5px 0;
+    } 
   }
 
   ion-item-sliding {
