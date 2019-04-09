@@ -7,6 +7,7 @@ import { App } from '../../../../providers/app/app';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { Vibration } from '@ionic-native/vibration';
 
 /**
  * Generated class for the WalletDeletePage page.
@@ -35,6 +36,7 @@ export class WalletDeletePage {
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
     private utils: UtilitiesProvider,
+    private vibration: Vibration
   ) {
     this.selectedWallet = this.navParams.get('wallet');
     this.init();
@@ -68,7 +70,7 @@ export class WalletDeletePage {
   }
 
   async onSubmit() {
-    window.navigator.vibrate(200); // vibrate for 200ms
+    this.vibration.vibrate(200);
     await this.walletProvider
       .deleteWallet(this.selectedWallet)
     return this.goBack();
