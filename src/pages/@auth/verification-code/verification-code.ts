@@ -108,7 +108,7 @@ export class VerificationCodePage {
           destination: 'TabsPage'
         };
 
-        data.destination = destination ? destination   : null;
+        // data.destination = destination ? destination   : null;
         
         return this.utils.showModal(page, data);
       });
