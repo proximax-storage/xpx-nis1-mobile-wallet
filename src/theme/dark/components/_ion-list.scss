@@ -50,10 +50,46 @@ ion-list[transparent-items] {
       font-size: 0.7rem;
     }
   }
+
+  
   
   ion-card[no-margin-bottom] {
     margin-bottom: .5rem !important;
   }
+  
+  ion-card[notification] {
+    margin-bottom: .5rem !important;
+    ion-item[notification] {
+     margin: 8px -24px -20px 12px !important;
+
+
+     ion-avatar[notification]{
+      margin: 8px 0px 0px 5px !important;
+      min-width: 80px;
+      min-height: 80px;
+      img{
+        width: 64px;
+        height: 64px;
+        border-radius: 1%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        box-shadow: 1px 1px 8px 0.1px rgba(0.1,0.1,0.1,0.4);
+     }
+    }
+
+     .item-inner > .input-wrapper {
+      ion-label {
+        // margin-top: -12px !important;
+        margin: -12px 21px 11px 0px;
+        h3 {
+          font-weight: bold;    
+        }
+      }
+    }
+   } 
+ }
+
   ion-card-header {
     padding: 0;
     &[reduce-transfer-tx-header] {

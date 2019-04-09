@@ -23,7 +23,7 @@ export class TabsPage {
 
   constructor(private navCtrl: NavController, public events: Events, private utils: UtilitiesProvider, private modalCtrl: ModalController, private articles: PostsProvider) {
     this.articles.getUnreadCount().then(count => {
-      // console.log("Unread count", res);
+      console.log("Unread count", count);
       this.notificationCount = count;
     })
    }

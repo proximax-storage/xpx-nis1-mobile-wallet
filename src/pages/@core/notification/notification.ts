@@ -23,11 +23,25 @@ export class NotificationPage {
       console.log("Blog posts", posts);
       this.posts = posts;
     })
+   
 
     this.articles.getUnreadCount().then(res => {
       console.log("Unread count", res);
     })
 
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      console.log('Async operation has ended');
+
+      this.articles.getAll().subscribe(posts=> {
+        console.log("Blog posts", posts);
+        this.posts = posts;
+      })
+
+      refresher.complete();
+    }, 0);
   }
 
  seenPost(postId) {

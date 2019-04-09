@@ -14,4 +14,15 @@ page-notification {
         border-bottom: none !important;
       }
 
+      ion-content {
+        margin-top: none;
+        ion-refresher {
+          margin-top: 3em;
+        }
+      }
+      
+      ion-content.has-refresher > .scroll-content {
+        border-top: none !important;
+      }
+
 }
