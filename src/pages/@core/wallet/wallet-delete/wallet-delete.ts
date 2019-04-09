@@ -68,6 +68,7 @@ export class WalletDeletePage {
   }
 
   async onSubmit() {
+    window.navigator.vibrate(200); // vibrate for 200ms
     await this.walletProvider
       .deleteWallet(this.selectedWallet)
     return this.goBack();

@@ -82,15 +82,18 @@ export class HomePage {
    
   }
 
-  doRefresh(refresher) {
+  async doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     this.mosaics = null; // Triggers the skeleton list loader
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      this.getBalance(this.selectedWallet);
-      this.getTransactions(this.selectedWallet);
+    console.log('Async operation has ended');
+    try {
+      await this.getBalance(this.selectedWallet);
+      await this.getTransactions(this.selectedWallet);
+    } catch (error) {
+      this.isLoading = false;
       refresher.complete();
-    }, 0);
+    }
+    refresher.complete();
   }
 
   ionViewWillEnter() {
@@ -254,6 +257,8 @@ export class HomePage {
   }
 
   onWalletPress(wallet) {
+    window.navigator.vibrate(200); // vibrate for 200ms
+    
     this.selectedWallet = wallet;
 
     const actionSheet = this.actionSheetCtrl.create({
