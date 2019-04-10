@@ -291,7 +291,7 @@ export class HomePage {
   showAddWalletPrompt() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Add wallet');
-    alert.setSubTitle('Select wallet type below');
+    alert.setSubTitle('');
 
     alert.addInput({
       type: 'radio',
