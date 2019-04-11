@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -32,6 +33,7 @@ export class LoginPage {
     public walletProvider: WalletProvider,
     public authProvider: AuthProvider,
     public utils: UtilitiesProvider,
+    private haptic: TapticEngine
   ) {
     this.init();
   }
@@ -70,6 +72,7 @@ export class LoginPage {
       .login(form.email, form.password)
       .then(res => {
         if (res.status === 'success') {
+          this.haptic.notification({ type: 'success' });
           this.authProvider
             .setSelectedAccount(form.email, form.password)
             .then(_ => {
@@ -79,10 +82,12 @@ export class LoginPage {
             });
         } else {
           this.utils.showInsetModal('TryAgainPage', {}, 'small');
+          this.haptic.notification({ type: 'error' });
         }
       })
       .catch(err => {
         this.utils.showInsetModal('TryAgainPage', {}, 'small');
+        this.haptic.notification({ type: 'error' });
       });
   }
 }

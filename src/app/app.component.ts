@@ -122,7 +122,7 @@ export class MyApp {
         isLoggedIn
       )
 
-      if(pin == false) {
+      if (!pin && isLoggedIn) {
         this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
        }
 

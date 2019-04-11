@@ -89,12 +89,12 @@ export class WalletBackupPage {
       'TabsPage',
       {},
       {
-        animate: false
+        animate: true
       }
     );
   }
 
-  onSubmit() {
+   onSubmit() {
     const WALLET: SimpleWallet = <SimpleWallet>this.navParams.data;
 
     if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
@@ -104,8 +104,8 @@ export class WalletBackupPage {
       });
     } else if (this.selectedOption === WalletBackupType.SHARE) {
       // TODO: save to Google drive
-      this.authProvider.getPassword().then(password => {
-        const privateKey = this.nemProvider.passwordToPrivateKey(
+      this.authProvider.getPassword().then(async password => {
+        const privateKey = await this.nemProvider.passwordToPrivateKey(
           password,
           WALLET
         );

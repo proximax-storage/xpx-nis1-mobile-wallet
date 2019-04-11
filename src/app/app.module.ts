@@ -48,7 +48,8 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import { OneSignal } from '@ionic-native/onesignal';
 import { PostsProvider } from '../providers/posts/posts';
 import { MarkdownModule } from '@ngx-markdown/core';
-import { Vibration } from '@ionic-native/vibration';
+import { TapticEngine } from '@ionic-native/taptic-engine';
+
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
   imports: [
@@ -107,7 +108,7 @@ import { Vibration } from '@ionic-native/vibration';
     LocalStorageProvider,
     OneSignal,
     PostsProvider,
-    Vibration
+    TapticEngine
   ]
 })
 export class AppModule {}

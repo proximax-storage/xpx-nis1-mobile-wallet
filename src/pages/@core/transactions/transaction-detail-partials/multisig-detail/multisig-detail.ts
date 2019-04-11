@@ -22,6 +22,7 @@ import { App } from '../../../../../providers/app/app';
 import { AuthProvider } from '../../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../../providers/alert/alert';
 import { NavController } from 'ionic-angular';
+import { TapticEngine } from '@ionic-native/taptic-engine';
 
 @Component({
   selector: 'multisig-detail',
@@ -103,7 +104,8 @@ export class MultisigDetailComponent {
     private nemProvider: NemProvider,
     private authProvider: AuthProvider,
     private alertProvider: AlertProvider,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private haptic: TapticEngine
     // private transactionHttp: TransactionHttp
   ) {
     this.amount = 0;
@@ -264,6 +266,7 @@ export class MultisigDetailComponent {
   }
 
   showErrorMessage(error) {
+    this.haptic.notification({ type: 'error' });
     console.log(error);
     if (error.toString().indexOf('FAILURE_INSUFFICIENT_BALANCE') >= 0) {
       this.alertProvider.showMessage(
@@ -286,6 +289,7 @@ export class MultisigDetailComponent {
     }
   }
   showSuccessMessage() {
+    this.haptic.notification({ type: 'success' });
     this.alertProvider.showMessage(
       "You have successfully signed the transaction"
     );

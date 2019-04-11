@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from "@angular/core";
 import {
   IonicPage,
@@ -35,7 +36,8 @@ export class VerificationCodePage {
     public viewCtrl: ViewController,
     public storage: Storage,
     private alertProvider: AlertProvider,
-    private utils: UtilitiesProvider
+    private utils: UtilitiesProvider,
+    private haptic: TapticEngine
   ) {}
 
   ionViewWillEnter() {
@@ -112,6 +114,7 @@ export class VerificationCodePage {
     } 
     
     if (status === "verify" && pinParams === pin) {
+      this.haptic.notification({ type: 'success' });
       console.log("status === 'verify && pinParams === pin");
 
       console.log(`status ${status}`);

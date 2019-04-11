@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController, Slides } from 'ionic-angular';
+import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController, Slides, Haptic } from 'ionic-angular';
 import { SimpleWallet, MosaicTransferable, TransactionTypes, Pageable, Transaction } from 'nem-library';
 
 import { App as AppConfig } from '../../providers/app/app';
@@ -11,7 +11,7 @@ import sortBy from 'lodash/sortBy';
 import { GetMarketPricePipe } from '../../pipes/get-market-price/get-market-price';
 import { NemProvider } from '../../providers/nem/nem';
 import { Observable } from 'rxjs';
-import { Vibration } from '@ionic-native/vibration';
+import { TapticEngine } from '@ionic-native/taptic-engine';
 
 
 export enum WalletCreationType {
@@ -71,7 +71,7 @@ export class HomePage {
     // public coinPriceChartProvider: CoinPriceChartProvider,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
-    private vibration: Vibration
+    private haptic: TapticEngine
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
@@ -95,8 +95,8 @@ export class HomePage {
   ionViewWillEnter() {
 
     this.utils.setHardwareBack();
-    this.walletProvider.getWallets().then(value => {
-      this.wallets = sortBy(value, 'name');
+    this.walletProvider.getWallets().then(wallets => {
+      this.wallets = wallets
 
 
       if (this.wallets.length > 0) {
@@ -166,7 +166,10 @@ export class HomePage {
         // console.info("Transactions", result);
         this.isLoading = false;
         this.showEmptyTransaction = false;
-        if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
+        if (!this.confirmedTransactions) {
+          this.showEmptyTransaction = true; this.isLoading = false;
+          this.unconfirmedTransactions = null;
+        }
       },
         err => console.error(err),
         () => {
@@ -180,10 +183,13 @@ export class HomePage {
    * Retrieves current account owned mosaics  into this.mosaics
    */
   public getBalance(selectedWallet: SimpleWallet) {
+    this.mosaics = null;
+    this.isLoading = true;
     this.getBalanceProvider
       .mosaics(selectedWallet.address)
       .subscribe(mosaics => {
         this.mosaics = mosaics;
+        this.isLoading = false;
         if (this.mosaics.length > 0) {
           this.showEmptyMosaic = false;
           this.selectedMosaic =
@@ -226,7 +232,16 @@ export class HomePage {
   slideChanged() {
     let currentIndex = this.slides.getActiveIndex();
     console.log('Current index is', currentIndex);
-    if (this.wallets.length != currentIndex) this.onWalletSelect(this.wallets[currentIndex]);
+    if (this.wallets.length != currentIndex) {
+      this.onWalletSelect(this.wallets[currentIndex])
+      this.haptic.selection();
+    } else {
+      this.mosaics = null;
+      this.unconfirmedTransactions = null;
+      this.confirmedTransactions = null;
+      this.showEmptyTransaction = true;
+      this.showEmptyMosaic = true;
+    }
   }
 
   trackByName(wallet) {
@@ -253,7 +268,8 @@ export class HomePage {
   }
 
   onWalletPress(wallet) {
-    this.vibration.vibrate(200);
+    this.haptic.impact({style:'heavy'});
+
     this.selectedWallet = wallet;
 
     const actionSheet = this.actionSheetCtrl.create({
@@ -289,6 +305,8 @@ export class HomePage {
   }
 
   showAddWalletPrompt() {
+    this.haptic.selection();
+
     let alert = this.alertCtrl.create();
     alert.setTitle('Add wallet');
     alert.setSubTitle('');

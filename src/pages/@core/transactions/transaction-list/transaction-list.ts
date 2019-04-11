@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController, ActionSheetController } from "ionic-angular";
 import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData, AccountInfo } from "nem-library";
@@ -73,7 +74,8 @@ export class TransactionListPage {
     private toastProvider: ToastProvider,
     private getBalanceProvider: GetBalanceProvider,
     private marketPrice: GetMarketPricePipe,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private haptic: TapticEngine
   ) {
    
   }
@@ -199,9 +201,11 @@ export class TransactionListPage {
   }
 
   showSendModal() {
+    
     console.log(this.accountInfo);
 
     if(this.isMultisig) {
+      this.haptic.selection();
       let page = 'SendMultisigPage';
 
       const actionSheet = this.actionSheetCtrl.create({
