@@ -232,7 +232,7 @@ export class HomePage {
 
   showWalletDetails() {
     let page = 'TransactionListPage';
-    const modal = this.modalCtrl.create(page, {
+    const modal = this.modalCtrl.create(page, this.selectedWallet, {
       enableBackdropDismiss: false,
       showBackdrop: true
     });
