@@ -70,7 +70,7 @@
 
   <div *ngIf="menu=='mosaics'">
     <ion-list transparent-items>
-      <ion-card no-margin-bottom *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
+      <ion-card  no-margin-bottom *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
         <ion-card-header no-padding>
           <ion-item>
             <img logo-small item-left [src]="utils.getLogo(mosaic)">

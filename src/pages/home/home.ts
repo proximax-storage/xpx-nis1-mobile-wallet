@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, trigger, transition, style, animate } from '@angular/core';
 import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController, Slides, Haptic } from 'ionic-angular';
 import { SimpleWallet, MosaicTransferable, TransactionTypes, Pageable, Transaction } from 'nem-library';
 
@@ -8,7 +8,6 @@ import { UtilitiesProvider } from '../../providers/utilities/utilities';
 import { GetBalanceProvider } from '../../providers/get-balance/get-balance';
 import { AlertProvider } from '../../providers/alert/alert';
 import sortBy from 'lodash/sortBy';
-import { GetMarketPricePipe } from '../../pipes/get-market-price/get-market-price';
 import { NemProvider } from '../../providers/nem/nem';
 import { Observable } from 'rxjs';
 import { TapticEngine } from '@ionic-native/taptic-engine';
@@ -22,7 +21,17 @@ export enum WalletCreationType {
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [GetMarketPricePipe]
+  animations: [
+    trigger('itemState', [
+        transition('void => *', [
+            style({transform: 'translateX(-100%)'}),
+            animate('250ms ease-out')
+        ]),
+        transition('* => void', [
+            animate('250ms ease-in', style({transform: 'translateX(100%)'}))    
+        ])
+    ])
+]
 })
 export class HomePage {
   @ViewChild(Slides) slides: Slides;
@@ -66,9 +75,6 @@ export class HomePage {
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController,
     public platform: Platform,
-    private marketPrice: GetMarketPricePipe,
-    // public coingeckoProvider: CoingeckoProvider,
-    // public coinPriceChartProvider: CoinPriceChartProvider,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
     private haptic: TapticEngine
@@ -78,22 +84,10 @@ export class HomePage {
    
   }
 
-  async doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-    this.mosaics = null; // Triggers the skeleton list loader
-    console.log('Async operation has ended');
-    try {
-      await this.getBalance(this.selectedWallet);
-      await this.getTransactions(this.selectedWallet);
-    } catch (error) {
-      this.isLoading = false;
-      refresher.complete();
-    }
-    refresher.complete();
-  }
+ 
 
   ionViewWillEnter() {
-
+    console.log("1 ionViewWillEnter");
     this.utils.setHardwareBack();
     this.walletProvider.getWallets().then(wallets => {
       this.wallets = wallets
@@ -105,21 +99,21 @@ export class HomePage {
         /** Transaction list business logic */
         this.unconfirmedTransactions = null;
         this.confirmedTransactions = null;
-        this.showEmptyMosaic = false;
         this.isLoading = true;
-        this.showEmptyTransaction = false;
+        // this.showEmptyTransaction = false;
+        // this.showEmptyMosaic = false;
 
         this.computeTotalWalletBalance(this.wallets);
 
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           // console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-          this.getTransactions(this.selectedWallet);
-          this.getBalance(this.selectedWallet);
+          // this.getTransactions(this.selectedWallet);
+          // this.getMosaicBalance(this.selectedWallet);
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
           this.getTransactions(this.selectedWallet);
-          this.getBalance(this.selectedWallet);
+          this.getMosaicBalance(this.selectedWallet);
         });
       } else {
         this.showEmptyTransaction = true;
@@ -129,11 +123,12 @@ export class HomePage {
 
 
   }
+
   computeTotalWalletBalance(wallets: any) {
+    console.log("2 computeTotalWalletBalance");
     wallets.map((wallet, index) => {
-      this.getTotalBalance(wallet).then(total => {
+        this.getBalanceProvider.totalBalance(wallet).then(total => {
         if (wallet.name == this.selectedWallet.name) {
-          console.log("Index", index);
           this.slides.slideTo(index);
         }
         wallet.total = total;
@@ -141,11 +136,13 @@ export class HomePage {
       })
     })
   }
+
   getTransactions(selectedWallet: SimpleWallet) {
-    // console.log("getTransactions",selectedWallet);
-    // this.confirmedTransactions=null;
-    // this.unconfirmedTransactions=null;
-    // this.isLoading = true;
+    console.log("3 getTransactions");
+    console.log("getTransactions",selectedWallet);
+    this.confirmedTransactions=null;
+    this.unconfirmedTransactions=null;
+    this.isLoading = true;
 
     this.pageable = this.nemProvider.getAllTransactionsPaginated(
       selectedWallet.address
@@ -182,14 +179,16 @@ export class HomePage {
   /**
    * Retrieves current account owned mosaics  into this.mosaics
    */
-  public getBalance(selectedWallet: SimpleWallet) {
-    this.mosaics = null;
+  public getMosaicBalance(selectedWallet: SimpleWallet) {
+    console.log("4 getMosaicBalance");
+
     this.isLoading = true;
+    this.mosaics = null; // Triggers the skeleton list loader
     this.getBalanceProvider
       .mosaics(selectedWallet.address)
       .subscribe(mosaics => {
-        this.mosaics = mosaics;
         this.isLoading = false;
+        this.mosaics = mosaics;
         if (this.mosaics.length > 0) {
           this.showEmptyMosaic = false;
           this.selectedMosaic =
@@ -198,41 +197,15 @@ export class HomePage {
       });
   }
 
-  getTotalBalance(wallet: SimpleWallet): Promise<number> {
-    return new Promise((resolve) => {
-      this.getBalanceProvider
-        .mosaics(wallet.address)
-        .subscribe(mosaics => {
-          this.mosaics = mosaics;
-          let total = 0;
 
-          this.mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
-            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
-              if (price > 0) {
-                total += price * mosaic.amount;
-               
-              }
-              // last loop: compute total
-              let lastItem = array.length - 1;
-              if (currentIndex == lastItem) {
-                // console.log(accumulator, currentIndex, array.length - 1, total);
-                // console.log(total);
-                resolve(total);
-              }
-            })
-
-            return accumulator;
-          });
-          // console.log("Result", result);
-          // return result;
-        });
-    });
-  }
 
   slideChanged() {
+    console.log("slideChanged");
     let currentIndex = this.slides.getActiveIndex();
     console.log('Current index is', currentIndex);
     if (this.wallets.length != currentIndex) {
+      this.showEmptyTransaction = false;
+      this.showEmptyMosaic = false;
       this.onWalletSelect(this.wallets[currentIndex])
       this.haptic.selection();
     } else {
@@ -249,11 +222,10 @@ export class HomePage {
   }
 
   onWalletSelect(wallet) {
-    // console.log(wallet);
-    this.mosaics = null; // Triggers the skeleton list loader
+    console.log("On wallet select");
     this.selectedWallet = wallet;
     this.walletProvider.setSelectedWallet(this.selectedWallet).then(() => {
-      this.getBalance(this.selectedWallet);
+      this.getMosaicBalance(this.selectedWallet);
       this.getTransactions(this.selectedWallet);
     });
   }
@@ -393,27 +365,6 @@ export class HomePage {
     this.showModal(page, tx);
   }
 
-  // doInfinite() {
-  //   if (this.showEmptyTransaction) return;
-
-  //   this.isLoadingInfinite = true;
-  //   this.pageable.nextPage();
-  //   console.log('Pageable Txs: ', this.pageable);
-  // }
-
-  // showInfiniteScroll() {
-  //   if (this.infiniteScroll) {
-  //     this.infiniteScroll.enable(true);;
-  //   }
-  // }
-
-  // hideInfiniteScroll() {
-  //   if (this.infiniteScroll) {
-  //     this.infiniteScroll.complete();
-  //     this.infiniteScroll.enable(false);
-  //   }
-  // }
-
   showReceiveModal() {
     let page = "ReceivePage";
 
@@ -427,4 +378,19 @@ export class HomePage {
     });
     modal.present();
   }
+
+  async doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.mosaics = null; // Triggers the skeleton list loader
+    console.log('Async operation has ended');
+    try {
+      await this.getMosaicBalance(this.selectedWallet);
+      await this.getTransactions(this.selectedWallet);
+    } catch (error) {
+      this.isLoading = false;
+      refresher.complete();
+    }
+    refresher.complete();
+  }
 }
+

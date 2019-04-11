@@ -297,12 +297,12 @@ export class CoinPriceChartProvider {
   }
 
   load(coin: any, duration: number, to_coin: string) {
-    console.log(coin)
+    // console.log(coin)
 
     this.coingeckoProvider
       .getPrices(coin.id, to_coin, duration)
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
         this.initChart(data, coin.symbol, to_coin);
       });
   }
