@@ -1,13 +1,13 @@
 import { SimpleWallet } from 'nem-library';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Haptic } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
-import { Vibration } from '@ionic-native/vibration';
+import { TapticEngine } from '@ionic-native/taptic-engine';
 
 /**
  * Generated class for the WalletDeletePage page.
@@ -36,7 +36,7 @@ export class WalletDeletePage {
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
     private utils: UtilitiesProvider,
-    private vibration: Vibration
+    private haptic: TapticEngine
   ) {
     this.selectedWallet = this.navParams.get('wallet');
     this.init();
@@ -70,7 +70,7 @@ export class WalletDeletePage {
   }
 
   async onSubmit() {
-    this.vibration.vibrate(200);
+      this.haptic.notification({ type:'success'});
     await this.walletProvider
       .deleteWallet(this.selectedWallet)
     return this.goBack();

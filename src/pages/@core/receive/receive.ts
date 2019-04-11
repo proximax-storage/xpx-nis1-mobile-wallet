@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Clipboard } from '@ionic-native/clipboard';
@@ -27,7 +28,8 @@ export class ReceivePage {
     private socialSharing: SocialSharing,
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
-    private nemProvider: NemProvider
+    private nemProvider: NemProvider,
+    private haptic: TapticEngine
   ) {
   }
   ionViewWillEnter() {
@@ -73,11 +75,13 @@ export class ReceivePage {
 
   copy() {
     this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
+      this.haptic.notification({ type: 'success' });
       this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
 
   share() {
+    this.haptic.notification({ type: 'success' });
     this.socialSharing
       .share(
         this.currentWallet.address.plain(),

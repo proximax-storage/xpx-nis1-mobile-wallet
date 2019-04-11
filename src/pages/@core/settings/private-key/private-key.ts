@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
@@ -38,7 +39,8 @@ export class PrivateKeyPage {
     private socialSharing: SocialSharing,
     private toastProvider: ToastProvider,
     private utils: UtilitiesProvider,
-    private viewController: ViewController
+    private viewController: ViewController,
+    private haptic: TapticEngine
   ) {
     this.password = this.navParams.get('password');
   }
@@ -80,11 +82,13 @@ export class PrivateKeyPage {
 
   copy() {
     this.clipboard.copy(this.privateKey).then(_ => {
+      this.haptic.notification({ type: 'success' });
       this.toastProvider.show('Copied private key successfully', 3, true);
     });
   }
 
   share() {
+    this.haptic.notification({ type: 'success' });
     this.socialSharing
       .share(
         `Private key of ${this.currentWallet.name}: \n${this.privateKey}`,

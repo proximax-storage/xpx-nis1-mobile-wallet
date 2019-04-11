@@ -1,3 +1,4 @@
+import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
@@ -39,7 +40,8 @@ export class SendMosaicConfirmationPage {
     private alertProvider: AlertProvider,
     private authProvider: AuthProvider,
     public utils: UtilitiesProvider,
-    private viewCtrl: ViewController
+    private viewCtrl: ViewController,
+    private haptic: TapticEngine
   ) {
     this.init();
   }
@@ -122,6 +124,7 @@ export class SendMosaicConfirmationPage {
     }
   }
   showErrorMessage(error) {
+    this.haptic.notification({ type: 'warning' });
     console.log(error);
               if (error.toString().indexOf('FAILURE_INSUFFICIENT_BALANCE') >= 0) {
                 this.alertProvider.showMessage(
@@ -144,6 +147,7 @@ export class SendMosaicConfirmationPage {
               }
   }
   showSuccessMessage() {
+    this.haptic.notification({ type: 'success' });
     this.alertProvider.showMessage(
       `You have successfully sent ${
       this.data.amount
