@@ -18,18 +18,14 @@ export class PostsProvider {
     console.log('Hello PostsProvider Provider');
   }
 
-  public getAll(): Observable<any> {
+/*   public getAll(): Observable<any> {
     let url = 'https://proximax-wallet-dashboard.herokuapp.com/posts';
     return this.http.get(url);
-
-    // let url = 'https://proximax-wallet-dashboard.herokuapp.com/posts';
-    // let requestObservable = this.http.get(url);
-    // return this.cache.observable('posts', requestObservable, 60*60) // 1 hour validity
-  }
+  } */
 
   public seenPost(postId): Promise<any> {
-    return this.storage.get("seenPosts").then(seenPosts => {
-      let posts: any[] = seenPosts;
+    return this.storage.get("sennPosts").then(sennPosts => {
+      let posts: any[] = sennPosts;
 
       console.log(posts);
       if (posts) {
@@ -38,25 +34,25 @@ export class PostsProvider {
       } else {
         posts = [{ id: postId }]; // Genesis post
       }
-      return this.storage.set("seenPosts", posts);
+      return this.storage.set("sennPosts", posts);
     })
 
   }
 
   public getSeenPosts(): Promise<any> {
-    return this.storage.get("seenPosts");
+    return this.storage.get("sennPosts");
   }
 
   public getUnreadCount(): Promise<any> {
     return new Promise((resolve) => {
       this.getSeenPosts().then(seenPosts => {
-        this.getAll().toPromise().then(async posts => {
-          if (seenPosts) {
-            resolve(posts.length - seenPosts.length);
-          } else {
-            resolve(posts.length);
-          }
-        })
+        // this.getAll().toPromise().then(async posts => {
+        //   if (seenPosts) {
+        //     resolve(posts.length - seenPosts.length);
+        //   } else {
+        //     resolve(posts.length);
+        //   }
+        // })
       })
     })
   }

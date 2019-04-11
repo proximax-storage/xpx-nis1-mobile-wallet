@@ -74,7 +74,7 @@ export class WalletProvider {
 
         }
 
-        
+
 
         wallets = wallets.map(_ => {
           return {
@@ -94,7 +94,7 @@ export class WalletProvider {
   }
 
   deleteWallet(wallet: SimpleWallet) {
-    
+
     return this.authProvider.getEmail().then(email => {
       return this.getAccounts().then(value => {
         let result: Array<any> = value[email];
@@ -121,9 +121,9 @@ export class WalletProvider {
         result
         return;
 
-        
 
-        
+
+
       });
     });
   }
@@ -212,7 +212,7 @@ export class WalletProvider {
             if (walletFile.name) {
               return this.convertJSONWalletToFileWallet(walletFile, walletFile.walletColor);
             } else {
-              let wallet = SimpleWallet.readFromWLT(walletFile.wallet);
+              let wallet:any = SimpleWallet.readFromWLT(walletFile.wallet);
               wallet.walletColor = walletFile.walletColor;
               return wallet ;
             }
@@ -244,7 +244,7 @@ export class WalletProvider {
         schema: 1,
       })
     );
-    let importedWallet = SimpleWallet.readFromWLT(walletString);
+    let importedWallet:any = SimpleWallet.readFromWLT(walletString);
     importedWallet.walletColor = walletColor;
     return importedWallet;
   }

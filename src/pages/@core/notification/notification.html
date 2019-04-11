@@ -30,27 +30,26 @@
     </ion-item>
 
 
-    <ion-card notification *ngFor="let post of posts" (click)="showMore(post);seenPost(post._id)">
+    <ion-card notification *ngFor="let post of posts" (click)="showMore(post['notific']);seenPost(post['notific']['notificationID'])">
 
       <ion-item notification *ngIf="!post.expanded">
-        <ion-avatar notification item-start>
-          <img [src]="post.thumbnail">
+        <ion-avatar *ngIf="post['notific']['bigPicture']" notification item-start>
+          <img [src]="post['notific']['bigPicture']">
+          <br>
         </ion-avatar>
-        <h3 text-wrap>{{post.title}}</h3>
-        <p><small>{{post.updatedAt | date:'MMM d, y'}}</small></p>
+        <h3 text-wrap>{{post['notific']['title']}}</h3>
       </ion-item>
-
-      <img [src]="post.thumbnail" *ngIf="post.expanded">
+      <img [src]="post['notific']['bigPicture']" *ngIf="post.expanded && post['notific']['bigPicture']">
 
       <ion-card-content>
-        <ion-card-title *ngIf="post.expanded">{{post.title}}</ion-card-title>
-        <p *ngIf="!post.expanded" text-justify-start [innerHTML]="post.description"></p>
+        <ion-card-title *ngIf="post.expanded">{{post['notific']['title']}}</ion-card-title>
+        <!-- <p *ngIf="!post.expanded" text-justify-start [innerHTML]="post['notific']['body']"></p> -->
 
-        <p *ngIf="post.expanded" text-justify-start [ngxmarkdown]="post.content"></p>
+        <p *ngIf="post.expanded" text-justify-start [ngxmarkdown]="post['notific']['body']"></p>
         <ion-item>
-          <ion-badge *ngFor="let tag of post.tags" item-start>{{tag.name}}</ion-badge>
-          <ion-note item-end>{{post.readTime}} MIN READ</ion-note>
+          <ion-badge *ngFor="let tag of post['notific']['actionButtons']" item-start>{{tag.text}}</ion-badge>
         </ion-item>
+
 
       </ion-card-content>
 

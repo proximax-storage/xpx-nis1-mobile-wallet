@@ -25,7 +25,7 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 export class WalletUpdatePage {
   App = App;
   formGroup: FormGroup;
-  selectedWallet: SimpleWallet;
+  selectedWallet: any
 
   PASSWORD: string;
 
