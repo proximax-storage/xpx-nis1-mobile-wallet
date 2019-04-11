@@ -79,5 +79,26 @@
           </p>
       </section>
     </ion-item>  
+
+    <ion-item multisig-status>
+      <section item-left>
+        <p float-left ion-text color="black">
+          <small>Normal</small>
+        </p>
+      </section>
+  
+      <section item-right>
+        <p float-right ion-text color="success" *ngIf="tx.isConfirmed()">
+          <small>Confirmed</small>
+        </p>
+  
+        <p float-right ion-text color="danger" *ngIf="!tx.isConfirmed()">
+          <small>
+  
+            Unconfirmed
+          </small>
+        </p>
+      </section>
+    </ion-item>
   </ion-card-header>
 </div>

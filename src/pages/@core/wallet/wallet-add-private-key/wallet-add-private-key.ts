@@ -26,7 +26,7 @@ export class WalletAddPrivateKeyPage {
 
   PASSWORD: string;
 
-  walletColor:string = "wallet-1";
+  walletColor: string = "wallet-1";
 
   constructor(
     public navCtrl: NavController,
@@ -42,7 +42,7 @@ export class WalletAddPrivateKeyPage {
     this.init();
   }
 
-  changeWalletColor(color){
+  changeWalletColor(color) {
     this.walletColor = color;
   }
 
@@ -74,24 +74,33 @@ export class WalletAddPrivateKeyPage {
   }
 
   onSubmit(form) {
-    const newWallet = this.nemProvider.createPrivateKeyWallet(
-      form.name,
-      this.PASSWORD,
-      form.privateKey
-    );
+    try {
+      const newWallet = this.nemProvider.createPrivateKeyWallet(
+        form.name,
+        this.PASSWORD,
+        form.privateKey
+      );
 
-    this.walletProvider.checkIfWalletNameExists(newWallet.name).then(value => {
-      if (value) {
-        this.alertProvider.showMessage('This wallet name already exists. Please try again.');
-      } else {
-        this.walletProvider
-          .storeWallet(newWallet, this.walletColor)
-          .then(_ => {
-            return this.walletProvider.setSelectedWallet(newWallet);
-          }).then(_ => {
-            this.gotoBackup(newWallet);
-          });
-      }
-    });
+      this.walletProvider.checkIfWalletNameExists(newWallet.name).then(value => {
+        if (value) {
+          this.alertProvider.showMessage('This wallet name already exists. Please try again.');
+        } else {
+
+          this.walletProvider
+            .storeWallet(newWallet, this.walletColor)
+            .then(_ => {
+              return this.walletProvider.setSelectedWallet(newWallet);
+            }).then(_ => {
+              this.gotoBackup(newWallet);
+            });
+
+        }
+
+
+      });
+    }
+    catch (error) {
+      this.alertProvider.showMessage(error);
+    }
   }
 }
