@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
@@ -29,41 +29,41 @@ export class ContactUpdatePage {
     public formBuilder: FormBuilder,
     public contactsProvider: ContactsProvider,
     public utils: UtilitiesProvider,
+    private viewCtrl: ViewController
   ) {
     this.init();
+    console.log(this.navParams.data.data);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactUpdatePage');
-    this.utils.setHardwareBack(this.navCtrl);
-  }
 
   init() {
     this.formGroup = this.formBuilder.group({
       id: ['', [Validators.required]],
       name: [
-        this.navParams.get('name'),
+        this.navParams.data.data.name,
         [Validators.minLength(3), Validators.required]
       ],
       address: [
-        this.navParams.get('address'),
+        this.navParams.data.data.address,
         [Validators.minLength(40), Validators.required]
       ],
-      telegram: [this.navParams.get('telegram')]
+      telegram: [this.navParams.data.data!.telegram]
     });
 
-    this.formGroup.setValue(this.navParams.get('contact'));
+    this.formGroup.setValue(this.navParams.data.data);
   }
 
   gotoHome() {
     this.contactsProvider
-      .update(this.navParams.get('contact').id, this.formGroup.value)
-      .then(_ => {
-        this.navCtrl.pop();
-      });
+      .update(this.navParams.data.data.id, this.formGroup.value);
   }
 
-  onSubmit(form) {
+  onSubmit() {
     this.gotoHome();
+    this.dismiss();
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

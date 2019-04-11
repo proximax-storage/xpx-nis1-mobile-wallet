@@ -10,6 +10,11 @@
     <ion-title>
       <span ion-text color="black">Contact Detail</span>
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()" color="black">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -24,153 +29,23 @@
     <h6 margin-left ion-text color="black">Name</h6>
     <ion-card>
       <ion-item>
-        <p ion-text color="black">{{ selectedContact.name }}</p>
+        <p ion-text color="black">{{ selectedContact?.name }}</p>
       </ion-item>
     </ion-card>
 
     <h6 margin-left ion-text color="black">NEM address</h6>
     <ion-card>
       <ion-item>
-        <p ion-text color="black">{{ selectedContact.address || 'None' }}</p>
+        <p ion-text color="black">{{ selectedContact?.address || 'None' }}</p>
       </ion-item>
     </ion-card>
 
     <h6 margin-left ion-text color="black" (click)="gotoTelegram(selectedContact.telegram)">Telegram</h6>
     <ion-card (click)="gotoTelegram(selectedContact.telegram)">
       <ion-item>
-        <p ion-text color="black">{{ selectedContact.telegram || 'None' }}</p>
+        <p ion-text color="black">{{ selectedContact?.telegram || 'None' }}</p>
         <ion-icon item-right ion-text color="black" name="ios-open-outline" *ngIf="selectedContact.telegram"></ion-icon>
       </ion-item>
     </ion-card>
   </ion-list>
-
-  <!-- <h6 margin-left ion-text color="black">Activity</h6>
-
-  <ion-list transparent-items>
-    <ion-card (click)="gotoTransactionDetail()">
-      <ion-card-header>
-        <p float-left ion-text color="black">
-          June 9, 2018 6:00 AM
-        </p>
-        <p float-right ion-text color="black">
-          8 hours ago
-        </p>
-      </ion-card-header>
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left [src]="App.LOGO.NEM">
-          <h2 ion-text color="black">XEM</h2>
-          <p ion-text color="black">
-            <small>
-              NEM
-            </small>
-          </p>
-
-          <section item-right>
-            <h2 ion-text color="trinary">+1000.00</h2>
-            <p text-right text-left ion-text color="black">
-              <small>
-                $1170.00
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 text-wrap ion-text color="black">Confirmed transfer</h3>
-
-          <section text-right item-right>
-            <button gradient-button pill color-1>
-              <ion-icon name="checkmark"></ion-icon>
-            </button>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card (click)="gotoTransactionDetail()">
-      <ion-card-header>
-        <p float-left ion-text color="black">
-          June 9, 2018 5:00 AM
-        </p>
-        <p float-right ion-text color="black">
-          7 hours ago
-        </p>
-      </ion-card-header>
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left [src]="App.LOGO.NEM">
-          <h2 ion-text color="black">XEM</h2>
-          <p ion-text color="black">
-            <small>
-              NEM
-            </small>
-          </p>
-
-          <section item-right>
-            <h2 ion-text color="danger">-1000.00</h2>
-            <p text-right text-left ion-text color="black">
-              <small>
-                $1170.00
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 text-wrap ion-text color="black">Unconfirmed transfer</h3>
-
-          <section text-right item-right>
-            <button gradient-button pill color-51>
-              <ion-icon name="ios-more"></ion-icon>
-            </button>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card (click)="gotoTransactionDetail()">
-      <ion-card-header>
-        <p float-left ion-text color="black">
-          June 9, 2018 4:00 AM
-        </p>
-        <p float-right ion-text color="black">
-          6 hours ago
-        </p>
-      </ion-card-header>
-      <ion-card-header no-padding>
-        <ion-item>
-          <img logo-small item-left [src]="App.LOGO.XPX">
-          <h2 ion-text color="black">XPX</h2>
-          <p ion-text color="black">
-            <small>
-              ProximaX
-            </small>
-          </p>
-
-          <section item-right>
-            <h2 ion-text color="trinary">+1000.00</h2>
-            <p text-right text-left ion-text color="black">
-              <small>
-                $1070.00
-              </small>
-            </p>
-          </section>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content line no-padding>
-        <ion-item>
-          <h3 text-wrap ion-text color="black">Confirmed transfer</h3>
-
-          <section text-right item-right>
-            <button gradient-button pill color-1>
-              <ion-icon name="checkmark"></ion-icon>
-            </button>
-          </section>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </ion-list> -->
 </ion-content>

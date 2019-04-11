@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 
@@ -25,25 +25,23 @@ export class ContactDetailPage {
     telegram: string;
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public utils: UtilitiesProvider) {
-    this.selectedContact = this.navParams.data;
-  }
-
-  ionViewWillEnter() {
-    this.utils.setHardwareBack(this.navCtrl);
+  constructor(public navCtrl: NavController, public navParams: NavParams, public utils: UtilitiesProvider, private viewCtrl: ViewController) {
+    console.log(this.navParams.data);
+    this.selectedContact = this.navParams.data.data;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactDetailPage');
   }
 
-  gotoTransactionDetail() {
-    this.navCtrl.push('TransactionDetailPage');
-  }
 
   gotoTelegram(username) {
     if (username) {
       window.open(`https://t.me/${username}`, '_system');
     }
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss();
   }
 }

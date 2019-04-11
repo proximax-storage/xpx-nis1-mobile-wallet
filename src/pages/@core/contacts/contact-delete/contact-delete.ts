@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { ContactsProvider } from '../../../../providers/contacts/contacts';
@@ -20,12 +20,12 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
   templateUrl: 'contact-delete.html',
 })
 export class ContactDeletePage {
-  App = App;
+  App = App; 
   formGroup: FormGroup;
   contact: any;
 
   PASSWORD: string;
-
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,43 +33,31 @@ export class ContactDeletePage {
     private contactProvider: ContactsProvider,
     private authProvider: AuthProvider,
     private utils: UtilitiesProvider,
+    private viewCtrl: ViewController
   ) {
-    this.contact = this.navParams.get('contact');
+    this.contact = this.navParams.data.data;
     this.init();
-  }
-
-  ionViewWillEnter() {
-    this.utils.setHardwareBack(this.navCtrl);
-  }
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactDeletePage');
   }
-
   init() {
     this.formGroup = this.formBuilder.group({});
     this.authProvider.getPassword().then(password => {
       this.PASSWORD = password;
     });
   }
-
-  goBack() {
-    return this.navCtrl.setRoot(
-      'ContactListPage',
-      {},
-      {
-        animate: true,
-        direction: 'forward'
-      }
-    );
-  }
-
   onSubmit() {
     this.contactProvider
       .remove(this.contact)
       .then(_ => {
-        return this.goBack();
+        return this.dismiss();
       });
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
 
