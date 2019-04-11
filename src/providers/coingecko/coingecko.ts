@@ -33,39 +33,39 @@ export class CoingeckoProvider {
   }
 
   getDetails(coin_id: string): Observable<any> {
-    let url = `${this.url}/coins/${coin_id}`;
-    let requestObservable = this.http.get(url);
+    // let url = `${this.url}/coins/${coin_id}`;
+    // let requestObservable = this.http.get(url);
     // console.log(requestObservable);
     
     // this.cache.observable(coin_id, requestObservable, 60*30).subscribe(result => {
     //   console.log("getDetailsPrice",result)
     // });
-    return this.cache.observable(coin_id, requestObservable, 60*30)
-    // return this.http.get(`${this.url}/coins/${coin_id}`);
+    // return this.cache.observable(coin_id, requestObservable, 60*30)
+    return this.http.get(`${this.url}/coins/${coin_id}`);
   }
 
   getPrices(coin_id: string, currency: string, days: number): Observable<any> {
-    let url = `${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`;
-    let requestObservable = this.http.get(url);
-    return this.cache.observable('getPrices', requestObservable, 60*30).map((data: any) => {
-      data.prices = data.prices.map(price => {
-        price[0] = moment(price[0]).format('MMM DD, YYYY hh:mm:a');
-        price[1] = parseFloat(price[1].toFixed(4));
-        return price;
-      });
-      console.log("getPrices", data) ;
-      return data;
-    });
-
-    // return this.http.get(`${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`)
-    //   .map((data: any) => {
-    //     data.prices = data.prices.map(price => {
-    //       price[0] = moment(price[0]).format('MMM DD, YYYY hh:mm:a');
-    //       price[1] = parseFloat(price[1].toFixed(4));
-    //       return price;
-    //     });
-    //     return data;
+    // let url = `${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`;
+    // let requestObservable = this.http.get(url);
+    // return this.cache.observable('getPrices', requestObservable, 60*30).map((data: any) => {
+    //   data.prices = data.prices.map(price => {
+    //     price[0] = moment(price[0]).format('MMM DD, YYYY hh:mm:a');
+    //     price[1] = parseFloat(price[1].toFixed(4));
+    //     return price;
     //   });
+    //   console.log("getPrices", data) ;
+    //   return data;
+    // });
+
+    return this.http.get(`${this.url}/coins/${coin_id}/market_chart?vs_currency=${currency}&days=${days}`)
+      .map((data: any) => {
+        data.prices = data.prices.map(price => {
+          price[0] = moment(price[0]).format('MMM DD, YYYY hh:mm:a');
+          price[1] = parseFloat(price[1].toFixed(4));
+          return price;
+        });
+        return data;
+      });
   }
 
 }

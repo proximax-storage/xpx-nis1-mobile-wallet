@@ -154,4 +154,13 @@ ion-card[balance] {
   border-radius: 0.5rem;
   background: rgba(224, 224, 224, 0.43);
   color: #1f6b86;
+  ion-card-content{
+    padding: 0px;
+    ion-list > ion-item > .item-inner > .input-wrapper > ion-label {
+      margin: 0px !important;
+    }
+    button {
+      margin: 5px 20px 5px 20px !important;
+    }
+  }
 }

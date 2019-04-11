@@ -76,7 +76,8 @@ export class ContactListPage {
 
   onSelect(contact) {
     this.selectedContact = contact;
-    this.navCtrl.push('ContactDetailPage', contact);
+    let page = "ContactDetailPage"
+    this.showModal(page, contact);
   }
 
   onPress(contact) {
@@ -88,7 +89,8 @@ export class ContactListPage {
           text: 'Change details',
           icon: this.platform.is('ios') ? null : 'create',
           handler: () => {
-            this.navCtrl.push('ContactUpdatePage', { contact: contact });
+            let page = "ContactUpdatePage"
+            this.showModal(page, contact);
           }
         },
         {
@@ -96,7 +98,9 @@ export class ContactListPage {
           role: 'destructive',
           icon: this.platform.is('ios') ? null : 'trash',
           handler: () => {
-            this.navCtrl.push('ContactDeletePage', { contact: contact });
+            // this.navCtrl.push('ContactDeletePage', { contact: contact });
+            let page = "ContactDeletePage"
+            this.showModal(page, contact);
           }
         },
         {
@@ -164,7 +168,8 @@ export class ContactListPage {
   }
 
   update(contact) {
-    this.navCtrl.push('ContactUpdatePage', contact);
+    let page = "ContactUpdatePage"
+    this.showModal(page, contact);
   }
 
   delete(contact) {
@@ -197,4 +202,8 @@ export class ContactListPage {
     });
     modal.present();
   }
+
+  
+
+  
 }

@@ -99,6 +99,8 @@ export class CoinPriceChartPage {
     console.log("navParams.data", this.navParams.data);
     this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
     this.coinId = this.navParams.data['coinId'];
+    this.currentWallet = this.navParams.data['currentWallet'];
+    this.totalBalance = this.currentWallet.total;
 
     // console.info(this.mosaicId, this.coinId );
     this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
@@ -107,78 +109,16 @@ export class CoinPriceChartPage {
 
     
   }
-
-  getAccountInfo() {
-    console.info("Getting account information.", this.currentWallet.address)
-    this.nemProvider
-      .getAccountInfo(this.currentWallet.address)
-      .subscribe(accountInfo => {
-        if (accountInfo) {
-          this.accountInfo = accountInfo;
-          console.log("accountInfo", this.accountInfo)
-          // Check if account is a cosignatory of multisig account(s)
-          if(this.accountInfo.cosignatoryOf) {
-            console.clear();
-            console.log("This is a multisig account");
-            this.isMultisig = true;
-          }
-
-        } 
-      });
-  }
-
-  copy() {
-    this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
-      this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
-    });
-  }
-
-  getTotalBalance(wallet: SimpleWallet): Promise<number> {
-    return new Promise((resolve) => {
-      this.getBalanceProvider
-        .mosaics(wallet.address)
-        .subscribe(mosaics => {
-          let total = 0;
-
-          mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
-            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
-              if (price > 0) {
-                total += price * mosaic.amount;
-                console.log(total);
-              }
-              // last loop: compute total
-              let lastItem = array.length - 1;
-              if (currentIndex == lastItem) {
-                console.log(accumulator, currentIndex, array.length - 1, total);
-                resolve(total);
-                this.totalBalance=total;
-              }
-            })
-
-            return accumulator;
-          });
-          // console.log("Result", result);
-          // return result;
-        });
-    });
-  }
-
   ionViewWillEnter() {
-    this.utils.setHardwareBack(this.navCtrl);
-    
+
     /** Transaction list business logic */ 
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
     this.showEmptyMessage = false;
     this.isLoading = true;
 
-    this.utils.setTabIndex(0);
-
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (currentWallet) {
-        this.currentWallet = currentWallet;
+      if (this.currentWallet) {
         this.getAccountInfo();
-        this.getTotalBalance(currentWallet);
         this.fakeList = [{}, {}];
 
         this.pageable = this.nemProvider.getAllTransactionsPaginated(
@@ -208,13 +148,33 @@ export class CoinPriceChartPage {
               if (!this.confirmedTransactions) this.showEmptyMessage = true;
             });
       }
+  }
+  
+  getAccountInfo() {
+    console.info("Getting account information.", this.currentWallet.address)
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        if (accountInfo) {
+          this.accountInfo = accountInfo;
+          console.log("accountInfo", this.accountInfo)
+          // Check if account is a cosignatory of multisig account(s)
+          if(this.accountInfo.cosignatoryOf) {
+            console.clear();
+            console.log("This is a multisig account");
+            this.isMultisig = true;
+          }
+
+        } 
+      });
+  }
+
+  copy() {
+    this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
+      this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
-
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad CoinPriceChartPage");
-  }
-
+  
   select(duration) {
     this.selectedDuration = duration;
     this.coinPriceChartProvider.load(

@@ -77,6 +77,11 @@ export class TransactionListPage {
     private actionSheetCtrl: ActionSheetController,
     private haptic: TapticEngine
   ) {
+       // this.getTotalBalance(currentWallet);
+       this.totalBalance = 0;
+       console.log("Wallet from home",this.navParams.data);
+       this.currentWallet = this.navParams.data;
+       this.totalBalance = this.currentWallet.total;
    
   }
 
@@ -90,7 +95,7 @@ export class TransactionListPage {
           console.log("accountInfo", this.accountInfo)
           // Check if account is a cosignatory of multisig account(s)
           if(this.accountInfo.cosignatoryOf) {
-            console.clear();
+            // console.clear();
             console.log("This is a multisig account");
             this.isMultisig = true;
           }
@@ -108,15 +113,9 @@ export class TransactionListPage {
     this.confirmedTransactions = null;
     this.showEmptyMessage = true;
 
-    this.utils.setTabIndex(0);
-
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      
-
-      if (currentWallet) {
-        this.walletName = currentWallet.name;
-        this.getTotalBalance(currentWallet);
-        this.currentWallet = currentWallet;
+      if (this.currentWallet) {
+        this.walletName = this.currentWallet.name;
+        this.currentWallet = this.currentWallet;
         this.fakeList = [{}, {}];
 
         this.getAccountInfo();
@@ -149,44 +148,12 @@ export class TransactionListPage {
               this.showEmptyMessage = true;
             });
       }
-    });
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad TransactionListPage");
 
   }
-
-  getTotalBalance(wallet: SimpleWallet): Promise<number> {
-    return new Promise((resolve) => {
-      this.getBalanceProvider
-        .mosaics(wallet.address)
-        .subscribe(mosaics => {
-          let total = 0;
-
-          mosaics.reduce((accumulator, mosaic, currentIndex, array) => {
-            this.marketPrice.transform(mosaic.mosaicId.name).then(price => {
-              if (price > 0) {
-                total += price * mosaic.amount;
-                console.log(total);
-              }
-              // last loop: compute total
-              let lastItem = array.length - 1;
-              if (currentIndex == lastItem) {
-                console.log(accumulator, currentIndex, array.length - 1, total);
-                resolve(total);
-                this.totalBalance=total;
-              }
-            })
-
-            return accumulator;
-          });
-          // console.log("Result", result);
-          // return result;
-        });
-    });
-  }
-
   goto(page) {
     this.navCtrl.push(page);
   }

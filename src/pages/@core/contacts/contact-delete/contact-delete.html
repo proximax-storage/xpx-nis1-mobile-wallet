@@ -5,9 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <ion-navbar transparent></ion-navbar>
+  <ion-navbar transparent>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()" color="black">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
-<ion-content fullscreen background>
+<ion-content background>
   <ion-grid>
     <ion-row>
       <ion-col col-12></ion-col>
@@ -15,10 +21,10 @@
       <ion-col col-12 text-center>
         <h3 ion-text color="black">
           Delete
-          <u>{{ contact.name }}</u>
+          <u>{{ contact?.name }}</u>
         </h3>
         <p ion-text color="black">
-          Are you sure to delete this contact forever?
+          Are you sure to delete this contact?
           <br>
           Warning: This is cannot be undone.
         </p>
@@ -26,7 +32,7 @@
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-          <button gradient-button color-50 type="submit" color="black">
+          <button gradient-button color-5 type="submit" color="black">
             Yes, delete forever
           </button>
         </form>

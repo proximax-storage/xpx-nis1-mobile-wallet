@@ -14,8 +14,21 @@
   </ion-navbar>
 </ion-header>
 <ion-content fullscreen background padding>
+  
   <ion-grid>
     <ion-row>
+
+        <ion-col col-12 text-center>
+            <h3 ion-text color="black">
+              Update
+              <u>{{ selectedWallet.name }}</u>
+              wallet
+            </h3>
+            <p ion-text color="black">
+              To update wallet name, change it below.
+            </p>
+          </ion-col>
+
         <ion-col>
             <div class="wallet">
                 <div class="wallet-content" [ngClass]="walletColor" text-center>
@@ -58,16 +71,7 @@
           </div>
         </ion-col>
 
-      <ion-col col-12 text-center>
-        <h3 ion-text color="black">
-          Update
-          <u>{{ selectedWallet.name }}</u>
-          wallet
-        </h3>
-        <p ion-text color="black">
-          To update wallet name change it below.
-        </p>
-      </ion-col>
+     
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">

@@ -312,7 +312,7 @@ export class SendPage {
         this.alertProvider.showMessage('Please select a recipient first.');
       } else {
         this.alertProvider.showMessage(
-          "Please type the recipient's address NEM address first."
+          "Please type the recipient's address first."
         );
       }
       return;
