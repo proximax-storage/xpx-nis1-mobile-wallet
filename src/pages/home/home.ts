@@ -384,6 +384,7 @@ export class HomePage {
     this.mosaics = null; // Triggers the skeleton list loader
     console.log('Async operation has ended');
     try {
+      await this.computeTotalWalletBalance(this.wallets);
       await this.getMosaicBalance(this.selectedWallet);
       await this.getTransactions(this.selectedWallet);
     } catch (error) {
