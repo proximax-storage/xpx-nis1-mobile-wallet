@@ -10,7 +10,7 @@
     <ion-slide *ngFor="let slide of slides">
       <ion-toolbar transparent>
         <ion-buttons end>
-          <button ion-button color="black" (click)="ionSlide.slideTo(6, 1000)">Skip</button>
+          <!-- <button ion-button color="black" (click)="ionSlide.slideTo(6, 1000)">Skip</button> -->
         </ion-buttons>
       </ion-toolbar>
       <ion-grid>
@@ -38,7 +38,7 @@
                 </ion-col>
                 <ion-col col-12 align-self-start>
                   <h2 ion-text color="black" class="slide-title"></h2>
-                  <p text-justify ion-text color="black"><br>&nbsp;<br>&nbsp;<br>&nbsp;Thank you for reading through our {{this.isPreview? 'guide' : 'introduction' }}. You are now ready to dive in! Should you wish to know more, contact us through Telegram here: <a href="https://t.me/@ProximaXio">@ProximaXio</a>.</p>
+                  <p text-justify ion-text color="black"><br>&nbsp;<br>&nbsp;<br>Thank you for reading through our {{this.isPreview? 'guide' : 'introduction' }}. You are now ready to dive in! Should you wish to know more, contact us through Telegram here: <a href="https://t.me/@ProximaXio">@ProximaXio</a>.</p>
                 </ion-col>
                 
               </ion-row>
