@@ -68,11 +68,11 @@ export class VerificationCodePage {
 
     this.pinTitle = this.navParams.data.title
       ? this.navParams.data.title
-      : "Setup your 6-digit PIN";
+      : "6-digit Pin Setup";
 
     this.pinSubtitle = this.navParams.data.subtitle
       ? this.navParams.data.subtitle
-      : "The following  6-digit PIN  is used to access your wallet. Please don't forget it: you won't be able to access your account.";
+      : "Please select a 6-digit pin to access your wallet. \n IMPORTANT: Do not forget this pin because we will not be able to recover it for you.";
 
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
@@ -105,8 +105,8 @@ export class VerificationCodePage {
         let page = "VerificationCodePage";
         let data: any = {
           status: "verify",
-          title: "Repeat PIN",
-          subtitle: "Let's double check",
+          title: "Re-enter Pin",
+          subtitle: " ",
           pin: pin,
           destination: 'TabsPage'
         };
@@ -126,8 +126,8 @@ export class VerificationCodePage {
       let page = "TabsPage";
       let data: any = {
         status: "verify",
-        title: "Repeat PIN",
-        subtitle: "Let's double check",
+        title: "Re-enter Pin",
+        subtitle: " ",
         pin: pin,
         destination: 'TabsPage'
       };

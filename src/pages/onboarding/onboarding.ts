@@ -61,7 +61,7 @@ export class OnboardingPage {
           <ul>
             <li>Write down your private keys and password and store them in a safe place.</li><br>
             <li>Do not store your keys and password on your computer or phone especially if they are assessible by other parties.</li>
-          </ul>.
+          </ul>
           `,
         isSmall: true,
         image: App.SLIDES.SLIDE3
