@@ -137,10 +137,14 @@ export class SendMultisigPage {
         .subscribe(mosaics => {
 
           console.log("Multisig mosaic", mosaics);
-          if (this.selectedMosaic) {
-            this.selectedMosaic = this.selectedMosaic;
-          } else {
-            this.selectedMosaic = this.mosaicSelectedName ? mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0] : mosaics[0];
+          if (!this.selectedMosaic) {
+            this.selectedMosaic = mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0];
+            console.log("this.selectedMosaic", this.selectedMosaic);
+
+            if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
+              console.log('this.selectedMosaic.mosaicId', this.selectedMosaic.mosaicId);
+              this.form.get('isMosaicTransfer').setValue(true);
+            }
           }
 
           let mosaic = this.selectedMosaic.mosaicId.name;
