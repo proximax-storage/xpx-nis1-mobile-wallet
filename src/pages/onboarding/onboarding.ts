@@ -47,7 +47,7 @@ export class OnboardingPage {
       {
         title: 'What is ProximaX Wallet?',
         description:
-          `<br>&nbsp;<br>
+          `<br>The ProximaX Wallet app is a free, client-side interface which allows you to interact directly with the blockchain while you remain in full control of your keys and funds. <br><br>
           At ProximaX, we are committed to helping you secure your digital assets. All our wallet updates undergo rigorous testing in order to ensure that everything you hold in your wallet is safe. However, a large part of keeping your wallet  and its contents safe depends on YOU.`,
         isSmall: true,
         image: App.SLIDES.SLIDE1
@@ -55,7 +55,7 @@ export class OnboardingPage {
       {
         title: 'Securing Your Private Keys and Password',
         description:
-          `<br>&nbsp;<br><strong>We strongly recommend you to:</strong>
+          `When your private key is generated, it is known to only you. We have absolutely no access to it. We can’t access accounts, recover keys, reset passwords or reverse transactions for you. <br><br><strong>We strongly recommend you to:</strong>
           <br>
           
           <ul>
