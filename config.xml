@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.proximax.walletv2" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.proximax.walletv2" version="0.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ProximaX Wallet</name>
     <description>The ProximaX wallet is a simple and powerful full featured ProximaX wallet that allows you to send and receive currency with anyone anywhere in the world.</description>
     <author email="core.dev@proximax.io" href="http://proximax.io/">ProximaX Limited</author>
@@ -100,6 +100,8 @@
     <plugin name="onesignal-cordova-plugin" spec="2.4.6" />
     <plugin name="cordova-plugin-vibration" spec="^3.1.0" />
     <plugin name="cordova-plugin-taptic-engine" spec="2.1.0" />
+    <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <hook src="scripts/incrementBuildNum.js" type="after_build" />
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="^4.5.5" />
 </widget>
