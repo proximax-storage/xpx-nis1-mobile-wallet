@@ -1,7 +1,5 @@
 
-# BlueWallet - A Bitcoin & Lightning Wallet
-
-Simple yet elegant wallet for ProximaX blockchain.
+# ProximaX Wallet - A simple yet elegant wallet for ProximaX blockchain.
 
  [![Appstore](https://i.imgur.com/4u7J8wI.jpg =150x)](https://testflight.apple.com/join/qZ6fNqfs)
  [![Playstore](https://i.imgur.com/CgdZqOM.jpg =150x)](https://play.google.com/store/apps/details?id=io.proximax.walletv2)
