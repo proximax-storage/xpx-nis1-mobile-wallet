@@ -108,8 +108,8 @@ export class HomePage {
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           // console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
-          // this.getTransactions(this.selectedWallet);
-          // this.getMosaicBalance(this.selectedWallet);
+          this.getTransactions(this.selectedWallet);
+          this.getMosaicBalance(this.selectedWallet);
         }).catch(err => {
           this.selectedWallet = (!this.selectedWallet && this.wallets) ? this.wallets[0] : null;
           this.getTransactions(this.selectedWallet);

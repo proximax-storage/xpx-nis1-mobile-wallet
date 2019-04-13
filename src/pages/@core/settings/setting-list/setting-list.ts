@@ -122,9 +122,9 @@ export class SettingListPage {
       this.haptic.selection();
       console.log("Logging out", _);
       // this.utils.setTabIndex(0);
-      this.utils.setHardwareBackToPage("WelcomePage");
+      this.utils.setHardwareBackToPage("LoginPage");
       this.utils.setHardwareBack();
-      this.utils.setRoot('WelcomePage');
+      this.utils.setRoot('LoginPage');
     })
   }
 }
