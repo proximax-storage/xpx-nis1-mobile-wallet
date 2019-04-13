@@ -44,12 +44,16 @@ export class SettingListPage {
 
   ionViewWillEnter() {
     // this.utils.setTabIndex(0);
+      this.walletProvider.getWallets(wallets=> {
+        if(wallets) {
+          this.walletProvider.getSelectedWallet().then(currentWallet => {
+            if (currentWallet) {
+              this.currentWallet = currentWallet;
+            }
+        })
+        }
+      })
 
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (currentWallet) {
-        this.currentWallet = currentWallet;
-      }
-    });
   }
 
   // getAccountInfo() {
