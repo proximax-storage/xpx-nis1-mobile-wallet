@@ -1,4 +1,3 @@
-import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
@@ -10,6 +9,7 @@ import { NemProvider } from './../../../../providers/nem/nem';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { ToastProvider } from '../../../../providers/toast/toast';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { HapticProvider } from '../../../../providers/haptic/haptic';
 
 /**
  * Generated class for the PrivateKeyPage page.
@@ -40,7 +40,7 @@ export class PrivateKeyPage {
     private toastProvider: ToastProvider,
     private utils: UtilitiesProvider,
     private viewController: ViewController,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     this.password = this.navParams.get('password');
   }

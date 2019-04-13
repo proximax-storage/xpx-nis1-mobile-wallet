@@ -9,7 +9,7 @@ import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
-import { TapticEngine } from '@ionic-native/taptic-engine';
+import { HapticProvider } from '../../../../providers/haptic/haptic';
 
 /**
  * Generated class for the WalletUpdatePage page.
@@ -44,7 +44,7 @@ export class WalletUpdatePage {
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
     private viewCtrl: ViewController,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     //this.walletColor = "wallet-1"; // to be change with current wallet color
     this.init();

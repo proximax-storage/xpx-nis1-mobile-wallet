@@ -9,8 +9,8 @@ import { WalletProvider } from "../../../../providers/wallet/wallet";
 import { NemProvider } from "../../../../providers/nem/nem";
 import { ToastProvider } from "./../../../../providers/toast/toast";
 import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
-import { TapticEngine } from '@ionic-native/taptic-engine';
 import { AppVersion } from '@ionic-native/app-version';
+import { HapticProvider } from '../../../../providers/haptic/haptic';
 
 
 /**
@@ -38,7 +38,7 @@ export class SettingListPage {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private authProvider: AuthProvider,
-    private haptic: TapticEngine,
+    private haptic: HapticProvider,
     private appVersion: AppVersion,
     private platform: Platform
   ) {

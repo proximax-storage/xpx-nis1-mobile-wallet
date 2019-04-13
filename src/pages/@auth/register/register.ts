@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../../providers/auth/auth';
 import { UtilitiesProvider } from '../../../providers/utilities/utilities';
-import { TapticEngine } from '@ionic-native/taptic-engine';
+import { HapticProvider } from '../../../providers/haptic/haptic';
 
 /**
  * Generated class for the RegisterPage page.
@@ -26,7 +26,7 @@ export class RegisterPage {
     public formBuilder: FormBuilder,
     public authProvider: AuthProvider,
     public utils: UtilitiesProvider,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     this.init();
   }

@@ -50,6 +50,7 @@ import { PostsProvider } from '../providers/posts/posts';
 import { MarkdownModule } from '@ngx-markdown/core';
 import { TapticEngine } from '@ionic-native/taptic-engine';
 import { AppVersion } from '@ionic-native/app-version';
+import { HapticProvider } from '../providers/haptic/haptic';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { AppVersion } from '@ionic-native/app-version';
     OneSignal,
     PostsProvider,
     TapticEngine,
-    AppVersion
+    AppVersion,
+    HapticProvider
   ]
 })
 export class AppModule {}

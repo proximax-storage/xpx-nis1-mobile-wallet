@@ -1,4 +1,3 @@
-import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
@@ -10,6 +9,7 @@ import { NemProvider } from '../../../../../providers/nem/nem';
 import { UtilitiesProvider } from '../../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../../providers/alert/alert';
 import { AuthProvider } from '../../../../../providers/auth/auth';
+import { HapticProvider } from '../../../../../providers/haptic/haptic';
 
 /**
  * Generated class for the SendMosaicConfirmationPage page.
@@ -41,7 +41,7 @@ export class SendMosaicConfirmationPage {
     private authProvider: AuthProvider,
     public utils: UtilitiesProvider,
     private viewCtrl: ViewController,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     this.init();
   }

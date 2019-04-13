@@ -22,7 +22,7 @@ import { App } from '../../../../../providers/app/app';
 import { AuthProvider } from '../../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../../providers/alert/alert';
 import { NavController } from 'ionic-angular';
-import { TapticEngine } from '@ionic-native/taptic-engine';
+import { HapticProvider } from '../../../../../providers/haptic/haptic';
 
 @Component({
   selector: 'multisig-detail',
@@ -105,7 +105,7 @@ export class MultisigDetailComponent {
     private authProvider: AuthProvider,
     private alertProvider: AlertProvider,
     private navCtrl: NavController,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
     // private transactionHttp: TransactionHttp
   ) {
     this.amount = 0;

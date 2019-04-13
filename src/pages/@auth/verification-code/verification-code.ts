@@ -9,6 +9,7 @@ import {
 import { Storage } from "@ionic/storage";
 import { AlertProvider } from "../../../providers/alert/alert";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
+import { HapticProvider } from '../../../providers/haptic/haptic';
 
 /**
  * Generated class for the VerificationCodePage page.
@@ -37,7 +38,7 @@ export class VerificationCodePage {
     public storage: Storage,
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {}
 
   ionViewWillEnter() {

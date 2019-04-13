@@ -1,4 +1,3 @@
-import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Clipboard } from '@ionic-native/clipboard';
@@ -7,6 +6,7 @@ import { ToastProvider } from '../../../providers/toast/toast';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 import { SimpleWallet } from 'nem-library';
 import { NemProvider } from '../../../providers/nem/nem';
+import { HapticProvider } from '../../../providers/haptic/haptic';
  /*
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -29,7 +29,7 @@ export class ReceivePage {
     private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
     private nemProvider: NemProvider,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
   }
   ionViewWillEnter() {
