@@ -1,8 +1,9 @@
 
-# ProximaX Wallet - A simple yet elegant wallet for ProximaX blockchain.
+# ProximaX Wallet 
+#### A simple yet elegant wallet for ProximaX blockchain.
 
- [![Appstore](https://i.imgur.com/4u7J8wI.jpg =150x)](https://testflight.apple.com/join/qZ6fNqfs)
- [![Playstore](https://i.imgur.com/CgdZqOM.jpg =150x)](https://play.google.com/store/apps/details?id=io.proximax.walletv2)
+[![Appstore](https://camo.githubusercontent.com/ddac8b1e589cfdb5b7ed6efd92fca87cf4553f1a/68747470733a2f2f626c756577616c6c65742e696f2f696d672f6170702d73746f72652d62616467652e737667)](https://testflight.apple.com/join/qZ6fNqfs)
+[![Playstore](https://camo.githubusercontent.com/2d939268876bda13dd071b99aa75daf82ef8c4f3/68747470733a2f2f626c756577616c6c65742e696f2f696d672f706c61792d73746f72652d62616467652e737667)](https://play.google.com/store/apps/details?id=io.proximax.walletv2)
 
 Website: [proximax.io](http://proximax.io)
 
