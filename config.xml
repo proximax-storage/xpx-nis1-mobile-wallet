@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.proximax.walletv2" version="0.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>ProximaX Wallet</name>
+<widget android-versionCode="66" id="io.proximax.walletv2" ios-CFBundleVersion="66" version="0.1.3"> xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0"&gt;
+                                            <name>ProximaX Wallet</name>
     <description>The ProximaX wallet is a simple and powerful full featured ProximaX wallet that allows you to send and receive currency with anyone anywhere in the world.</description>
     <author email="core.dev@proximax.io" href="http://proximax.io/">ProximaX Limited</author>
     <content src="index.html" />

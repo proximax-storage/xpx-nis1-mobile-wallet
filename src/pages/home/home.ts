@@ -164,7 +164,8 @@ export class HomePage {
         this.isLoading = false;
         this.showEmptyTransaction = false;
         if (!this.confirmedTransactions) {
-          this.showEmptyTransaction = true; this.isLoading = false;
+          this.isLoading = false;
+          this.showEmptyTransaction = true; 
           this.unconfirmedTransactions = null;
         }
       },
