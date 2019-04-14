@@ -1,4 +1,3 @@
-import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Component, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, ViewController, ActionSheetController } from "ionic-angular";
 import { TransactionTypes, SimpleWallet, Transaction, Pageable, TransferTransaction, AccountInfoWithMetaData, AccountInfo } from "nem-library";
@@ -15,6 +14,7 @@ import { Clipboard } from "@ionic-native/clipboard";
 import sortBy from 'lodash/sortBy';
 import { GetBalanceProvider } from "../../../../providers/get-balance/get-balance";
 import { GetMarketPricePipe } from "../../../../pipes/get-market-price/get-market-price";
+import { HapticProvider } from '../../../../providers/haptic/haptic';
 
 /**
  * Generated class for the TransactionListPage page.
@@ -75,7 +75,7 @@ export class TransactionListPage {
     private getBalanceProvider: GetBalanceProvider,
     private marketPrice: GetMarketPricePipe,
     private actionSheetCtrl: ActionSheetController,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
        // this.getTotalBalance(currentWallet);
        this.totalBalance = 0;
@@ -111,7 +111,6 @@ export class TransactionListPage {
     /** Transaction list business logic */
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
-    this.showEmptyMessage = true;
 
       if (this.currentWallet) {
         this.walletName = this.currentWallet.name;

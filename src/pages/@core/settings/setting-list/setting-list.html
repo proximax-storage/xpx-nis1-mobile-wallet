@@ -88,7 +88,7 @@
 
     <section></section> -->
 
-    <ion-card (click)="backupWallet()">
+    <ion-card no-margin-bottom (click)="backupWallet()">
           <ion-item>
             <ion-icon item-left name="ios-download-outline"></ion-icon>
             <h2>Backup Wallet</h2>
@@ -96,13 +96,6 @@
           </ion-item>
         </ion-card>
 
-    <ion-card (click)="showResetPINPrompt()">
-      <ion-item>
-        <ion-icon item-left name="ios-key-outline"></ion-icon>
-        <h2>Reset Pin</h2>
-        <p text-wrap>Manage your account details such as username, password and pin.</p>
-      </ion-item>
-    </ion-card>
 
 
     <ion-card (click)="gotoGuide()">
@@ -112,6 +105,15 @@
         <p text-wrap>What you need to know to take appropriate steps to secure your wallet. </p>
       </ion-item>
     </ion-card>
+
+    <ion-card (click)="showResetPINPrompt()">
+      <ion-item>
+        <ion-icon item-left name="ios-key-outline"></ion-icon>
+        <h2>Reset PIN</h2>
+        <p text-wrap></p>
+      </ion-item>
+    </ion-card>
+
 
     <ion-card (click)="logOut()">
       <ion-item>
@@ -123,3 +125,9 @@
 
   </ion-list>
 </ion-content>
+
+<ion-footer>
+    <ion-list-header>
+      App version {{version}} 
+    </ion-list-header>
+</ion-footer>

@@ -10,5 +10,15 @@ page-setting-list {
     }
   }
 
+  ion-list-header{
+    border-bottom: none !important;
+    border-top: none !important;
+    margin-bottom: 0px !important;
+  }
+
+  .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+    height: 0px;
+}
+
 
 }

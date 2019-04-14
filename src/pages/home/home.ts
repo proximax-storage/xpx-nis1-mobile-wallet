@@ -10,7 +10,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 import sortBy from 'lodash/sortBy';
 import { NemProvider } from '../../providers/nem/nem';
 import { Observable } from 'rxjs';
-import { TapticEngine } from '@ionic-native/taptic-engine';
+import { HapticProvider } from '../../providers/haptic/haptic';
 
 
 export enum WalletCreationType {
@@ -77,7 +77,7 @@ export class HomePage {
     public platform: Platform,
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";

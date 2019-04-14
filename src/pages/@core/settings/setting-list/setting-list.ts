@@ -1,6 +1,6 @@
 import { AuthProvider } from './../../../../providers/auth/auth';
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, App, ModalController, AlertController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, App, ModalController, AlertController, Platform } from "ionic-angular";
 import { Clipboard } from "@ionic-native/clipboard";
 
 import { SimpleWallet, AccountInfoWithMetaData } from "nem-library";
@@ -9,7 +9,8 @@ import { WalletProvider } from "../../../../providers/wallet/wallet";
 import { NemProvider } from "../../../../providers/nem/nem";
 import { ToastProvider } from "./../../../../providers/toast/toast";
 import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
-import { TapticEngine } from '@ionic-native/taptic-engine';
+import { AppVersion } from '@ionic-native/app-version';
+import { HapticProvider } from '../../../../providers/haptic/haptic';
 
 
 /**
@@ -27,29 +28,39 @@ import { TapticEngine } from '@ionic-native/taptic-engine';
 export class SettingListPage {
   currentWallet: SimpleWallet;
   accountInfo: AccountInfoWithMetaData;
+  version: string = '0.0.1';
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private nemProvider: NemProvider,
-    private clipboard: Clipboard,
-    private toastProvider: ToastProvider,
     private walletProvider: WalletProvider,
     private utils: UtilitiesProvider,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private authProvider: AuthProvider,
-    private haptic: TapticEngine
-  ) { }
+    private haptic: HapticProvider,
+    private appVersion: AppVersion,
+    private platform: Platform
+  ) {
+    if (this.platform.is('cordova')) {
+      this.appVersion.getVersionNumber().then(version=> {
+        this.version = version ? version : '0.0.1';
+      })
+    }
+  }
 
   ionViewWillEnter() {
     // this.utils.setTabIndex(0);
-
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (currentWallet) {
-        this.currentWallet = currentWallet;
+    this.walletProvider.getWallets().then(wallets=> {
+      if (wallets) {
+        this.walletProvider.getSelectedWallet().then(currentWallet => {
+          if (currentWallet) {
+            this.currentWallet = currentWallet;
+          }
+        })
       }
-    });
+    })
+
   }
 
   // getAccountInfo() {

@@ -49,6 +49,9 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { PostsProvider } from '../providers/posts/posts';
 import { MarkdownModule } from '@ngx-markdown/core';
 import { TapticEngine } from '@ionic-native/taptic-engine';
+import { AppVersion } from '@ionic-native/app-version';
+import { HapticProvider } from '../providers/haptic/haptic';
+
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -108,7 +111,9 @@ import { TapticEngine } from '@ionic-native/taptic-engine';
     LocalStorageProvider,
     OneSignal,
     PostsProvider,
-    TapticEngine
+    TapticEngine,
+    AppVersion,
+    HapticProvider
   ]
 })
 export class AppModule {}

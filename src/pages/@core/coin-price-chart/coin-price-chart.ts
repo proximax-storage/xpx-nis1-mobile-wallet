@@ -13,7 +13,7 @@ import { GetBalanceProvider } from "../../../providers/get-balance/get-balance";
 import { GetMarketPricePipe } from "../../../pipes/get-market-price/get-market-price";
 import { Clipboard } from "@ionic-native/clipboard";
 import { ToastProvider } from "../../../providers/toast/toast";
-import { TapticEngine } from "@ionic-native/taptic-engine";
+import { HapticProvider } from "../../../providers/haptic/haptic";
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -83,7 +83,7 @@ export class CoinPriceChartPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private actionSheetCtrl: ActionSheetController,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     this.selectedSegment = 'transactions';
     this.durations = [

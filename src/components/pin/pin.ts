@@ -1,4 +1,3 @@
-import { TapticEngine } from '@ionic-native/taptic-engine';
 import {
   Component,
   Input,
@@ -6,6 +5,7 @@ import {
   EventEmitter,
   OnChanges
 } from "@angular/core";
+import { HapticProvider } from '../../providers/haptic/haptic';
 
 /**
  * Generated class for the PinComponent component.
@@ -34,7 +34,7 @@ export class PinComponent implements OnChanges {
 
   @Output() submit: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private haptic: TapticEngine) {
+  constructor(private haptic: HapticProvider) {
     console.log(this.random9DigitNumberNotStartingWithZero());
     console.log(
       this.random9DigitNumberNotStartingWithZero()

@@ -8,6 +8,7 @@ import { AuthProvider } from '../../../providers/auth/auth';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 import { AlertProvider } from '../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../providers/utilities/utilities';
+import { HapticProvider } from '../../../providers/haptic/haptic';
 
 /**
  * Generated class for the LoginPage page.
@@ -33,7 +34,7 @@ export class LoginPage {
     public walletProvider: WalletProvider,
     public authProvider: AuthProvider,
     public utils: UtilitiesProvider,
-    private haptic: TapticEngine
+    private haptic: HapticProvider
   ) {
     this.init();
   }
