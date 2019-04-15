@@ -104,7 +104,7 @@
     </ion-list>
 
     <ion-grid padding empty *ngIf="showEmptyMosaic">
-      <ion-row padding>
+      <ion-row >
         <ion-col>
           <p>
           </p>
@@ -113,7 +113,6 @@
       <br>
       <ion-row>
         <ion-col>
-
           <img quarter-width [src]="AppConfig.STICKERS.SORRY">
 
           <h6 ion-text color="grey" text-wrap>
@@ -212,7 +211,7 @@
     </ion-list>
 
 
-    <ion-grid empty *ngIf="showEmptyTransaction">
+    <ion-grid padding empty *ngIf="showEmptyTransaction">
       <ion-row >
         <ion-col>
           <p>
