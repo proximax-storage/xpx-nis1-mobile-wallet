@@ -24,13 +24,13 @@ export class HapticProvider {
 
   notification(type){
     if(this.platform.is("ios")) {
-    this.tapticEngine.notification({type: type})
+    this.tapticEngine.notification(type)
     }
   }
 
   impact(style) {
     if(this.platform.is("ios")) {
-    this.tapticEngine.impact({style: style})
+    this.tapticEngine.impact(style)
     }
   }
 
