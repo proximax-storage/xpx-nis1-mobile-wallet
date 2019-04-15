@@ -78,16 +78,18 @@ export class TransactionListPage {
     private haptic: HapticProvider
   ) {
        // this.getTotalBalance(currentWallet);
-       this.totalBalance = 0;
        console.log("Wallet from home",this.navParams.data);
        this.currentWallet = this.navParams.data;
-       this.totalBalance = this.currentWallet.total;
+       this.totalBalance = this.currentWallet.total || 0;
    
   }
 
   getAccountInfo() {
     console.info("Getting account information.", this.currentWallet.address)
-    this.nemProvider
+
+
+    try {
+      this.nemProvider
       .getAccountInfo(this.currentWallet.address)
       .subscribe(accountInfo => {
         if (accountInfo) {
@@ -99,9 +101,16 @@ export class TransactionListPage {
             console.log("This is a multisig account");
             this.isMultisig = true;
           }
-
         } 
+        
+      }, (err:any)=> {
+        console.log(err)
       });
+      
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
 

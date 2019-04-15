@@ -52,6 +52,8 @@ getAccountInfo() {
     .subscribe(accountInfo => {
       this.accountInfo = accountInfo;
       console.log(this.accountInfo)
+    }, (err:any)=> {
+      console.log(err)
     });
 }
 
