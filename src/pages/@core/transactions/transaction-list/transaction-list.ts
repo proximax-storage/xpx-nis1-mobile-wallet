@@ -215,7 +215,7 @@ export class TransactionListPage {
 
   moreDetails(){
     let page = "WalletDetailsPage";
-    this.showModal(page, { totalBalance: this.totalBalance });
+    this.showModal(page, { totalBalance: this.totalBalance, wallet: this.currentWallet });
   }
 
   showModal(page,params) {

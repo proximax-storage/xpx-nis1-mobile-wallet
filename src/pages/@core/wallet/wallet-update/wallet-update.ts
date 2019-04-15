@@ -63,6 +63,7 @@ export class WalletUpdatePage {
   }
 
   init() {
+    console.log(this.navParams.get('wallet'));
     this.selectedWallet = this.navParams.get('wallet');
     this.walletColor = this.selectedWallet.walletColor;
     this.walletName = this.selectedWallet.name;

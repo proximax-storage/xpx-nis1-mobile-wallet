@@ -49,16 +49,7 @@ export class PrivateKeyPage {
     this.utils.setHardwareBack(this.navCtrl);
 
     this.walletProvider.getSelectedWallet().then(currentWallet => {
-      if (!currentWallet) {
-        this.navCtrl.setRoot(
-          'TabsPage',
-          {},
-          {
-            animate: true,
-            direction: 'backward'
-          }
-        );
-      } else {
+      if (currentWallet) {
         this.currentWallet = currentWallet;
         this.privateKey = this.nemProvider.passwordToPrivateKey(
           this.password,

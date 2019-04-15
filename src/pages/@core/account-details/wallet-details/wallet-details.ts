@@ -36,12 +36,14 @@ export class WalletDetailsPage {
     private modalCtrl: ModalController
     ) {
       this.totalBalance = navParams.get('totalBalance');
-    
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      this.walletName = currentWallet.name;
-      this.currentWallet = currentWallet;
+      this.currentWallet = navParams.get('wallet');
       this.getAccountInfo();
-  });
+    
+  //   this.walletProvider.getSelectedWallet().then(currentWallet => {
+  //     this.walletName = currentWallet.name;
+  //     this.currentWallet = currentWallet;
+  //     this.getAccountInfo();
+  // });
 }
 
 getAccountInfo() {
