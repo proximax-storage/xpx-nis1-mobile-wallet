@@ -76,7 +76,7 @@
 
           <ion-item transparent padding>
             <ion-label stacked>Private key</ion-label>
-            <ion-textarea autosize formControlName="privateKey" type="text" autocapitalize="none" placeholder="Enter your private key"></ion-textarea>
+            <ion-textarea rows="3" formControlName="privateKey" type="text" autocapitalize="none" placeholder="Enter your private key"></ion-textarea>
           </ion-item>
 
           <button gradient-button color-5 [disabled]="formGroup.invalid" type="submit" color="black">
@@ -86,6 +86,7 @@
           <p (click)="scan()"><strong>or scan QR code instead?</strong></p>
         </form>
       </ion-col>
+      <br><br><br>
 
       <ion-col col-12></ion-col>
       <ion-col col-12></ion-col>

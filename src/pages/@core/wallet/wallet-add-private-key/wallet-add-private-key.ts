@@ -110,29 +110,31 @@ export class WalletAddPrivateKeyPage {
 
   scan() {
     this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
+      console.info('Barcode data', barcodeData);
       let password: string;
       let payload = JSON.parse(barcodeData.text);
 
 
       let alert = this.alertCtrl.create();
-      alert.setTitle('Enter password');
+      alert.setTitle('Import wallet');
       alert.setSubTitle('');
   
       alert.addInput({
         type: 'password',
         label: 'Password',
+        placeholder: 'Enter your password'
       });
 
       alert.addButton('Cancel');
   
       alert.addButton({
-        text: 'Import',
+        text: 'Verify',
         handler: data => {
           if(data) {
+            console.log(data);
             password = data[0];
-            let privKey = this.nemProvider.decryptPrivateKey(password,JSON.parse(payload));
-            this.formGroup.patchValue({ name: payload.name})
+            let privKey = this.nemProvider.decryptPrivateKey(password,payload);
+            this.formGroup.patchValue({ name: payload.data.name})
             this.formGroup.patchValue({ privateKey: privKey})
           }
         }
