@@ -105,6 +105,7 @@ export class TransactionListPage {
         
       }, (err:any)=> {
         console.log(err)
+          this.isMultisig = false;
       });
       
     } catch (error) {

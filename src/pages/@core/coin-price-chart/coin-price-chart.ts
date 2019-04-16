@@ -152,21 +152,29 @@ export class CoinPriceChartPage {
   
   getAccountInfo() {
     console.info("Getting account information.", this.currentWallet.address)
-    this.nemProvider
-      .getAccountInfo(this.currentWallet.address)
-      .subscribe(accountInfo => {
-        if (accountInfo) {
-          this.accountInfo = accountInfo;
-          console.log("accountInfo", this.accountInfo)
-          // Check if account is a cosignatory of multisig account(s)
-          if(this.accountInfo.cosignatoryOf) {
-            console.clear();
-            console.log("This is a multisig account");
-            this.isMultisig = true;
+    try {
+      this.nemProvider
+        .getAccountInfo(this.currentWallet.address)
+        .subscribe(accountInfo => {
+          if (accountInfo) {
+            this.accountInfo = accountInfo;
+            console.log("accountInfo", this.accountInfo)
+            // Check if account is a cosignatory of multisig account(s)
+            if (this.accountInfo.cosignatoryOf) {
+              // console.clear();
+              console.log("This is a multisig account");
+              this.isMultisig = true;
+            }
           }
 
-        } 
-      });
+        }, (err: any) => {
+          console.log(err)
+          this.isMultisig = false;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   copy() {
