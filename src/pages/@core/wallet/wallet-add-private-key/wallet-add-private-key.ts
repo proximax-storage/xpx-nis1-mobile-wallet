@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { App } from '../../../../providers/app/app';
 import { NemProvider } from '../../../../providers/nem/nem';
@@ -8,6 +8,8 @@ import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { scan } from 'rxjs/operators';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 /**
  * Generated class for the WalletAddPrivateKeyPage page.
  *
@@ -37,6 +39,8 @@ export class WalletAddPrivateKeyPage {
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
     private utils: UtilitiesProvider,
+    private barcodeScanner : BarcodeScanner,
+    private alertCtrl: AlertController,
   ) {
     this.walletColor = 'wallet-1';
     this.init();
@@ -103,4 +107,43 @@ export class WalletAddPrivateKeyPage {
       this.alertProvider.showMessage(error);
     }
   }
+
+  scan() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      let password: string;
+      let payload = JSON.parse(barcodeData.text);
+
+
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Enter password');
+      alert.setSubTitle('');
+  
+      alert.addInput({
+        type: 'password',
+        label: 'Password',
+      });
+
+      alert.addButton('Cancel');
+  
+      alert.addButton({
+        text: 'Import',
+        handler: data => {
+          if(data) {
+            password = data[0];
+            let privKey = this.nemProvider.decryptPrivateKey(password,JSON.parse(payload));
+            this.formGroup.patchValue({ name: payload.name})
+            this.formGroup.patchValue({ privateKey: privKey})
+          }
+        }
+      });
+  
+      alert.present();
+     }).catch(err => {
+         console.log('Error', err);
+     });
+  }
+
 }
+
+

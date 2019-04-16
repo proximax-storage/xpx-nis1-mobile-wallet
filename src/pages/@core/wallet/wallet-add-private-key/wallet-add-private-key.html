@@ -80,8 +80,10 @@
           </ion-item>
 
           <button gradient-button color-5 [disabled]="formGroup.invalid" type="submit" color="black">
-            Continue
+            Import
           </button>
+
+          <p (click)="scan()"><strong>or scan QR code instead?</strong></p>
         </form>
       </ion-col>
 

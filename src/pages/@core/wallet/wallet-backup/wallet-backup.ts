@@ -48,9 +48,7 @@ export class WalletBackupPage {
     private platform: Platform
   ) {
 
-    if(this.platform.is("ios")){
-      this.showBackupfile = false;
-    }
+
     this.init();
   }
 
@@ -65,25 +63,37 @@ export class WalletBackupPage {
   }
 
   init() {
-    this.options = [
-      {
-        name: 'Copy to clipboard',
-        value: WalletBackupType.COPY_TO_CLIPBOARD,
-        icon: 'ios-copy-outline'
-      },
-      {
-        name: 'Share',
-        value: WalletBackupType.SHARE,
-        icon: 'ios-share-outline'
-      }
-    ];
-
-    if(this.showBackupfile) {
-      this.options.push({
-        name: 'Export as file', // TODO
-        value: WalletBackupType.EXPORT_AS_FILE,
-        icon: 'ios-folder-outline'
-      });
+    if(this.platform.is("android")) {
+      this.options = [
+        {
+          name: 'Export as file', // TODO
+          value: WalletBackupType.EXPORT_AS_FILE,
+          icon: 'ios-folder-outline'
+        },
+        {
+          name: 'Copy to clipboard',
+          value: WalletBackupType.COPY_TO_CLIPBOARD,
+          icon: 'ios-copy-outline'
+        },
+        {
+          name: 'Share',
+          value: WalletBackupType.SHARE,
+          icon: 'ios-share-outline'
+        }
+      ];
+    } else {
+      this.options = [
+        {
+          name: 'Copy to clipboard',
+          value: WalletBackupType.COPY_TO_CLIPBOARD,
+          icon: 'ios-copy-outline'
+        },
+        {
+          name: 'Share',
+          value: WalletBackupType.SHARE,
+          icon: 'ios-share-outline'
+        }
+      ];
     }
   }
 
@@ -109,6 +119,7 @@ export class WalletBackupPage {
     if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
       // TODO: export as .wlt file
       this.walletBackupProvider.saveAsFile(WALLET).then(_ => {
+        alert(_);
         this.goHome();
       });
     } else if (this.selectedOption === WalletBackupType.SHARE) {
