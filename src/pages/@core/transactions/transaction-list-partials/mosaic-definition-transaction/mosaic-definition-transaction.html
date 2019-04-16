@@ -1,11 +1,3 @@
-<ion-card-header>
-  <p float-left ion-text color="black">
-    {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
-  </p>
-  <p float-right ion-text color="black">
-    {{ tx.timeWindow.timeStamp.toString() | timeago }}
-  </p>
-</ion-card-header>
 <ion-card-header no-padding transaction-header>
   <ion-item>
     <img logo-small item-left [src]="App.LOGO.NEM">
@@ -20,7 +12,7 @@
       <h2 ion-text color="danger">- {{ (tx.creationFee + tx.fee) | formatXEM }} </h2>
       <p text-right text-left ion-text color="black">
         <small>
-          {{ (tx.creationFee + tx.fee) | formatXEM | currency }}
+          {{ tx.timeWindow.timeStamp.toString() | timeago }}
         </small>
       </p>
     </section>
