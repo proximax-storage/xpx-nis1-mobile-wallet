@@ -86,6 +86,11 @@ showWalletUpdate(){
   this.showModal(page, { wallet: this.currentWallet });
 }
 
+showWalletDete(){
+  let page = "WalletDeletePage";
+  this.showModal(page, { wallet: this.currentWallet });
+}
+
 showModal(page,params) {
   const modal = this.modalCtrl.create(page, params ,{
     enableBackdropDismiss: false,

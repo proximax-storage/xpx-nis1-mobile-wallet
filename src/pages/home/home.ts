@@ -263,7 +263,8 @@ export class HomePage {
           role: 'destructive',
           icon: this.platform.is('ios') ? null : 'trash',
           handler: () => {
-            this.navCtrl.push('WalletDeletePage', { wallet: wallet });
+            let page = "WalletDeletePage";
+            this.showModal(page, { wallet: wallet });
           }
         },
         {
