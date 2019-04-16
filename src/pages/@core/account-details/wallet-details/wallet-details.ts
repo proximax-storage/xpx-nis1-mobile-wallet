@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { AccountInfoWithMetaData, SimpleWallet } from 'nem-library';
@@ -33,7 +34,8 @@ export class WalletDetailsPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private viewCtrl: ViewController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private authProvider: AuthProvider
     ) {
       this.totalBalance = navParams.get('totalBalance');
       this.currentWallet = navParams.get('wallet');
@@ -64,8 +66,15 @@ copy() {
 }
 
 showExportPrivateKeyModal() {
-    let page = "PrivateKeyPasswordPage";
-    this.showModal(page, {})
+  this.authProvider.getPassword().then(password => {
+    let credentials = {
+      password: password,
+      privateKey: ''
+    };
+
+    let page = "PrivateKeyPage";
+    this.showModal(page, { password: credentials.password });
+  })
   }
 
 dismiss() {
