@@ -115,32 +115,36 @@ export class WalletAddPrivateKeyPage {
       let payload = JSON.parse(barcodeData.text);
 
 
-      let alert = this.alertCtrl.create();
-      alert.setTitle('Import wallet');
-      alert.setSubTitle('');
+      let alertCtrl = this.alertCtrl.create();
+      alertCtrl.setTitle('Import wallet');
+      alertCtrl.setSubTitle('');
   
-      alert.addInput({
+      alertCtrl.addInput({
         type: 'password',
         label: 'Password',
         placeholder: 'Enter your password'
       });
 
-      alert.addButton('Cancel');
+      alertCtrl.addButton('Cancel');
   
-      alert.addButton({
+      alertCtrl.addButton({
         text: 'Verify',
         handler: data => {
           if(data) {
             console.log(data);
             password = data[0];
-            let privKey = this.nemProvider.decryptPrivateKey(password,payload);
-            this.formGroup.patchValue({ name: payload.data.name})
-            this.formGroup.patchValue({ privateKey: privKey})
+            try {
+              let privKey = this.nemProvider.decryptPrivateKey(password, payload);
+              this.formGroup.patchValue({ name: payload.data.name })
+              this.formGroup.patchValue({ privateKey: privKey })
+            } catch (error) {
+              alert(error);
+            }
           }
         }
       });
   
-      alert.present();
+      alertCtrl.present();
      }).catch(err => {
          console.log('Error', err);
      });
