@@ -75,6 +75,7 @@ export class WalletDeletePage {
       this.haptic.notification({ type:'success'});
     await this.walletProvider
       .deleteWallet(this.selectedWallet)
+    await this.walletProvider.unsetSelectedWallet();
     return this.dismiss();
   }
 
