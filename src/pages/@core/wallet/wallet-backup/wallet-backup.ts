@@ -119,7 +119,6 @@ export class WalletBackupPage {
     if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
       // TODO: export as .wlt file
       this.walletBackupProvider.saveAsFile(WALLET).then(_ => {
-        alert(_);
         this.goHome();
       });
     } else if (this.selectedOption === WalletBackupType.SHARE) {
