@@ -16,7 +16,6 @@ import { WalletProvider } from './../../../../providers/wallet/wallet';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../../providers/alert/alert';
 
-import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
 import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -41,9 +40,8 @@ export class SendPage {
   selectedCoin: any;
 
   form: FormGroup;
-  inputOptions: CurrencyMaskConfig;
   fee: number = 0;
-  amount: number = 0;
+  amount: number;
   mosaicSelectedName: string;
 
   constructor(
@@ -142,18 +140,7 @@ export class SendPage {
   init() {
 
     console.log('Init called');
-    // Initialize input options
-    this.inputOptions = {
-      align: 'center',
-      allowNegative: false,
-      allowZero: true,
-      decimal: '.',
-      precision: 2,
-      prefix: '',
-      suffix: this.mosaicSelectedName ? ' ' + this.mosaicSelectedName.toUpperCase() : ' XPX',
-      thousands: ',',
-      nullable: false
-    };
+
     // Initialize form
     this.form = this.formBuilder.group({
       senderName: '',
@@ -182,7 +169,7 @@ export class SendPage {
     }
 
     this.fee = 0;
-    this.amount = 0;
+    this.amount = null;
   }
 
   onChangeFrom(val) {
@@ -214,8 +201,6 @@ export class SendPage {
           console.log('Selected mosaic', data);
           this.selectedMosaic = data;
           console.log(this.selectedMosaic);
-          this.inputOptions.suffix =
-            ' ' + this.selectedMosaic.mosaicId.name.toUpperCase();
 
           if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
             console.log('this.selectedMosaic.mosaicId', this.selectedMosaic.mosaicId);
@@ -260,11 +245,6 @@ export class SendPage {
       );
     }
   }
-
-  getPrice(selectedMosaic) {
-    return 0;
-  }
-
   /**
    * Calculates fee and returns prepared Transaction
    */
@@ -385,7 +365,5 @@ export class SendPage {
      }).catch(err => {
          console.log('Error', err);
      });
-
-
   }
 }

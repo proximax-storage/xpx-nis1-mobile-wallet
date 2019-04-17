@@ -37,9 +37,9 @@
       <ion-card amount>
         <ion-item>
           <ion-label>
-            <input currencyMask maxlength="20" type="tel"
+            <input maxlength="20" type="number"
               formControlName="amount"
-              [options]="inputOptions" [(ngModel)]="amount">
+               [(ngModel)]="amount" placeholder="0" >
           </ion-label>
         </ion-item>
       </ion-card>
@@ -47,8 +47,7 @@
       <section total text-center>
           <h2 price ion-text color="black" *ngIf="selectedCoin">
             ≈ {{ selectedCoin?.market_data.current_price.usd * amount  | currency: 'USD': 'symbol': '1.2-6' }}</h2>
-        </section>
-      
+        </section>      
     
 
       <!-- Mosaic -->
