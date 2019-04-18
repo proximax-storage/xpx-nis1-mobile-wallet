@@ -6,10 +6,17 @@
     no-repeat;
 
   // background: color($colors, white);
-  background-position: center;
+  background-position: center !important;
   background-size: cover;
   height: 100%;
   width: 100%;
+    display: block !important;
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    opacity: 1;
+    margin-bottom: 0px !important;
   [transparent] {
     color: color($colors, dark);
     background: transparent;

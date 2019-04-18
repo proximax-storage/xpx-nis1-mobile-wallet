@@ -5,7 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <ion-navbar transparent></ion-navbar>
+
+  <ion-navbar transparent>
+    <ion-title>Delete Wallet</ion-title>
+
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()" color="black">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
 </ion-header>
 <ion-content fullscreen background>
   <ion-grid>
@@ -14,21 +25,19 @@
 
       <ion-col col-12 text-center>
         <h3 ion-text color="danger">
-          You are about to
+          You are about to delete
           <strong><u>{{ selectedWallet.name }}</u></strong>
           wallet!
         </h3>
         <p ion-text color="black">
-          Are you sure to delete this wallet forever?
-          <br>
-          Please make sure you backup your wallet before deletion. This is cannot be undone.
+          Continuing this action will delete the wallet from your account and cannot be undone. Please make sure to backup your wallet first so you can recover it anytime.
         </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <button gradient-button color-5 type="submit" color="black">
-            Yes, delete forever
+            Continue
           </button>
         </form>
       </ion-col>

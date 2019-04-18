@@ -1,3 +1,4 @@
+import { AuthProvider } from './../../../../providers/auth/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { AccountInfoWithMetaData, SimpleWallet } from 'nem-library';
@@ -33,15 +34,18 @@ export class WalletDetailsPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private viewCtrl: ViewController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private authProvider: AuthProvider
     ) {
       this.totalBalance = navParams.get('totalBalance');
-    
-    this.walletProvider.getSelectedWallet().then(currentWallet => {
-      this.walletName = currentWallet.name;
-      this.currentWallet = currentWallet;
+      this.currentWallet = navParams.get('wallet');
       this.getAccountInfo();
-  });
+    
+  //   this.walletProvider.getSelectedWallet().then(currentWallet => {
+  //     this.walletName = currentWallet.name;
+  //     this.currentWallet = currentWallet;
+  //     this.getAccountInfo();
+  // });
 }
 
 getAccountInfo() {
@@ -50,6 +54,8 @@ getAccountInfo() {
     .subscribe(accountInfo => {
       this.accountInfo = accountInfo;
       console.log(this.accountInfo)
+    }, (err:any)=> {
+      console.log(err)
     });
 }
 
@@ -60,8 +66,15 @@ copy() {
 }
 
 showExportPrivateKeyModal() {
-    let page = "PrivateKeyPasswordPage";
-    this.showModal(page, {})
+  this.authProvider.getPassword().then(password => {
+    let credentials = {
+      password: password,
+      privateKey: ''
+    };
+
+    let page = "PrivateKeyPage";
+    this.showModal(page, { password: credentials.password });
+  })
   }
 
 dismiss() {
@@ -70,6 +83,11 @@ dismiss() {
 
 showWalletUpdate(){
   let page = "WalletUpdatePage";
+  this.showModal(page, { wallet: this.currentWallet });
+}
+
+showWalletDete(){
+  let page = "WalletDeletePage";
   this.showModal(page, { wallet: this.currentWallet });
 }
 

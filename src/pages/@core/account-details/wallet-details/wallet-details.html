@@ -36,7 +36,7 @@
             <ion-item *ngIf="currentWallet">
                 <ion-icon name='fi-wallet' item-start></ion-icon>
                 Wallet Name:
-                <span item-end>{{walletName }}</span>
+                <span item-end>{{currentWallet.name }}</span>
             </ion-item>
 
             <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
@@ -52,7 +52,7 @@
             </ion-item>
 
             <ion-item *ngIf="accountInfo && accountInfo.publicAccount" (click)="copy(accountInfo.publicAccount.publicKey)">
-                <ion-icon name='paper' item-start></ion-icon>
+                <ion-icon name='ios-key-outline' item-start></ion-icon>
                 Public Key:
                 <p text-justify  *ngIf="currentWallet">{{ accountInfo.publicAccount.publicKey }} </p>
             </ion-item>
@@ -85,15 +85,23 @@
               </button>
             </ion-col> -->
 
-            <button gradient-button quarter-width color-5 medium (click)="showExportPrivateKeyModal()">
-              Export Private Key
+            <button reduce-margin gradient-button quarter-width color-5 medium (click)="showExportPrivateKeyModal()">
+              Export / backup
             </button>
         </ion-row>
         
         <ion-row>
-          <button gradient-button quarter-width color-5 medium (click)="showWalletUpdate()">
+          <button reduce-margin gradient-button quarter-width color-5 medium (click)="showWalletUpdate()">
             Edit Wallet
           </button>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col col="12" align-self-center>
+            <button text-center full ion-button color="danger" clear (click)="showWalletDete()">
+              Delete Wallet
+            </button>
+          </ion-col>
         </ion-row>
       </ion-card>
 

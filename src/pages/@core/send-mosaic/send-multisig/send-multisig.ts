@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { SimpleWallet, MosaicTransferable, XEM, Address, TransferTransaction, AccountInfo, AccountInfoWithMetaData, Transaction } from 'nem-library';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CurrencyMaskConfig } from 'ngx-currency/src/currency-mask.config';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { GetBalanceProvider } from '../../../../providers/get-balance/get-balance';
 import { WalletProvider } from '../../../../providers/wallet/wallet';
@@ -32,7 +31,6 @@ export class SendMultisigPage {
   selectedCoin: any;
 
   form: FormGroup;
-  inputOptions: CurrencyMaskConfig;
   fee: number = 0;
   amount: number = 0;
   mosaicSelectedName: string;
@@ -181,18 +179,6 @@ export class SendMultisigPage {
   init() {
 
     console.log('Init called');
-    // Initialize input options
-    this.inputOptions = {
-      align: 'center',
-      allowNegative: false,
-      allowZero: true,
-      decimal: '.',
-      precision: 2,
-      prefix: '',
-      suffix: this.mosaicSelectedName ? ' ' + this.mosaicSelectedName.toUpperCase() : ' XPX',
-      thousands: ',',
-      nullable: false
-    };
     // Initialize form
     this.form = this.formBuilder.group({
       senderName: '',
@@ -223,7 +209,7 @@ export class SendMultisigPage {
     }
 
     this.fee = 0;
-    this.amount = 0;
+    this.amount = null;
   }
 
   onChangeFrom(val) {
@@ -256,8 +242,6 @@ export class SendMultisigPage {
           console.log('Selected mosaic', data);
           this.selectedMosaic = data;
           console.log(this.selectedMosaic);
-          this.inputOptions.suffix =
-            ' ' + this.selectedMosaic.mosaicId.name.toUpperCase();
 
           if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
             console.log('this.selectedMosaic.mosaicId', this.selectedMosaic.mosaicId);
@@ -303,9 +287,6 @@ export class SendMultisigPage {
     }
   }
 
-  getPrice(selectedMosaic) {
-    return 0;
-  }
 
   /**
    * Calculates fee and returns prepared Transaction

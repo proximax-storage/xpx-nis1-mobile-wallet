@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 
 import { App } from './../../../../providers/app/app';
@@ -35,6 +35,7 @@ export class WalletBackupPage {
     icon: string;
   }>;
   selectedOption: number = 0;
+  showBackupfile: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -44,7 +45,10 @@ export class WalletBackupPage {
     private nemProvider: NemProvider,
     private socialSharing: SocialSharing,
     private utils: UtilitiesProvider,
+    private platform: Platform
   ) {
+
+
     this.init();
   }
 
@@ -59,23 +63,38 @@ export class WalletBackupPage {
   }
 
   init() {
-    this.options = [
-      {
-        name: 'Export as file', // TODO
-        value: WalletBackupType.EXPORT_AS_FILE,
-        icon: 'ios-folder-outline'
-      },
-      {
-        name: 'Copy to clipboard',
-        value: WalletBackupType.COPY_TO_CLIPBOARD,
-        icon: 'ios-copy-outline'
-      },
-      {
-        name: 'Share',
-        value: WalletBackupType.SHARE,
-        icon: 'ios-share-outline'
-      }
-    ];
+    if(this.platform.is("android")) {
+      this.options = [
+        {
+          name: 'Export as file', // TODO
+          value: WalletBackupType.EXPORT_AS_FILE,
+          icon: 'ios-folder-outline'
+        },
+        {
+          name: 'Copy to clipboard',
+          value: WalletBackupType.COPY_TO_CLIPBOARD,
+          icon: 'ios-copy-outline'
+        },
+        {
+          name: 'Share',
+          value: WalletBackupType.SHARE,
+          icon: 'ios-share-outline'
+        }
+      ];
+    } else {
+      this.options = [
+        {
+          name: 'Copy to clipboard',
+          value: WalletBackupType.COPY_TO_CLIPBOARD,
+          icon: 'ios-copy-outline'
+        },
+        {
+          name: 'Share',
+          value: WalletBackupType.SHARE,
+          icon: 'ios-share-outline'
+        }
+      ];
+    }
   }
 
   onSelect(option) {

@@ -1,3 +1,4 @@
+import { ViewController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -36,7 +37,8 @@ export class WalletDeletePage {
     private walletProvider: WalletProvider,
     private authProvider: AuthProvider,
     private utils: UtilitiesProvider,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private viewCtrl: ViewController
   ) {
     this.selectedWallet = this.navParams.get('wallet');
     this.init();
@@ -73,6 +75,13 @@ export class WalletDeletePage {
       this.haptic.notification({ type:'success'});
     await this.walletProvider
       .deleteWallet(this.selectedWallet)
-    return this.goBack();
+    await this.walletProvider.unsetSelectedWallet();
+    return this.dismiss();
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss().then(_=> {
+      this.goBack();
+    })
   }
 }

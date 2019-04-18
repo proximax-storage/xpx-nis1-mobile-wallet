@@ -17,7 +17,8 @@
 
 @import "../theme/dark/utilities/icon";
 
-ion-tab > .ion-page { 
+.ios {
+  ion-ios-tab > .ion-page { 
     animation: fadeIn 0.3s 1 forwards;
   }
   @keyframes fadeIn {
@@ -30,3 +31,4 @@ ion-tab > .ion-page {
       transform: translate3d(0, 0, 0);
     }
   }
+}

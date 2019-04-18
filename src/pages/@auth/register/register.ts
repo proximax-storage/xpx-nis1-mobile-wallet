@@ -48,6 +48,14 @@ export class RegisterPage {
       .register(form.email, form.password)
       .then(_ => {
         this.haptic.notification({ type: 'success' });
+        this.navCtrl.setRoot(
+          'TabsPage',
+          {},
+          {
+            animate: true,
+            direction: 'forward'
+          }
+        );
         this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
       })
       .then(_ => {

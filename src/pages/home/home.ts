@@ -106,7 +106,7 @@ export class HomePage {
         this.computeTotalWalletBalance(this.wallets);
 
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
-          // console.log("Selected wallet:", selectedWallet);
+          console.log("Selected wallet:", selectedWallet);
           this.selectedWallet = selectedWallet ? selectedWallet : this.wallets[0];
           this.getTransactions(this.selectedWallet);
           this.getMosaicBalance(this.selectedWallet);
@@ -164,7 +164,8 @@ export class HomePage {
         this.isLoading = false;
         this.showEmptyTransaction = false;
         if (!this.confirmedTransactions) {
-          this.showEmptyTransaction = true; this.isLoading = false;
+          this.isLoading = false;
+          this.showEmptyTransaction = true; 
           this.unconfirmedTransactions = null;
         }
       },
@@ -232,7 +233,9 @@ export class HomePage {
 
   showWalletDetails() {
     let page = 'TransactionListPage';
-    const modal = this.modalCtrl.create(page, this.selectedWallet, {
+    let wallet = this.selectedWallet
+    wallet.walletColor = this.wallets[this.slides._activeIndex].walletColor;
+    const modal = this.modalCtrl.create(page, wallet, {
       enableBackdropDismiss: false,
       showBackdrop: true
     });
@@ -260,7 +263,8 @@ export class HomePage {
           role: 'destructive',
           icon: this.platform.is('ios') ? null : 'trash',
           handler: () => {
-            this.navCtrl.push('WalletDeletePage', { wallet: wallet });
+            let page = "WalletDeletePage";
+            this.showModal(page, { wallet: wallet });
           }
         },
         {

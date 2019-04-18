@@ -21,8 +21,10 @@
       <ion-col col-12 text-center>
         <h3 ion-text color="black">Import wallet</h3>
         <p ion-text color="black">
-          To import your wallet fill up the name and paste your private key below.
+          To import your wallet, fill up the name and paste your private key below.
         </p>
+
+        <h4 (click)="scan()">or scan QR code instead?</h4>
       </ion-col>
 
       <ion-col>
@@ -76,14 +78,17 @@
 
           <ion-item transparent padding>
             <ion-label stacked>Private key</ion-label>
-            <ion-textarea autosize formControlName="privateKey" type="text" autocapitalize="none" placeholder="Enter your private key"></ion-textarea>
+            <ion-textarea rows="3" formControlName="privateKey" type="text" autocapitalize="none" placeholder="Enter your private key"></ion-textarea>
           </ion-item>
 
           <button gradient-button color-5 [disabled]="formGroup.invalid" type="submit" color="black">
-            Continue
+            Import
           </button>
+
+          
         </form>
       </ion-col>
+      <br><br><br>
 
       <ion-col col-12></ion-col>
       <ion-col col-12></ion-col>

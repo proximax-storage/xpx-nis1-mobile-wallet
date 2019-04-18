@@ -79,9 +79,14 @@ export class WalletAddPage {
         this.alertProvider.showMessage('This wallet name already exists. Please try again.');
       } else {
         this.walletProvider.storeWallet(newWallet, this.walletColor).then(value => {
+
+          newWallet.walletColor = this.walletColor;
+          console.log("New wallet:",newWallet);
           return this.walletProvider.setSelectedWallet(newWallet);
         }).then(() => {
           this.haptic.notification({ type: 'success' });
+          delete newWallet.total;
+          delete newWallet.walletColor;
           this.gotoBackup(newWallet);
         });
       }
