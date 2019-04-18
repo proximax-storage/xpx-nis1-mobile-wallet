@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { WalletBackupPage } from './wallet-backup';
+import { WalletBackupQrcodePage } from './wallet-backup-qrcode';
 import { NgxKjuaModule } from 'ngx-kjua';
 
 @NgModule({
   declarations: [
-    WalletBackupPage,
+    WalletBackupQrcodePage,
   ],
   imports: [
-    IonicPageModule.forChild(WalletBackupPage),
+    IonicPageModule.forChild(WalletBackupQrcodePage),
     NgxKjuaModule
   ],
 })
-export class WalletBackupPageModule {}
+export class WalletBackupQrcodePageModule {}
