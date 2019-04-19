@@ -114,7 +114,7 @@ export class WalletBackupPage {
     } else {
       this.options = [
         {
-          name: 'Export wallet QR Code', // TODO
+          name: 'Export via QR Code', // TODO
           value: WalletBackupType.QR_CODE,
           icon: 'ios-barcode-outline'
         },
