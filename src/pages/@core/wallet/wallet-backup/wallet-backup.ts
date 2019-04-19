@@ -95,6 +95,12 @@ export class WalletBackupPage {
           icon: 'ios-folder-outline'
         },
         {
+          name: 'Export QR Code', // TODO
+          value: WalletBackupType.QR_CODE,
+          icon: 'ios-barcode-outline'
+        },
+        
+        {
           name: 'Copy to clipboard',
           value: WalletBackupType.COPY_TO_CLIPBOARD,
           icon: 'ios-copy-outline'
@@ -174,7 +180,7 @@ export class WalletBackupPage {
 
   gotoQRCodePage() {
     let page = "WalletBackupQrcodePage";
-    const modal = this.modalCtrl.create(page, {QRData:this.QRData, privateKey: this.privateKey} ,{
+    const modal = this.modalCtrl.create(page, {QRData:this.QRData, privateKey: this.privateKey, walletName: this.currentWallet.name } ,{
       enableBackdropDismiss: false,
       showBackdrop: true
     });
