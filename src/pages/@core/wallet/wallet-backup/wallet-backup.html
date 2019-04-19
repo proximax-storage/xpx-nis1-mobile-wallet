@@ -16,6 +16,8 @@
 
 <ion-content fullscreen background>
 
+    
+
   <ion-list transparent-items radio-group [(ngModel)]="selectedOption">
 
     <ion-card margin-bottom>
@@ -29,28 +31,69 @@
       </ion-card-content>
     </ion-card>
 
-   <ion-grid>
-     <ion-row>
-       <ion-col>
-          <ion-card *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null"
-      (click)="onSelect(option)">
-      <ion-item>
-        <ion-icon item-left ion-text color="black" [name]="option.icon"></ion-icon>
-        <h2 ion-text color="black">{{ option.name }}</h2>
-        <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
-      </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 text-center>
+          <!-- <ngx-kjua 
+            text-center 
+            *ngIf="currentWallet" 
+            fill="#000" 
+            [ecLevel] = "'H'"
+            [crisp] = "true"
+            [size]="200"
+            [mPosX]="50"
+            [mPosY]="50"
+            [mSize]="15" 
+            [fontcolor]="'#1f6b86'"
+            [mode]="'label'" 
+            [render] = "'label'"
+            [label]="'ProximaX'" 
+            [back]="'#fff'" 
+            [text]="QRData">
+              </ngx-kjua>
+  
+          <section text-center *ngIf="!currentWallet">
+            <ion-spinner name="dots"></ion-spinner>
+          </section>
+          <ion-card >
+              <ion-item>
+                <ion-icon item-left name="ios-key-outline"></ion-icon>
+                <p text-wrap *ngIf="privateKey">{{ privateKey }}</p>
+  
+                <section text-center>
+                  <ion-spinner *ngIf="!privateKey"></ion-spinner>
+                </section>
+              </ion-item>
+            </ion-card> -->
 
-    </ion-card>
-       </ion-col>
-     </ion-row>
-     <!-- <ion-row>
+          
+  
+          <ion-list transparent-items no-margin-bottom>
+
+              
+
+            <ion-card  *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null"
+            (click)="onSelect(option)">
+            <ion-item>
+              <ion-icon item-left ion-text color="black" [name]="option.icon"></ion-icon>
+              <h2 ion-text color="black">{{ option.name }}</h2>
+              <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
+            </ion-item>
+      
+          </ion-card>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
         <ion-col  col-12 text-center>
             <button medium gradient-button color-5 ion-button icon-end no-margin color="black" (click)="goHome()">
                 Done
               </button>
         </ion-col>
-     </ion-row> -->
-   </ion-grid>
+     </ion-row>
+    </ion-grid>
+
+   
     <br>
     <br>
 

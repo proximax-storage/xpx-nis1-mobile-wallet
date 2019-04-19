@@ -140,7 +140,7 @@ export class WalletProvider {
       return this.getAccounts().then(value => {
         let wallets = value[email];
         for (var i = 0; i < wallets.length; i++) {
-          if (wallets[i].name === walletName) {
+          if (wallets[i].wallet.name === walletName) {
             exists = true;
             break;
           }

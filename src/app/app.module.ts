@@ -51,6 +51,7 @@ import { MarkdownModule } from '@ngx-markdown/core';
 import { TapticEngine } from '@ionic-native/taptic-engine';
 import { AppVersion } from '@ionic-native/app-version';
 import { HapticProvider } from '../providers/haptic/haptic';
+import { Screenshot } from '@ionic-native/screenshot';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { HapticProvider } from '../providers/haptic/haptic';
     PostsProvider,
     TapticEngine,
     AppVersion,
-    HapticProvider
+    HapticProvider,
+    Screenshot
   ]
 })
 export class AppModule {}

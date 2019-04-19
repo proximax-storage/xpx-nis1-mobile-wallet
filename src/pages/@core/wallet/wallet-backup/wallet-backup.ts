@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 
 import { App } from './../../../../providers/app/app';
@@ -8,6 +8,7 @@ import { SocialSharing } from '../../../../../node_modules/@ionic-native/social-
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { of } from 'rxjs/observable/of';
 /**
  * Generated class for the WalletBackupPage page.
  *
@@ -18,7 +19,8 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 export enum WalletBackupType {
   EXPORT_AS_FILE = 0,
   SHARE = 1,
-  COPY_TO_CLIPBOARD = 2
+  COPY_TO_CLIPBOARD = 2,
+  QR_CODE = 3
 }
 
 @IonicPage()
@@ -36,6 +38,9 @@ export class WalletBackupPage {
   }>;
   selectedOption: number = 0;
   showBackupfile: boolean;
+  privateKey: string;
+  QRData: string;
+  currentWallet: SimpleWallet;
 
   constructor(
     public navCtrl: NavController,
@@ -45,17 +50,36 @@ export class WalletBackupPage {
     private nemProvider: NemProvider,
     private socialSharing: SocialSharing,
     private utils: UtilitiesProvider,
-    private platform: Platform
+    private platform: Platform,
+    private modalCtrl: ModalController,
   ) {
 
 
     this.init();
   }
 
+  ionViewWillEnter() {
+
+
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletBackupPage');
 
     this.utils.setHardwareBack(this.navCtrl);
+    this.currentWallet = <SimpleWallet>this.navParams.data;
+    if (this.currentWallet) {
+
+      this.authProvider
+        .getPassword()
+        .then(password => {
+          this.QRData = this.nemProvider.generateWalletQRText(password, this.currentWallet);
+          this.privateKey = this.nemProvider.passwordToPrivateKey(
+            password,
+            this.currentWallet
+          );
+        });
+    }
   }
 
   ionViewDidLeave() {
@@ -63,13 +87,19 @@ export class WalletBackupPage {
   }
 
   init() {
-    if(this.platform.is("android")) {
+    if (this.platform.is("android")) {
       this.options = [
         {
           name: 'Export as file', // TODO
           value: WalletBackupType.EXPORT_AS_FILE,
           icon: 'ios-folder-outline'
         },
+        {
+          name: 'Export QR Code', // TODO
+          value: WalletBackupType.QR_CODE,
+          icon: 'ios-barcode-outline'
+        },
+        
         {
           name: 'Copy to clipboard',
           value: WalletBackupType.COPY_TO_CLIPBOARD,
@@ -84,6 +114,16 @@ export class WalletBackupPage {
     } else {
       this.options = [
         {
+          name: 'Export as file', // TODO
+          value: WalletBackupType.EXPORT_AS_FILE,
+          icon: 'ios-folder-outline'
+        },
+        {
+          name: 'Export QR Code', // TODO
+          value: WalletBackupType.QR_CODE,
+          icon: 'ios-barcode-outline'
+        },
+        {
           name: 'Copy to clipboard',
           value: WalletBackupType.COPY_TO_CLIPBOARD,
           icon: 'ios-copy-outline'
@@ -97,50 +137,54 @@ export class WalletBackupPage {
     }
   }
 
-  onSelect(option) {
-    this.selectedOption = option.value;
 
-    this.onSubmit();
-  }
 
   goHome() {
     this.navCtrl.setRoot(
       'TabsPage',
-      {},
       {
         animate: true
       }
     );
   }
 
-   onSubmit() {
-    const WALLET: SimpleWallet = <SimpleWallet>this.navParams.data;
+  onSelect(option) {
+    this.selectedOption = option.value;
 
+    this.onSubmit();
+  }
+
+  onSubmit() {
+    const WALLET: SimpleWallet = <SimpleWallet>this.navParams.data;
     if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
-      // TODO: export as .wlt file
       this.walletBackupProvider.saveAsFile(WALLET).then(_ => {
         this.goHome();
       });
-    } else if (this.selectedOption === WalletBackupType.SHARE) {
-      // TODO: save to Google drive
+    }
+    else if (this.selectedOption === WalletBackupType.SHARE) {
       this.authProvider.getPassword().then(async password => {
-        const privateKey = await this.nemProvider.passwordToPrivateKey(
-          password,
-          WALLET
-        );
-
-        this.socialSharing.share(
-          privateKey,
-          null,
-          null,
-          null
-        );
-      });
-    } else if (this.selectedOption === WalletBackupType.COPY_TO_CLIPBOARD) {
-      // TODO: copy to clipbboard
-      this.walletBackupProvider.copyToClipboard(WALLET).then(_ => {
+        const privateKey = await this.nemProvider.passwordToPrivateKey(password, WALLET);
+        await this.socialSharing.share(
+          privateKey, null, null);
         this.goHome();
       });
     }
+    else if (this.selectedOption === WalletBackupType.COPY_TO_CLIPBOARD) {
+      this.walletBackupProvider.copyToClipboard(WALLET).then(_ => {
+        this.goHome();
+      });
+    } else if (this.selectedOption === WalletBackupType.QR_CODE) {
+      this.gotoQRCodePage();
+    }
+  }
+
+  gotoQRCodePage() {
+    let page = "WalletBackupQrcodePage";
+    const modal = this.modalCtrl.create(page, {QRData:this.QRData, privateKey: this.privateKey, walletName: this.currentWallet.name } ,{
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
+    
   }
 }

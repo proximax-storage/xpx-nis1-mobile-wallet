@@ -100,8 +100,8 @@ export class HomePage {
         this.unconfirmedTransactions = null;
         this.confirmedTransactions = null;
         this.isLoading = true;
-        // this.showEmptyTransaction = false;
-        // this.showEmptyMosaic = false;
+        this.showEmptyTransaction = false;
+        this.showEmptyMosaic = false;
 
         this.computeTotalWalletBalance(this.wallets);
 
