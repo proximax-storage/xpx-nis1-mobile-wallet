@@ -30,16 +30,14 @@
           wallet!
         </h3>
         <p ion-text color="black">
-          <strong>Are you sure you want to delete your wallet forever?</strong>
-          <br>
-          Please make sure you backup your wallet before deletion. Once deleted, it cannot be undone.
+          Continuing this action will delete the wallet from your account and it cannot be undone. Please make sure you backup your wallet first so that you can recover it anytime.
         </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <button gradient-button color-5 type="submit" color="black">
-            Yes, delete forever
+            Continue
           </button>
         </form>
       </ion-col>
