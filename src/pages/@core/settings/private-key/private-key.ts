@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 
 import { Clipboard } from '@ionic-native/clipboard';
@@ -10,6 +10,7 @@ import { WalletProvider } from '../../../../providers/wallet/wallet';
 import { ToastProvider } from '../../../../providers/toast/toast';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { HapticProvider } from '../../../../providers/haptic/haptic';
+import { App } from '../../../../providers/app/app';
 
 /**
  * Generated class for the PrivateKeyPage page.
@@ -24,6 +25,8 @@ import { HapticProvider } from '../../../../providers/haptic/haptic';
   templateUrl: 'private-key.html'
 })
 export class PrivateKeyPage {
+  App = App;
+
   currentWallet: SimpleWallet;
   privateKey: string;
   password: string;
@@ -40,7 +43,8 @@ export class PrivateKeyPage {
     private toastProvider: ToastProvider,
     private utils: UtilitiesProvider,
     private viewController: ViewController,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private modalCtrl: ModalController
   ) {
     this.password = this.navParams.get('password');
   }
@@ -67,14 +71,12 @@ export class PrivateKeyPage {
     console.log('ionViewDidLoad PrivateKeyPage');
   }
 
-  ionViewWillLeave() {
-    this.navCtrl.popToRoot();
-  }
 
   copy() {
     this.clipboard.copy(this.privateKey).then(_ => {
       this.haptic.notification({ type: 'success' });
       this.toastProvider.show('Copied private key successfully', 3, true);
+      this.dismiss();
     });
   }
 
@@ -87,10 +89,22 @@ export class PrivateKeyPage {
         null,
         null
       )
-      .then(_ => { });
+      .then(_ => {
+        this.dismiss();
+      });
   }
 
   dismiss(){
     this.viewController.dismiss();
+  }
+
+  gotoQRCodePage() {
+    let page = "WalletBackupQrcodePage";
+    const modal = this.modalCtrl.create(page, { QRData: this.QRData, privateKey: this.privateKey, walletName: this.currentWallet.name }, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
+
   }
 }
