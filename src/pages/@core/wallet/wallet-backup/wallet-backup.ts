@@ -87,49 +87,24 @@ export class WalletBackupPage {
   }
 
   init() {
-    if (this.platform.is("android")) {
       this.options = [
         {
-          name: 'Export as file', // TODO
-          value: WalletBackupType.EXPORT_AS_FILE,
-          icon: 'ios-folder-outline'
-        },
-        {
-          name: 'Export wallet QR Code', // TODO
+          name: 'Backup wallet', // TODO
           value: WalletBackupType.QR_CODE,
           icon: 'ios-barcode-outline'
         },
         
         {
-          name: 'Copy to clipboard',
+          name: 'Copy private key',
           value: WalletBackupType.COPY_TO_CLIPBOARD,
           icon: 'ios-copy-outline'
         },
         {
-          name: 'Share',
+          name: 'Export private key',
           value: WalletBackupType.SHARE,
           icon: 'ios-share-outline'
         }
       ];
-    } else {
-      this.options = [
-        {
-          name: 'Export via QR Code', // TODO
-          value: WalletBackupType.QR_CODE,
-          icon: 'ios-barcode-outline'
-        },
-        {
-          name: 'Copy to clipboard',
-          value: WalletBackupType.COPY_TO_CLIPBOARD,
-          icon: 'ios-copy-outline'
-        },
-        {
-          name: 'Share',
-          value: WalletBackupType.SHARE,
-          icon: 'ios-share-outline'
-        }
-      ];
-    }
   }
 
 

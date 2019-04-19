@@ -1,3 +1,5 @@
+import { ToastProvider } from './../../../../providers/toast/toast';
+import { Clipboard } from '@ionic-native/clipboard';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { App } from '../../../../providers/app/app';
@@ -25,7 +27,14 @@ export class ContactDetailPage {
     telegram: string;
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public utils: UtilitiesProvider, private viewCtrl: ViewController) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public utils: UtilitiesProvider, 
+    private viewCtrl: ViewController,
+    private clipboard: Clipboard,
+    private toastProvider: ToastProvider,
+    ) {
     console.log(this.navParams.data);
     this.selectedContact = this.navParams.data.data;
   }
@@ -43,5 +52,11 @@ export class ContactDetailPage {
 
   dismiss(){
     this.viewCtrl.dismiss();
+  }
+
+  copyAddress() {
+    this.clipboard.copy(this.selectedContact.address).then(_=> {
+      this.toastProvider.show(`${this.selectedContact.name}'s address has been successfully copied to the clipboard.`, 3, true);
+    })
   }
 }
