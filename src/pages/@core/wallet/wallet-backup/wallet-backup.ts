@@ -95,7 +95,7 @@ export class WalletBackupPage {
           icon: 'ios-folder-outline'
         },
         {
-          name: 'Export QR Code', // TODO
+          name: 'Export wallet QR Code', // TODO
           value: WalletBackupType.QR_CODE,
           icon: 'ios-barcode-outline'
         },
@@ -114,12 +114,7 @@ export class WalletBackupPage {
     } else {
       this.options = [
         {
-          name: 'Export as file', // TODO
-          value: WalletBackupType.EXPORT_AS_FILE,
-          icon: 'ios-folder-outline'
-        },
-        {
-          name: 'Export QR Code', // TODO
+          name: 'Export wallet QR Code', // TODO
           value: WalletBackupType.QR_CODE,
           icon: 'ios-barcode-outline'
         },
