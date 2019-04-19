@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="black"></span>
+      <span ion-text color="black">Export via QR code</span>
     </ion-title>
 
     <ion-buttons end>
@@ -24,17 +24,35 @@
 <ion-content fullscreen background>
   <ion-list transparent-items>
     <ion-grid>
+
+      <ion-row justify-content-between align-items-center>
+        <ion-col col-12>
+          <div text-center>
+            <h4> <strong>{{ walletName }}</strong> </h4>
+          </div>
+        </ion-col>
+      </ion-row>
+
       <ion-row>
         <ion-col col-12 text-center>
 
-          <ngx-kjua text-center fill="#000" [ecLevel]="'H'" [crisp]="true" [size]="300" [mPosX]="50" [mPosY]="50"
-            [mSize]="15" [fontcolor]="'#1f6b86'" [mode]="'label'" [render]="'label'" [label]="'ProximaX'"
-            [back]="'#fff'" [text]="QRData">
+          <ngx-kjua text-center fill="#003642" [ecLevel]="'H'" [crisp]="true" [size]="350" [mPosX]="50" [mPosY]="50"
+            [mSize]="10" [fontcolor]="'#005E62'" [mode]="'label'" [render]="'label'" [label]="'ProximaX'"
+            [back]="'#fff'"
+            [text]="QRData">
           </ngx-kjua>
 
-          <section *ngIf="!privateKey"text-center>
+          <section *ngIf="!privateKey" text-center>
             <ion-spinner name="dots"></ion-spinner>
           </section>
+
+          <!-- <ion-card margin-bottom>
+            <ion-card-content>
+              <h4 text-wrap text-justify ion-text color="black">
+                {{privateKey}}
+              </h4>
+            </ion-card-content>
+          </ion-card> -->
 
           <ion-card>
             <ion-item>
@@ -49,13 +67,28 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
-          <ion-col  col-12 text-center>
-              <button  medium gradient-button color-5 ion-button icon-end no-margin color="black" (click)="takeScreenshot()">
-                  Take screenshot
-                </button>
-          </ion-col>
-       </ion-row>
+      <ion-row justify-content-between align-items-center>
+        <ion-col col-12>
+          <div padding>
+            <h4 color="grey">Backup your wallet</h4>
+            <ol>
+              <li>
+                Take a screenshot of this screen that has your QR code and private key.
+              </li>
+              <br>
+              <li>
+                Make sure to store it safely in your device, computer or an external hard drive.
+              </li>
+            </ol>
+            <h4 color="grey">Restoring your wallet via QR code</h4>
+            <ol>
+              <li>You can use the QR code later to restore  your wallet.</li>
+              <br>
+              <li>The QR code contains your encrypted private key. Make sure you remember your account's password to fully recover your wallet. </li>
+            </ol>
+          </div>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-list>
 </ion-content>
