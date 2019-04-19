@@ -19,7 +19,7 @@ export class PostsProvider {
   }
 
   public getAll(): Observable<any> {
-    let url = 'https://proximax-wallet-dashboard.herokuapp.com/posts';
+    let url = 'https://proximax-wallet-dashboard.herokuapp.com/posts?_sort=createdAt:DESC';
     return this.http.get(url);
 
     // let url = 'https://proximax-wallet-dashboard.herokuapp.com/posts';
