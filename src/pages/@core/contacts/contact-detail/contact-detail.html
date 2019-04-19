@@ -34,9 +34,10 @@
     </ion-card>
 
     <h6 margin-left ion-text color="black">Wallet address</h6>
-    <ion-card>
+    <ion-card (click)="copyAddress()">
       <ion-item>
         <p ion-text color="black">{{ selectedContact?.address || 'None' }}</p>
+         <ion-icon item-end ion-text color="black" name="ios-copy-outline"></ion-icon>
       </ion-item>
     </ion-card>
 
