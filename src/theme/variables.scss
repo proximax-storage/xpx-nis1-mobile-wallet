@@ -40,7 +40,7 @@ trinary: #c1f5ec,
 danger: #d41a1a,
 light: #E4E6EE,
 dark: #1b2d37,
-black : #000,
+black : #111111,
 white: #FFFFFF,
 grey: #666666,
 success: #00735f,
@@ -118,5 +118,9 @@ $text-input-placeholder-color: lighten(color($colors, grey), 20%);
 // Fonts
 // --------------------------------------------------
 
-@import "roboto";
-@import "noto-sans";
+// @import "roboto";
+// @import "noto-sans";
+
+
+
+

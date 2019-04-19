@@ -20,7 +20,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-list transparent-items title transparent>
+  <ion-list title transparent>
     <ion-item transparent>
       <h2 padding-left title color="dark">
         <strong>
@@ -28,8 +28,9 @@
         </strong>
       </h2>
     </ion-item>
+  </ion-list>
 
-
+  <ion-list transparent-items>
     <ion-card notification *ngFor="let post of posts" (click)="showMore(post);seenPost(post._id)">
 
       <ion-item notification *ngIf="!post.expanded">
