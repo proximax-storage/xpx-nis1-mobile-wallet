@@ -32,7 +32,7 @@ ion-list[transparent-items] {
     h2:not([ion-text]) {
       font-size: 1.5rem;
       font-weight: bold;
-      padding-bottom: 18px;
+      padding-bottom: 19px;
     }
 
     h2:not([ion-text]), ion-icon {
@@ -59,8 +59,12 @@ ion-list[transparent-items] {
   
   ion-card[notification] {
     margin-bottom: .5rem !important;
+
+    ion-card-content{
+      padding: 0px !important;
+    }
     ion-item[notification] {
-     margin: 8px -24px -20px 12px !important;
+     margin: 8px -24px -20px 0px !important;
 
 
      ion-avatar[notification]{
@@ -68,20 +72,23 @@ ion-list[transparent-items] {
       min-width: 80px;
       min-height: 80px;
       img{
-        width: 64px;
-        height: 64px;
-        border-radius: 1%;
-        background-position: center center;
-        background-repeat: no-repeat;
+        object-fit: cover;
         overflow: hidden;
-        box-shadow: 1px 1px 8px 0.1px rgba(0.1,0.1,0.1,0.4);
+        position: relative;
+      overflow: hidden;
+        width: 70px;
+        height: 70px;
+        border-radius: 5%;
+
+
+        // box-shadow: 1px 1px 8px 0.1px rgba(0.1,0.1,0.1,0.4);
      }
     }
 
      .item-inner > .input-wrapper {
       ion-label {
         // margin-top: -12px !important;
-        margin: -12px 21px 11px 0px;
+        margin: -12px 0px 11px 0px;
         h3 {
           font-weight: bold;    
         }
