@@ -24,6 +24,9 @@ import { HapticProvider } from '../../../providers/haptic/haptic';
 })
 export class LoginPage {
   formGroup: FormGroup;
+  passwordType: string = "password";
+  passwordIcon: string = "ios-eye-outline";
+
 
   constructor(
     public navCtrl: NavController,
@@ -37,6 +40,9 @@ export class LoginPage {
     private haptic: HapticProvider
   ) {
     this.init();
+    this.passwordType = "password";
+    this.passwordIcon = "ios-eye-outline";
+
   }
 
   init() {
@@ -90,5 +96,11 @@ export class LoginPage {
         this.utils.showInsetModal('TryAgainPage', {}, 'small');
         this.haptic.notification({ type: 'error' });
       });
+  }
+
+  showHidePassword(e: Event) {
+    e.preventDefault();
+    this.passwordType = this.passwordType === "password" ? "text" : "password";
+    this.passwordIcon = this.passwordIcon === "ios-eye-outline" ? "ios-eye-off-outline" : "ios-eye-outline";
   }
 }
