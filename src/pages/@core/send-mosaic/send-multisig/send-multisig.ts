@@ -229,6 +229,10 @@ export class SendMultisigPage {
       this.form.get('recipientName').setValue(null);
       this.form.get('recipientAddress').setValue(null);
     }
+
+    if (val === 'qrcode') {
+      this.scan();
+    }
   }
 
   selectMosaic() {
@@ -258,8 +262,6 @@ export class SendMultisigPage {
         if (data != undefined || data != null) {
           this.form.get('recipientName').setValue(data.name);
           this.form.get('recipientAddress').setValue(data.address);
-        } else {
-          this.viewCtrl.dismiss();
         }
       });
   }

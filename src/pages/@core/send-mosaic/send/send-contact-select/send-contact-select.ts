@@ -1,3 +1,4 @@
+import { ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController, App } from 'ionic-angular';
 import { App as AppConfig } from '../../../../../providers/app/app';
@@ -38,7 +39,8 @@ export class SendContactSelectPage {
     public viewCtrl: ViewController,
     public contactsProvider: ContactsProvider,
     private alertCtrl: AlertController,
-    private barcodeScannerProvider: BarcodeScannerProvider
+    private barcodeScannerProvider: BarcodeScannerProvider,
+    private modalCtrl: ModalController
   ) {
     this.init();
   }
@@ -99,14 +101,21 @@ export class SendContactSelectPage {
       text: 'Proceed',
       handler: data => {
 
-        this.viewCtrl.dismiss(null).then(() => {
+        this.viewCtrl.dismiss().then(() => {
 
           if (data === ContactCreationType.MANUAL.toString()) {
-            this.app.getRootNav().push('ContactAddPage', {
+            // this.app.getRootNav().push('ContactAddPage', {
+            //   name: '',
+            //   address: '',
+            //   telegram: ''
+            // });
+            let page = "ContactAddPage";
+            // let params = ;
+            this.showModal(page, {
               name: '',
               address: '',
               telegram: ''
-            });
+            })
           } else if (data === ContactCreationType.QR_SCAN.toString()) {
             this.barcodeScannerProvider
               .getData('ContactListPage')
@@ -117,7 +126,12 @@ export class SendContactSelectPage {
                   telegram: result.data.telegram || ''
                 };
 
-                if (data) this.app.getRootNav().push('ContactAddPage', ACCOUNT_INFO);
+                if (data) {
+                  let page = "ContactAddPage";
+                  let params = ACCOUNT_INFO;
+                  this.showModal(page, params)
+
+                }
               });
           }
         })
@@ -125,5 +139,13 @@ export class SendContactSelectPage {
       }
     });
     alert.present();
+  }
+
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, {data: params}, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 }

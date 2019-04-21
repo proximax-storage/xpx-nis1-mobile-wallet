@@ -101,15 +101,39 @@
       </ion-card>
 
       <!-- Recipient -->
-      <ion-card no-margin-bottom>
+
+      <ion-item select-contact no-lines>
+        <ion-label ion-text color="black"></ion-label>
+        <ion-select [selectOptions]="{
+    title: 'Address input options',
+    subTitle: ''        
+  }" [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
+          <ion-option value="manual">Enter manually</ion-option>
+          <ion-option value="qrcode">Scan QR code</ion-option>
+          <ion-option value="contact">Select from address book</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('to')">
         <ion-item>
-          <ion-input (input)="calculateFee()" formControlName="recipientAddress" type="text" value="" placeholder="Address"></ion-input>
-          <button clear item-right ion-button icon-only (click)="scan()">
+          <img item-left logo-small [src]="App.USER">
+          <h2 ion-text color="black">{{ form.get('recipientName').value || 'Select a contact' }}</h2>
+          <p small ion-text color="black">
+            {{ form.get('recipientAddress').value || 'Tap here to select from address book' }}</p>
+        </ion-item>
+      </ion-card>
+
+      <ion-card no-margin-bottom *ngIf="addressSourceType.to === 'manual' || addressSourceType.to === 'qrcode'">
+        <ion-item>
+          <ion-input (input)="calculateFee()" formControlName="recipientAddress" type="text" value=""
+            placeholder="Address"></ion-input>
+          <button *ngIf="addressSourceType.to === 'qrcode'" clear item-right ion-button icon-only (click)="scan()">
             <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
           </button>
         </ion-item>
       </ion-card>
-
+      
       <!-- Note -->
       <ion-card>
         <ion-item no-border>

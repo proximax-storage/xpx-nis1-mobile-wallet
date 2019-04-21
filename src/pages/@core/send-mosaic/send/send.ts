@@ -189,6 +189,10 @@ export class SendPage {
       this.form.get('recipientName').setValue(null);
       this.form.get('recipientAddress').setValue(null);
     }
+
+    if (val === 'qrcode') {
+      this.scan();
+    }
   }
 
   selectMosaic() {
@@ -217,8 +221,6 @@ export class SendPage {
         if (data != undefined || data != null) {
           this.form.get('recipientName').setValue(data.name);
           this.form.get('recipientAddress').setValue(data.address);
-        } else {
-          this.viewCtrl.dismiss();
         }
       });
   }
@@ -296,7 +298,7 @@ export class SendPage {
         this.alertProvider.showMessage('Please select a recipient first.');
       } else {
         this.alertProvider.showMessage(
-          "Please type the recipient's address first."
+          "Please enter the recipient's address first."
         );
       }
       return;

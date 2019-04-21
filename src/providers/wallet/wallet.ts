@@ -63,7 +63,6 @@ export class WalletProvider {
     return this.authProvider.getEmail().then(email => {
       return this.getAccounts().then(accounts => {
         let wallets: any = accounts[email];
-        let walletIndex:number;
         let updateWallet :any;
         for(let i=0; i<wallets.length; i++) {
           if(wallets[i].wallet.name == wallet.name) {
