@@ -81,6 +81,65 @@ page-wallet-update {
             transition: background 0s;
         }
     }
+    button[five] {
+      @include button-styles();
+      background-color: #ff5575;
+
+      &:hover {
+        background: #ff5575 radial-gradient(circle, transparent 1%, #ff5575 1%) center/15000%;
+      }
+
+      &:active {
+        background-color: lighten(#ff5575, 10%);
+        background-size: 100%;
+        transition: background 0s;
+      }
+    }
+
+    button[six] {
+      @include button-styles();
+      background-color: #268ff7;
+
+      &:hover {
+        background: #268ff7 radial-gradient(circle, transparent 1%, #268ff7 1%) center/15000%;
+      }
+
+      &:active {
+        background-color: lighten(#268ff7, 10%);
+        background-size: 100%;
+        transition: background 0s;
+      }
+    }
+
+    button[seven] {
+      @include button-styles();
+      background-color: #2bd173;
+
+      &:hover {
+        background: #2bd173 radial-gradient(circle, transparent 1%, #2bd173 1%) center/15000%;
+      }
+
+      &:active {
+        background-color: lighten(#2bd173, 10%);
+        background-size: 100%;
+        transition: background 0s;
+      }
+    }
+
+    button[eight] {
+      @include button-styles();
+      background-color: #f1b23c;
+
+      &:hover {
+        background: #f1b23c radial-gradient(circle, transparent 1%, #f1b23c 1%) center/15000%;
+      }
+
+      &:active {
+        background-color: lighten(#f1b23c, 10%);
+        background-size: 100%;
+        transition: background 0s;
+      }
+    }
 
 
 }

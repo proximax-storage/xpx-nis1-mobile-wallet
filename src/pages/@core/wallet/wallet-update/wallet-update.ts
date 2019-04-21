@@ -98,8 +98,6 @@ export class WalletUpdatePage {
   onSubmit(form) {
     this.walletProvider.checkIfWalletNameExists(form.name).then(value => {
       if (value) {
-        this.alertProvider.showMessage('This wallet name already exists. Please try again.');
-      } else {
         this.walletProvider
           .updateWalletName(this.selectedWallet, form.name, this.walletColor)
           .then(selectedWallet => {
