@@ -89,6 +89,28 @@ page-send-multisig {
         padding-left: 0px;
     }
 
+    // Select contact
+    ion-select {
+      max-width: 100%;
+    }
+
+    .select {
+      padding: 11px 13px 11px 16px;
+    }
+
+    ion-item[select-contact] {
+      margin-bottom: -16px;
+    }
+
+    .select .select-icon .select-icon-inner {
+      left: 7px;
+      top: 64%;
+    }
+
+    .select-text {
+      font-size: 1.4rem !important;
+    }
+
 
 
 }

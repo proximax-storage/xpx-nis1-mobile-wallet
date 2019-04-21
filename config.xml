@@ -96,7 +96,7 @@
     
     
 
-	                                                        <name>ProximaX Wallet</name>
+	                                                                <name>ProximaX Wallet</name>
     <description>A simple and secure wallet to store, send and receive your ProximaX based digital assets. </description>
     <author email="core.dev@proximax.io" href="http://proximax.io/">ProximaX Limited</author>
     <content src="index.html" />

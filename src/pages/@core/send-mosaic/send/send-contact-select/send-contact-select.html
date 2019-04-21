@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header no-border>
+<!-- <ion-header no-border>
 
   <ion-navbar transparent>
     <ion-title>
@@ -12,7 +12,7 @@
     </ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-header> -->
 
 
 <ion-content background>
@@ -23,8 +23,7 @@
 
         <p color="grey" text-wrap>
           <strong>
-              No contacts yet.
-              <br> Try adding one or two.
+              Your contacts will appear here. There are none at the moment.
           </strong>
         </p>
 
@@ -36,7 +35,8 @@
   </ion-grid>
 
   <ion-list transparent-items *ngIf="contacts && contacts.length">
-    <ion-card [attr.selected]="selectedContact.address === contact.address ? true : null" *ngFor="let contact of contacts" (click)="onSelect(contact)">
+    <ion-card no-margin-bottom [attr.selected]="selectedContact.address === contact.address ? true : null"
+      *ngFor="let contact of contacts" (click)="onSelect(contact);onSubmit()">
       <ion-item text-wrap>
         <img item-left logo-small [src]="App.USER">
 
@@ -47,10 +47,10 @@
   </ion-list>
 </ion-content>
 
-<ion-footer no-border>
+<!-- <ion-footer no-border>
   <ion-toolbar transparent text-center padding-bottom>
     <button gradient-button  color-5 type="submit" color="black" (click)="onSubmit()">
       Save
     </button>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
