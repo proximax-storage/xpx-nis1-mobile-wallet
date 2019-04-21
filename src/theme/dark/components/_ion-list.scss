@@ -108,8 +108,8 @@ ion-list[transparent-items] {
     &[time-stamp-header] {
       margin: 6px 15px 0px 16px;
     }
-    > ion-item[multisig-status]{
-      margin: -25px 0 -8px 0px;
+    >ion-item[transaction-status] {
+      margin: -27px 0px -5px -1px;
     }
   }
   ion-card-header:nth-child(n+2) {
