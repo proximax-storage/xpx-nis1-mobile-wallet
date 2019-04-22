@@ -253,7 +253,7 @@ export class HomePage {
       cssClass: 'wallet-on-press',
       buttons: [
         {
-          text: 'Change name',
+          text: 'Edit',
           icon: this.platform.is('ios') ? null : 'create',
           handler: () => {
             this.navCtrl.push('WalletUpdatePage', { wallet: wallet });
