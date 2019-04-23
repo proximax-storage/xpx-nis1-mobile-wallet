@@ -87,6 +87,8 @@
     "@types/js-base64": "^2.3.1",
     "@types/uniqid": "^4.1.2",
     "cz-conventional-changelog": "^2.1.0",
+    "cz-conventional-changelog-emoji": "^0.1.0",
+    "javascript-obfuscator": "^0.18.1",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
@@ -121,7 +123,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-conventional-changelog-emoji"
     }
   }
 }
