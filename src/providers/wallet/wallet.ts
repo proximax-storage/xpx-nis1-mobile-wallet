@@ -136,10 +136,10 @@ export class WalletProvider {
     let exists = false;
 
     return this.authProvider.getEmail().then(email => {
-      return this.getAccounts().then(value => {
-        let wallets = value[email];
-        for (var i = 0; i < wallets.length; i++) {
-          if (wallets[i].wallet.name === walletName) {
+      return this.getAccounts().then(wallets => {
+        const WALLETS = wallets[email];
+        for (var i = 0; i < WALLETS.length; i++) {
+          if (WALLETS[i].wallet.name === walletName) {
             exists = true;
             break;
           }
