@@ -85,7 +85,10 @@ export class PinComponent implements OnChanges {
   }
 
   public backspace() {
-    if (this.inputPin.length) this.inputPin = this.inputPin.slice(0, -1);
+    if (this.inputPin.length) {
+      this.inputPin = this.inputPin.slice(0, -1);
+      this.activePin = this.activePin.slice(0, -1);
+    }
   }
 
   random9DigitNumberNotStartingWithZero() {
