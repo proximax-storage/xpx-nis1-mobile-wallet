@@ -6,6 +6,8 @@ import {
   OnChanges
 } from "@angular/core";
 import { HapticProvider } from '../../providers/haptic/haptic';
+import { PinProvider } from "../../providers/pin/pin";
+import * as BcryptJS from "bcryptjs";
 
 /**
  * Generated class for the PinComponent component.
@@ -24,6 +26,7 @@ export class PinComponent implements OnChanges {
   @Input() previousPin = "";
   @Input() isVerify = false;
 
+  activePin: string = ""
   inputPin: string = "";
   maxLength: number = 6;
   keypadNums: number[];
@@ -34,7 +37,7 @@ export class PinComponent implements OnChanges {
 
   @Output() submit: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private haptic: HapticProvider) {
+  constructor(private haptic: HapticProvider, private pin: PinProvider) {
     console.log(this.random9DigitNumberNotStartingWithZero());
     console.log(
       this.random9DigitNumberNotStartingWithZero()
@@ -61,51 +64,20 @@ export class PinComponent implements OnChanges {
 
   handleInput(pin: string) {
     this.styleClasses.miss = false;
+    this.activePin += "1";
+
 
     if (this.inputPin.length !== this.maxLength) {
-      this.inputPin += pin;
-      console.log("PinComponent : this.inputPin", this.inputPin);
-      console.log("PinComponent : this.inputPin.length", this.inputPin.length);
-
-      console.log("PinComponent : this.previousPin", this.previousPin);
-      console.log(
-        "PinComponent : this.previousPin.length :",
-        this.previousPin.length
-      );
-
-      console.log(
-        "PinComponent : this.styleClasses.miss",
-        this.styleClasses.miss
-      );
-      console.log("PinComponent : this.isVerify", this.isVerify);
-
-      this.inputPin.length;
-
+          this.inputPin += pin;
       if (this.inputPin.length === this.maxLength) {
         console.log("PinComponent : Pin length===", this.inputPin.length);
-        if (this.isVerify && this.previousPin !== this.inputPin) {
-          console.log("PinComponent : this.inputPin", this.inputPin.length);
-          console.log(
-            "PinComponent : this.inputPin.length",
-            this.inputPin.length
-          );
 
-          console.log("PinComponent : this.previousPin", this.previousPin);
-          console.log(
-            "PinComponent : this.previousPin.length :",
-            this.previousPin.length
-          );
-
-          console.log(
-            "PinComponent : this.styleClasses.miss",
-            this.styleClasses.miss
-          );
-          console.log("PinComponent : this.isVerify", this.isVerify);
-
+        if (this.isVerify && !BcryptJS.compareSync(this.inputPin, this.previousPin)) {
+					console.log("TCL: PinComponent -> handleInput -> BcryptJS.compareSync(this.inputPin, this.previousPin)", BcryptJS.compareSync(this.inputPin, this.previousPin))
           this.styleClasses.miss = true;
+          this.activePin = "";
           this.haptic.notification({ type: 'error' });
         }
-
         this.emitEvent();
         this.inputPin = "";
       }
@@ -113,7 +85,10 @@ export class PinComponent implements OnChanges {
   }
 
   public backspace() {
-    if (this.inputPin.length) this.inputPin = this.inputPin.slice(0, -1);
+    if (this.inputPin.length) {
+      this.inputPin = this.inputPin.slice(0, -1);
+      this.activePin = this.activePin.slice(0, -1);
+    }
   }
 
   random9DigitNumberNotStartingWithZero() {

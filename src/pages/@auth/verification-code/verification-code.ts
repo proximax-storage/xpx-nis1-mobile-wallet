@@ -10,6 +10,8 @@ import { Storage } from "@ionic/storage";
 import { AlertProvider } from "../../../providers/alert/alert";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
 import { HapticProvider } from '../../../providers/haptic/haptic';
+import { PinProvider } from '../../../providers/pin/pin';
+import * as BcryptJS from "bcryptjs";
 
 /**
  * Generated class for the VerificationCodePage page.
@@ -38,14 +40,15 @@ export class VerificationCodePage {
     public storage: Storage,
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
-    private haptic: HapticProvider
-  ) {}
+    private haptic: HapticProvider,
+    private pin: PinProvider
+  ) { }
 
   ionViewWillEnter() {
     console.log(
       "VerificationCodePage :: ionViewWillEnter",
       !this.navParams.data.destination &&
-        this.navParams.data.status === "verify"
+      this.navParams.data.status === "verify"
     );
 
     if (
@@ -79,71 +82,59 @@ export class VerificationCodePage {
       ? this.navParams.data.invalidPinMessage
       : "Your pin is not equal to previous one. Please try again.";
 
-    this.storage.get("pin").then(pin => {
-      console.log("VerificationCodePage : pin", pin);
-      if (this.navParams.data.status === "verify") {
-        this.isVerify = true;
-        if(pin) {
-          this.previousPin = pin;
-        } else {
-          this.previousPin = this.navParams.data.pin;
-        }
-      }
-    });
+
+    // Used in pin component to compare previous and current pin
+
+    if (this.navParams.data.status === "verify") {
+      this.isVerify = true;
+      this.previousPin = this.navParams.data.pin;
+      console.log("LOG: VerificationCodePage -> ionViewDidLoad -> this.previousPin", this.previousPin)
+    }
+
+    if (this.navParams.data.status === "confirm") {
+      this.isVerify = true;
+      this.pin.get().then(pin => {
+        console.log("LOG: VerificationCodePage -> ionViewDidLoad -> pin", pin)
+        this.previousPin = pin.toString();
+      });
+    }
   }
 
   onSubmit(pin) {
 
-    let status:string = this.navParams.data.status;
-    let pinParams = this.navParams.data.pin;
+    let status: string = this.navParams.data.status;
     let destination = this.navParams.data.destination;
-    
-    console.log(`status ${status}`)
+    let pinParams = this.navParams.data.pin;
 
-    if (status === 'confirm') {
-      console.log("status === 'confirm'");
-        console.log("VerificationCodePage : pin", pin);
-        let page = "VerificationCodePage";
-        let data: any = {
-          status: "verify",
-          title: "Re-enter Pin",
-          subtitle: " ",
-          pin: pin,
-          destination: 'TabsPage'
-        };
-        return this.utils.showModal(page, data);
-    } 
-    
-    if (status === "verify" && pinParams === pin) {
-      this.haptic.notification({ type: 'success' });
-      console.log("status === 'verify && pinParams === pin");
-
-      console.log(`status ${status}`);
-      console.log(`isVerify ${this.isVerify}`);
-      console.log(`previousPin ${this.previousPin}`);
-      console.log(`pin ${pin}`);
-      console.log(`destination ${destination}`,);
-
-      let page = "TabsPage";
+    if (status === 'setup') {
+      console.log("status === 'setup'");
+      console.log("VerificationCodePage : pin", pin);
+      let page = "VerificationCodePage";
       let data: any = {
         status: "verify",
         title: "Re-enter Pin",
         subtitle: " ",
-        pin: pin,
+        pin: this.pin.hash(pin),
         destination: 'TabsPage'
       };
+      return this.utils.showModal(page, data);
+    }
 
+    if (status === "verify" && BcryptJS.compareSync(pin, pinParams)) {
+      console.log("status === 'verify'");
+
+      this.haptic.notification({ type: 'success' });
+      let page = "TabsPage";
       this.isVerify = true;
       this.previousPin = pin;
 
-      return this.storage
-        .set("pin", pin)
+      return this.pin.set(pin)
         .then(_ => {
           return this.storage.set("isModalShown", false);
         })
         .then(_ => {
           if (page) {
-            return this.navCtrl.setRoot(page, data, {
+            return this.navCtrl.setRoot(page, {
               animate: true,
               direction: "forward"
             });
@@ -151,6 +142,37 @@ export class VerificationCodePage {
             this.viewCtrl.dismiss();
           }
         });
+
+    }
+
+    if (status === "confirm") {
+      console.log("status === 'confirm'");
+      this.pin.compare(pin).then(isMatch => {
+        console.log("TCL: VerificationCodePage -> onSubmit -> isMatch", isMatch)
+
+        if (isMatch) {
+          this.haptic.notification({ type: 'success' });
+          let page = "TabsPage";
+          this.isVerify = true;
+          this.previousPin = pin;
+
+          return this.pin.set(pin)
+            .then(_ => {
+              return this.storage.set("isModalShown", false);
+            })
+            .then(_ => {
+              if (page) {
+                return this.navCtrl.setRoot(page, {}, {
+                  animate: true,
+                  direction: "forward"
+                });
+              } else {
+                this.viewCtrl.dismiss();
+              }
+            });
+        }
+
+      })
     }
   }
 }

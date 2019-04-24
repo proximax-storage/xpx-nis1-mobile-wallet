@@ -174,12 +174,13 @@ export class WalletProvider {
    */
   public getAccounts(): Promise<any> {
     return this.authProvider.getEmail().then(email => {
-      return this.storage.get('wallets').then(data => {
-        let ACCOUNT = data ? data : {};
-        const ACCOUNT_WALLETS = ACCOUNT[email] ? ACCOUNT[email] : [];
+      return this.storage.get('wallets').then(wallets => {
+        let _wallets = wallets ? wallets : {};
+				console.log("LOG: WalletProvider -> constructor -> _wallets", _wallets)
+        const ACCOUNT_WALLETS = _wallets[email] ? _wallets[email] : [];
 
-        if (data) {
-          const wallets = ACCOUNT_WALLETS.map(walletFile => {
+        if (wallets) {
+          const walletsMap = ACCOUNT_WALLETS.map(walletFile => {
             if (walletFile.name) {
               return this.convertJSONWalletToFileWallet(walletFile, walletFile.walletColor);
             } else {
@@ -187,12 +188,12 @@ export class WalletProvider {
             }
           });
 
-          ACCOUNT[email] = wallets;
+          _wallets[email] = walletsMap;
         } else {
-          ACCOUNT[email] = [];
+          _wallets[email] = [];
         }
 
-        return ACCOUNT;
+        return _wallets;
       });
     });
   }
@@ -202,12 +203,14 @@ export class WalletProvider {
    */
   public getWallets(): Promise<any> {
     return this.authProvider.getEmail().then(email => {
-      return this.storage.get('wallets').then(data => {
-        let ACCOUNT = data ? data : {};
-        const ACCOUNT_WALLETS = ACCOUNT[email] ? ACCOUNT[email] : [];
+      return this.storage.get('wallets').then(wallets => {
+				console.log("LOG: WalletProvider -> constructor -> data", wallets)
+        let _wallets = wallets || {};
+        const ACCOUNT_WALLETS = _wallets[email] ? _wallets[email] : [];
+				console.log("LOG: WalletProvider -> constructor -> ACCOUNT_WALLETS", ACCOUNT_WALLETS)
 
-        if (data) {
-          const wallets = ACCOUNT_WALLETS.map(walletFile => {
+        if (ACCOUNT_WALLETS) {
+          const walletsMap = ACCOUNT_WALLETS.map(walletFile => {
             if (walletFile.name) {
               return this.convertJSONWalletToFileWallet(walletFile, walletFile.walletColor);
             } else {
@@ -217,12 +220,12 @@ export class WalletProvider {
             }
           });
 
-          ACCOUNT[email] = wallets;
+          _wallets[email] = walletsMap;
         } else {
-          ACCOUNT[email] = [];
+          _wallets[email] = [];
         }
 
-        return ACCOUNT[email];
+        return _wallets[email];
       });
     });
   }

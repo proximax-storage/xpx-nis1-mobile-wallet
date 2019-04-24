@@ -56,15 +56,15 @@ export class SettingListPage {
 
   ionViewWillEnter() {
     // this.utils.setTabIndex(0);
-    this.walletProvider.getWallets().then(wallets=> {
-      if (wallets) {
-        this.walletProvider.getSelectedWallet().then(currentWallet => {
-          if (currentWallet) {
-            this.currentWallet = currentWallet;
-          }
-        })
-      }
-    })
+    // this.walletProvider.getWallets().then(wallets=> {
+    //   if (wallets) {
+    //     this.walletProvider.getSelectedWallet().then(currentWallet => {
+    //       if (currentWallet) {
+    //         this.currentWallet = currentWallet;
+    //       }
+    //     })
+    //   }
+    // })
 
   }
 
@@ -97,7 +97,7 @@ export class SettingListPage {
 
   resetPIN() {
     // Reset pin first.
-    this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
+    this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
   }
 
   showResetPINPrompt() {
@@ -129,9 +129,9 @@ export class SettingListPage {
     this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
 
-  backupWallet() {
-    this.navCtrl.push('WalletBackupPage', this.currentWallet);
-  }
+  // backupWallet() {
+  //   this.navCtrl.push('WalletBackupPage', this.currentWallet);
+  // }
 
   logOut() {
     this.authProvider.logout().then(_ => {

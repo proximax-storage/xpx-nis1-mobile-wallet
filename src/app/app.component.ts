@@ -112,7 +112,7 @@ export class MyApp {
 
       if (!pin && isLoggedIn) {
         this.utils.showModal("VerificationCodePage", {
-          status: "confirm",
+          status: "setup",
           destination: "TabsPage"
         });
       }
@@ -128,7 +128,7 @@ export class MyApp {
         isLoggedIn
       ) {
         return this.utils.showModal("VerificationCodePage", {
-          status: "verify",
+          status: "confirm",
           title: "Wallet is secured",
           subtitle: "Please enter your PIN",
           invalidPinMessage: "Incorrect pin. Please try again",
