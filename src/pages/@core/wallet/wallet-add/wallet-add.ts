@@ -76,7 +76,7 @@ export class WalletAddPage {
 
     this.walletProvider.checkIfWalletNameExists(newWallet.name).then(value => {
       if (value) {
-        this.alertProvider.showMessage('This wallet name already exists. Please try again.');
+        this.alertProvider.showMessage('Wallet name already exist. Please choose a new one.');
       } else {
         this.walletProvider.storeWallet(newWallet, this.walletColor).then(value => {
 
