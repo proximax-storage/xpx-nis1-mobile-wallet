@@ -61,7 +61,7 @@ export class RegisterPage {
             direction: 'forward'
           }
         );
-        this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
+        this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
       })
       .then(_ => {
         this.authProvider.setSelectedAccount(form.email, form.password);

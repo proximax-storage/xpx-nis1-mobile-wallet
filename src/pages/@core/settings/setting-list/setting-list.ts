@@ -97,7 +97,7 @@ export class SettingListPage {
 
   resetPIN() {
     // Reset pin first.
-    this.utils.showModal('VerificationCodePage', { status: 'confirm', destination: 'TabsPage' });
+    this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
   }
 
   showResetPINPrompt() {

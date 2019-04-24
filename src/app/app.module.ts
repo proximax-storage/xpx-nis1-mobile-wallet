@@ -52,6 +52,7 @@ import { TapticEngine } from '@ionic-native/taptic-engine';
 import { AppVersion } from '@ionic-native/app-version';
 import { HapticProvider } from '../providers/haptic/haptic';
 import { Screenshot } from '@ionic-native/screenshot';
+import { PinProvider } from '../providers/pin/pin';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { Screenshot } from '@ionic-native/screenshot';
     TapticEngine,
     AppVersion,
     HapticProvider,
-    Screenshot
+    Screenshot,
+    PinProvider
   ]
 })
 export class AppModule {}

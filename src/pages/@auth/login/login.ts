@@ -61,9 +61,9 @@ export class LoginPage {
   }
 
   gotoHome() {
-    this.storage.get('pin').then(pin => {
+    this.storage.get('currentPin').then(pin => {
       this.utils.showModal('VerificationCodePage', {
-        status: 'verify',
+        status: 'confirm',
         title: 'Wallet is secured',
         subtitle:
           'Please enter your PIN',
