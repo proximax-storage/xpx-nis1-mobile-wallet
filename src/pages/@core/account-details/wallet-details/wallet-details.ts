@@ -22,12 +22,12 @@ import { ToastProvider } from '../../../../providers/toast/toast';
 export class WalletDetailsPage {
   accountInfo: AccountInfoWithMetaData;
   currentWallet: SimpleWallet;
-  walletName:string='';
+  walletName: string = '';
   totalBalance: number;
 
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private walletProvider: WalletProvider,
     private nemProvider: NemProvider,
@@ -36,68 +36,62 @@ export class WalletDetailsPage {
     private viewCtrl: ViewController,
     private modalCtrl: ModalController,
     private authProvider: AuthProvider
-    ) {
-      this.totalBalance = navParams.get('totalBalance');
-      this.currentWallet = navParams.get('wallet');
-      this.getAccountInfo();
-    
-  //   this.walletProvider.getSelectedWallet().then(currentWallet => {
-  //     this.walletName = currentWallet.name;
-  //     this.currentWallet = currentWallet;
-  //     this.getAccountInfo();
-  // });
-}
-
-getAccountInfo() {
-  this.nemProvider
-    .getAccountInfo(this.currentWallet.address)
-    .subscribe(accountInfo => {
-      this.accountInfo = accountInfo;
-      console.log(this.accountInfo)
-    }, (err:any)=> {
-      console.log(err)
-    });
-}
-
-copy() {
-  this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
-    this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
-  });
-}
-
-showExportPrivateKeyModal() {
-  this.authProvider.getPassword().then(password => {
-    let credentials = {
-      password: password,
-      privateKey: ''
-    };
-
-    let page = "PrivateKeyPage";
-    this.showModal(page, { password: credentials.password });
-  })
+  ) {
+    this.totalBalance = navParams.get('totalBalance');
+    this.currentWallet = navParams.get('wallet');
+    this.getAccountInfo();
   }
 
-dismiss() {
-  this.viewCtrl.dismiss();
-}
+  getAccountInfo() {
+    this.nemProvider
+      .getAccountInfo(this.currentWallet.address)
+      .subscribe(accountInfo => {
+        this.accountInfo = accountInfo;
+        console.log(this.accountInfo)
+      }, (err: any) => {
+        console.log(err)
+      });
+  }
 
-showWalletUpdate(){
-  let page = "WalletUpdatePage";
-  this.showModal(page, { wallet: this.currentWallet });
-}
+  copy() {
+    this.clipboard.copy(this.currentWallet.address.plain()).then(_ => {
+      this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
+    });
+  }
 
-showWalletDete(){
-  let page = "WalletDeletePage";
-  this.showModal(page, { wallet: this.currentWallet });
-}
+  showExportPrivateKeyModal() {
+    this.authProvider.getPassword().then(password => {
+      let credentials = {
+        password: password,
+        privateKey: ''
+      };
 
-showModal(page,params) {
-  const modal = this.modalCtrl.create(page, params ,{
-    enableBackdropDismiss: false,
-    showBackdrop: true
-  });
-  modal.present();
-}
+      let page = "PrivateKeyPage";
+      this.showModal(page, { password: credentials.password });
+    })
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+
+  showWalletUpdate() {
+    let page = "WalletUpdatePage";
+    this.showModal(page, { wallet: this.currentWallet });
+  }
+
+  showWalletDete() {
+    let page = "WalletDeletePage";
+    this.showModal(page, { wallet: this.currentWallet });
+  }
+
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, params, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
+  }
 
 
   ionViewDidLoad() {

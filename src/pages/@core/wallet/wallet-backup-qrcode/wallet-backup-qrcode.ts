@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Haptic } from 'ionic-angular';
+import { HapticProvider } from '../../../../providers/haptic/haptic';
+import { Clipboard } from '@ionic-native/clipboard';
+import { ToastProvider } from '../../../../providers/toast/toast';
 
 
 /**
@@ -26,6 +29,9 @@ export class WalletBackupQrcodePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private viewCtrl: ViewController,
+    private haptic: HapticProvider,
+    private clipboard: Clipboard,
+    private toastProvider: ToastProvider
     ) {
       this.privateKey = this.navParams.get("privateKey");
       this.QRData = this.navParams.get("QRData");
@@ -44,6 +50,14 @@ export class WalletBackupQrcodePage {
   dismiss() {
      this.viewCtrl.dismiss(); 
      this.goHome();
+  }
+
+  copy() {
+    this.clipboard.copy(this.privateKey).then(_ => {
+      this.haptic.notification({ type: 'success' });
+      this.toastProvider.show('Copied private key successfully', 3, true);
+      this.dismiss();
+    });
   }
 
 

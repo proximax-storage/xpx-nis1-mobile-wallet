@@ -46,15 +46,7 @@
             <ion-spinner name="dots"></ion-spinner>
           </section>
 
-          <!-- <ion-card margin-bottom>
-            <ion-card-content>
-              <h4 text-wrap text-justify ion-text color="black">
-                {{privateKey}}
-              </h4>
-            </ion-card-content>
-          </ion-card> -->
-
-          <ion-card>
+          <ion-card (click)="copy()">
             <ion-item>
               <ion-icon item-left name="ios-key-outline"></ion-icon>
               <p text-wrap *ngIf="privateKey">{{ privateKey }}</p>

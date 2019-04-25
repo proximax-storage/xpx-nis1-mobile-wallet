@@ -53,6 +53,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { HapticProvider } from '../providers/haptic/haptic';
 import { Screenshot } from '@ionic-native/screenshot';
 import { PinProvider } from '../providers/pin/pin';
+import { ForgeProvider } from '../providers/forge/forge';
 
 
 @NgModule({
@@ -117,7 +118,8 @@ import { PinProvider } from '../providers/pin/pin';
     AppVersion,
     HapticProvider,
     Screenshot,
-    PinProvider
+    PinProvider,
+    ForgeProvider
   ]
 })
 export class AppModule {}

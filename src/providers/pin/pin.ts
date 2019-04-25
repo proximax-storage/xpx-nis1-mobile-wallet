@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import * as BcryptJS from "bcryptjs";
+import { ForgeProvider } from '../forge/forge';
 
 /*
   Generated class for the PinProvider provider.
@@ -12,7 +13,7 @@ import * as BcryptJS from "bcryptjs";
 @Injectable()
 export class PinProvider {
 
-  constructor(public http: HttpClient, private storage: Storage) {
+  constructor(public http: HttpClient, private storage: Storage, private forge: ForgeProvider) {
     console.log('Hello PinProvider Provider');
   }
 
@@ -45,6 +46,7 @@ export class PinProvider {
     return new Promise((resolve, reject) => {
       this.storage.get("pin").then(previousPin => {
         if (BcryptJS.compareSync(currentPin, previousPin)) {
+          this.saveCurrentPin(currentPin);
           resolve(true);
         } else {
           resolve(false);
@@ -55,29 +57,74 @@ export class PinProvider {
     });
   }
 
-  // private saveCurrentPin(currentPin) {
-  //   this.storage.set("currentPin", currentPin).then(pin => {
-  //     console.log(pin);
-  //   }).catch(error => {
-  //     console.log(error);
-  //   })
-  // }
+  public encryptPasswordUsingCurrentPin() {
+    Promise.all([
+      this.storage.get("currentPin"),
+      this.storage.get("plainPassword"),
+    ]).then(results => {
+      const CURRENT_PIN = results[0];
+      const PLAIN_PASSWORD = results[1];
+      const SALT = this.forge.generateSalt();
+      const IV = this.forge.generateIv();
+      const ENCRYPTED_PASSWORD = this.forge.encrypt(PLAIN_PASSWORD, CURRENT_PIN, SALT, IV);
 
-  // public getCurrentPin() {
-  //   return new Promise((resolve, reject) => {
-  //     this.storage.get("currentPin").then(previousPin => {
-  //       if(previousPin) {
-  //         resolve(previousPin);
-  //       } else {
-  //         resolve(false);
-  //       }
+      Promise.all([
+        this.storage.set("currentPin", null),
+        this.storage.set("plainPassword", null),
+        this.storage.set("encryptedPassword", {password: ENCRYPTED_PASSWORD, salt: SALT, iv: IV }),
+      ]).then(res=> {
+        return res;
+      })
+    });
+  }
+
+  public decryptPasswordUsingCurrentPin() {
+    Promise.all([
+      this.storage.get("currentPin"),
+      this.storage.get("encryptedPassword"),
+    ]).then(results => {
+      const CURRENT_PIN = results[0];
+      const ENCRYPTED_PASSWORD = results[1];
+			console.log("LOG: PinProvider -> publicdecryptPasswordUsingCurrentPin -> ENCRYPTED_PASSWORD", ENCRYPTED_PASSWORD);
+
+      const SALT = ENCRYPTED_PASSWORD.salt;
+      const IV = ENCRYPTED_PASSWORD.iv;
+      const PLAIN_PASSWORD = this.forge.decrypt(ENCRYPTED_PASSWORD.password, CURRENT_PIN, SALT, IV);
+      
+      Promise.all([
+        this.storage.set("plainPassword", PLAIN_PASSWORD),
+        this.storage.set("encryptedPassword", null),
+      ]).then(res=> {
+        return res;
+      })
+    });
+  }
+
+  private saveCurrentPin(currentPin) {
+    this.storage.set("currentPin", currentPin).then(pin => {
+      console.log(pin);
+
+      this.decryptPasswordUsingCurrentPin();
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
+  public getCurrentPin() {
+    return new Promise((resolve, reject) => {
+      this.storage.get("currentPin").then(currentPin => {
+        if(currentPin) {
+          resolve(currentPin);
+        } else {
+          resolve(false);
+        }
         
-  //     }).catch(error => {
-  //       reject(error);
-  //     })
-  //   });
+      }).catch(error => {
+        reject(error);
+      })
+    });
 
-  // }
+  }
 
   public removeCurrentPin() {
     this.storage.set("currentPin", false).then(pin => {
