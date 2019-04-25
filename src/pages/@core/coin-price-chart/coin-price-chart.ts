@@ -35,7 +35,7 @@ export class CoinPriceChartPage {
   durations: Array<{ label: string; value: number }>;
   selectedDuration: { label: string; value: number };
   selectedCoin: any;
-  descriptionLength: number = 450;
+  descriptionLength: number = 600;
 
 
   /** Transaction list member variables */ 
@@ -121,7 +121,7 @@ export class CoinPriceChartPage {
             "twitter_screen_name": "SportsFix_io",
             "telegram_channel_identifier": "SFICO"
           },
-        "genesis_date": "2018-12-18 15:39:55",
+        "genesis_date": "2018-12-18",
           "description": {
             en: "SportsFix aims to transform the most powerful content in the world – SPORTS. SF presents a decentralized sports media ecosystem which aims to completely change the way fans connect and engage with sports content. In its current stage, SF is a rapidly growing over-the-top (OTT) business in Asia streaming local and international sports events to millions of fans every week and on track to become one of the most valuable video streaming platforms in the region. In our next phase, SF will be issuing SportsFix Tokens (SFT) which allows fans to participate and engage with their favourite leagues and clubs in a self-contained economy with all digital transactions employing smart contracts backed by blockchain technology."
           }
@@ -140,7 +140,7 @@ export class CoinPriceChartPage {
           "twitter_screen_name": "xarcadeofficial",
           "telegram_channel_identifier": "EZvkTkPk7msNRR3yQX0wWw"
         },
-        "genesis_date": "2018-03-05 11:28:19",
+        "genesis_date": "2018-03-05",
         "description": {
           en: "Xarcade is a ProximaX-powered cost-effective video game distribution/exchange platform for both game developers and gamers to use. It is a game changer and is a cost-less direct alternative to other app stores in the market. Xarcade does not levy game developers anything for the sale of in-game credits, changing the paradigm, and passing these cost savings to gamers."
         }
@@ -244,7 +244,7 @@ export class CoinPriceChartPage {
 
   readMore(descriptionLength) {
     this.descriptionLength =
-      descriptionLength === this.descriptionLength ? 450 : descriptionLength;
+      descriptionLength === this.descriptionLength ? 600 : descriptionLength;
   }
 
   goto(page) {
