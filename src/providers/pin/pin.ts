@@ -28,6 +28,7 @@ export class PinProvider {
   }
 
   public set(pin) {
+    this.saveCurrentPin(pin);
     const hashedPin = BcryptJS.hashSync(pin, 8)
     return new Promise((resolve, reject) => {
       this.storage.set("pin", hashedPin).then(pin => {
@@ -46,7 +47,9 @@ export class PinProvider {
     return new Promise((resolve, reject) => {
       this.storage.get("pin").then(previousPin => {
         if (BcryptJS.compareSync(currentPin, previousPin)) {
-          this.saveCurrentPin(currentPin);
+          this.saveCurrentPin(currentPin).then(_=> {
+            this.decryptPasswordUsingCurrentPin();
+          })
           resolve(true);
         } else {
           resolve(false);
@@ -101,13 +104,14 @@ export class PinProvider {
   }
 
   private saveCurrentPin(currentPin) {
-    this.storage.set("currentPin", currentPin).then(pin => {
-      console.log(pin);
-
-      this.decryptPasswordUsingCurrentPin();
-    }).catch(error => {
-      console.log(error);
-    })
+    return new Promise((resolve, reject) => {
+      this.storage.set("currentPin", currentPin).then(pin => {
+        resolve(pin);
+      }).catch(error => {
+        reject(error);
+      })
+    })  
+    
   }
 
   public getCurrentPin() {

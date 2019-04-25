@@ -37,9 +37,29 @@
             </button>
           </ion-item>
 
+          <ion-item transparent padding>
+            <ion-label stacked>Confirm Password</ion-label>
+            <ion-input formControlName="confirmPassword" [type]="confirmPasswordType" placeholder="Confirm your password">
+            </ion-input>
+
+            <button (click)="showHideConfirmPassword($event)" clear item-right ion-button icon-only>
+              <ion-icon item-right color="black" [name]="confirmPasswordIcon">
+              </ion-icon>
+            </button>
+
+          </ion-item>
+
+          <div *ngIf="formGroup.invalid" color="danger">
+            <p error padding-left text-left color="danger" *ngFor="let error of formGroup.errors">
+              <strong>{{ (error.passwordMismatch ? 'Password  mismatch':'') }}</strong>
+            </p>
+          </div>
+
+
           <br>&nbsp;<br>
 
-          <button gradient-button color-5 ion-button icon-end no-margin [disabled]="formGroup.invalid" type="submit" color="black">
+          <button gradient-button color-5 ion-button icon-end no-margin [disabled]="formGroup.invalid"
+            type="submit" color="black">
               Sign Up
             </button>
         </form>

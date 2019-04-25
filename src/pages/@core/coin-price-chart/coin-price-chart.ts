@@ -14,6 +14,8 @@ import { GetMarketPricePipe } from "../../../pipes/get-market-price/get-market-p
 import { Clipboard } from "@ionic-native/clipboard";
 import { ToastProvider } from "../../../providers/toast/toast";
 import { HapticProvider } from "../../../providers/haptic/haptic";
+import { BrowserTab } from "@ionic-native/browser-tab";
+import { SafariViewController } from "@ionic-native/safari-view-controller";
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -33,7 +35,7 @@ export class CoinPriceChartPage {
   durations: Array<{ label: string; value: number }>;
   selectedDuration: { label: string; value: number };
   selectedCoin: any;
-  descriptionLength: number = 450;
+  descriptionLength: number = 600;
 
 
   /** Transaction list member variables */ 
@@ -83,7 +85,9 @@ export class CoinPriceChartPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private actionSheetCtrl: ActionSheetController,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private browserTab: BrowserTab,
+    private safariViewController: SafariViewController
   ) {
     this.selectedSegment = 'transactions';
     this.durations = [
@@ -98,14 +102,60 @@ export class CoinPriceChartPage {
 
     console.log("navParams.data", this.navParams.data);
     this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
+		console.log("TCL: CoinPriceChartPage -> this.mosaicId", this.mosaicId)
     this.coinId = this.navParams.data['coinId'];
     this.currentWallet = this.navParams.data['currentWallet'];
     this.totalBalance = this.currentWallet.total;
 
-    // console.info(this.mosaicId, this.coinId );
-    this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
-      this.selectedCoin = coin;
-    });
+    
+
+    if (this.mosaicId == "sft") {
+      this.selectedCoin = {
+          "name": "SportsFix",
+          "symbol": "SFT",
+          "links": {
+            "homepage": ["https://sportsfix.io/"],
+            "announcement_url": ["https://medium.com/@sportsfix"],
+            "blockchain_site": ["https://bitcointalk.org/index.php?topic=4380637.msg39045279#msg39045279"],
+            "facebook_username": "sportsfix.io",
+            "twitter_screen_name": "SportsFix_io",
+            "telegram_channel_identifier": "SFICO"
+          },
+        "genesis_date": "2018-12-18",
+          "description": {
+            en: "SportsFix aims to transform the most powerful content in the world – SPORTS. SF presents a decentralized sports media ecosystem which aims to completely change the way fans connect and engage with sports content. In its current stage, SF is a rapidly growing over-the-top (OTT) business in Asia streaming local and international sports events to millions of fans every week and on track to become one of the most valuable video streaming platforms in the region. In our next phase, SF will be issuing SportsFix Tokens (SFT) which allows fans to participate and engage with their favourite leagues and clubs in a self-contained economy with all digital transactions employing smart contracts backed by blockchain technology."
+          }
+      }
+
+    } else if (this.mosaicId == 'xar') {
+
+      this.selectedCoin = {
+        "name": "Xarcade",
+        "symbol": "XAR",
+        "links": {
+          "homepage": ["https://xarcade.io/"],
+          "announcement_url": ["https://medium.com/@xarcadeofficial"],
+          "blockchain_site": ["https://bitcointalk.org/index.php?topic=2648389.0"],
+          "facebook_username": "xarcadeofficial",
+          "twitter_screen_name": "xarcadeofficial",
+          "telegram_channel_identifier": "EZvkTkPk7msNRR3yQX0wWw"
+        },
+        "genesis_date": "2018-03-05",
+        "description": {
+          en: "Xarcade is a ProximaX-powered cost-effective video game distribution/exchange platform for both game developers and gamers to use. It is a game changer and is a cost-less direct alternative to other app stores in the market. Xarcade does not levy game developers anything for the sale of in-game credits, changing the paradigm, and passing these cost savings to gamers."
+        }
+      }
+
+    } else {
+      // console.info(this.mosaicId, this.coinId );
+      if (this.coinId) {
+        this.coingeckoProvider.getDetails(this.coinId).subscribe(coin => {
+          this.selectedCoin = coin;
+          console.log("TCL: CoinPriceChartPage -> this.selectedCoin", this.selectedCoin)
+        });
+      }
+      
+    }
 
     
   }
@@ -160,7 +210,7 @@ export class CoinPriceChartPage {
             this.accountInfo = accountInfo;
             console.log("accountInfo", this.accountInfo)
             // Check if account is a cosignatory of multisig account(s)
-            if (this.accountInfo.cosignatoryOf) {
+            if (this.accountInfo.cosignatoryOf.length > 0) {
               // console.clear();
               console.log("This is a multisig account");
               this.isMultisig = true;
@@ -194,7 +244,7 @@ export class CoinPriceChartPage {
 
   readMore(descriptionLength) {
     this.descriptionLength =
-      descriptionLength === this.descriptionLength ? 450 : descriptionLength;
+      descriptionLength === this.descriptionLength ? 600 : descriptionLength;
   }
 
   goto(page) {
@@ -266,7 +316,40 @@ export class CoinPriceChartPage {
   }
 
   openLink(link){
-    window.open(link, "_system");
+    this.browserTab.isAvailable()
+      .then(isAvailable => {
+        if (isAvailable) {
+          this.browserTab.openUrl(link);
+        } else {
+          // open URL with InAppBrowser instead or SafariViewController
+
+          this.safariViewController.isAvailable()
+            .then((available: boolean) => {
+              if (available) {
+
+                this.safariViewController.show({
+                  url: link,
+                  hidden: false,
+                  animated: false,
+                  transition: 'curl',
+                  enterReaderModeIfAvailable: true,
+                  tintColor: '#ff0000'
+                })
+                  .subscribe((result: any) => {
+                    if (result.event === 'opened') console.log('Opened');
+                    else if (result.event === 'loaded') console.log('Loaded');
+                    else if (result.event === 'closed') console.log('Closed');
+                  },
+                    (error: any) => console.error(error)
+                  );
+
+              } else {
+                // use fallback browser, example InAppBrowser
+              }
+            }
+            );
+        }
+      });
   }
 
   dismiss() {

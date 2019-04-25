@@ -80,11 +80,9 @@
         <ion-select [selectOptions]="{
     title: 'Address input options',
     subTitle: ''        
-  }" [(ngModel)]="addressSourceType.to"
-          [ngModelOptions]="{standalone: true}"
-          (ionChange)="onChangeTo($event)">
+  }" [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
           <ion-option value="manual">Enter manually</ion-option>
-          <ion-option value="qrcode">Scan QR code</ion-option>
+          <!-- <ion-option value="qrcode">Scan QR code</ion-option> -->
           <ion-option value="contact">Select from address book</ion-option>
         </ion-select>
       </ion-item>
@@ -99,12 +97,11 @@
         </ion-item>
       </ion-card>
 
-      <ion-card no-margin-bottom *ngIf="addressSourceType.to === 'manual' || addressSourceType.to === 'qrcode'">
+      <ion-card no-margin-bottom *ngIf="addressSourceType.to === 'manual'">
         <ion-item>
           <ion-input (input)="calculateFee()" formControlName="recipientAddress" type="text" value=""
             placeholder="Address"></ion-input>
-          <button *ngIf="addressSourceType.to === 'qrcode'" clear item-right
-            ion-button icon-only (click)="scan()">
+          <button clear item-right ion-button icon-only (click)="scan()">
             <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
           </button>
         </ion-item>

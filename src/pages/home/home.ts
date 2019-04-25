@@ -337,10 +337,11 @@ export class HomePage {
     } else if (mosaic === 'npxs') {
       coinId = 'pundi-x';
     } else {
-      this.alertProvider.showMessage(
-        "We're sorry but we don't have any available data for this mosaic yet."
-      );
-      return;
+      // this.alertProvider.showMessage(
+      //   "We're sorry but we don't have any available data for this mosaic yet."
+      // );
+      // return;
+      coinId = '';
     }
 
     // this.navCtrl.push('CoinPriceChartPage', {mosaicId: mosaic, coinId: coinId});
@@ -384,19 +385,26 @@ export class HomePage {
     modal.present();
   }
 
-  async doRefresh(refresher) {
+   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    this.mosaics = null; // Triggers the skeleton list loader
-    console.log('Async operation has ended');
-    try {
-      await this.computeTotalWalletBalance(this.wallets);
-      await this.getMosaicBalance(this.selectedWallet);
-      await this.getTransactions(this.selectedWallet);
-    } catch (error) {
-      this.isLoading = false;
-      refresher.complete();
-    }
-    refresher.complete();
+
+     setTimeout(async () => {
+      this.mosaics = null; // Triggers the skeleton list loader
+      console.log('Async operation has ended');
+      try {
+        await this.computeTotalWalletBalance(this.wallets);
+        await this.getMosaicBalance(this.selectedWallet);
+        await this.getTransactions(this.selectedWallet);
+        refresher.complete();
+      } catch (error) {
+        this.isLoading = false;
+        refresher.complete();
+      }
+    }, 2000);
+
+    
+    
+    
   }
 }
 

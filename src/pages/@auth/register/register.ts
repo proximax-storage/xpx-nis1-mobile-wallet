@@ -1,3 +1,4 @@
+import { ToastProvider } from './../../../providers/toast/toast';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -22,13 +23,17 @@ export class RegisterPage {
   passwordType: string = "password";
   passwordIcon: string = "ios-eye-outline";
 
+  confirmPasswordType: string = "password";
+  confirmPasswordIcon: string = "ios-eye-outline";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public authProvider: AuthProvider,
     public utils: UtilitiesProvider,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private toastProvider: ToastProvider
   ) {
     this.init();
     this.passwordType = "password";
@@ -43,29 +48,48 @@ export class RegisterPage {
   init() {
     this.formGroup = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
     });
+
+    this.formGroup.valueChanges.subscribe(form => {
+      this.checkPasswords(this.formGroup);
+    });
+  }
+
+    checkPasswords(form: FormGroup) {
+      let pass = form.controls.password.value;
+      let confirmPass = form.controls.confirmPassword.value;
+
+    return pass === confirmPass
+      ? null
+      : this.formGroup.setErrors([{ passwordMismatch: true }]);
   }
 
 
   onSubmit(form) {
-    this.authProvider
-      .register(form.email, form.password)
-      .then(_ => {
-        this.haptic.notification({ type: 'success' });
-        this.navCtrl.setRoot(
-          'TabsPage',
-          {},
-          {
-            animate: true,
-            direction: 'forward'
-          }
-        );
-        this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
-      })
-      .then(_ => {
-        this.authProvider.setSelectedAccount(form.email, form.password);
-      });
+    if(form.password === form.confirmPassword) {
+      this.authProvider
+        .register(form.email, form.password)
+        .then(_ => {
+          this.haptic.notification({ type: 'success' });
+          this.navCtrl.setRoot(
+            'TabsPage',
+            {},
+            {
+              animate: true,
+              direction: 'forward'
+            }
+          );
+          this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
+        })
+        .then(_ => {
+          this.authProvider.setSelectedAccount(form.email, form.password);
+        });
+    } else {
+      alert("Please make sure you confirm your password.");
+    }
+   
   }
 
   showHidePassword(e: Event){
@@ -73,4 +97,12 @@ export class RegisterPage {
     this.passwordType = this.passwordType === "password" ? "text" : "password";
     this.passwordIcon = this.passwordIcon === "ios-eye-outline" ? "ios-eye-off-outline" : "ios-eye-outline";
   }
+
+  showHideConfirmPassword(e: Event) {
+    e.preventDefault();
+    this.confirmPasswordType = this.confirmPasswordType === "password" ? "text" : "password";
+    this.confirmPasswordIcon = this.confirmPasswordIcon === "ios-eye-outline" ? "ios-eye-off-outline" : "ios-eye-outline";
+  }
+
+  
 }
