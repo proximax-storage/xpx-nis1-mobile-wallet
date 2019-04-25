@@ -14,6 +14,8 @@ import { GetMarketPricePipe } from "../../../pipes/get-market-price/get-market-p
 import { Clipboard } from "@ionic-native/clipboard";
 import { ToastProvider } from "../../../providers/toast/toast";
 import { HapticProvider } from "../../../providers/haptic/haptic";
+import { BrowserTab } from "@ionic-native/browser-tab";
+import { SafariViewController } from "@ionic-native/safari-view-controller";
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -83,7 +85,9 @@ export class CoinPriceChartPage {
     private clipboard: Clipboard,
     private toastProvider: ToastProvider,
     private actionSheetCtrl: ActionSheetController,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private browserTab: BrowserTab,
+    private safariViewController: SafariViewController
   ) {
     this.selectedSegment = 'transactions';
     this.durations = [
@@ -266,7 +270,40 @@ export class CoinPriceChartPage {
   }
 
   openLink(link){
-    window.open(link, "_system");
+    this.browserTab.isAvailable()
+      .then(isAvailable => {
+        if (isAvailable) {
+          this.browserTab.openUrl(link);
+        } else {
+          // open URL with InAppBrowser instead or SafariViewController
+
+          this.safariViewController.isAvailable()
+            .then((available: boolean) => {
+              if (available) {
+
+                this.safariViewController.show({
+                  url: link,
+                  hidden: false,
+                  animated: false,
+                  transition: 'curl',
+                  enterReaderModeIfAvailable: true,
+                  tintColor: '#ff0000'
+                })
+                  .subscribe((result: any) => {
+                    if (result.event === 'opened') console.log('Opened');
+                    else if (result.event === 'loaded') console.log('Loaded');
+                    else if (result.event === 'closed') console.log('Closed');
+                  },
+                    (error: any) => console.error(error)
+                  );
+
+              } else {
+                // use fallback browser, example InAppBrowser
+              }
+            }
+            );
+        }
+      });
   }
 
   dismiss() {
