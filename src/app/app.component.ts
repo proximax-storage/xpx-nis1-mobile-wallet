@@ -5,6 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { Storage } from "@ionic/storage";
 import { UtilitiesProvider } from "../providers/utilities/utilities";
 import { OneSignal } from "@ionic-native/onesignal";
+import { PinProvider } from '../providers/pin/pin';
 
 @Component({
   templateUrl: "app.html"
@@ -18,7 +19,8 @@ export class MyApp {
     private platform: Platform,
     private storage: Storage,
     private utils: UtilitiesProvider,
-    private oneSignal: OneSignal
+    private oneSignal: OneSignal,
+    private pinProvider: PinProvider
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -71,6 +73,12 @@ export class MyApp {
         const isAppPaused = !!results[1];
 
         if (pin) this.storage.set("isAppPaused", isAppPaused);
+        
+
+        // encrypt plainPassword using currentPIN
+        this.pinProvider.encryptPasswordUsingCurrentPin();
+        // Clear Current PIN
+
       });
     });
 

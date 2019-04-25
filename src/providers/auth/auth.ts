@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
+import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
+import * as BcryptJS from "bcryptjs";
+import { ForgeProvider } from '../forge/forge';
+
 
 /*
   Generated class for the AuthProvider provider.
@@ -11,9 +15,11 @@ import findIndex from 'lodash/findIndex';
 */
 @Injectable()
 export class AuthProvider {
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private forge: ForgeProvider) {
     console.log('Hello AuthProvider Provider');
   }
+
+
 
   getEmail() {
     return this.storage.get('selectedAccount').then(data => {
@@ -22,17 +28,21 @@ export class AuthProvider {
     });
   }
 
+
   getPassword() {
-    return this.storage.get('selectedAccount').then(data => {
-      const result = data ? data : { password: '' };
-      return result.password;
+    return this.storage.get('plainPassword').then(password => {
+      const PASSWORD = password || '';
+      return PASSWORD;
     });
   }
 
+
   setSelectedAccount(email: string, password: string): Promise<any> {
-    const accountFromInput = {
+
+      // TODO : Encrypt password
+    const ACCOUNT = {
       email: email,
-      password: password
+      password: BcryptJS.hashSync(password, 8)
     };
 
     return this.storage.set('isLoggedIn', true)
@@ -40,10 +50,13 @@ export class AuthProvider {
         return this.storage.get('selectedAccount');
       })
       .then(_ => {
-        return accountFromInput;
+        return ACCOUNT;
       })
       .then(_ => {
-        return this.storage.set('selectedAccount', accountFromInput);
+        return this.storage.set('selectedAccount', ACCOUNT); // Ecnrypted password
+      })
+      .then(_ => {
+        return this.storage.set('plainPassword', password); // Plain password
       });
   }
 
@@ -57,7 +70,9 @@ export class AuthProvider {
     password: string
   ): Promise<{ status: string; message: string }> {
     return this.storage.get('accounts').then(data => {
-      const accountFromInput = {
+      
+      // TODO : Encrypt password
+      const ACCOUNT = {
         email: email,
         password: password
       };
@@ -67,23 +82,24 @@ export class AuthProvider {
         status: '',
         message: ''
       };
-      let accountExists = findIndex(ACCOUNTS, accountFromInput);
-      console.log("Accounts", ACCOUNTS);
-      console.log("accountExists", accountExists);
 
-      if (accountExists === -1) {
-        response = {
-          status: 'failed',
-          message:
-            "It looks like there's something wrong with your username of password you entered. Please try again."
-        };
-      } else {
+      let existingAccount = find(ACCOUNTS, (accounts) => { return accounts.email == ACCOUNT.email; });
+      
+      if(BcryptJS.compareSync(ACCOUNT.password, existingAccount.password)) {
+        console.log("Accounts", ACCOUNTS);
+        console.log("accountExists", existingAccount);
         response = {
           status: 'success',
           message: "You've successfully logged in."
         };
       }
-
+      else {
+        response = {
+          status: 'failed',
+          message:
+            "Invalid username or password. Please try again."
+        };
+      }
       return response;
     });
   }
@@ -119,9 +135,10 @@ export class AuthProvider {
         return ACCOUNTS;
       })
       .then((accounts: any[]) => {
+        // TODO: Encrypt password
         const accountFromInput = {
           email: email,
-          password: password
+          password: BcryptJS.hashSync(password, 8)
         };
         accounts.push(accountFromInput);
         return this.storage.set('accounts', accounts);
@@ -173,6 +190,31 @@ export class AuthProvider {
   logout(): Promise<any> {
     return this.storage.set('isLoggedIn', false).then(_ => {
       this.storage.set('selectedAccount', {})
+    })
+    .then(_=> {
+
+      return this.encryptPasswordUsingCurrentPin();
+    });
+  }
+
+  private encryptPasswordUsingCurrentPin() {
+    Promise.all([
+      this.storage.get("currentPin"),
+      this.storage.get("plainPassword"),
+    ]).then(results => {
+      const CURRENT_PIN = results[0];
+      const PLAIN_PASSWORD = results[1];
+      const SALT = this.forge.generateSalt();
+      const IV = this.forge.generateIv();
+      const ENCRYPTED_PASSWORD = this.forge.encrypt(PLAIN_PASSWORD, CURRENT_PIN, SALT, IV);
+
+      Promise.all([
+        this.storage.set("currentPin", null),
+        this.storage.set("plainPassword", null),
+        this.storage.set("encryptedPassword", {password: ENCRYPTED_PASSWORD, salt: SALT, iv: IV }),
+      ]).then(res=> {
+        return res;
+      })
     });
   }
 }
