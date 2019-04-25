@@ -337,10 +337,11 @@ export class HomePage {
     } else if (mosaic === 'npxs') {
       coinId = 'pundi-x';
     } else {
-      this.alertProvider.showMessage(
-        "We're sorry but we don't have any available data for this mosaic yet."
-      );
-      return;
+      // this.alertProvider.showMessage(
+      //   "We're sorry but we don't have any available data for this mosaic yet."
+      // );
+      // return;
+      coinId = '';
     }
 
     // this.navCtrl.push('CoinPriceChartPage', {mosaicId: mosaic, coinId: coinId});
