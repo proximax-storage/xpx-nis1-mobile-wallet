@@ -210,7 +210,7 @@ export class CoinPriceChartPage {
             this.accountInfo = accountInfo;
             console.log("accountInfo", this.accountInfo)
             // Check if account is a cosignatory of multisig account(s)
-            if (this.accountInfo.cosignatoryOf) {
+            if (this.accountInfo.cosignatoryOf.length > 0) {
               // console.clear();
               console.log("This is a multisig account");
               this.isMultisig = true;
