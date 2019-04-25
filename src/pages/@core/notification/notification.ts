@@ -41,7 +41,7 @@ export class NotificationPage {
       })
 
       refresher.complete();
-    }, 0);
+    }, 2000);
   }
 
  seenPost(postId) {

@@ -16,4 +16,8 @@ page-register {
     .item [item-end] {
       margin: 0px;
     }
+
+    p[error] {
+      color: color($colors, danger);
+    }
 }
