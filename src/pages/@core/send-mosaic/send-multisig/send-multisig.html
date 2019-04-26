@@ -37,7 +37,7 @@
       <ion-card amount>
         <ion-item>
           <ion-label>
-            <input maxlength="20" type="number"
+            <input type="text" pattern="[0-9]*" decimal="true" button-char="." decimal-char="." 
               formControlName="amount"
                [(ngModel)]="amount" placeholder="0" >
           </ion-label>
