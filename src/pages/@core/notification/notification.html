@@ -37,17 +37,17 @@
         <ion-avatar notification item-start>
           <img [src]="post.thumbnail">
         </ion-avatar>
-        <h3 text-wrap>{{post.title}}</h3>
+        <h3 text-wrap>{{post.title  | ngXtruncate: 57 : '...'}}</h3>
         <p><small>{{post.updatedAt | date:'MMM d, y'}}</small></p>
       </ion-item>
 
       <img [src]="post.thumbnail" *ngIf="post.expanded">
 
       <ion-card-content>
-        <ion-card-title *ngIf="post.expanded">{{post.title}}</ion-card-title>
-        <p *ngIf="!post.expanded" text-justify-start [innerHTML]="post.description"></p>
+        <ion-card-title padding *ngIf="post.expanded">{{post.title}}</ion-card-title>
+        <!-- <p *ngIf="!post.expanded" text-justify-start [innerHTML]="post.subtitle"></p> -->
 
-        <p *ngIf="post.expanded" text-justify-start [ngxmarkdown]="post.content"></p>
+        <p padding *ngIf="post.expanded" text-justify-start [ngxmarkdown]="post.content"></p>
         <ion-item>
           <ion-badge *ngFor="let tag of post.tags" item-start>{{tag.name}}</ion-badge>
           <ion-note item-end>{{post.readTime}} MIN READ</ion-note>
