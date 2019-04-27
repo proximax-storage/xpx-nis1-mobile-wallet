@@ -104,7 +104,7 @@ export class WalletAddPrivateKeyPage {
       });
     }
     catch (error) {
-      this.alertProvider.showMessage(error);
+      this.alertProvider.showMessage("Invalid private key. Please try again.");
     }
   }
 
@@ -138,7 +138,8 @@ export class WalletAddPrivateKeyPage {
               this.formGroup.patchValue({ name: payload.data.name })
               this.formGroup.patchValue({ privateKey: privKey })
             } catch (error) {
-              alert(error);
+              // alert(error);
+              this.alertProvider.showMessage("Invalid password. Please try again.");
             }
           }
         }
