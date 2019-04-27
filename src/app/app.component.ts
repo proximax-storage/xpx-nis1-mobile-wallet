@@ -76,7 +76,7 @@ export class MyApp {
         
 
         // encrypt plainPassword using currentPIN
-        this.pinProvider.encryptPasswordUsingCurrentPin();
+        // this.pinProvider.encryptPasswordUsingCurrentPin();
         // Clear Current PIN
 
       });
