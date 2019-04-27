@@ -48,7 +48,7 @@ export class PinProvider {
       this.storage.get("pin").then(previousPin => {
         if (BcryptJS.compareSync(currentPin, previousPin)) {
           this.saveCurrentPin(currentPin).then(_=> {
-            this.decryptPasswordUsingCurrentPin();
+            // this.decryptPasswordUsingCurrentPin();
           })
           resolve(true);
         } else {

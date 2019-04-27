@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { NotificationPage } from './notification';
 import { MarkdownModule } from '@ngx-markdown/core';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { NgXtruncateModule } from 'ngx-truncate';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { PipesModule } from '../../../pipes/pipes.module';
   ],
   imports: [
     IonicPageModule.forChild(NotificationPage),
-    MarkdownModule.forChild(), PipesModule
+    MarkdownModule.forChild(), PipesModule,
+    NgXtruncateModule
   ],
 })
 export class NotificationPageModule {}
