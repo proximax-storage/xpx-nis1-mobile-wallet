@@ -122,6 +122,7 @@ export class WalletAddPrivateKeyPage {
       alertCtrl.addInput({
         type: 'password',
         label: 'Password',
+        min:'8',
         placeholder: 'Enter your password'
       });
 
