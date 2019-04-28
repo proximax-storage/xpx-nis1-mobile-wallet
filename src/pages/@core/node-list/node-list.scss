@@ -1,0 +1,25 @@
+page-node-list {
+    // Select contact
+  ion-select {
+    max-width: 80%;
+    left: 4px;
+  }
+
+  .select {
+    padding: 11px 5px 11px 5px;
+  }
+
+  ion-item[select-node] {
+    margin-bottom: -16px;
+  }
+
+  .select .select-icon .select-icon-inner {
+    left: 4px;
+    top: 64%;
+  }
+
+  .select-text {
+    font-size: 1.7rem !important;
+  }
+
+}
