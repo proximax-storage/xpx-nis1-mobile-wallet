@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 
 import {
   NEMLibrary,
@@ -36,17 +36,26 @@ import {
   MosaicLevyType,
   MultisigTransaction,
   MultisigSignatureTransaction,
-  HashData
+  HashData,
+  ChainHttp,
+  Block,
+  NodeHttp,
+  Node
 } from "nem-library";
 
 import { Observable } from "nem-library/node_modules/rxjs";
+import { Storage } from "@ionic/storage";
 
-export const SERVER_CONFIG: ServerConfig[] = [
-  { protocol: "http", domain: "23.228.67.85", port: 7890 },
-  // { protocol: "http", domain: "192.3.61.243", port: 7890 },
-  // { protocol: "http", domain: "50.3.87.123", port: 7890 },
 
-];
+// export const SERVER_CONFIG: ServerConfig[] = [
+//   // { protocol: "http", domain: "35.229.200.77", port: 7890 },
+//   // { protocol: "http", domain: "104.128.226.60", port: 7890 },
+//   { protocol: "http", domain: "23.228.67.85", port: 7890 },
+//   // { protocol: "http", domain: "192.3.61.243", port: 7890 },
+//   // { protocol: "http", domain: "50.3.87.123", port: 7890 },
+
+
+// ];
 
 /*
  Generated class for the NemProvider provider.
@@ -55,32 +64,56 @@ export const SERVER_CONFIG: ServerConfig[] = [
  for more info on providers and Angular DI.
  */
 @Injectable()
-export class NemProvider {
+export class NemProvider{
   wallets: SimpleWallet[];
   accountHttp: AccountHttp;
   mosaicHttp: MosaicHttp;
   transactionHttp: TransactionHttp;
   qrService: QRService;
   accountOwnedMosaicsService: AccountOwnedMosaicsService;
+  chainHttp: ChainHttp;
+  nodeHttp: NodeHttp;
 
-  constructor() {
-    NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // TEST_NET Note: Change to MAIN_NET for production
 
-    if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
-      this.accountHttp = new AccountHttp;
-      this.mosaicHttp = new MosaicHttp;
-      this.transactionHttp = new TransactionHttp;
-    } else {
-      this.accountHttp = new AccountHttp(SERVER_CONFIG);
-      this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
-      this.transactionHttp = new TransactionHttp(SERVER_CONFIG);
-    }
+  constructor(private storage: Storage) {
+    this.storage.get("node").then(node => {
+      console.log("LOG: NemProvider -> constructor -> node", node);
 
-    this.qrService = new QRService();
-    this.accountOwnedMosaicsService = new AccountOwnedMosaicsService(
-      this.accountHttp,
-      this.mosaicHttp
-    );
+      let serverConfig: ServerConfig;
+      if (node) {
+        serverConfig = JSON.parse(node) as ServerConfig
+      } else {
+        serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig;
+      }
+
+      console.log("LOG: NemProvider -> constructor -> serverConfig", serverConfig);
+
+      const SERVER_CONFIG: ServerConfig[] = [serverConfig];
+      console.log("LOG: NemProvider -> constructor -> SERVER_CONFIG", SERVER_CONFIG);
+
+
+      NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // TEST_NET Note: Change to MAIN_NET for production
+
+      if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
+        this.accountHttp = new AccountHttp;
+        this.mosaicHttp = new MosaicHttp;
+        this.transactionHttp = new TransactionHttp;
+        this.chainHttp = new ChainHttp;
+        this.nodeHttp = new NodeHttp;
+      } else {
+        this.accountHttp = new AccountHttp(SERVER_CONFIG);
+        this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
+        this.transactionHttp = new TransactionHttp(SERVER_CONFIG);
+        this.chainHttp = new ChainHttp(SERVER_CONFIG);
+        this.nodeHttp = new NodeHttp(SERVER_CONFIG);
+      }
+
+      this.qrService = new QRService();
+      this.accountOwnedMosaicsService = new AccountOwnedMosaicsService(
+        this.accountHttp,
+        this.mosaicHttp
+      );
+    })
   }
 
   /**
@@ -460,31 +493,31 @@ export class NemProvider {
     return this.transactionHttp.announceTransaction(signedTransaction);
   }
 
-   /**
-  * Sign multisig transaction into the blockchain
-  * @param address address
-  * @param hash hash
-  * @param wallet wallet
-  * @param password password
-  * @return Promise containing sent transaction
-  */
- public signMultisigTransaction(
-  address: Address,
-  hash: HashData,
-  wallet: SimpleWallet,
-  password: string
-): Observable<NemAnnounceResult> {
+  /**
+ * Sign multisig transaction into the blockchain
+ * @param address address
+ * @param hash hash
+ * @param wallet wallet
+ * @param password password
+ * @return Promise containing sent transaction
+ */
+  public signMultisigTransaction(
+    address: Address,
+    hash: HashData,
+    wallet: SimpleWallet,
+    password: string
+  ): Observable<NemAnnounceResult> {
 
-  const multisigTransaction: MultisigSignatureTransaction = MultisigSignatureTransaction.create(
-    TimeWindow.createWithDeadline(), 
-    address, 
-    hash
-  )
+    const multisigTransaction: MultisigSignatureTransaction = MultisigSignatureTransaction.create(
+      TimeWindow.createWithDeadline(),
+      address,
+      hash
+    )
 
-  let account = wallet.open(new Password(password));
-  let signedTransaction = account.signTransaction(multisigTransaction);
-  return this.transactionHttp.announceTransaction(signedTransaction);
-}
+    let account = wallet.open(new Password(password));
+    let signedTransaction = account.signTransaction(multisigTransaction);
+    return this.transactionHttp.announceTransaction(signedTransaction);
+  }
 
   /**
    * Adds to a transaction data mosaic definitions
@@ -549,4 +582,33 @@ export class NemProvider {
   ): Observable<Transaction[]> {
     return this.accountHttp.unconfirmedTransactions(address);
   }
+
+  public getBlockHeight(): Promise<Block> {
+    return new Promise((resolve, reject) => {
+      this.chainHttp.getBlockchainLastBlock().subscribe(block => {
+        resolve(block);
+      });
+    })
+  }
+
+  public getActiveNodes(): Promise<Array<Node>> {
+    return new Promise((resolve, reject) => {
+      this.nodeHttp.getActiveNodes().subscribe(nodes => {
+        resolve(nodes);
+      });
+    })
+
+
+  }
+
+  public getActiveNode(): Promise<Node> {
+    return new Promise((resolve, reject) => {
+      this.nodeHttp.getNodeInfo().subscribe(node => {
+        resolve(node);
+      });
+
+    })
+  }
+
+
 }

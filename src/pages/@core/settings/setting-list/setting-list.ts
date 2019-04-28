@@ -133,6 +133,10 @@ export class SettingListPage {
   //   this.navCtrl.push('WalletBackupPage', this.currentWallet);
   // }
 
+  showNodeList() {
+    this.utils.showInsetModal("NodeListPage", {});
+  }
+
   logOut() {
     this.authProvider.logout().then(_ => {
       this.haptic.selection();
