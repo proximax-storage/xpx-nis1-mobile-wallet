@@ -140,11 +140,20 @@ export class SendMosaicConfirmationPage {
                 this.alertProvider.showMessage(
                   'This address does not belong to this network'
                 );
-              } else {
+              } else if (error.toString().indexOf('FAILURE_TRANSACTION_NOT_ALLOWED_FOR_MULTISIG') >= 0) {
                 this.alertProvider.showMessage(
-                  'An error occured. Please try again.'
+                  'Transaction is not allowed for multisignature enabled wallets.'
+                );
+              } else {
+                // this.alertProvider.showMessage(
+                //   'An error occured. Please try again.'
+                // );
+                this.alertProvider.showMessage(
+                  error
                 );
               }
+              
+              
   }
   showSuccessMessage() {
     this.haptic.notification({ type: 'success' });
