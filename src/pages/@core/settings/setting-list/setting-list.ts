@@ -134,7 +134,7 @@ export class SettingListPage {
   // }
 
   showNodeList() {
-    this.utils.showInsetModal("NodeListPage", {});
+    this.utils.showModal("NodeListPage", {});
   }
 
   logOut() {
