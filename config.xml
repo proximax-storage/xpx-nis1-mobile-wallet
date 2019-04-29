@@ -86,10 +86,7 @@
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.2.1" />
-<<<<<<< HEAD
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
-=======
->>>>>>> c0f58629636c8fa8372d0c634103ae8035d4d207
     <plugin name="cordova-plugin-secure-storage" spec="^2.6.8" />
     <plugin name="cordova-clipboard" spec="^1.2.1" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
@@ -109,10 +106,7 @@
     <plugin name="cordova-plugin-safariviewcontroller" spec="1.6.0" />
     <plugin name="cordova-plugin-decimal-key" spec="1.1.2" />
     <hook src="scripts/incrementBuildNum.js" type="after_build" />
-<<<<<<< HEAD
-=======
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
->>>>>>> c0f58629636c8fa8372d0c634103ae8035d4d207
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="^4.5.5" />
 </widget>
