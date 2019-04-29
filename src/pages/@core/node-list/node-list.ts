@@ -64,13 +64,15 @@ export class NodeListPage {
       this.nem.getActiveNode().then((node: Node)=>{
         console.log("LOG: NodeListPage -> node", node);
         this.node = node;
-        this.currentNode = this.node.endpoint.protocol + '://' + this.node.endpoint.host + ':' +this.node.endpoint.port
+        // this.currentNode = this.node.endpoint.protocol + '://' + this.node.endpoint.host + ':' +this.node.endpoint.port
+        this.currentNode = this.node.identity.name;
         
       })
   }
 
-  getNodeInfo(endpoint: NodeEndpoint) {
-    return endpoint.protocol + '://' + endpoint.host + ':' +endpoint.port
+  getNodeInfo(node: Node) {
+    // return node.endpoint.protocol + '://' + node.endpoint.host + ':' + node.endpoint.port
+    return node.identity.name;
   }
 
   onChange() {

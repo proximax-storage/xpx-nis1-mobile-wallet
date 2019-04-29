@@ -126,7 +126,7 @@
 
         <ion-card no-margin-bottom *ngIf="addressSourceType.to === 'manual'">
           <ion-item>
-            <ion-input (input)="calculateFee()" formControlName="recipientAddress" type="text" value=""
+            <ion-input formControlName="recipientAddress" type="text" value=""
               placeholder="Address"></ion-input>
             <button clear item-right ion-button icon-only (click)="scan()">
               <ion-icon color="white" name="ios-barcode-outline"></ion-icon>

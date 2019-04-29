@@ -83,7 +83,8 @@ export class NemProvider{
       if (node) {
         serverConfig = JSON.parse(node) as ServerConfig
       } else {
-        serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig;
+        serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig; // Test net
+        //serverConfig = { protocol: "http", domain: "62.75.171.41", port: 7890 } as ServerConfig; // Main net - Hi I am Huge Alice 3
       }
 
       console.log("LOG: NemProvider -> constructor -> serverConfig", serverConfig);
@@ -95,11 +96,11 @@ export class NemProvider{
       NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // TEST_NET Note: Change to MAIN_NET for production
 
       if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
-        this.accountHttp = new AccountHttp;
-        this.mosaicHttp = new MosaicHttp;
-        this.transactionHttp = new TransactionHttp;
-        this.chainHttp = new ChainHttp;
-        this.nodeHttp = new NodeHttp;
+        this.accountHttp = new AccountHttp(SERVER_CONFIG);
+        this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
+        this.transactionHttp = new TransactionHttp(SERVER_CONFIG);
+        this.chainHttp = new ChainHttp(SERVER_CONFIG);
+        this.nodeHttp = new NodeHttp(SERVER_CONFIG);
       } else {
         this.accountHttp = new AccountHttp(SERVER_CONFIG);
         this.mosaicHttp = new MosaicHttp(SERVER_CONFIG);
