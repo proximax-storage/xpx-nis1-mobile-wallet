@@ -5,8 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { Storage } from "@ionic/storage";
 import { UtilitiesProvider } from "../providers/utilities/utilities";
 import { OneSignal } from "@ionic-native/onesignal";
-import { PinProvider } from '../providers/pin/pin';
-
+import { Keyboard } from "@ionic-native/keyboard";
 @Component({
   templateUrl: "app.html"
 })
@@ -20,12 +19,21 @@ export class MyApp {
     private storage: Storage,
     private utils: UtilitiesProvider,
     private oneSignal: OneSignal,
-    private pinProvider: PinProvider
+    private keyboard: Keyboard
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
+
+      // Add class when keyboard is on
+      this.keyboard.onKeyboardShow().subscribe(() => {
+        document.body.classList.add('keyboard-is-open');
+      });
+  
+      this.keyboard.onKeyboardHide().subscribe(() => {
+        document.body.classList.remove('keyboard-is-open');
+      });
 
       this.initGetRoot().then(rootPage => {
         this.rootPage = rootPage;

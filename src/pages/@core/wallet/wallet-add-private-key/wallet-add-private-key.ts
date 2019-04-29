@@ -122,7 +122,7 @@ export class WalletAddPrivateKeyPage {
       alertCtrl.addInput({
         type: 'password',
         label: 'Password',
-        min:'8',
+        min:'1',
         placeholder: 'Enter your password'
       });
 
@@ -135,12 +135,17 @@ export class WalletAddPrivateKeyPage {
             console.log(data);
             password = data[0];
             try {
-              let privKey = this.nemProvider.decryptPrivateKey(password, payload);
-              this.formGroup.patchValue({ name: payload.data.name })
-              this.formGroup.patchValue({ privateKey: privKey })
+              try {
+                let privKey = this.nemProvider.decryptPrivateKey(password, payload);
+                this.formGroup.patchValue({ name: payload.data.name })
+                this.formGroup.patchValue({ privateKey: privKey })
+              } catch (error) {
+                this.alertProvider.showMessage("Invalid password. Please try again.");
+              }
+              
             } catch (error) {
-              // alert(error);
-              this.alertProvider.showMessage("Invalid password. Please try again.");
+              alert(error);
+              this.alertProvider.showMessage("Invalid private key. Please try again.");
             }
           }
         }

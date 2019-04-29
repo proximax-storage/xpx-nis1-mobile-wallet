@@ -56,6 +56,7 @@ import { PinProvider } from '../providers/pin/pin';
 import { ForgeProvider } from '../providers/forge/forge';
 import { BrowserTab } from '@ionic-native/browser-tab';
 import { SafariViewController } from '@ionic-native/safari-view-controller';
+import { Keyboard } from "@ionic-native/keyboard";
 
 
 @NgModule({
@@ -123,7 +124,8 @@ import { SafariViewController } from '@ionic-native/safari-view-controller';
     PinProvider,
     ForgeProvider,
     BrowserTab,
-    SafariViewController
+    SafariViewController,
+    Keyboard
   ]
 })
 export class AppModule {}
