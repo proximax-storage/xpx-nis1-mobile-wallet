@@ -137,6 +137,10 @@ export class SettingListPage {
     this.utils.showModal("NodeListPage", {});
   }
 
+  showReleaseNotes() {
+    this.utils.showModal("WhatsNewPage", {});
+  }
+
   logOut() {
     this.authProvider.logout().then(_ => {
       this.haptic.selection();
