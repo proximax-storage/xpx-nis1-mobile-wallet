@@ -80,3 +80,12 @@ body{
   h1, h2, h3, h4, h5, h6, button, p, span, ion-content, ion-label {
   font-family: "Open Sans" !important;
   }
+
+  body.keyboard-is-open {
+    div.tabbar.show-tabbar {
+        display: none;
+    }
+    scroll-content {
+        margin-bottom: 0 !important;
+    }
+}
