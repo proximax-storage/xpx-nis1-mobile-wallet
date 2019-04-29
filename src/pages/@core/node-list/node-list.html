@@ -37,7 +37,7 @@
                   title: 'Select a node',
                   subTitle: ''        
                 }" placeholder="Select a node">
-              <ion-option [value]="nodeInfo.endpoint" *ngFor="let nodeInfo of nodes" >{{ getNodeInfo(nodeInfo.endpoint) }}</ion-option>
+              <ion-option [value]="nodeInfo.endpoint" *ngFor="let nodeInfo of nodes" >{{ getNodeInfo(nodeInfo) }}</ion-option>
             </ion-select>
           </ion-item>
 
