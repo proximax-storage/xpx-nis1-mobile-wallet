@@ -406,6 +406,8 @@ export class SendMultisigPage {
       this.form.patchValue({ recipientAddress: payload.data.addr })
     }).catch(err => {
       console.log('Error', err);
+      this.alertProvider.showMessage(err);
+
     });
 
 
