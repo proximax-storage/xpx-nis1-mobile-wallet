@@ -366,7 +366,7 @@ export class SendPage {
       this.form.patchValue({ recipientAddress: payload.data.addr })
      }).catch(err => {
          console.log('Error', err);
-         this.alertProvider.showMessage(err);
+        //  this.alertProvider.showMessage(err);
      });
   }
 }
