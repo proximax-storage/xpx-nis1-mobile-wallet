@@ -366,7 +366,10 @@ export class SendPage {
       this.form.patchValue({ recipientAddress: payload.data.addr })
      }).catch(err => {
          console.log('Error', err);
-         this.alertProvider.showMessage(err);
+       if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
+        let message = "Camera access is disabled. Please enable it in the Settings app."
+        this.alertProvider.showMessage(message);
+      }
      });
   }
 }

@@ -122,7 +122,7 @@ export class WalletAddPrivateKeyPage {
       alertCtrl.addInput({
         type: 'password',
         label: 'Password',
-        min:'1',
+        min:'6',
         placeholder: 'Enter your password'
       });
 
@@ -140,11 +140,17 @@ export class WalletAddPrivateKeyPage {
                 this.formGroup.patchValue({ name: payload.data.name })
                 this.formGroup.patchValue({ privateKey: privKey })
               } catch (error) {
-                this.alertProvider.showMessage("Invalid password. Please try again.");
+                console.log('Error', error);
+                
+                if (error.toString().indexOf('Password must be at least 6 characters') >= 0) {
+                  this.alertProvider.showMessage("Password must be at least 6 characters");
+                } else {
+                  this.alertProvider.showMessage("Invalid password. Please try again.");
+                }
               }
               
             } catch (error) {
-              alert(error);
+              console.log(error);
               this.alertProvider.showMessage("Invalid private key. Please try again.");
             }
           }
@@ -153,7 +159,11 @@ export class WalletAddPrivateKeyPage {
   
       alertCtrl.present();
      }).catch(err => {
-         console.log('Error', err);
+          console.log('Error', err);
+          if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
+            let message = "Camera access is disabled. Please enable it in the Settings app."
+            this.alertProvider.showMessage(message);
+          }
      });
   }
 
