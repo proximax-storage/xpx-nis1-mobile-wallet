@@ -407,7 +407,10 @@ export class SendMultisigPage {
     }).catch(err => {
       console.log('Error', err);
       // this.alertProvider.showMessage(err);
-
+      if (err.toString().indexOf('Access to the camera has been prohibited;') >= 0) {
+        let message = "Camera access is disabled. Please enable it in the Settings app."
+        this.alertProvider.showMessage(message);
+      }
     });
 
 
