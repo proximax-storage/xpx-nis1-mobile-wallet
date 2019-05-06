@@ -1,9 +1,9 @@
-<ion-card-header time-stamp-header>
-  <!-- <p float-left ion-text color="black">
+<!-- <ion-card-header time-stamp-header>
+  <p float-left ion-text color="black">
     {{ tx.otherTransaction.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
-  </p> -->
+  </p>
 
-</ion-card-header>
+</ion-card-header> -->
 <ion-card-header reduce-multisig-tx-header
   *ngIf="tx.otherTransaction.containsMosaics && !tx.otherTransaction.containsMosaics()">
   <ion-item>
@@ -53,51 +53,54 @@
 
 </ion-card-header>
 
-<ion-card-header reduce-multisig-tx-header *ngFor="let mosaic of mosaics">
-  <ion-item>
-    <img logo-small item-left [src]="utils.getLogo(mosaic)">
-    <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
-    <p ion-text color="black" text-uppercase>
-      <small>
-        {{ mosaic.mosaicId.namespaceId }}
-      </small>
-    </p>
-
-    <section item-right>
-      <h2 text-right ion-text color="success" [hidden]="!mosaics"
-        *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">
-        +{{ mosaic.amount?.toString() | number: '1.0-16' }}
-      </h2>
-
-      <h2 text-right ion-text color="danger" [hidden]="!mosaics"
-        *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">
-        -{{ mosaic.amount?.toString() | number: '1.0-16' }}
-      </h2>
-
-      <p float-right ion-text color="black">
-        <small>{{ tx.otherTransaction.timeWindow.timeStamp.toString() | timeago }}</small>
-      </p>
-    </section>
-  </ion-item>
-
-  <ion-item transaction-status>
-    <section item-left>
-      <p float-left ion-text color="black">
-        <small>Multisig</small>
-      </p>
-    </section>
-
-    <section item-right>
-      <p float-right ion-text color="success" *ngIf="tx.isConfirmed()">
-        <small>Confirmed</small>
-      </p>
-
-      <p float-right ion-text color="danger" *ngIf="!tx.isConfirmed()">
+<div *ngIf="tx.otherTransaction.containsMosaics()">
+  <ion-card-header reduce-multisig-tx-header *ngFor="let mosaic of mosaics">
+    <ion-item>
+      <img logo-small item-left [src]="utils.getLogo(mosaic)">
+      <h2 ion-text text-uppercase color="black">{{ mosaic.mosaicId.name }}</h2>
+      <p ion-text color="black" text-uppercase>
         <small>
-
-          {{getStatus()}}
+          {{ mosaic.mosaicId.namespaceId }}
         </small>
       </p>
-    </section>
-  </ion-item>
-</ion-card-header>
+  
+      <section item-right>
+        <h2 text-right ion-text color="success" [hidden]="!mosaics"
+          *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">
+          +{{ mosaic.amount?.toString() | number: '1.0-16' }}
+        </h2>
+  
+        <h2 text-right ion-text color="danger" [hidden]="!mosaics"
+          *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">
+          -{{ mosaic.amount?.toString() | number: '1.0-16' }}
+        </h2>
+  
+        <p float-right ion-text color="black">
+          <small>{{ tx.otherTransaction.timeWindow.timeStamp.toString() | timeago }}</small>
+        </p>
+      </section>
+    </ion-item>
+  
+    <ion-item transaction-status>
+      <section item-left>
+        <p float-left ion-text color="black">
+          <small>Multisig</small>
+        </p>
+      </section>
+  
+      <section item-right>
+        <p float-right ion-text color="success" *ngIf="tx.isConfirmed()">
+          <small>Confirmed</small>
+        </p>
+  
+        <p float-right ion-text color="danger" *ngIf="!tx.isConfirmed()">
+          <small>
+  
+            {{getStatus()}}
+          </small>
+        </p>
+      </section>
+    </ion-item>
+  </ion-card-header>
+</div>
+

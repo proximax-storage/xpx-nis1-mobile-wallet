@@ -73,6 +73,7 @@ export class MyApp {
 
   initOnPauseResume() {
     this.platform.pause.subscribe(() => {
+      alert("Paused.");
       Promise.all([
         this.storage.get("pin"),
         this.storage.get("isAppPaused")
@@ -91,6 +92,7 @@ export class MyApp {
     });
 
     this.platform.resume.subscribe(() => {
+      alert("resume.");
       this.showPin();
     });
   }
@@ -108,7 +110,7 @@ export class MyApp {
       const isModalShown = results[3];
 
       console.log(
-        "rootPage:",
+        "rootPage:", this.rootPage ,
         this.rootPage !== "OnboardingPage" && this.rootPage !== "WelcomePage"
       );
       console.log("isModalShown:", !isModalShown);

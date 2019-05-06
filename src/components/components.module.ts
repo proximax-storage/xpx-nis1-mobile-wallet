@@ -7,7 +7,7 @@ import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader';
   declarations: [
     PinComponent,
     ModalHeaderComponent,
-    SkeletonLoaderComponent
+    SkeletonLoaderComponent,
   ],
   imports: [IonicModule],
   exports: [

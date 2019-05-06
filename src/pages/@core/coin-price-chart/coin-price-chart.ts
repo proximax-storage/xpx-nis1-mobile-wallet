@@ -17,6 +17,9 @@ import { HapticProvider } from "../../../providers/haptic/haptic";
 import { BrowserTab } from "@ionic-native/browser-tab";
 import { SafariViewController } from "@ionic-native/safari-view-controller";
 
+import find from 'lodash/find';
+import filter from 'lodash/filter';
+
 /**
  * Generated class for the CoinPriceChartPage page.
  *
@@ -175,6 +178,8 @@ export class CoinPriceChartPage {
           this.currentWallet.address
         );
 
+        
+
         this.nemProvider
           .getUnconfirmedTransactions(this.currentWallet.address)
           .flatMap(_ => _)
@@ -183,20 +188,62 @@ export class CoinPriceChartPage {
             this.unconfirmedTransactions = result;
           });
 
-        this.pageable
-          .map((txs: any) => txs ? txs : Observable.empty())
-          .subscribe(result => {
+        // temp
+        if(this.mosaicId != 'xem') {
+          this.nemProvider.getMosaicTransactions(this.currentWallet.address).subscribe(transactions=> {
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> transactions", transactions);
+            
+            const filteredTransactions  = transactions.filter(tx=> tx!._mosaics[0].mosaicId.name == this.mosaicId);
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> filteredTransactions", filteredTransactions);
+
+            // let supportedMosaics = [
+            //   { mosaicId: 'xpx'},
+            //   { mosaicId: 'xem'},
+            //   { mosaicId: 'npxs'},
+            //   { mosaicId: 'sft'},
+            //   { mosaicId: 'xar'},
+            // ]
+      
+            // const filteredTransactions = filter(transactions, (tx) => {  tx._mosaics[0].mosaicId.name : this.mosaicId });
+            // console.log("LOG: HomePage -> getTransactions -> filteredTransactions", filteredTransactions);
+            
             this.isLoading = false;
             this.showEmptyMessage = false;
-            this.confirmedTransactions = result;
-
+            this.confirmedTransactions = filteredTransactions;
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> this.confirmedTransactions", this.confirmedTransactions);
+  
+            // Check transaction is empty
+            if(this.confirmedTransactions.length == 0) this.showEmptyMessage = true;
+          })
+        } else {
+          this.nemProvider.getXEMTransactions(this.currentWallet.address).subscribe(transactions=> {
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> transactions", transactions);
+            
+            this.isLoading = false;
+            this.showEmptyMessage = false;
+            this.confirmedTransactions = transactions;
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> this.confirmedTransactions", this.confirmedTransactions);
+  
             if(!this.confirmedTransactions) this.showEmptyMessage = true;
-          },
-            err => console.error(err),
-            () => {
-              this.isLoading = false;
-              if (!this.confirmedTransactions) this.showEmptyMessage = true;
-            });
+          })
+        }
+        
+
+        // this.pageable
+        //   .map((txs: any) => txs ? txs : Observable.empty())
+        //   .subscribe(result => {
+        //     this.isLoading = false;
+        //     this.showEmptyMessage = false;
+        //     this.confirmedTransactions = result;
+				// 		console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> this.confirmedTransactions", this.confirmedTransactions);
+
+        //     if(!this.confirmedTransactions) this.showEmptyMessage = true;
+        //   },
+        //     err => console.error(err),
+        //     () => {
+        //       this.isLoading = false;
+        //       if (!this.confirmedTransactions) this.showEmptyMessage = true;
+        //     });
       }
   }
   
