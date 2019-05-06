@@ -549,6 +549,7 @@ export class NemProvider{
       .toArray();
   }
 
+  
   /**
    * Get all confirmed transactions of an account
    * @param address account Address
@@ -556,10 +557,37 @@ export class NemProvider{
    */
   public getAllTransactions(address: Address): Observable<Transaction[]> {
     return this.accountHttp.allTransactions(address, {
-      pageSize: 25
+      pageSize: 100
+    });
+  }
+  
+  public getMosaicTransactions(address: Address) : Observable<any[]> {
+    return new Observable(observer => {
+        this.accountHttp.allTransactions(address, {
+          pageSize: 100
+        }).subscribe(transactions=> {
+            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics !== undefined);
+            observer.next(mosaicTransactions);
+            //call complete if you want to close this stream (like a promise)
+            observer.complete();
+        })
     });
   }
 
+  public getXEMTransactions(address: Address) : Observable<Transaction[]> {
+    return new Observable(observer => {
+        this.accountHttp.allTransactions(address, {
+          pageSize: 100
+        }).subscribe(transactions=> {
+            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics === undefined);
+            observer.next(mosaicTransactions);
+            //call complete if you want to close this stream (like a promise)
+            observer.complete();
+        })
+    });
+  }
+
+  // TODO: Page size
   /**
    * Get all confirmed transactions of an account paginated
    * @param address account Address
@@ -569,7 +597,7 @@ export class NemProvider{
     address: Address
   ): Pageable<Transaction[]> {
     return this.accountHttp.allTransactionsPaginated(address, {
-      pageSize: 10
+      pageSize: 100
     });
   }
 

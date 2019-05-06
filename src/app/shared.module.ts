@@ -9,6 +9,7 @@ import { TransferTransactionComponent } from '../pages/@core/transactions/transa
 import { MultisigAggregateModificationTransactionComponent } from '../pages/@core/transactions/transaction-list-partials/multisig-aggregate-modification-transaction/multisig-aggregate-modification-transaction';
 import { PipesModule } from '../pipes/pipes.module';
 import { IonicModule } from 'ionic-angular';
+import { TransferTransactionFilterComponent } from '../pages/@core/transactions/transaction-list-partials/transfer-transaction-filter/transfer-transaction-filter';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { IonicModule } from 'ionic-angular';
     MultisigTransactionComponent,
     ProvisionNamespaceTransactionComponent,
     TransferTransactionComponent,
+    TransferTransactionFilterComponent,
     MultisigAggregateModificationTransactionComponent
   ],
   exports: [
@@ -31,6 +33,7 @@ import { IonicModule } from 'ionic-angular';
     MultisigTransactionComponent,
     ProvisionNamespaceTransactionComponent,
     TransferTransactionComponent,
+    TransferTransactionFilterComponent,
     MultisigAggregateModificationTransactionComponent
   ]
 })
