@@ -3,11 +3,9 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { NemProvider } from '../../../providers/nem/nem';
 import { Node, NodeEndpoint, ServerConfig, Protocol, NodeHttp } from 'nem-library';
 import { Storage } from '@ionic/storage';
-import { App } from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 import { AlertProvider } from '../../../providers/alert/alert';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
  * Generated class for the NodeListPage page.
@@ -58,7 +56,15 @@ export class NodeListPage {
 
       this.nem.getActiveNodes().then((nodes: Array<Node>) => {
       console.log("LOG: NodeListPage -> nodes", nodes);
-      this.nodes = nodes;
+      //  this.nodes = nodes;
+
+      let alice = nodes.filter( node => {
+         return node.identity.name.includes('Alice')
+      });
+
+      this.nodes = alice;
+
+      console.log("LOG: NodeListPage -> getInfo -> results", alice);
       });
 
       this.nem.getActiveNode().then((node: Node)=>{
