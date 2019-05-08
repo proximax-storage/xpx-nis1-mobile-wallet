@@ -45,7 +45,10 @@ export class AuthProvider {
       password: BcryptJS.hashSync(password, 8)
     };
 
-    return this.storage.set('isLoggedIn', true)
+    return this.storage.set('isAccountCreated', true)
+      .then(_ => {
+      return this.storage.set('isLoggedIn', true)
+      })
       .then(_ => {
         return this.storage.get('selectedAccount');
       })

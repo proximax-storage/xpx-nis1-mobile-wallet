@@ -56,24 +56,27 @@ export class MyApp {
   initGetRoot() {
     return Promise.all([
       this.storage.get("isFirstAppOpen"),
-      this.storage.get("isLoggedIn")
+      this.storage.get("isLoggedIn"),
+      this.storage.get("isAccountCreated")
     ]).then(results => {
       const isFirstAppOpen = results[0] === null ? true : !!results[0];
       const isLoggedIn = results[1];
+      const isAccountCreated = results[2];
 
       if (isFirstAppOpen) {
         return "OnboardingPage";
       } else if (isLoggedIn) {
         return "TabsPage";
+      } else if (isAccountCreated){
+        return "LoginPage";
       } else {
-        return "WelcomePage";
+        return "RegisterPage";
       }
     });
   }
 
   initOnPauseResume() {
     this.platform.pause.subscribe(() => {
-      alert("Paused.");
       Promise.all([
         this.storage.get("pin"),
         this.storage.get("isAppPaused")
@@ -92,7 +95,6 @@ export class MyApp {
     });
 
     this.platform.resume.subscribe(() => {
-      alert("resume.");
       this.showPin();
     });
   }
