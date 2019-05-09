@@ -10,6 +10,7 @@ import { AlertProvider } from '../../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { scan } from 'rxjs/operators';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the WalletAddPrivateKeyPage page.
  *
@@ -41,6 +42,7 @@ export class WalletAddPrivateKeyPage {
     private utils: UtilitiesProvider,
     private barcodeScanner : BarcodeScanner,
     private alertCtrl: AlertController,
+    private storage: Storage,
   ) {
     this.walletColor = 'wallet-1';
     this.init();
@@ -56,6 +58,11 @@ export class WalletAddPrivateKeyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WalletAddPage');
+    this.storage.set('isQrActive', true);
+  }
+
+  ionViewDidLeave() {
+    this.storage.set('isQrActive', false);
   }
 
   init() {

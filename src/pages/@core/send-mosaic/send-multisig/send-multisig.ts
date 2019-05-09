@@ -10,6 +10,7 @@ import { AlertProvider } from '../../../../providers/alert/alert';
 import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { App } from '../../../../providers/app/app';
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the SendMultisigPage page.
  *
@@ -55,7 +56,8 @@ export class SendMultisigPage {
     public viewCtrl: ViewController,
     public modalCtrl: ModalController,
     private coingeckoProvider: CoingeckoProvider,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private storage: Storage
   ) {
     console.log("Nav params", this.navParams.data);
 
@@ -174,7 +176,13 @@ export class SendMultisigPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SendMultisigPage');
+    this.storage.set('isQrActive', true);
   }
+
+  ionViewDidLeave() {
+    this.storage.set('isQrActive', false);
+  }
+
 
   init() {
 

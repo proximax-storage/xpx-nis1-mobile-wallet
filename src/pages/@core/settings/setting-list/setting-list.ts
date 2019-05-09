@@ -97,7 +97,7 @@ export class SettingListPage {
 
   resetPIN() {
     // Reset pin first.
-    this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
+    this.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
   }
 
   showResetPINPrompt() {
@@ -134,11 +134,19 @@ export class SettingListPage {
   // }
 
   showNodeList() {
-    this.utils.showModal("NodeListPage", {});
+    this.showModal("NodeListPage", {});
   }
 
   showReleaseNotes() {
-    this.utils.showModal("WhatsNewPage", {});
+    this.showModal("WhatsNewPage", {});
+  }
+
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, params, {
+      enableBackdropDismiss: false,
+      showBackdrop: true
+    });
+    modal.present();
   }
 
   logOut() {
