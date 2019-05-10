@@ -22,4 +22,11 @@ page-node-list {
     font-size: 1.7rem !important;
   }
 
+  h6[black] {
+    color: color($colors, black);
+  }
+
+  h6[danger] {
+    color: color($colors, danger);
+  }
 }

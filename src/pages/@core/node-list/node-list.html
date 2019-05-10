@@ -8,24 +8,35 @@
 
     <ion-navbar transparent>
       <ion-title>
-        <span ion-text color="black"></span>
+        <span ion-text color="black">Nodes</span>
       </ion-title>
   
-      <ion-buttons end>
+      <!-- <ion-buttons end>
         <button ion-button icon-only (click)="dismiss()" color="black">
           <ion-icon name="close"></ion-icon>
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
     </ion-navbar>
   
   </ion-header>
 
 <ion-content>
 
+
+
   <ion-list transparent-items>
+
     <ion-card>
       <ion-card-content no-padding>
         <ion-list transparent-items>
+            <!-- <h6 padding black>
+                Nodes are distributed across a widespread network and carry out a variety of tasks such as maintaining the a copy of a blockchain records and to process transactions.
+            </h6> -->
+
+            <h6 padding black>
+               <strong> Please be aware that switching to an invalid custom node will cause instability to the app.</strong>
+             </h6>
+           
           <ion-item>
             <!-- <ion-icon name='ios-cash-outline' item-start></ion-icon> -->
             <strong>Block height:</strong>
@@ -44,7 +55,7 @@
                   title: 'Select a node',
                   subTitle: ''        
                 }" placeholder="Select a node">
-              <ion-option [value]="nodeInfo.endpoint" *ngFor="let nodeInfo of nodes" >{{ getNodeInfo(nodeInfo) }}</ion-option>
+              <ion-option [value]="nodeInfo.endpoint" *ngFor="let nodeInfo of nodes" >{{ nodeInfo.name }}</ion-option>
             </ion-select>
           </ion-item>
 
@@ -60,10 +71,22 @@
           </ion-item>
 
         </form>
+
+        <!-- <h6 padding danger>
+            <i>Please be aware that switching to an invalid custom node will cause instability to the app.</i>
+         </h6> -->
         </ion-list>
       </ion-card-content>
     </ion-card>
   </ion-list>
+
+  <ion-row>
+      <ion-col col-12 text-center>
+        <button half-width gradient-button color-5 ion-button icon-end no-margin color="black" (click)="dismiss()">
+          Close
+        </button>
+      </ion-col>
+    </ion-row>
 
 </ion-content>
 
