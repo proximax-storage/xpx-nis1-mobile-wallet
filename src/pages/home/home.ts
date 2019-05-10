@@ -88,18 +88,11 @@ export class HomePage {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
 
-<<<<<<< HEAD
     if (window.screen.width >= 768) { // 768px portrait
       this.tablet = true;
     }
    
   }
-=======
-  }
-
-
-
->>>>>>> 3d30649a69106a6afb429d76b8d3657a7e579788
   ionViewWillEnter() {
     console.log("1 ionViewWillEnter");
     this.utils.setHardwareBack();
