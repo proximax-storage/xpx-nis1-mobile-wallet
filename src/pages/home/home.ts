@@ -7,10 +7,15 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 import { UtilitiesProvider } from '../../providers/utilities/utilities';
 import { GetBalanceProvider } from '../../providers/get-balance/get-balance';
 import { AlertProvider } from '../../providers/alert/alert';
-import sortBy from 'lodash/sortBy';
+
 import { NemProvider } from '../../providers/nem/nem';
 import { Observable } from 'rxjs';
 import { HapticProvider } from '../../providers/haptic/haptic';
+
+
+import find from 'lodash/find';
+import filter from 'lodash/filter';
+
 
 
 export enum WalletCreationType {
@@ -23,15 +28,15 @@ export enum WalletCreationType {
   templateUrl: 'home.html',
   animations: [
     trigger('itemState', [
-        transition('void => *', [
-            style({transform: 'translateX(-100%)'}),
-            animate('250ms ease-out')
-        ]),
-        transition('* => void', [
-            animate('250ms ease-in', style({transform: 'translateX(100%)'}))    
-        ])
+      transition('void => *', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('250ms ease-out')
+      ]),
+      transition('* => void', [
+        animate('250ms ease-in', style({ transform: 'translateX(100%)' }))
+      ])
     ])
-]
+  ]
 })
 export class HomePage {
   @ViewChild(Slides) slides: Slides;
@@ -83,11 +88,18 @@ export class HomePage {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
 
+<<<<<<< HEAD
     if (window.screen.width >= 768) { // 768px portrait
       this.tablet = true;
     }
    
   }
+=======
+  }
+
+
+
+>>>>>>> 3d30649a69106a6afb429d76b8d3657a7e579788
   ionViewWillEnter() {
     console.log("1 ionViewWillEnter");
     this.utils.setHardwareBack();
@@ -129,7 +141,7 @@ export class HomePage {
   computeTotalWalletBalance(wallets: any) {
     console.log("2 computeTotalWalletBalance");
     wallets.map((wallet, index) => {
-        this.getBalanceProvider.totalBalance(wallet).then(total => {
+      this.getBalanceProvider.totalBalance(wallet).then(total => {
         if (wallet.name == this.selectedWallet.name) {
           this.slides.slideTo(index);
         }
@@ -141,14 +153,10 @@ export class HomePage {
 
   getTransactions(selectedWallet: SimpleWallet) {
     console.log("3 getTransactions");
-    console.log("getTransactions",selectedWallet);
-    this.confirmedTransactions=null;
-    this.unconfirmedTransactions=null;
+    console.log("getTransactions", selectedWallet);
+    this.confirmedTransactions = null;
+    this.unconfirmedTransactions = null;
     this.isLoading = true;
-
-    this.pageable = this.nemProvider.getAllTransactionsPaginated(
-      selectedWallet.address
-    );
 
     this.nemProvider
       .getUnconfirmedTransactions(selectedWallet.address)
@@ -158,25 +166,45 @@ export class HomePage {
         this.unconfirmedTransactions = result;
       });
 
-    this.pageable
-      .map((txs: any) => txs ? txs : Observable.empty())
-      .subscribe(result => {
-        this.confirmedTransactions = result;
-        // console.info("Transactions", result);
-        this.isLoading = false;
-        this.showEmptyTransaction = false;
-        if (!this.confirmedTransactions) {
-          this.isLoading = false;
-          this.showEmptyTransaction = true; 
-          this.unconfirmedTransactions = null;
-        }
-      },
-        err => console.error(err),
-        () => {
+
+    this.nemProvider.getMosaicTransactions(selectedWallet.address).subscribe(mosaicTransactions => {
+
+      console.clear();
+      console.log("LOG: HomePage -> getTransactions -> mosaicTransactions", mosaicTransactions);
+
+      let supportedMosaics = [
+        { mosaicId: 'xpx' },
+        { mosaicId: 'xem' },
+        { mosaicId: 'npxs' },
+        { mosaicId: 'sft' },
+        { mosaicId: 'xar' },
+      ]
+
+      const filteredTransactions = filter(mosaicTransactions, (tx) => find(supportedMosaics, { mosaicId: tx._mosaics[0].mosaicId.name }));
+      console.log("LOG: HomePage -> getTransactions -> filteredTransactions", filteredTransactions);
+
+      setTimeout(() => {
+        this.nemProvider.getXEMTransactions(selectedWallet.address).subscribe(XEMTransactions => {
+          console.log("LOG: HomePage -> getTransactions -> XEMTransactions", XEMTransactions);
+          this.confirmedTransactions = [].concat(filteredTransactions, XEMTransactions);
+
           this.isLoading = false;
           this.showEmptyTransaction = false;
-          if (!this.confirmedTransactions) this.showEmptyTransaction = true; this.isLoading = false;
-        });
+
+          // Check transaction is empty
+          if (this.confirmedTransactions.length == 0) {
+            this.isLoading = false;
+            this.showEmptyTransaction = true;
+            this.unconfirmedTransactions = null;
+          }
+
+        })
+      }, 1000);
+
+
+    })
+
+    return;
   }
 
   /**
@@ -246,7 +274,7 @@ export class HomePage {
   }
 
   onWalletPress(wallet) {
-    this.haptic.impact({style:'heavy'});
+    this.haptic.impact({ style: 'heavy' });
 
     this.selectedWallet = wallet;
 
@@ -387,10 +415,10 @@ export class HomePage {
     modal.present();
   }
 
-   doRefresh(refresher) {
+  doRefresh(refresher) {
     console.log('Begin async operation', refresher);
 
-     setTimeout(async () => {
+    setTimeout(async () => {
       this.mosaics = null; // Triggers the skeleton list loader
       console.log('Async operation has ended');
       try {
@@ -404,9 +432,9 @@ export class HomePage {
       }
     }, 2000);
 
-    
-    
-    
+
+
+
   }
 }
 

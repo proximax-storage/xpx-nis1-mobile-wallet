@@ -111,8 +111,8 @@
           [tx]="transaction"></provision-namespace-transaction>
 
         <!-- if transfer  -->
-        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
-        </transfer-transaction>
+        <transfer-transaction-filter *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction" [mosaicId]="mosaicId">
+        </transfer-transaction-filter>
       </ion-card>
 
       <ion-card no-margin-bottom *ngFor="let transaction of confirmedTransactions; trackBy: trackByHash"
@@ -143,8 +143,8 @@
           [tx]="transaction"></provision-namespace-transaction>
 
         <!-- if transfer  -->
-        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
-        </transfer-transaction>
+        <transfer-transaction-filter *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction" [mosaicId]="mosaicId">
+        </transfer-transaction-filter>
       </ion-card>
 
     </ion-list>

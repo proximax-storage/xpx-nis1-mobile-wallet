@@ -133,8 +133,9 @@ export class GetBalanceProvider {
 
            
 
-
-          observer.next(mosaics);
+          // return only 5 mosaics
+          observer.next(mosaics.slice(0, 5));
+          // observer.next(mosaics);
 
 
 
