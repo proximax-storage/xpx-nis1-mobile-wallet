@@ -60,6 +60,7 @@ export class HomePage {
   pageable: Pageable<Transaction[]>;
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
+  tablet: boolean;
 
 
 
@@ -81,11 +82,12 @@ export class HomePage {
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
+
+    if (window.screen.width >= 768) { // 768px portrait
+      this.tablet = true;
+    }
    
   }
-
- 
-
   ionViewWillEnter() {
     console.log("1 ionViewWillEnter");
     this.utils.setHardwareBack();
