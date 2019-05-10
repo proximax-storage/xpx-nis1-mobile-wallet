@@ -32,7 +32,13 @@
       <div class="wallet">
         <div class="wallet-content" [ngClass]="wallet.walletColor">
           <img class="wallet-front-logo wallet-logo" src="assets/imgs/xpx-logo-white.png">
-          <p class="wallet-number">{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</p>
+
+          <div *ngIf="!tablet">
+            <p class="wallet-number">{{ wallet.address.plain() | ngXtruncate: 20 : '...' }}</p>
+          </div>
+          <div *ngIf="tablet">
+            <p class="wallet-number">{{ wallet.address.plain() }}</p>
+          </div>
           <div class="wallet-space-75">
             <span class="wallet-label">Wallet Name</span>
             <p class="wallet-info">{{ wallet.name }}</p>
