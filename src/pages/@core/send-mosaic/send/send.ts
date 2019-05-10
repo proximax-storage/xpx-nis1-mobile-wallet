@@ -1,7 +1,7 @@
 import { GetBalanceProvider } from './../../../../providers/get-balance/get-balance';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, Platform } from 'ionic-angular';
 import {
   SimpleWallet,
   MosaicTransferable,
@@ -58,7 +58,8 @@ export class SendPage {
     public modalCtrl: ModalController,
     private coingeckoProvider: CoingeckoProvider,
     private barcodeScanner: BarcodeScanner,
-    private storage: Storage
+    private storage: Storage,
+    public platform: Platform
   ) {
     console.log("Nav params",this.navParams.data);
     
