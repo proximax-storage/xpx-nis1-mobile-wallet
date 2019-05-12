@@ -22,9 +22,11 @@ export class TransferTransactionFilterComponent {
 
   @Input() tx: Transaction;
   @Input() mosaicId: string;
+  @Input() owner: string;
+
   App = App;
 
-  owner: Address;
+  // owner: Address;
   amount: number;
   mosaics: MosaicTransferable[];
   hasLevy: boolean;
@@ -66,9 +68,9 @@ export class TransferTransactionFilterComponent {
   }
 
   private _setOwner() {
-    this.wallet.getSelectedWallet().then(wallet => {
-      this.owner = wallet.address;
-    });
+    // this.wallet.getSelectedWallet().then(wallet => {
+    //   this.owner = wallet.address;
+    // });
   }
 
   constructor(
@@ -108,8 +110,8 @@ export class TransferTransactionFilterComponent {
   }
 
   ngOnInit() {
-    this._getMosaics();
+    // this._getMosaics();
     this._getAmount();
-    this._setOwner();
+    // this._setOwner();
   }
 }

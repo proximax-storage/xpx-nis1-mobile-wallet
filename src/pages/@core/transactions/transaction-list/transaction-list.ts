@@ -15,6 +15,7 @@ import sortBy from 'lodash/sortBy';
 import { GetBalanceProvider } from "../../../../providers/get-balance/get-balance";
 import { GetMarketPricePipe } from "../../../../pipes/get-market-price/get-market-price";
 import { HapticProvider } from '../../../../providers/haptic/haptic';
+import filter from 'lodash/filter';
 
 /**
  * Generated class for the TransactionListPage page.
@@ -53,7 +54,7 @@ export class TransactionListPage {
   mosaicId: string;
   walletName: string;
 
-  
+
   totalBalance: number;
 
   // Multisignature
@@ -77,11 +78,11 @@ export class TransactionListPage {
     private actionSheetCtrl: ActionSheetController,
     private haptic: HapticProvider
   ) {
-       // this.getTotalBalance(currentWallet);
-       console.log("Wallet from home",this.navParams.data);
-       this.currentWallet = this.navParams.data;
-       this.totalBalance = this.currentWallet.total || 0;
-   
+    // this.getTotalBalance(currentWallet);
+    console.log("Wallet from home", this.navParams.data);
+    this.currentWallet = this.navParams.data;
+    this.totalBalance = this.currentWallet.total || 0;
+
   }
 
   getAccountInfo() {
@@ -90,30 +91,29 @@ export class TransactionListPage {
 
     try {
       this.nemProvider
-      .getAccountInfo(this.currentWallet.address)
-      .subscribe(accountInfo => {
-        if (accountInfo) {
-          this.accountInfo = accountInfo;
-          console.log("accountInfo", this.accountInfo)
-          // Check if account is a cosignatory of multisig account(s)
-          if(this.accountInfo.cosignatoryOf.length>0) {
-            // console.clear();
-            console.log("This is a multisig account");
-            this.isMultisig = true;
+        .getAccountInfo(this.currentWallet.address)
+        .subscribe(accountInfo => {
+          if (accountInfo) {
+            this.accountInfo = accountInfo;
+            console.log("accountInfo", this.accountInfo)
+            // Check if account is a cosignatory of multisig account(s)
+            if (this.accountInfo.cosignatoryOf.length > 0) {
+              // console.clear();
+              console.log("This is a multisig account");
+              this.isMultisig = true;
+            }
           }
-        } 
-        
-      }, (err:any)=> {
-        console.log(err)
+
+        }, (err: any) => {
+          console.log(err)
           this.isMultisig = false;
-      });
-      
+        });
+
     } catch (error) {
       console.log(error);
     }
 
   }
-
 
   ionViewWillEnter() {
     this.utils.setHardwareBack(this.navCtrl);
@@ -122,41 +122,57 @@ export class TransactionListPage {
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
 
-      if (this.currentWallet) {
-        this.walletName = this.currentWallet.name;
-        this.currentWallet = this.currentWallet;
-        this.fakeList = [{}, {}];
+    if (this.currentWallet) {
+      this.walletName = this.currentWallet.name;
+      this.currentWallet = this.currentWallet;
+      this.fakeList = [{}, {}];
+      this.isLoading = true;
 
-        this.getAccountInfo();
+      this.getAccountInfo();
 
-        this.pageable = this.nemProvider.getAllTransactionsPaginated(
-          this.currentWallet.address
-        );
+      this.nemProvider
+        .getUnconfirmedTransactions(this.currentWallet.address)
+        .flatMap(_ => _)
+        .toArray()
+        .subscribe(result => {
+          this.unconfirmedTransactions = result;
+        });
 
-        this.nemProvider
-          .getUnconfirmedTransactions(this.currentWallet.address)
-          .flatMap(_ => _)
-          .toArray()
-          .subscribe(result => {
-            this.unconfirmedTransactions = result;
-          });
 
-        this.isLoading = true;
-        this.pageable
-          .map((txs: any) => txs ? txs : Observable.empty())
-          .subscribe(result => {
-            console.info("Transactions", result);
+      this.nemProvider.getMosaicTransactions(this.currentWallet.address).subscribe(mosaicTransactions => {
+
+        console.clear();
+
+        let supportedMosaics = [
+          { mosaicId: 'xpx' },
+          { mosaicId: 'xem' },
+          { mosaicId: 'npxs' },
+          { mosaicId: 'sft' },
+          { mosaicId: 'xar' },
+        ]
+
+        const filteredTransactions = filter(mosaicTransactions, (tx) => find(supportedMosaics, { mosaicId: tx._mosaics[0].mosaicId.name }));
+
+        setTimeout(() => {
+          this.nemProvider.getXEMTransactions(this.currentWallet.address).subscribe(XEMTransactions => {
+            this.confirmedTransactions = [].concat(filteredTransactions, XEMTransactions);
+
             this.isLoading = false;
             this.showEmptyMessage = false;
-            this.confirmedTransactions = result;
-            if (!this.confirmedTransactions) this.showEmptyMessage = false;
-          },
-            err => console.error(err),
-            () => {
+
+            // Check transaction is empty
+            if (this.confirmedTransactions.length == 0) {
               this.isLoading = false;
               this.showEmptyMessage = true;
-            });
-      }
+              this.unconfirmedTransactions = null;
+            }
+
+          })
+        }, 1000);
+
+
+      })
+    }
   }
 
   ionViewDidLoad() {
@@ -177,10 +193,10 @@ export class TransactionListPage {
   }
 
   showSendModal() {
-    
+
     console.log(this.accountInfo);
 
-    if(this.isMultisig) {
+    if (this.isMultisig) {
       this.haptic.selection();
       let page = 'SendMultisigPage';
 
@@ -192,13 +208,13 @@ export class TransactionListPage {
             text: 'Normal Transaction',
             handler: () => {
               let page = 'SendPage';
-              this.showModal(page,{ mosaicSelectedName: 'xpx'})
+              this.showModal(page, { mosaicSelectedName: 'xpx' })
             }
           },
           {
             text: 'Multisig Transaction',
             handler: () => {
-              this.showModal(page,{ mosaicSelectedName: 'xpx'})
+              this.showModal(page, { mosaicSelectedName: 'xpx' })
             }
           },
           {
@@ -213,23 +229,23 @@ export class TransactionListPage {
       actionSheet.present();
       // this.showModal(page,{ mosaicSelectedName: 'xpx'})
     } else {
-       let page = "SendPage"; 
-       this.showModal(page,{ mosaicSelectedName: 'xpx'})
+      let page = "SendPage";
+      this.showModal(page, { mosaicSelectedName: 'xpx' })
     }
   }
 
-  showExportPrivateKeyModal(){
+  showExportPrivateKeyModal() {
     let page = "PrivateKeyPasswordPage";
     this.showModal(page, {})
   }
 
-  moreDetails(){
+  moreDetails() {
     let page = "WalletDetailsPage";
     this.showModal(page, { totalBalance: this.totalBalance, wallet: this.currentWallet });
   }
 
-  showModal(page,params) {
-    const modal = this.modalCtrl.create(page, params ,{
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, params, {
       enableBackdropDismiss: false,
       showBackdrop: true
     });
@@ -255,17 +271,4 @@ export class TransactionListPage {
       this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
-
-  // searchByMosaicId(mosaicId: string, transactions: Array<Transaction>) {
-  //   let txs = <TransferTransaction[]>transactions.filter(transaction => transaction.type == TransactionTypes.TRANSFER);
-  //   txs.filter(tx => {
-  //     try {
-  //       if(tx.mosaicIds()) {
-  //         tx.mosaicIds().filter(mosaic => { return mosaic.name == mosaicId});
-  //       }
-  //     } catch (err) {
-  //       console.info("No mosaic", err);
-  //     }
-  //   })
-  // }
 }

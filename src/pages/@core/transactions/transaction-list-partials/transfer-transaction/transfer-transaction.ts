@@ -15,9 +15,10 @@ import { App } from '../../../../../providers/app/app';
 })
 export class TransferTransactionComponent {
   @Input() tx: any;
+  @Input() owner: string;
   App = App;
 
-  owner: Address;
+  // owner: Address;
   amount: number;
   mosaics: MosaicTransferable[];
   hasLevy: boolean;
@@ -46,9 +47,9 @@ export class TransferTransactionComponent {
   }
 
   private _setOwner() {
-    this.wallet.getSelectedWallet().then(wallet => {
-      this.owner = wallet.address;
-    });
+    // this.wallet.getSelectedWallet().then(wallet => {
+    //   this.owner = wallet.address;
+    // });
   }
 
   constructor(

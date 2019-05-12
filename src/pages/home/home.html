@@ -76,7 +76,7 @@
 
   <div *ngIf="menu=='mosaics'">
     <ion-list transparent-items>
-      <ion-card  no-margin-bottom *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic.mosaicId.name)">
+      <ion-card  no-margin-bottom *ngFor="let mosaic of mosaics" (click)="gotoCoinPrice(mosaic)">
         <ion-card-header no-padding>
           <ion-item>
             <img logo-small item-left [src]="utils.getLogo(mosaic)">
@@ -84,7 +84,7 @@
             <p text-uppercase ion-text color="black">{{ mosaic.mosaicId.namespaceId }}</p>
 
             <section text-right item-right>
-              <h2 ion-text color="black">{{ mosaic.amount | number:'1.2' }}</h2>
+              <h2 ion-text color="black">{{ mosaic.amount | number : '1.6-6' }}</h2>
               <p text-right ion-text color="black"
                 *ngIf="(mosaic.mosaicId.name | getMarketPrice | async) as marketPrice">
                 {{ marketPrice | currency: 'USD' : 'symbol' : '1.6-6' }}
@@ -175,7 +175,7 @@
           [tx]="transaction"></provision-namespace-transaction>
 
         <!-- if transfer  -->
-        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
+        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction" [owner]="selectedWallet.address">
         </transfer-transaction>
       </ion-card>
 
@@ -207,7 +207,7 @@
           [tx]="transaction"></provision-namespace-transaction>
 
         <!-- if transfer  -->
-        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
+        <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction" [owner]="selectedWallet.address">
         </transfer-transaction>
       </ion-card>
 

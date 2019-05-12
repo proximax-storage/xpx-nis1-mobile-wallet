@@ -17,11 +17,11 @@
 
     <section item-right>
       <h2 text-right ion-text color="success" *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">
-        +{{ amount | number: '1.0-16' }}
+        +{{ amount | number: '1.6-6' }}
       </h2>
 
       <h2 text-right ion-text color="danger" *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">
-        -{{ amount | number: '1.0-16' }}
+        -{{ amount | number: '1.6-6' }}
       </h2>
 
       <p float-right ion-text color="black">
@@ -67,12 +67,12 @@
       <section item-right>
         <h2 text-right ion-text color="success" [hidden]="!mosaics"
           *ngIf="owner?.plain() == tx?.otherTransaction?.recipient.plain()">
-          +{{ mosaic.amount?.toString() | number: '1.0-16' }}
+          +{{ mosaic.amount?.toString() | number: '1.6-6' }}
         </h2>
   
         <h2 text-right ion-text color="danger" [hidden]="!mosaics"
           *ngIf="owner?.plain() != tx?.otherTransaction?.recipient.plain()">
-          -{{ mosaic.amount?.toString() | number: '1.0-16' }}
+          -{{ mosaic.amount?.toString() | number: '1.6-6' }}
         </h2>
   
         <p float-right ion-text color="black">
