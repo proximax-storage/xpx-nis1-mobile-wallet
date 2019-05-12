@@ -31,6 +31,10 @@ export class ServicesPage {
     this.utils.showInsetModal("ComingSoonPage", {}, "small");
   }
 
+  showModal(page) {
+    this.utils.showInsetModal(page, {}, "small");
+  }
+
   goto(page) {
     const modal = this.modalCtrl.create(page, {
       enableBackdropDismiss: false,

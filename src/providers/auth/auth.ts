@@ -45,7 +45,10 @@ export class AuthProvider {
       password: BcryptJS.hashSync(password, 8)
     };
 
-    return this.storage.set('isLoggedIn', true)
+    return this.storage.set('isAccountCreated', true)
+      .then(_ => {
+      return this.storage.set('isLoggedIn', true)
+      })
       .then(_ => {
         return this.storage.get('selectedAccount');
       })
@@ -135,6 +138,19 @@ export class AuthProvider {
         return ACCOUNTS;
       })
       .then((accounts: any[]) => {
+        console.log("LOG: register -> accounts", accounts);
+        
+        let foundAccount = accounts.filter( account => {
+          return account.email.includes(email)
+       });
+
+       if(foundAccount.length > 0) {
+         // duplicate account
+        //  alert("Duplicate account");
+
+         return "duplicate"
+
+       } else {
         // TODO: Encrypt password
         const accountFromInput = {
           email: email,
@@ -142,6 +158,8 @@ export class AuthProvider {
         };
         accounts.push(accountFromInput);
         return this.storage.set('accounts', accounts);
+       }
+        
       });
   }
 

@@ -56,33 +56,41 @@ export class MyApp {
   initGetRoot() {
     return Promise.all([
       this.storage.get("isFirstAppOpen"),
-      this.storage.get("isLoggedIn")
+      this.storage.get("isLoggedIn"),
+      this.storage.get("isAccountCreated")
     ]).then(results => {
       const isFirstAppOpen = results[0] === null ? true : !!results[0];
       const isLoggedIn = results[1];
+      const isAccountCreated = results[2];
 
       if (isFirstAppOpen) {
         return "OnboardingPage";
       } else if (isLoggedIn) {
         return "TabsPage";
+      } else if (isAccountCreated){
+        return "LoginPage";
       } else {
-        return "WelcomePage";
+        return "RegisterPage";
       }
     });
   }
 
   initOnPauseResume() {
     this.platform.pause.subscribe(() => {
+      
       Promise.all([
         this.storage.get("pin"),
-        this.storage.get("isAppPaused")
+        this.storage.get("isAppPaused"),
+        this.storage.set('isModalShown', false)
       ]).then(results => {
         const pin = !!results[0];
         const isAppPaused = !!results[1];
+        // const isModalShown = results[2];
+        // alert("0App paused:" + isAppPaused + ", PIN:" + pin)
 
-        if (pin) this.storage.set("isAppPaused", isAppPaused);
+        if (pin) this.storage.set("isAppPaused", true);
+        // if (isModalShown) this.storage.set("isModalShown", false);
         
-
         // encrypt plainPassword using currentPIN
         // this.pinProvider.encryptPasswordUsingCurrentPin();
         // Clear Current PIN
@@ -100,15 +108,16 @@ export class MyApp {
       this.storage.get("pin"),
       this.storage.get("isLoggedIn"),
       this.storage.get("isAppPaused"),
-      this.storage.get("isModalShown")
+      this.storage.get("isModalShown"),
+      this.storage.get("isQrActive")
     ]).then(results => {
       const pin = results[0];
       const isLoggedIn = results[1];
       const isAppPaused = results[2];
       const isModalShown = results[3];
-
+      const isQrActive = !!results[4];
       console.log(
-        "rootPage:",
+        "rootPage:", this.rootPage ,
         this.rootPage !== "OnboardingPage" && this.rootPage !== "WelcomePage"
       );
       console.log("isModalShown:", !isModalShown);
@@ -126,6 +135,21 @@ export class MyApp {
           isLoggedIn
       );
 
+      // alert(
+      //     "OnboardingPage:" + this.rootPage + 
+      //     ",isModalShown:" + !isModalShown +
+      //     ",isAppPaused:" + isAppPaused +
+      //     ",pin:" + !!pin +
+      //     ",isLoggedIn:" + isLoggedIn);++
+
+      // alert(
+      //   "1OnboardingPage:" + this.rootPage + 
+      //   ",isModalShown:" + !isModalShown +
+      //   ",isAppPaused:" + isAppPaused +
+      //   ",pin:" + !!pin +
+      //   ",isLoggedIn:" + isLoggedIn +
+      //   ",isQrActive:" + !isQrActive);
+
       if (!pin && isLoggedIn) {
         this.utils.showModal("VerificationCodePage", {
           status: "setup",
@@ -133,16 +157,30 @@ export class MyApp {
         });
       }
 
-      if (isAppPaused) {
-        return this.storage.set("isAppPaused", false);
+          // if (isAppPaused) {
+      //   return this.storage.set("isAppPaused", false);
+      // } else 
+
+      if(isQrActive) {
+         return this.storage.set('isQrActive', false);
+
       } else if (
         this.rootPage !== "OnboardingPage" &&
         this.rootPage !== "WelcomePage" &&
         !isModalShown &&
-        !isAppPaused &&
+        isAppPaused &&
         !!pin &&
-        isLoggedIn
+        isLoggedIn &&
+        !isQrActive
       ) {
+        // alert(
+        //   "2OnboardingPage:" + this.rootPage + 
+        //   ",isModalShown:" + !isModalShown +
+        //   ",isAppPaused:" + isAppPaused +
+        //   ",pin:" + !!pin +
+        //   ",isLoggedIn:" + isLoggedIn +
+        //   ",isQrActive:" + !isQrActive);
+
         return this.utils.showModal("VerificationCodePage", {
           status: "confirm",
           title: "Wallet is secured",

@@ -1,7 +1,7 @@
 import { GetBalanceProvider } from './../../../../providers/get-balance/get-balance';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, Platform } from 'ionic-angular';
 import {
   SimpleWallet,
   MosaicTransferable,
@@ -18,6 +18,7 @@ import { AlertProvider } from '../../../../providers/alert/alert';
 
 import { CoingeckoProvider } from '../../../../providers/coingecko/coingecko';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the SendPage page.
@@ -56,7 +57,9 @@ export class SendPage {
     public viewCtrl: ViewController,
     public modalCtrl: ModalController,
     private coingeckoProvider: CoingeckoProvider,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private storage: Storage,
+    public platform: Platform
   ) {
     console.log("Nav params",this.navParams.data);
     
@@ -135,6 +138,11 @@ export class SendPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SendPage');
+    this.storage.set('isQrActive', true);
+  }
+
+  ionViewDidLeave() {
+    this.storage.set('isQrActive', false);
   }
 
   init() {
@@ -357,15 +365,20 @@ export class SendPage {
   }
 
   scan() {
-
-    this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-      barcodeData.format = "QR_CODE";
-      let payload = JSON.parse(barcodeData.text);
-      this.form.patchValue({ recipientName: payload.data.name})
-      this.form.patchValue({ recipientAddress: payload.data.addr })
-     }).catch(err => {
-         console.log('Error', err);
-     });
+      this.barcodeScanner.scan().then(barcodeData => {
+        console.log('Barcode data', barcodeData);
+        barcodeData.format = "QR_CODE";
+        let payload = JSON.parse(barcodeData.text);
+        this.form.patchValue({ recipientName: payload.data.name})
+        this.form.patchValue({ recipientAddress: payload.data.addr })
+        // this.storage.set('isModalShown', false);
+       }).catch(err => {
+           console.log('Error', err);
+         if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
+          let message = "Camera access is disabled. Please enable it in the Settings app."
+          this.alertProvider.showMessage(message);
+          // this.storage.set('isModalShown', false);
+        }
+       });  
   }
 }

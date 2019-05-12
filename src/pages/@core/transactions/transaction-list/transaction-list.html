@@ -21,31 +21,23 @@
 
   <section wallets>
 
-
-    <ion-card no-margin-bottom balance>
-        <!-- <ion-card-header>
-            Wallet name: {{walletName }}
-        </ion-card-header> -->
+      <ion-card balance>
         <ion-card-content>
-            <ion-list transparent-items>
-                <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
-                    <ion-icon name='ios-cash-outline' item-start></ion-icon>
-                    Balance:
-                    <span>${{ (totalBalance? totalBalance:0) | number : '1.2-2'}} USD</span>
-                </ion-item>
+          <br>
 
-                <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
-                    <ion-icon name='ios-paper-outline' item-start></ion-icon>
-                    Address:
-                    <p text-justify  *ngIf="currentWallet">{{ currentWallet?.address.value }} </p>
+          <h1 color="dark" text-center> ≈${{ (totalBalance? totalBalance:0) | number : '1.2-2'}}</h1>
+          <!-- <h2 color="dark"  text-center>≈${{ (totalBalance? totalBalance:0) | number : '1.2-2'}}</h2> -->
+
+            <ion-list transparent-items>
+                <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.plain())">
+                    <ion-icon name='ios-copy-outline' item-end></ion-icon>
+                    <p text-justify  *ngIf="currentWallet">{{ currentWallet?.address.plain() }} </p>
                 </ion-item>
               </ion-list>
               <button gradient-button quarter-width color-5 medium (click)="moreDetails()">
                 More Details
               </button>
         </ion-card-content>
-       
-
       </ion-card>
 
       
@@ -103,7 +95,7 @@
         [tx]="transaction"></provision-namespace-transaction>
 
       <!-- if transfer  -->
-      <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
+      <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction" [owner]="currentWallet.address">
       </transfer-transaction>
     </ion-card>
 
@@ -135,7 +127,7 @@
         [tx]="transaction"></provision-namespace-transaction>
 
       <!-- if transfer  -->
-      <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction">
+      <transfer-transaction *ngIf="transaction.type == TransactionTypes.TRANSFER" [tx]="transaction" [owner]="currentWallet.address">
       </transfer-transaction>
     </ion-card>
 

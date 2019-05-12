@@ -15,12 +15,14 @@ import { App } from '../../../../../providers/app/app';
 })
 export class TransferTransactionComponent {
   @Input() tx: any;
+  @Input() owner: string;
   App = App;
 
-  owner: Address;
+  // owner: Address;
   amount: number;
   mosaics: MosaicTransferable[];
   hasLevy: boolean;
+  mosaicInfo: { mosaicId: string; divisibility: number; }[];
 
   private _getAmount() {
     try {
@@ -31,23 +33,23 @@ export class TransferTransactionComponent {
   }
 
   private _getMosaics() {
-    try {
-      this.nemProvider.getMosaicsDefinition(this.tx.mosaics()).subscribe(mosaics => {
-        this.mosaics = mosaics;
-        console.log(mosaics);
-        this.hasLevy = this.mosaics.filter(mosaic => mosaic.levy).length
-          ? true
-          : false;
-      });
-    } catch (e) {
-      this.mosaics = [];
-    }
+    // try {
+    //   this.nemProvider.getMosaicsDefinition(this.tx.mosaics()).subscribe(mosaics => {
+    //     this.mosaics = mosaics;
+    //     // console.log(mosaics);
+    //     this.hasLevy = this.mosaics.filter(mosaic => mosaic.levy).length
+    //       ? true
+    //       : false;
+    //   });
+    // } catch (e) {
+    //   this.mosaics = [];
+    // }
   }
 
   private _setOwner() {
-    this.wallet.getSelectedWallet().then(wallet => {
-      this.owner = wallet.address;
-    });
+    // this.wallet.getSelectedWallet().then(wallet => {
+    //   this.owner = wallet.address;
+    // });
   }
 
   constructor(
@@ -58,6 +60,34 @@ export class TransferTransactionComponent {
     this.hasLevy = false;
     this.amount = 0;
     this.mosaics = [];
+
+    this.mosaicInfo = [
+      { mosaicId: 'xpx', divisibility: 6 },
+      { mosaicId: 'xem', divisibility: 6 },
+      { mosaicId: 'npxs', divisibility: 6 },
+      { mosaicId: 'sft', divisibility: 6 },
+      { mosaicId: 'xar', divisibility: 4 },
+    ]
+  }
+
+  getDivisibility(mosaicId): number {
+    let currentMosaic = this.mosaicInfo.find(mosaic => mosaic.mosaicId == mosaicId);
+
+    if (currentMosaic != undefined) {
+
+      if (currentMosaic.divisibility == 6) {
+        return 1e6;
+      }
+      else if (currentMosaic.divisibility == 4) {
+        return 1e4;
+      }
+
+    } else {
+      return 1e6;
+    }
+
+
+
   }
 
   ngOnInit() {

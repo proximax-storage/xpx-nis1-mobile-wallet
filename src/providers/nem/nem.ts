@@ -79,21 +79,38 @@ export class NemProvider{
     this.storage.get("node").then(node => {
       console.log("LOG: NemProvider -> constructor -> node", node);
 
-      let serverConfig: ServerConfig;
+      let serverConfig: ServerConfig[];
       if (node) {
-        serverConfig = JSON.parse(node) as ServerConfig
+        serverConfig = [JSON.parse(node) as ServerConfig]
       } else {
-        serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig; // Test net
-        //serverConfig = { protocol: "http", domain: "62.75.171.41", port: 7890 } as ServerConfig; // Main net - Hi I am Huge Alice 3
+        // serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig; // Test net
+        serverConfig = [
+          {protocol: "http", domain:"88.99.192.82", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"76.9.68.110", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"176.9.20.180", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"199.217.118.114", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"62.75.171.41", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"167.86.96.227", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"167.86.95.114", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"167.86.95.115", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"167.86.96.228", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"167.86.96.231", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"62.75.251.134", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"62.75.163.236", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"209.126.98.204", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"108.61.182.27", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"108.61.168.86", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"104.238.161.61", port: 7890 } as ServerConfig,
+         ]; // Main net - Hi I am Huge Alice 3
       }
 
       console.log("LOG: NemProvider -> constructor -> serverConfig", serverConfig);
 
-      const SERVER_CONFIG: ServerConfig[] = [serverConfig];
+      const SERVER_CONFIG: ServerConfig[] = serverConfig;
       console.log("LOG: NemProvider -> constructor -> SERVER_CONFIG", SERVER_CONFIG);
 
 
-      NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // TEST_NET Note: Change to MAIN_NET for production
+      NEMLibrary.bootstrap(NetworkTypes.MAIN_NET); // TEST_NET Note: Change to MAIN_NET for production
 
       if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
         this.accountHttp = new AccountHttp(SERVER_CONFIG);
@@ -549,6 +566,7 @@ export class NemProvider{
       .toArray();
   }
 
+  
   /**
    * Get all confirmed transactions of an account
    * @param address account Address
@@ -556,10 +574,37 @@ export class NemProvider{
    */
   public getAllTransactions(address: Address): Observable<Transaction[]> {
     return this.accountHttp.allTransactions(address, {
-      pageSize: 25
+      pageSize: 100
+    });
+  }
+  
+  public getMosaicTransactions(address: Address) : Observable<any[]> {
+    return new Observable(observer => {
+        this.accountHttp.allTransactions(address, {
+          pageSize: 100
+        }).subscribe(transactions=> {
+            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics !== undefined);
+            observer.next(mosaicTransactions);
+            //call complete if you want to close this stream (like a promise)
+            observer.complete();
+        })
     });
   }
 
+  public getXEMTransactions(address: Address) : Observable<Transaction[]> {
+    return new Observable(observer => {
+        this.accountHttp.allTransactions(address, {
+          pageSize: 100
+        }).subscribe(transactions=> {
+            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics === undefined);
+            observer.next(mosaicTransactions);
+            //call complete if you want to close this stream (like a promise)
+            observer.complete();
+        })
+    });
+  }
+
+  // TODO: Page size
   /**
    * Get all confirmed transactions of an account paginated
    * @param address account Address
@@ -569,7 +614,7 @@ export class NemProvider{
     address: Address
   ): Pageable<Transaction[]> {
     return this.accountHttp.allTransactionsPaginated(address, {
-      pageSize: 10
+      pageSize: 100
     });
   }
 

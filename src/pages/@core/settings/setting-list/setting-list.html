@@ -105,6 +105,14 @@
         <p text-wrap>What you need to know to take appropriate steps to secure your wallet. </p>
       </ion-item>
     </ion-card>
+    
+    <ion-card (click)="showNodeList()">
+        <ion-item>
+          <ion-icon item-left name="ios-git-branch-outline"></ion-icon>
+          <h2>Nodes</h2>
+          <p text-wrap>Nodes are distributed across a widespread network and carry out a variety of tasks such as maintaining the a copy of a blockchain records and to process transactions.</p>
+        </ion-item>
+      </ion-card>
 
     <ion-card (click)="showReleaseNotes()">
         <ion-item>
@@ -114,13 +122,6 @@
         </ion-item>
       </ion-card>
 
-    <ion-card (click)="showNodeList()">
-        <ion-item>
-          <ion-icon item-left name="ios-git-branch-outline"></ion-icon>
-          <h2>Nodes</h2>
-          <p text-wrap></p>
-        </ion-item>
-      </ion-card>
 
     <ion-card (click)="showResetPINPrompt()">
       <ion-item>

@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, InfiniteScroll, V
 import { CoinPriceChartProvider } from "../../../providers/coin-price-chart/coin-price-chart";
 import { CoingeckoProvider } from "../../../providers/coingecko/coingecko";
 import { UtilitiesProvider } from "../../../providers/utilities/utilities";
-import { TransactionTypes, SimpleWallet, Transaction, Pageable, AccountInfoWithMetaData } from "nem-library";
+import { TransactionTypes, SimpleWallet, Transaction, Pageable, AccountInfoWithMetaData, MultisigTransaction, TransferTransaction } from 'nem-library';
 import { NemProvider } from "../../../providers/nem/nem";
 import { WalletProvider } from "../../../providers/wallet/wallet";
 import { Observable } from "rxjs";
@@ -16,6 +16,9 @@ import { ToastProvider } from "../../../providers/toast/toast";
 import { HapticProvider } from "../../../providers/haptic/haptic";
 import { BrowserTab } from "@ionic-native/browser-tab";
 import { SafariViewController } from "@ionic-native/safari-view-controller";
+
+import find from 'lodash/find';
+import filter from 'lodash/filter';
 
 /**
  * Generated class for the CoinPriceChartPage page.
@@ -31,14 +34,14 @@ import { SafariViewController } from "@ionic-native/safari-view-controller";
   providers: [GetMarketPricePipe]
 })
 export class CoinPriceChartPage {
-  /** Mosaic details member variables */ 
+  /** Mosaic details member variables */
   durations: Array<{ label: string; value: number }>;
   selectedDuration: { label: string; value: number };
   selectedCoin: any;
   descriptionLength: number = 600;
 
 
-  /** Transaction list member variables */ 
+  /** Transaction list member variables */
   App = App;
   TransactionTypes = TransactionTypes;
 
@@ -56,6 +59,7 @@ export class CoinPriceChartPage {
 
   coinId: string;
   mosaicId: string;
+  mosaicAmount: number;
 
   @ViewChild(InfiniteScroll)
   private infiniteScroll: InfiniteScroll;
@@ -93,7 +97,7 @@ export class CoinPriceChartPage {
     this.durations = [
       { label: "24H", value: 1 },
       { label: "7D", value: 7 },
-      { label: "14D", value: 365 },
+      { label: "14D", value: 14 },
       { label: "30D", value: 30 },
       { label: "6M", value: 182 }
 
@@ -102,29 +106,30 @@ export class CoinPriceChartPage {
 
     console.log("navParams.data", this.navParams.data);
     this.mosaicId = this.navParams.data['mosaicId']; // will be used to filter transactions
-		console.log("TCL: CoinPriceChartPage -> this.mosaicId", this.mosaicId)
+    console.log("TCL: CoinPriceChartPage -> this.mosaicId", this.mosaicId)
     this.coinId = this.navParams.data['coinId'];
     this.currentWallet = this.navParams.data['currentWallet'];
-    this.totalBalance = this.currentWallet.total;
+    this.mosaicAmount = this.navParams.data['mosaicAmount']; 
+    this.totalBalance = this.navParams.data['totalBalance'];
 
-    
+
 
     if (this.mosaicId == "sft") {
       this.selectedCoin = {
-          "name": "SportsFix",
-          "symbol": "SFT",
-          "links": {
-            "homepage": ["https://sportsfix.io/"],
-            "announcement_url": ["https://medium.com/@sportsfix"],
-            "blockchain_site": ["https://bitcointalk.org/index.php?topic=4380637.msg39045279#msg39045279"],
-            "facebook_username": "sportsfix.io",
-            "twitter_screen_name": "SportsFix_io",
-            "telegram_channel_identifier": "SFICO"
-          },
+        "name": "SportsFix",
+        "symbol": "SFT",
+        "links": {
+          "homepage": ["https://sportsfix.io/"],
+          "announcement_url": ["https://medium.com/@sportsfix"],
+          "blockchain_site": ["https://bitcointalk.org/index.php?topic=4380637.msg39045279#msg39045279"],
+          "facebook_username": "sportsfix.io",
+          "twitter_screen_name": "SportsFix_io",
+          "telegram_channel_identifier": "SFICO"
+        },
         "genesis_date": "2018-12-18",
-          "description": {
-            en: "SportsFix aims to transform the most powerful content in the world – SPORTS. SF presents a decentralized sports media ecosystem which aims to completely change the way fans connect and engage with sports content. In its current stage, SF is a rapidly growing over-the-top (OTT) business in Asia streaming local and international sports events to millions of fans every week and on track to become one of the most valuable video streaming platforms in the region. In our next phase, SF will be issuing SportsFix Tokens (SFT) which allows fans to participate and engage with their favourite leagues and clubs in a self-contained economy with all digital transactions employing smart contracts backed by blockchain technology."
-          }
+        "description": {
+          en: "SportsFix aims to transform the most powerful content in the world – SPORTS. SF presents a decentralized sports media ecosystem which aims to completely change the way fans connect and engage with sports content. In its current stage, SF is a rapidly growing over-the-top (OTT) business in Asia streaming local and international sports events to millions of fans every week and on track to become one of the most valuable video streaming platforms in the region. In our next phase, SF will be issuing SportsFix Tokens (SFT) which allows fans to participate and engage with their favourite leagues and clubs in a self-contained economy with all digital transactions employing smart contracts backed by blockchain technology."
+        }
       }
 
     } else if (this.mosaicId == 'xar') {
@@ -154,52 +159,114 @@ export class CoinPriceChartPage {
           console.log("TCL: CoinPriceChartPage -> this.selectedCoin", this.selectedCoin)
         });
       }
-      
+
     }
 
-    
+
   }
   ionViewWillEnter() {
 
-    /** Transaction list business logic */ 
+    /** Transaction list business logic */
     this.unconfirmedTransactions = null;
     this.confirmedTransactions = null;
     this.showEmptyMessage = false;
     this.isLoading = true;
 
-      if (this.currentWallet) {
-        this.getAccountInfo();
-        this.fakeList = [{}, {}];
+    if (this.currentWallet) {
+      this.getAccountInfo();
+      this.fakeList = [{}, {}];
 
-        this.pageable = this.nemProvider.getAllTransactionsPaginated(
-          this.currentWallet.address
-        );
+      this.pageable = this.nemProvider.getAllTransactionsPaginated(
+        this.currentWallet.address
+      );
 
-        this.nemProvider
-          .getUnconfirmedTransactions(this.currentWallet.address)
-          .flatMap(_ => _)
-          .toArray()
-          .subscribe(result => {
-            this.unconfirmedTransactions = result;
-          });
 
-        this.pageable
-          .map((txs: any) => txs ? txs : Observable.empty())
-          .subscribe(result => {
-            this.isLoading = false;
-            this.showEmptyMessage = false;
-            this.confirmedTransactions = result;
 
-            if(!this.confirmedTransactions) this.showEmptyMessage = true;
-          },
-            err => console.error(err),
-            () => {
-              this.isLoading = false;
-              if (!this.confirmedTransactions) this.showEmptyMessage = true;
-            });
-      }
-  }
+      this.nemProvider
+        .getUnconfirmedTransactions(this.currentWallet.address)
+        .flatMap(_ => _)
+        .toArray()
+        .subscribe(result => {
+          this.unconfirmedTransactions = result;
+        });
+
+      // temp
+      if (this.mosaicId != 'xem') {
+        this.nemProvider.getMosaicTransactions(this.currentWallet.address).subscribe(transactions => {
+
+          const filteredTransactions = transactions.filter(tx => tx!._mosaics[0].mosaicId.name == this.mosaicId);
+
+          let mosaicInfo = [
+            { mosaicId: 'xpx', divisibility: 1e6 },
+            { mosaicId: 'npxs', divisibility: 1e6 },
+            { mosaicId: 'sft', divisibility: 1e6 },
+            { mosaicId: 'xar', divisibility: 1e4 },
+          ]
+
+          let currentMosaic = mosaicInfo.find(mosaic => mosaic.mosaicId == this.mosaicId);
+          console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> currentMosaic", currentMosaic);
+
+
+          let total: number = 0;
+
+
+          filteredTransactions.forEach(tx => {
+            let amount = tx.mosaics().map(mosaic => mosaic.quantity)[0] / currentMosaic.divisibility;
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> amount", amount);
+            if (tx.recipient.value === this.currentWallet.address.plain()) {
+              total += amount
+            }
+            else {
+              total -= amount
+            }
+          })
+        
+
+          this.nemProvider.getXEMTransactions(this.currentWallet.address).subscribe(transactions => {
+            console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> this.confirmedTransactions", this.confirmedTransactions);
+            transactions.forEach(tx => {
+              if(tx.type == TransactionTypes.MULTISIG) {
+                console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> tx", tx);
+
+                let transaction = ((tx as MultisigTransaction).otherTransaction as TransferTransaction)
+                let currentMosaicTransaction = transaction.mosaics().find(mosaic => mosaic.mosaicId.name == this.mosaicId);
+								
+                if(currentMosaicTransaction ) {
+                  console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> currentMosaicTransaction", currentMosaicTransaction);
+                  this.confirmedTransactions.push(tx);
+                  if (transaction.recipient.plain() === this.currentWallet.address.plain()) {
+                  total += currentMosaicTransaction.quantity / currentMosaic.divisibility;
+                }
+                else {
+                  total -= currentMosaicTransaction.quantity / currentMosaic.divisibility;
+                }
+                }
+              }
+            })
   
+          })
+
+          this.isLoading = false;
+          this.showEmptyMessage = false;
+          this.confirmedTransactions = filteredTransactions;
+
+
+          // Check transaction is empty
+          if (this.confirmedTransactions.length == 0) this.showEmptyMessage = true;
+        })
+      } else {
+        this.nemProvider.getXEMTransactions(this.currentWallet.address).subscribe(transactions => {
+          this.isLoading = false;
+          this.showEmptyMessage = false;
+          this.confirmedTransactions = transactions;
+          console.log("LOG: CoinPriceChartPage -> ionViewWillEnter -> this.confirmedTransactions", this.confirmedTransactions);
+
+          if (!this.confirmedTransactions) this.showEmptyMessage = true;
+        })
+      }
+    }
+  }
+
   getAccountInfo() {
     console.info("Getting account information.", this.currentWallet.address)
     try {
@@ -232,7 +299,7 @@ export class CoinPriceChartPage {
       this.toastProvider.show('Your address has been successfully copied to the clipboard.', 3, true);
     });
   }
-  
+
   select(duration) {
     this.selectedDuration = duration;
     this.coinPriceChartProvider.load(
@@ -259,7 +326,7 @@ export class CoinPriceChartPage {
   showSendModal() {
     console.log(this.accountInfo);
 
-    if(this.isMultisig) {
+    if (this.isMultisig) {
       this.haptic.selection();
       let page = 'SendMultisigPage';
 
@@ -271,13 +338,13 @@ export class CoinPriceChartPage {
             text: 'Normal Transaction',
             handler: () => {
               let page = 'SendPage';
-              this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+              this.showModal(page, { mosaicSelectedName: this.mosaicId })
             }
           },
           {
             text: 'Multisig Transaction',
             handler: () => {
-              this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+              this.showModal(page, { mosaicSelectedName: this.mosaicId })
             }
           },
           {
@@ -292,13 +359,13 @@ export class CoinPriceChartPage {
       actionSheet.present();
       // this.showModal(page,{ mosaicSelectedName: this.mosaicId})
     } else {
-       let page = "SendPage"; 
-       this.showModal(page,{ mosaicSelectedName: this.mosaicId})
+      let page = "SendPage";
+      this.showModal(page, { mosaicSelectedName: this.mosaicId })
     }
   }
 
-  showModal(page,params) {
-    const modal = this.modalCtrl.create(page, params ,{
+  showModal(page, params) {
+    const modal = this.modalCtrl.create(page, params, {
       enableBackdropDismiss: false,
       showBackdrop: true
     });
@@ -315,7 +382,7 @@ export class CoinPriceChartPage {
     return index;
   }
 
-  openLink(link){
+  openLink(link) {
     this.browserTab.isAvailable()
       .then(isAvailable => {
         if (isAvailable) {
@@ -356,5 +423,5 @@ export class CoinPriceChartPage {
     this.viewCtrl.dismiss();
   }
 
-  
+
 }

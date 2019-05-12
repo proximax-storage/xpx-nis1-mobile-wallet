@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../../providers/auth/auth';
 import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 import { HapticProvider } from '../../../providers/haptic/haptic';
+import { AlertProvider } from '../../../providers/alert/alert';
 
 /**
  * Generated class for the RegisterPage page.
@@ -33,7 +34,7 @@ export class RegisterPage {
     public authProvider: AuthProvider,
     public utils: UtilitiesProvider,
     private haptic: HapticProvider,
-    private toastProvider: ToastProvider
+    private alertProvider: AlertProvider
   ) {
     this.init();
     this.passwordType = "password";
@@ -71,21 +72,26 @@ export class RegisterPage {
     if(form.password === form.confirmPassword) {
       this.authProvider
         .register(form.email, form.password)
-        .then(_ => {
-          this.haptic.notification({ type: 'success' });
-          this.navCtrl.setRoot(
-            'TabsPage',
-            {},
-            {
-              animate: true,
-              direction: 'forward'
-            }
-          );
-          this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
+        .then(status => {
+          if(status === "duplicate") {
+            this.alertProvider.showMessage("Account already exist. Please try again.");
+            this.haptic.notification({ type: 'error' });
+          } else {
+            this.haptic.notification({ type: 'success' });
+            this.navCtrl.setRoot(
+              'TabsPage',
+              {},
+              {
+                animate: true,
+                direction: 'forward'
+              }
+            );
+            this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
+          }
         })
         .then(_ => {
           this.authProvider.setSelectedAccount(form.email, form.password);
-        });
+        })
     } else {
       alert("Please make sure you confirm your password.");
     }
