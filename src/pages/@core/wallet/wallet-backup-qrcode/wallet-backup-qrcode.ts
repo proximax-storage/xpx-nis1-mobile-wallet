@@ -49,7 +49,7 @@ export class WalletBackupQrcodePage {
 
   dismiss() {
      this.viewCtrl.dismiss(); 
-     this.goHome();
+    //  this.goHome();
   }
 
   copy() {

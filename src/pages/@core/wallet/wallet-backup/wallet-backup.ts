@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, ViewController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 
 import { App } from './../../../../providers/app/app';
@@ -52,6 +52,7 @@ export class WalletBackupPage {
     private utils: UtilitiesProvider,
     private platform: Platform,
     private modalCtrl: ModalController,
+    private viewCtrl: ViewController
   ) {
 
 
@@ -89,18 +90,18 @@ export class WalletBackupPage {
   init() {
       this.options = [
         {
-          name: 'Backup wallet', // TODO
+          name: 'Export via QR Code', // TODO
           value: WalletBackupType.QR_CODE,
           icon: 'ios-barcode-outline'
         },
         
         {
-          name: 'Copy private key',
+          name: 'Copy Private Key',
           value: WalletBackupType.COPY_TO_CLIPBOARD,
           icon: 'ios-copy-outline'
         },
         {
-          name: 'Export private key',
+          name: 'Export Private Key',
           value: WalletBackupType.SHARE,
           icon: 'ios-share-outline'
         }
@@ -126,12 +127,7 @@ export class WalletBackupPage {
 
   onSubmit() {
     const WALLET: SimpleWallet = <SimpleWallet>this.navParams.data;
-    if (this.selectedOption === WalletBackupType.EXPORT_AS_FILE) {
-      this.walletBackupProvider.saveAsFile(WALLET).then(_ => {
-        this.goHome();
-      });
-    }
-    else if (this.selectedOption === WalletBackupType.SHARE) {
+    if (this.selectedOption === WalletBackupType.SHARE) {
       this.authProvider.getPassword().then(async password => {
         const privateKey = await this.nemProvider.passwordToPrivateKey(password, WALLET);
         await this.socialSharing.share(
@@ -156,5 +152,9 @@ export class WalletBackupPage {
     });
     modal.present();
     
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }
