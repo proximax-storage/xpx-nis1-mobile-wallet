@@ -38,7 +38,7 @@
           <ion-item>
             <ion-label>
               <input type="text" pattern="[0-9]*" decimal="true"  button-char="." decimal-char="." formControlName="amount" [(ngModel)]="amount"
-                [placeholder]="amountPlaceholder" (click)="clearPlaceholder()">
+                [placeholder]="amountPlaceholder" (click)="clearPlaceholder()"(keydown)="validateAmount($event)">
             </ion-label>
           </ion-item>
         </ion-card>
@@ -47,7 +47,7 @@
             <ion-item>
               <ion-label>
                 <input type="number" pattern="[0-9]*" formControlName="amount" [(ngModel)]="amount"
-                  [placeholder]="amountPlaceholder" (click)="clearPlaceholder()">
+                  [placeholder]="amountPlaceholder" (click)="clearPlaceholder()"(keydown)="validateAmount($event)">
               </ion-label>
             </ion-item>
           </ion-card>
