@@ -44,6 +44,8 @@ export class SendMultisigPage {
   isMultisig: boolean;
   multisigAccountAddress: Address;
 
+  amountPlaceholder: string = "0";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -421,7 +423,9 @@ export class SendMultisigPage {
         this.alertProvider.showMessage(message);
       }
     });
+  }
 
-
+  clearPlaceholder() {
+    this.amountPlaceholder = "";
   }
 }

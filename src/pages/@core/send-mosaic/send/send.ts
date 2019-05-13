@@ -45,6 +45,8 @@ export class SendPage {
   amount: number;
   mosaicSelectedName: string;
 
+  amountPlaceholder: string = "0";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -380,5 +382,9 @@ export class SendPage {
           // this.storage.set('isModalShown', false);
         }
        });  
+  }
+
+  clearPlaceholder() {
+    this.amountPlaceholder = "";
   }
 }
