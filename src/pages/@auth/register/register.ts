@@ -91,7 +91,7 @@ export class RegisterPage implements OnInit {
                 direction: 'forward'
               }
             );
-            this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
+            return this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
           }
         })
         .then(_ => {
