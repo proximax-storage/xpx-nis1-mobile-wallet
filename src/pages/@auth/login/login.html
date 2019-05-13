@@ -19,7 +19,7 @@
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" (keyup.enter)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Username</ion-label>
             <ion-input type="text" formControlName="email" placeholder="Enter your username"></ion-input>
@@ -29,7 +29,7 @@
             <ion-label stacked>Password</ion-label>
             <ion-input formControlName="password" [type]="passwordType" placeholder="Enter your password"></ion-input>
 
-            <button (click)="showHidePassword($event)" clear item-right ion-button icon-only>
+            <button type="button" (click)="showHidePassword($event)" clear item-right ion-button icon-only>
               <ion-icon item-right color="black" [name]="passwordIcon">
               </ion-icon>
             </button>

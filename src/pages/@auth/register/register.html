@@ -31,7 +31,7 @@
             <ion-input formControlName="password" [type]="passwordType"
               placeholder="Enter your password"></ion-input>
 
-            <button (click)="showHidePassword($event)"  clear item-right ion-button icon-only>
+            <button type="button" (click)="showHidePassword($event)"  clear item-right ion-button icon-only>
               <ion-icon item-right color="black" [name]="passwordIcon">
               </ion-icon>
             </button>
@@ -42,10 +42,10 @@
             <ion-input formControlName="confirmPassword" [type]="confirmPasswordType" placeholder="Confirm your password">
             </ion-input>
 
-            <button (click)="showHideConfirmPassword($event)" clear item-right ion-button icon-only>
+            <!-- <button (click)="showHideConfirmPassword($event)" clear item-right ion-button icon-only>
               <ion-icon item-right color="black" [name]="confirmPasswordIcon">
               </ion-icon>
-            </button>
+            </button> -->
 
           </ion-item>
 
