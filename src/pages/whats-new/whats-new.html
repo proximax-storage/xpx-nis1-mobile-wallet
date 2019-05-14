@@ -9,7 +9,7 @@
 
     <ion-navbar transparent>
       <ion-title>
-        <span ion-text color="black">What's New</span>
+        <span ion-text color="black">Changelog</span>
       </ion-title>
   
       <ion-buttons end>
@@ -23,29 +23,52 @@
 
 
 <ion-content  fullscreen padding>
-    
-    <h4>ProximaX Wallet v0.1.4-alpha.74</h4>
-    <br>
-    <h5>Release Notes:</h5>
 
-    <ul release-notes>
-        <li>♻️refactor: remove checking of address when entering address in send page</li>
-        <li>♻️refactor: show error message when camera is disabled</li>
-        <li>♻️refactor: enhance error message for send mosaic confirmation page</li>
-        <li>♻️refactor: convert node list popup to modal</li>
-        <li>✨feat: what's new section</li>
-        <li>✨feat: switching node capability</li>
-        <li>♻️refactor: unable to create new wallet after some time</li>
-        <li>🐛fix: unable to import wallet with exactly 8 character password</li>
-        <li>♻️refactor: enhance error message for importing wallet page</li>
-        <li>♻️refactor: remove back button in export wallet page</li>
-        <li>🐛fix: notification issues(iOS)</li>
-        <li>✨feat: decimal keyboard (iOS)</li>
-        <li>🐛fix: send mosaic confirmation page</li>
-        <li>🐛fix: remove tx type for normal wallets</li>
-        <li>✨feat: add mosaic details for xar and sft</li>
-        <li>✨feat: enable opening of social media links</li>
-    </ul>
+  <h2 text-center>ProximaX Wallet 2.0</h2>
+
+    <div id="timeline_container">
+        <ul id="timeline">
+
+          <li><strong>v0.2.0-beta.77 (May 14, 2019)</strong>
+            <p>♻️refactor:there are instances that notification count will show up again even after reading all articles.</p>
+            <p>♻️refactor:create wallet and import wallet pages should use the same card visuals.</p>
+            <p>🐛fix:misspelled words in the app.</p>
+            <p>🐛fix:in login/signup page, return key can toggle the view/hide password.</p>
+            <p>🐛fix:no limit after comma/period even if mosaics can support up to 6 divisibility only.</p>
+            <p>♻️refactor:remove the 0 placeholder in the amount field when it is active.</p>
+            <p>♻️refactor:optimize loading of transactions.</p>
+            <p>♻️refactor:remove unsupported mosaics.</p>
+            <p>🐛fix: character keyboard in android.</p>
+            <p>🐛refactor: css media rules for tablet.</p>
+            <p>🐛fix: issues on node settings.</p>
+            <p>🐛fix: after qrscan the PIN code shows up; when you go to node page then close the app, the PIN code doesn't show again.</p>
+            <p>🐛fix:when the user repoen the app after logging out, it will redirect to the login page.</p>
+            <p>🐛fix:14D graph issue.</p>
+            <p>🐛fix:duplicate account issue.</p>
+            <p>♻️refactor: invalid username or password message.</p>
+          </li>
+
+          <li><strong>v0.1.4-beta.76 (May 2, 2019)</strong>
+            <p>♻️refactor: remove checking of address when entering address in send page.</p>
+            <p>♻️refactor: show error message when camera is disabled.</p>
+            <p>♻️refactor: enhance error message for send mosaic confirmation page.</p>
+            <p>♻️refactor: convert node list popup to modal.</p>
+            <p>✨feat: what's new section.</p>
+            <p>✨feat: switching node capability.</p>
+            <p>♻️refactor: unable to create new wallet after some time.</p>
+            <p>🐛fix: unable to import wallet with exactly 8 character password.</p>
+            <p>♻️refactor: enhance error message for importing wallet page.</p>
+            <p>♻️refactor: remove back button in export wallet page.</p>
+            <p>🐛fix: notification issues(iOS).</p>
+            <p>✨feat: decimal keyboard (iOS).</p>
+            <p>🐛fix: send mosaic confirmation page.</p>
+            <p>🐛fix: remove tx type for normal wallets.</p>
+            <p>✨feat: add mosaic details for xar and sft.</p>
+            <p>✨feat: enable opening of social media links.</p>
+        </li>
+        </ul>
+      </div>
+
   
 
 </ion-content>
