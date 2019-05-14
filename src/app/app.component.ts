@@ -151,7 +151,8 @@ export class MyApp {
       //   ",isQrActive:" + !isQrActive);
 
       if (!pin && isLoggedIn) {
-        this.utils.showModal("VerificationCodePage", {
+        alert("showModal: VerificationCodePage");
+        return this.utils.showModal("VerificationCodePage", {
           status: "setup",
           destination: "TabsPage"
         });

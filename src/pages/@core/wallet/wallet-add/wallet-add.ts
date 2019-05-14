@@ -29,6 +29,7 @@ export class WalletAddPage {
   PASSWORD: string;
 
   walletColor:string = "wallet-1";
+  walletName: string = "Primary";
 
   constructor(
     public navCtrl: NavController,
@@ -91,5 +92,13 @@ export class WalletAddPage {
         });
       }
     });
+  }
+
+  updateName(val) {
+    if(val) {
+      this.walletName = val;
+    } else {
+      this.walletName = "Primary";
+    }
   }
 }

@@ -1,14 +1,15 @@
 import { TapticEngine } from '@ionic-native/taptic-engine';
 import { Storage } from '@ionic/storage';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Keyboard } from 'ionic-angular';
 
 import { AuthProvider } from '../../../providers/auth/auth';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 import { AlertProvider } from '../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 import { HapticProvider } from '../../../providers/haptic/haptic';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /**
  * Generated class for the LoginPage page.
@@ -22,7 +23,7 @@ import { HapticProvider } from '../../../providers/haptic/haptic';
   selector: 'page-login',
   templateUrl: 'login.html'
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   formGroup: FormGroup;
   passwordType: string = "password";
   passwordIcon: string = "ios-eye-outline";
@@ -37,7 +38,10 @@ export class LoginPage {
     public walletProvider: WalletProvider,
     public authProvider: AuthProvider,
     public utils: UtilitiesProvider,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private platform: Platform,
+    private statusBar: StatusBar,
+    private keyboard: Keyboard
   ) {
     this.init();
     this.passwordType = "password";
@@ -102,5 +106,14 @@ export class LoginPage {
     e.preventDefault();
     this.passwordType = this.passwordType === "password" ? "text" : "password";
     this.passwordIcon = this.passwordIcon === "ios-eye-outline" ? "ios-eye-off-outline" : "ios-eye-outline";
+  }
+
+  ngOnInit() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.statusBar.styleDefault();
+      this.keyboard.hideFormAccessoryBar(false);
+    });
   }
 }

@@ -19,7 +19,7 @@
       <ion-col col-12></ion-col>
 
       <ion-col col-12 text-center>
-        <h3 ion-text color="black">Import wallet</h3>
+        <h3 ion-text color="black">Create new wallet</h3>
         <p ion-text color="black">
           To import your wallet, fill up the name and paste your private key below.
         </p>
@@ -34,11 +34,11 @@
             <p class="wallet-number">TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH</p>
             <div class="wallet-space-75">
               <span class="wallet-label">Wallet Name</span>
-              <p class="wallet-info">Primary</p>
+              <p class="wallet-info">{{walletName}}</p>
             </div>
             <div class="wallet-space-25">
               <span class="wallet-label">Balance</span>
-              <p class="wallet-info">100.00 USD</p>
+              <p class="wallet-info">0.00 USD</p>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
             <ion-label stacked>Wallet name</ion-label>
-            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="Enter your wallet name">
+            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="Enter your wallet name" (input)="updateName($event.target.value)">
             </ion-input>
           </ion-item>
 

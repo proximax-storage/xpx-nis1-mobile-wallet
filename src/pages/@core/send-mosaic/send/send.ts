@@ -45,6 +45,8 @@ export class SendPage {
   amount: number;
   mosaicSelectedName: string;
 
+  amountPlaceholder: string = "0";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -380,5 +382,25 @@ export class SendPage {
           // this.storage.set('isModalShown', false);
         }
        });  
+  }
+
+  clearPlaceholder() {
+    this.amountPlaceholder = "";
+  }
+
+  countDecimals(value) {
+    if (Math.floor(value) !== value)
+      return value.toString().split(".")[1].length || 0;
+    return 0;
+  }
+
+  validateAmount(e) {
+    if(this.amount && this.amount.toString().indexOf('.') !== -1) {
+    let decimalCount = this.countDecimals(this.amount);
+    // Limit to 6 decimal points only
+    if(decimalCount == 6 && e.key !== "Backspace" ) {
+      e.preventDefault();
+    }
+   }
   }
 }

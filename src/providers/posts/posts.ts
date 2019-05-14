@@ -14,8 +14,17 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class PostsProvider {
 
+  seenPosts: Array<any> = [];
+
+
   constructor(public http: HttpClient, private cache: LocalCacheProvider, private storage: Storage) {
     console.log('Hello PostsProvider Provider');
+    this.seenPosts
+
+    this.getSeenPosts().then(posts=> {
+			console.log("LOG: PostsProvider -> constructor -> posts", posts);
+      this.seenPosts = posts || [];
+    })
   }
 
   public getAll(): Observable<any> {
@@ -28,13 +37,13 @@ export class PostsProvider {
   }
 
   public seenPost(postId): Promise<any> {
+    this.seenPosts.push({ id: postId });
     return this.storage.get("seenPosts").then(seenPosts => {
       let posts: any[] = seenPosts;
-
-      console.log(posts);
       if (posts) {
         posts = posts.filter(_ => _.id != postId);
         posts.push({ id: postId });
+          
       } else {
         posts = [{ id: postId }]; // Genesis post
       }
@@ -59,5 +68,19 @@ export class PostsProvider {
         })
       })
     })
+  }
+
+  public isNew(postId) {
+      if (this.seenPosts) {
+        let posts = this.seenPosts.filter(_ => _.id === postId);
+				console.log("LOG: PostsProvider -> publicisNew -> posts", posts);
+        if(posts.length > 0) {
+          return true;
+        } else {
+          return false;
+        } 
+      } else {
+        return false;
+      }
   }
 }

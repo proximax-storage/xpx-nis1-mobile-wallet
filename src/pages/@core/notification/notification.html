@@ -49,8 +49,9 @@
 
         <p padding *ngIf="post.expanded" text-justify-start [ngxmarkdown]="post.content"></p>
         <ion-item>
-          <ion-badge *ngFor="let tag of post.tags" item-start>{{tag.name}}</ion-badge>
-          <ion-note item-end>{{post.readTime}} MIN READ</ion-note>
+          <small *ngFor="let tag of post.tags" item-start>#{{tag.name}}</small>
+          <ion-badge  item-end color="danger">{{isNew(post._id)}}</ion-badge>
+          <!-- <ion-note item-end>{{post.readTime}} MIN READ</ion-note> -->
         </ion-item>
 
       </ion-card-content>

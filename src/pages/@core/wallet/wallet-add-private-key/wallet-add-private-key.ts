@@ -30,6 +30,7 @@ export class WalletAddPrivateKeyPage {
   PASSWORD: string;
 
   walletColor: string = "wallet-1";
+  walletName:string = "Primary";
 
   constructor(
     public navCtrl: NavController,
@@ -172,6 +173,14 @@ export class WalletAddPrivateKeyPage {
             this.alertProvider.showMessage(message);
           }
      });
+  }
+
+  updateName(val) {
+    if(val) {
+      this.walletName = val;
+    } else {
+      this.walletName = "Primary";
+    }
   }
 
 }

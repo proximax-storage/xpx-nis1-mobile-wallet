@@ -81,6 +81,15 @@ export class NotificationPage {
 
     });
 
-}
+  } 
+
+  isNew(postId) {
+    if(!this.articles.isNew(postId)) {
+      return "New"
+    } else {
+      return ''
+    }
+		console.log("LOG: NotificationPage -> isNew -> this.articles.isNew(postId)", this.articles.isNew(postId));
+  }
 
 }
