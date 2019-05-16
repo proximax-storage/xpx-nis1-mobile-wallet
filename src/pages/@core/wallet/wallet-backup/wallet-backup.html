@@ -8,7 +8,7 @@
 <ion-header no-border>
   <ion-navbar hideBackButton transparent>
     <ion-title>
-      <span ion-text color="black">Backup Wallet</span>
+      <span ion-text color="black">{{"WALLETS.EXPORT.BACKUP_WALLET" | translate}}</span>
     </ion-title>
 
     <!-- <ion-buttons end>
@@ -24,44 +24,57 @@
   <ion-list transparent-items radio-group [(ngModel)]="selectedOption">
     <ion-card margin-bottom>
       <ion-card-header text-center>
-          <ion-card-title>
-              Export Wallet & Private Key
+          <ion-card-title text-wrap>
+              {{"WALLETS.EXPORT.PRIVATE_KEY_TITLE" | translate}}
               </ion-card-title>
         <img quarter-width [src]="App.STICKERS.HINT">
       </ion-card-header>
       <ion-card-content>
         <h4 text-wrap text-justify ion-text color="black">
-          We strongly recommend that you back up your wallet and private key. It is your responsibility to save these in
-          a secure place. ProximaX does not store any of your data, so we cannot help you recover your wallet or gain
-          access to your digital assets in the event of human error or a system failure.
+          {{"WALLETS.EXPORT.PRIVATE_KEY_DESC" | translate}}
         </h4>
       </ion-card-content>
     </ion-card>
 
     <ion-grid>
-      <ion-row>
-        <ion-col col-12 text-center>
-          <ion-list transparent-items no-margin-bottom>
-            <ion-card *ngFor="let option of options" [attr.selected]="selectedOption === option.value ? true : null"
-              (click)="onSelect(option)">
-              <ion-item>
-                <ion-icon item-left ion-text color="black" [name]="option.icon"></ion-icon>
-                <h2 ion-text color="black">{{ option.name }}</h2>
-                <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
-              </ion-item>
-
-            </ion-card>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-12 text-center>
-          <button medium gradient-button color-5 ion-button icon-end no-margin color="black" (click)="goHome()">
-            Done
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <ion-list transparent-items no-margin-bottom>
+  
+              <ion-card (click)="gotoQRCodePage()">
+                <ion-item>
+                  <ion-icon item-left ion-text color="black" name="ios-barcode-outline"></ion-icon>
+                  <h2 ion-text color="black">{{"WALLETS.EXPORT.BACKUP_WALLET.QRCODE" | translate}}</h2>
+                  <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
+                </ion-item>
+              </ion-card>
+  
+              <ion-card (click)="copy()">
+                <ion-item>
+                  <ion-icon item-left ion-text color="black" name="ios-copy-outline"></ion-icon>
+                  <h2 ion-text color="black">{{"WALLETS.EXPORT.COPY_PRIVATE_KEY" | translate}}</h2>
+                  <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
+                </ion-item>
+              </ion-card>
+  
+              <ion-card (click)="share()">
+                <ion-item>
+                  <ion-icon item-left ion-text color="black" name="ios-share-outline"></ion-icon>
+                  <h2 ion-text color="black">{{"WALLETS.EXPORT.EXPORT_PRIVATE_KEY" | translate}}</h2>
+                  <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
+                </ion-item>
+              </ion-card>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <button medium gradient-button color-5 ion-button icon-end no-margin color="black" (click)="dismiss()">
+                {{"WALLETS.BUTTON.DONE" | translate}}
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     <br>
     <br>
   </ion-list>

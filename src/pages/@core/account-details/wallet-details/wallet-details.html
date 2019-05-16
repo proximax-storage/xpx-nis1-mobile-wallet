@@ -7,7 +7,7 @@
 <ion-header no-border>
 
   <ion-navbar transparent>
-    <ion-title>Wallet Details</ion-title>
+    <ion-title>{{"WALLETS.MORE_DETAILS" | translate}}</ion-title>
 
     
     <ion-buttons end>
@@ -35,38 +35,38 @@
 
             <ion-item *ngIf="currentWallet">
                 <ion-icon name='fi-wallet' item-start></ion-icon>
-                Wallet Name:
+                {{"WALLETS.WALLET_NAME" | translate}}:
                 <span item-end>{{currentWallet.name }}</span>
             </ion-item>
 
             <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
                 <ion-icon name='ios-cash-outline' item-start></ion-icon>
-                Balance:
+                {{"WALLETS.BALANCE" | translate}}:
                 <span item-end *ngIf="currentWallet">${{ (totalBalance? totalBalance:0) | number : '1.2-2'}} USD</span>
             </ion-item>
 
             <ion-item *ngIf="currentWallet" (click)="copy(currentWallet.address.value)">
                 <ion-icon name='ios-paper-outline' item-start></ion-icon>
-                Address:
+                {{"WALLETS.ADDRESS" | translate}}:
                 <p text-justify  *ngIf="currentWallet">{{ currentWallet?.address.value }} </p>
             </ion-item>
 
             <ion-item *ngIf="accountInfo && accountInfo.publicAccount" (click)="copy(accountInfo.publicAccount.publicKey)">
                 <ion-icon name='ios-key-outline' item-start></ion-icon>
-                Public Key:
+                {{"WALLETS.PUBLIC_KEY" | translate}}:
                 <p text-justify  *ngIf="currentWallet">{{ accountInfo.publicAccount.publicKey }} </p>
             </ion-item>
 
             <ion-item *ngIf="accountInfo" (click)="copy(accountInfo.importance)">
                 <ion-icon name='ios-cloud-upload-outline' item-start></ion-icon>
-                Importance score :
+                {{"WALLETS.IMPORTANCE_SCORE" | translate}}:
                 <p text-wrap item-end *ngIf="currentWallet">
                     {{ ((accountInfo.importance | formatImportance)[0] | number:'1.0-0') + '.' + (accountInfo.importance | formatImportance)[1]
                     }} * 10</p>
             </ion-item>
             <ion-item *ngIf="accountInfo" (click)="copy(accountInfo.balance.vestedBalance)">
                 <ion-icon name='ios-pulse-outline' item-start></ion-icon>
-                Vested balance:
+                {{"WALLETS.VESTED_BALANCE" | translate}}:
                 <p text-wrap item-end *ngIf="currentWallet">{{ accountInfo.balance.vestedBalance | formatXEM }} XEM</p>
             </ion-item>
           </ion-list>
@@ -74,20 +74,20 @@
         <ion-row>
 
             <button reduce-margin gradient-button quarter-width color-5 medium (click)="showExportPrivateKeyModal()">
-              Export / backup
+              {{"WALLETS.EXPORT" | translate}}
             </button>
         </ion-row>
         
         <ion-row>
           <button reduce-margin gradient-button quarter-width color-5 medium (click)="showWalletUpdate()">
-            Edit Wallet
+            {{"WALLETS.EDIT" | translate}}
           </button>
         </ion-row>
 
         <ion-row align-items-center>
           <ion-col col="12" align-self-center>
             <button text-center full ion-button color="danger" clear (click)="showWalletDete()">
-              Delete Wallet
+              {{"WALLETS.DELETE" | translate}}
             </button>
           </ion-col>
         </ion-row>

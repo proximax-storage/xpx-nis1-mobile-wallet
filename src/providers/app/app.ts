@@ -33,6 +33,16 @@ export class App {
   };
   public static USER = `${App.ASSETS}/user.svg`;
 
+  public static FLAGS = {
+    CN: `assets/imgs/flags/cn.png`,
+    EN: `assets/imgs/flags/en.png`,
+    ES: `assets/imgs/flags/es.png`,
+    FR: `assets/imgs/flags/fr.png`,
+    JP: `assets/imgs/flags/jp.png`,
+    NL: `assets/imgs/flags/nl.png`,
+    RU: `assets/imgs/flags/ru.png`,
+  };
+
   constructor(public http: HttpClient) {
     console.log("Hello AppProvider Provider");
   }

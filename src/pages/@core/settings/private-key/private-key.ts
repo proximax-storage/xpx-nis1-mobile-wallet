@@ -11,6 +11,7 @@ import { ToastProvider } from '../../../../providers/toast/toast';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { HapticProvider } from '../../../../providers/haptic/haptic';
 import { App } from '../../../../providers/app/app';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the PrivateKeyPage page.
@@ -44,7 +45,8 @@ export class PrivateKeyPage {
     private utils: UtilitiesProvider,
     private viewController: ViewController,
     private haptic: HapticProvider,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private translateService: TranslateService
   ) {
     this.password = this.navParams.get('password');
   }
@@ -73,11 +75,17 @@ export class PrivateKeyPage {
 
 
   copy() {
-    this.clipboard.copy(this.privateKey).then(_ => {
-      this.haptic.notification({ type: 'success' });
-      this.toastProvider.show('Copied private key successfully', 3, true);
-      this.dismiss();
-    });
+    this.translateService.get('WALLETS.EXPORT.COPY_PRIVATE_KEY.RESPONSE').subscribe(
+      value => {
+        // value is our translated string
+        let alertTitle = value;
+        this.clipboard.copy(this.privateKey).then(_ => {
+          this.haptic.notification({ type: 'success' });
+          this.toastProvider.show(alertTitle, 3, true);
+          this.dismiss();
+        });
+      });
+   
   }
 
   share() {

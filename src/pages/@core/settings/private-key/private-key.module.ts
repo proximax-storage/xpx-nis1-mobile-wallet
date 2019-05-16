@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { NgxKjuaModule } from 'ngx-kjua';
 
 import { PrivateKeyPage } from './private-key';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { PrivateKeyPage } from './private-key';
   imports: [
     IonicPageModule.forChild(PrivateKeyPage),
     NgxKjuaModule,
+    TranslateModule.forChild() 
   ],
 })
 export class PrivateKeyPageModule {}

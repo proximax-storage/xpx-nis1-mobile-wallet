@@ -8,7 +8,7 @@
 
     <ion-navbar transparent>
       <ion-title>
-        <span ion-text color="black">Nodes</span>
+        <span ion-text color="black">{{"SETTINGS.NODES" | translate}}</span>
       </ion-title>
   
       <!-- <ion-buttons end>
@@ -39,18 +39,18 @@
            
           <ion-item>
             <!-- <ion-icon name='ios-cash-outline' item-start></ion-icon> -->
-            <strong>Block height:</strong>
+            <strong>{{"SETTINGS.NODES.BLOCKHEIGHT" | translate}}</strong>
             <span>{{ blockHeight }}</span>
           </ion-item>
 
           <ion-item>
             <!-- <ion-icon name='ios-paper-outline' item-start></ion-icon> -->
-            <strong>Active:</strong>
+            <strong>{{"SETTINGS.NODES.BLOCKHEIGHT" | translate}}</strong>
             <span>{{ currentNode }}</span>
           </ion-item>
 
           <ion-item select-node no-lines>
-            <ion-label ion-text color="black"><strong>Nodes:</strong></ion-label>
+            <ion-label ion-text color="black"><strong>{{"SETTINGS.NODES.ACTIVE" | translate}}</strong></ion-label>
             <ion-select (ionChange)="onChange()" [(ngModel)]="selectedNode" [selectOptions]="{
                   title: 'Select a node',
                   subTitle: ''        
@@ -62,7 +62,7 @@
           <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
 
           <ion-item no-lines>
-            <ion-label ion-text color="black"><strong>Custom:</strong></ion-label>
+            <ion-label ion-text color="black"><strong>{{"SETTINGS.NODES.CUSTOM" | translate}}</strong></ion-label>
             <ion-input type="text" formControlName="ipAddress"
               placeholder="Custom node or IP"></ion-input>
             <button clear item-right ion-button icon-only type="submit" [disabled]="formGroup.invalid">
@@ -83,7 +83,7 @@
   <ion-row>
       <ion-col col-12 text-center>
         <button half-width gradient-button color-5 ion-button icon-end no-margin color="black" (click)="dismiss()">
-          Close
+          {{"WALLETS.BUTTON.DONE" | translate}}
         </button>
       </ion-col>
     </ion-row>

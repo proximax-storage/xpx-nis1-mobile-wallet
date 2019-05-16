@@ -12,6 +12,7 @@ import { UtilitiesProvider } from "../../../providers/utilities/utilities";
 import { HapticProvider } from '../../../providers/haptic/haptic';
 import { PinProvider } from '../../../providers/pin/pin';
 import * as BcryptJS from "bcryptjs";
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the VerificationCodePage page.
@@ -41,7 +42,8 @@ export class VerificationCodePage {
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
     private haptic: HapticProvider,
-    private pin: PinProvider
+    private pin: PinProvider,
+    private translateService: TranslateService
   ) { }
 
   ionViewWillEnter() {
@@ -70,13 +72,16 @@ export class VerificationCodePage {
       this.navParams.data.invalidPinMessage
     );
 
+    const setupPinTitle = this.translateService.instant("APP.PIN.SETUP.TITLE");
+    const setupPinSubTitle = this.translateService.instant("APP.PIN.SETUP.DESC");
+
     this.pinTitle = this.navParams.data.title
       ? this.navParams.data.title
-      : "6-digit Pin Setup";
+      : setupPinTitle;
 
     this.pinSubtitle = this.navParams.data.subtitle
       ? this.navParams.data.subtitle
-      : "Please select a 6-digit pin to access your wallet. \n IMPORTANT: Do not forget this pin because we will not be able to recover it for you.";
+      : setupPinSubTitle;
 
     this.invalidPinMessage = this.navParams.data.invalidPinMessage
       ? this.navParams.data.invalidPinMessage
@@ -102,6 +107,8 @@ export class VerificationCodePage {
 
   onSubmit(pin) {
 
+    const verifyPinTitle = this.translateService.instant("APP.PIN.VERIFY.TITLE");
+
     let status: string = this.navParams.data.status;
     let destination = this.navParams.data.destination;
     let pinParams = this.navParams.data.pin;
@@ -111,8 +118,8 @@ export class VerificationCodePage {
       console.log("VerificationCodePage : pin", pin);
       let page = "VerificationCodePage";
       let data: any = {
-        status: "verify",
-        title: "Re-enter Pin",
+        status: 'verify',
+        title: verifyPinTitle,
         subtitle: " ",
         pin: this.pin.hash(pin),
         destination: 'TabsPage'

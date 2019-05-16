@@ -120,6 +120,28 @@ export class UtilitiesProvider {
     }
   }
 
+    /**
+   * Get the logo of the specified language
+   * @param lange The language object for getting the logo
+   */
+  getFlag(lang) {
+    if (lang.value == "cn") {
+      return AppConfig.FLAGS.CN;
+    } else if (lang.value == "en") {
+      return AppConfig.FLAGS.EN;
+    }  else if (lang.value == "es") {
+      return AppConfig.FLAGS.ES;
+    } else if (lang.value == "fr") {
+      return AppConfig.FLAGS.FR;
+    } else if (lang.value == "jp") {
+      return AppConfig.FLAGS.JP;
+    } else if (lang.value == "nl") {
+      return AppConfig.FLAGS.NL;
+    } else if (lang.value == "ru") {
+      return AppConfig.FLAGS.RU;
+    } 
+  }
+
   /**
    * Show inset modal
    * @param page { Component || string } The page to set as modal.

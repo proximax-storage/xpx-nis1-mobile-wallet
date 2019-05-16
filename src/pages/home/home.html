@@ -16,7 +16,7 @@
     <ion-item transparent>
       <h2 padding-left title color="dark">
         <strong>
-          Wallets
+            {{ "WALLETS.TITLE" | translate }}
         </strong>
       </h2>
       <button ion-button icon-only item-end clear (click)="showAddWalletPrompt()">
@@ -40,11 +40,11 @@
             <p class="wallet-number">{{ wallet.address.plain() }}</p>
           </div>
           <div class="wallet-space-75">
-            <span class="wallet-label">Wallet Name</span>
+            <span class="wallet-label">{{"WALLETS.WALLET_NAME" | translate}}</span>
             <p class="wallet-info">{{ wallet.name }}</p>
           </div>
           <div class="wallet-space-25">
-            <span class="wallet-label">Balance</span>
+            <span class="wallet-label">{{"WALLETS.BALANCE" | translate}}</span>
             <p class="wallet-info">${{ (wallet.total>0?wallet.total:0) | number : '1.2-2'}} USD</p>
           </div>
         </div>
@@ -56,8 +56,8 @@
       <div class="wallet">
         <div class="wallet-content" [ngClass]="'wallet-create'">
           <img class="wallet-create-front-logo wallet-logo" src="assets/imgs/wallet-add.svg">
-          <h2 class="wallet-create-title">Create a wallet</h2>
-          <p class="wallet-create-subtitle">It's free and you can create as many as you like.</p>
+          <h2 class="wallet-create-title">{{"WALLETS.CREATE.TITLE" | translate}}</h2>
+          <p class="wallet-create-subtitle">{{"WALLETS.CREATE.DESC" | translate}}</p>
         </div>
       </div>
     </ion-slide>
@@ -66,10 +66,10 @@
   <ion-grid normal>
     <ion-segment mode='md' [(ngModel)]="menu" color="dark">
       <ion-segment-button value="mosaics" checked>
-        Mosaics
+          {{"WALLETS.MOSAICS" | translate}}
       </ion-segment-button>
       <ion-segment-button value="transactions">
-        Transactions
+          {{"WALLETS.TRANSACTIONS" | translate}}
       </ion-segment-button>
     </ion-segment>
   </ion-grid>
@@ -119,7 +119,7 @@
           <img quarter-width [src]="AppConfig.STICKERS.SORRY">
 
           <h6 ion-text color="grey" text-wrap>
-            <strong>Your mosaics will appear here. There are none at the moment.</strong>
+            <strong>{{"APP.EMPTY.MOSAICS" | translate}}</strong>
           </h6>
 
         </ion-col>
@@ -228,7 +228,7 @@
           <img quarter-width [src]="AppConfig.STICKERS.SORRY">
 
           <h6 ion-text color="grey" text-wrap>
-            <strong>Your transactions will appear here. There are none at the moment.</strong>
+            <strong>{{"APP.EMPTY.TRANSACTIONS" | translate}}</strong>
           </h6>
 
         </ion-col>

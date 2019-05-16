@@ -10,6 +10,7 @@ import { AlertProvider } from '../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../providers/utilities/utilities';
 import { HapticProvider } from '../../../providers/haptic/haptic';
 import { StatusBar } from '@ionic-native/status-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the LoginPage page.
@@ -41,7 +42,8 @@ export class LoginPage implements OnInit {
     private haptic: HapticProvider,
     private platform: Platform,
     private statusBar: StatusBar,
-    private keyboard: Keyboard
+    private keyboard: Keyboard,
+    private translateService: TranslateService
   ) {
     this.init();
     this.passwordType = "password";
@@ -65,12 +67,16 @@ export class LoginPage implements OnInit {
   }
 
   gotoHome() {
+
+    const confirmPinTitle = this.translateService.instant("APP.PIN.CONFIRM.TITLE");
+    const confirmPinSubtitle = this.translateService.instant("APP.PIN.CONFIRM")
+
     this.storage.get('currentPin').then(pin => {
       this.utils.showModal('VerificationCodePage', {
         status: 'confirm',
-        title: 'Wallet is secured',
+        title: confirmPinTitle,
         subtitle:
-          'Please enter your PIN',
+        confirmPinSubtitle,
         invalidPinMessage: 'Incorrect pin. Please try again',
         pin: pin,
         destination: 'TabsPage'

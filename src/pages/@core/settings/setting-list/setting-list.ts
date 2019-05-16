@@ -11,6 +11,9 @@ import { ToastProvider } from "./../../../../providers/toast/toast";
 import { UtilitiesProvider } from "../../../../providers/utilities/utilities";
 import { AppVersion } from '@ionic-native/app-version';
 import { HapticProvider } from '../../../../providers/haptic/haptic';
+import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
+import { AlertProvider } from '../../../../providers/alert/alert';
 
 
 /**
@@ -41,7 +44,10 @@ export class SettingListPage {
     private authProvider: AuthProvider,
     private haptic: HapticProvider,
     private appVersion: AppVersion,
-    private platform: Platform
+    private platform: Platform,
+    private alertProvider: AlertProvider,
+    private storage: Storage,
+    private translateService: TranslateService
   ) {
     if (this.platform.is('cordova')) {
       this.appVersion.getVersionNumber().then(version=> {
@@ -139,6 +145,31 @@ export class SettingListPage {
 
   showReleaseNotes() {
     this.showModal("WhatsNewPage", {});
+  }
+
+  showLanguage(){
+    this.storage.get("lang").then(lang=>{
+
+      this.utils
+      .showInsetModal('LanguagePage', {
+        selectedLanguage: lang
+      })
+      .subscribe(lang => {
+        if (lang) {
+          console.log('Selected language', lang);
+          const alertTitle = this.translateService.instant("SETTINGS.LANGUAGE.SWITCH", {'lang' : lang.name} );
+          this.alertProvider.showMessage(alertTitle )
+          this.storage.set("lang", lang.value).then(_=> {
+            setTimeout(()=> {
+              window.location.reload();
+            }, 400)
+          })
+        }
+      });
+
+    })
+
+    
   }
 
   showModal(page, params) {

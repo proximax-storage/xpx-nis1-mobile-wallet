@@ -5,6 +5,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { ReceivePage } from './receive';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { NgxKjuaModule } from 'ngx-kjua';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { NgxKjuaModule } from 'ngx-kjua';
     NgxCurrencyModule,
     DirectivesModule,
     NgxKjuaModule,
+    TranslateModule.forChild() 
   ],
 })
 export class ReceivePageModule {}

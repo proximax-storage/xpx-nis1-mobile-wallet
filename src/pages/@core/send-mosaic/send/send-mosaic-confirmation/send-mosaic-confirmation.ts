@@ -10,6 +10,7 @@ import { UtilitiesProvider } from '../../../../../providers/utilities/utilities'
 import { AlertProvider } from '../../../../../providers/alert/alert';
 import { AuthProvider } from '../../../../../providers/auth/auth';
 import { HapticProvider } from '../../../../../providers/haptic/haptic';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the SendMosaicConfirmationPage page.
@@ -41,7 +42,8 @@ export class SendMosaicConfirmationPage {
     private authProvider: AuthProvider,
     public utils: UtilitiesProvider,
     private viewCtrl: ViewController,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private translateService: TranslateService
   ) {
     this.init();
   }
@@ -98,7 +100,7 @@ export class SendMosaicConfirmationPage {
             }
           );
       } else {
-        this.alertProvider.showMessage('Invalid password. Please try again.');
+        this.showGenericError();
       }
     } else if (this.data.transactionType = 'normal'){
       console.log("Normal transfer");
@@ -119,9 +121,17 @@ export class SendMosaicConfirmationPage {
             }
           );
       } else {
-        this.alertProvider.showMessage('Invalid password. Please try again.');
+        this.showGenericError();
       }
     }
+  }
+  showGenericError() {
+    this.translateService.get('APP.ERROR').subscribe(
+      value => {
+        let alertTitle = value;
+        this.alertProvider.showMessage(alertTitle);
+      });
+
   }
   showErrorMessage(error) {
     this.haptic.notification({ type: 'warning' });

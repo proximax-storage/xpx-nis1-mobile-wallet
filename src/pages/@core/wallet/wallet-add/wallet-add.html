@@ -11,9 +11,9 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12 text-center>
-        <h3 ion-text color="black">Create new wallet</h3>
+        <h3 ion-text color="black">{{"WALLETS.CREATE.NEW.TITLE" | translate}}</h3>
         <p ion-text color="black">
-          To create new wallet, enter your wallet name.
+            {{"WALLETS.CREATE.NEW.DESC" | translate}}
         </p>
       </ion-col>
 
@@ -23,11 +23,11 @@
             <img class="wallet-front-logo wallet-logo" src="assets/imgs/xpx-logo-white.png">
             <p class="wallet-number">TDDG3UDZBGZUIOCDCOPT45NB7C7VJMPMMNWVO4MH</p>
             <div class="wallet-space-75">
-              <span class="wallet-label">Wallet Name</span>
+              <span class="wallet-label">{{"WALLETS.COMMON.LABEL.WALLET_NAME" | translate}}</span>
               <p class="wallet-info">{{walletName}}</p>
             </div>
             <div class="wallet-space-25">
-              <span class="wallet-label">Balance</span>
+              <span class="wallet-label">{{"WALLETS.BALANCE" | translate}}</span>
               <p class="wallet-info">$0.00 USD</p>
             </div>
           </div>
@@ -35,7 +35,7 @@
       </ion-col>
       <ion-col col-12 text-center>
         <br>
-        <h3 ion-text color="black">Choose wallet color</h3>
+        <h3 ion-text color="black">{{"WALLETS.COMMON.CHOOSE_COLOR" | translate}}</h3>
       </ion-col>
       <ion-col text-center>
         <div class="color-palette">
@@ -85,8 +85,8 @@
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
-            <ion-label stacked>Wallet name</ion-label>
-            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="Enter your wallet name">
+            <ion-label stacked>{{"WALLETS.COMMON.LABEL.WALLET_NAME" | translate}}</ion-label>
+            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="{{'WALLETS.COMMON.PLACEHOLDER.WALLET_NAME' | translate}}" (input)="updateName()">
             </ion-input>
           </ion-item>
           <br>
@@ -95,7 +95,7 @@
 
           <button gradient-button color-5 ion-button no-margin [disabled]="formGroup.invalid" type="submit"
             color="black">
-            Next
+            {{"WALLETS.BUTTON.CONTINUE" | translate}}
           </button>
 
 
