@@ -4,6 +4,7 @@ import { SendMultisigPage } from './send-multisig';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { DirectivesModule } from '../../../../directives/directives.module';
 import { PipesModule } from '../../../../pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { PipesModule } from '../../../../pipes/pipes.module';
     IonicPageModule.forChild(SendMultisigPage),
     NgxCurrencyModule,
     DirectivesModule,
-    PipesModule
+    PipesModule,
+    TranslateModule.forChild() 
   ],
 })
 export class SendMultisigPageModule {}

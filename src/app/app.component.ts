@@ -6,6 +6,8 @@ import { Storage } from "@ionic/storage";
 import { UtilitiesProvider } from "../providers/utilities/utilities";
 import { OneSignal } from "@ionic-native/onesignal";
 import { Keyboard } from "@ionic-native/keyboard";
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   templateUrl: "app.html"
 })
@@ -19,12 +21,15 @@ export class MyApp {
     private storage: Storage,
     private utils: UtilitiesProvider,
     private oneSignal: OneSignal,
-    private keyboard: Keyboard
+    private keyboard: Keyboard,
+    private translateService: TranslateService
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
+
+      this.initTranslate();
 
       // Add class when keyboard is on
       this.keyboard.onKeyboardShow().subscribe(() => {
@@ -182,10 +187,13 @@ export class MyApp {
         //   ",isLoggedIn:" + isLoggedIn +
         //   ",isQrActive:" + !isQrActive);
 
+        const confirmPinTitle = this.translateService.instant("APP.PIN.CONFIRM.TITLE");
+        const confirmPinSubtitle = this.translateService.instant("APP.PIN.CONFIRM")
+
         return this.utils.showModal("VerificationCodePage", {
           status: "confirm",
-          title: "Wallet is secured",
-          subtitle: "Please enter your PIN",
+          title: confirmPinTitle,
+          subtitle: confirmPinSubtitle,
           invalidPinMessage: "Incorrect pin. Please try again",
           pin: pin
         });
@@ -216,5 +224,23 @@ export class MyApp {
 
       this.oneSignal.endInit();
     }
+  }
+
+  private initTranslate()
+  {
+     // Set the default language for translation strings, and the current language.
+     this.storage.get("lang").then(lang => {
+       if(lang) {
+        this.translateService.setDefaultLang(lang);
+       }
+       else {
+        if (this.translateService.getBrowserLang() !== undefined) {
+            this.translateService.use(this.translateService.getBrowserLang());
+        }
+        else {
+            this.translateService.use('en'); // Set your language here
+        }
+       }
+     });
   }
 }

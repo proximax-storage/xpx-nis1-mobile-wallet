@@ -20,7 +20,7 @@
     <ion-item transparent>
       <h2 padding-left title color="dark">
         <strong>
-          Settings
+          {{"SETTINGS" | translate}}
         </strong>
       </h2>
     </ion-item>
@@ -101,23 +101,31 @@
     <ion-card (click)="gotoGuide()">
       <ion-item>
         <ion-icon item-left name="ios-images-outline"></ion-icon>
-        <h2>Wallet Guide</h2>
-        <p text-wrap>What you need to know to take appropriate steps to secure your wallet. </p>
+        <h2>{{"SETTINGS.WALLET_GUIDE" | translate}}</h2>
+        <p text-wrap>{{"SETTINGS.WALLET_GUIDE.DESC" | translate}}</p>
       </ion-item>
     </ion-card>
     
     <ion-card (click)="showNodeList()">
         <ion-item>
           <ion-icon item-left name="ios-git-branch-outline"></ion-icon>
-          <h2>Nodes</h2>
-          <p text-wrap>Nodes are distributed across a widespread network and carry out a variety of tasks such as maintaining the a copy of a blockchain records and to process transactions.</p>
+          <h2>{{"SETTINGS.NODES" | translate}}</h2>
+          <p text-wrap>{{"SETTINGS.NODES.DESC" | translate}}</p>
+        </ion-item>
+      </ion-card>
+
+      <ion-card (click)="showLanguage()">
+        <ion-item>
+          <ion-icon item-left name="ios-globe-outline"></ion-icon>
+          <h2>{{"SETTINGS.LANGUAGE" | translate}}</h2>
+          <p text-wrap>{{"SETTINGS.LANGUAGE.DESC" | translate}}</p>
         </ion-item>
       </ion-card>
 
     <ion-card (click)="showReleaseNotes()">
         <ion-item>
           <ion-icon item-left name="ios-flame-outline"></ion-icon>
-          <h2>Changelog</h2>
+          <h2>{{"SETTINGS.CHANGELOG" | translate}}</h2>
           <p text-wrap></p>
         </ion-item>
       </ion-card>
@@ -126,16 +134,18 @@
     <ion-card (click)="showResetPINPrompt()">
       <ion-item>
         <ion-icon item-left name="ios-key-outline"></ion-icon>
-        <h2>Reset PIN</h2>
+        <h2>{{"SETTINGS.RESET_PIN" | translate}}</h2>
         <p text-wrap></p>
       </ion-item>
     </ion-card>
 
 
+
+
     <ion-card (click)="logOut()">
       <ion-item>
         <ion-icon item-left name="ios-unlock-outline"></ion-icon>
-        <h2>Logout</h2>
+        <h2>{{"SETTINGS.LOGOUT" | translate}}</h2>
         <!-- <p text-wrap>End a session of your wallet.</p> -->
       </ion-item>
     </ion-card>

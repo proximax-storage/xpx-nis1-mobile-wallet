@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { WalletBackupQrcodePage } from './wallet-backup-qrcode';
 import { NgxKjuaModule } from 'ngx-kjua';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { NgxKjuaModule } from 'ngx-kjua';
   ],
   imports: [
     IonicPageModule.forChild(WalletBackupQrcodePage),
-    NgxKjuaModule
+    NgxKjuaModule,
+    TranslateModule.forChild() 
   ],
 })
 export class WalletBackupQrcodePageModule {}

@@ -10,6 +10,7 @@ import { AuthProvider } from '../../../../providers/auth/auth';
 import { AlertProvider } from '../../../../providers/alert/alert';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { HapticProvider } from '../../../../providers/haptic/haptic';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the WalletUpdatePage page.
@@ -45,7 +46,8 @@ export class WalletUpdatePage {
     private alertProvider: AlertProvider,
     private utils: UtilitiesProvider,
     private viewCtrl: ViewController,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private translateService: TranslateService
   ) {
     //this.walletColor = "wallet-1"; // to be change with current wallet color
     this.init();
@@ -127,6 +129,16 @@ export class WalletUpdatePage {
             });
         }
       });
+    }
+  }
+
+  updateName() {
+		let name = this.formGroup.value.name
+		console.log("LOG: WalletAddPage -> updateName -> name", name);
+    if(name) {
+      this.walletName = name;
+    } else {
+      this.walletName = `<${this.translateService.instant("WALLETS.COMMON.LABEL.WALLET_NAME")}>`;
     }
   }
 

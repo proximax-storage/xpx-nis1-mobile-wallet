@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="black">Address Book</span>
+      <span ion-text color="black">{{"SERVICES.ADDRESS_BOOK.TITLE" | translate}}</span>
     </ion-title>
 
   <ion-buttons end>
@@ -29,11 +29,11 @@
         <img half-width [src]="App.STICKERS.SORRY">
 
         <h6 ion-text color="grey" text-wrap>
-          <strong>Your contacts will appear here. There are none at the moment.</strong>
+          <strong>{{"APP.EMPTY.CONTACT" | translate}}</strong>
         </h6>
 
         <button gradient-button color-5 (click)="showAddContactPrompt()">
-          Add new contact
+          {{"SERVICES.ADDRESS_BOOK.ADD_CONTACT" | translate}}
         </button>
       </ion-col>
     </ion-row>
@@ -53,7 +53,7 @@
       <button no-margin gradient-button circle color-5 (click)="showAddContactPrompt()">
         <ion-icon name="md-add"></ion-icon>
       </button>
-      <p text-wrap ion-text color="black">Add contact</p>
+      <p text-wrap ion-text color="black">{{"WALLETS.BUTTON.CONTINUE" | translate}}</p>
     </section>
   </ion-list>
 </ion-content>

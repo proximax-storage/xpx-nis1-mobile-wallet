@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -57,7 +57,14 @@ import { ForgeProvider } from '../providers/forge/forge';
 import { BrowserTab } from '@ionic-native/browser-tab';
 import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { Keyboard } from "@ionic-native/keyboard";
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpModule, Http } from '@angular/http';
 
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+}
 
 @NgModule({
   declarations: [MyApp, AboutPage, HomePage],
@@ -65,6 +72,13 @@ import { Keyboard } from "@ionic-native/keyboard";
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  }),
     IonicModule.forRoot(MyApp, {
       tabsHideOnSubPages: true
     }),
@@ -76,7 +90,7 @@ import { Keyboard } from "@ionic-native/keyboard";
     PipesModule,
     SharedModule,
     NgXtruncateModule,
-    MarkdownModule.forRoot()    
+    MarkdownModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, AboutPage, HomePage],

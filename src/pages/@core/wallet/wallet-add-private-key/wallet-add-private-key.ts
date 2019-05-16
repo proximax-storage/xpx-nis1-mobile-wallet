@@ -11,6 +11,7 @@ import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
 import { scan } from 'rxjs/operators';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
 /**
  * Generated class for the WalletAddPrivateKeyPage page.
  *
@@ -44,9 +45,11 @@ export class WalletAddPrivateKeyPage {
     private barcodeScanner : BarcodeScanner,
     private alertCtrl: AlertController,
     private storage: Storage,
+    private translateService: TranslateService
   ) {
     this.walletColor = 'wallet-1';
     this.init();
+    this.walletName = `<${this.translateService.instant("WALLETS.COMMON.LABEL.WALLET_NAME")}>`;
   }
 
   changeWalletColor(color) {
@@ -175,11 +178,13 @@ export class WalletAddPrivateKeyPage {
      });
   }
 
-  updateName(val) {
-    if(val) {
-      this.walletName = val;
+  updateName() {
+		let name = this.formGroup.value.name
+		console.log("LOG: WalletAddPage -> updateName -> name", name);
+    if(name) {
+      this.walletName = name;
     } else {
-      this.walletName = "Primary";
+      this.walletName = `<${this.translateService.instant("WALLETS.COMMON.LABEL.WALLET_NAME")}>`;
     }
   }
 

@@ -85,8 +85,6 @@ export class NemProvider{
       } else {
         // serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig; // Test net
         serverConfig = [
-          {protocol: "http", domain:"88.99.192.82", port: 7890 } as ServerConfig,
-          {protocol: "http", domain:"76.9.68.110", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"176.9.20.180", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"199.217.118.114", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"62.75.171.41", port: 7890 } as ServerConfig,
@@ -101,16 +99,26 @@ export class NemProvider{
           {protocol: "http", domain:"108.61.182.27", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"108.61.168.86", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"104.238.161.61", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"88.99.192.82", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"76.9.68.110", port: 7890 } as ServerConfig,
          ]; // Main net - Hi I am Huge Alice 3
       }
 
       console.log("LOG: NemProvider -> constructor -> serverConfig", serverConfig);
 
-      const SERVER_CONFIG: ServerConfig[] = serverConfig;
+      const SERVER_CONFIG: ServerConfig[] = [
+        // { protocol: "http", domain: "35.229.200.77", port: 7890 },
+        // { protocol: "http", domain: "104.128.226.60", port: 7890 },
+        { protocol: "http", domain: "23.228.67.85", port: 7890 },
+        // { protocol: "http", domain: "192.3.61.243", port: 7890 },
+        // { protocol: "http", domain: "50.3.87.123", port: 7890 },
+      
+      
+      ];
       console.log("LOG: NemProvider -> constructor -> SERVER_CONFIG", SERVER_CONFIG);
 
 
-      NEMLibrary.bootstrap(NetworkTypes.MAIN_NET); // TEST_NET Note: Change to MAIN_NET for production
+      NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // TEST_NET Note: Change to MAIN_NET for production
 
       if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
         this.accountHttp = new AccountHttp(SERVER_CONFIG);

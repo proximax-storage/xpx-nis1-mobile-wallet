@@ -7,7 +7,7 @@
 <ion-header no-border>
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="black">Receive</span>
+      <span ion-text color="black">{{"WALLETS.RECEIVE" | translate}}</span>
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="dismiss()" color="black">
@@ -49,13 +49,13 @@
             <ion-row justify-content-center>
               <ion-col col-6>
                 <button gradient-button medium color-5 ion-button icon-end no-margin (click)="copy()">
-                  Copy
+                    {{"WALLETS.BUTTON.COPY" | translate}}
                   <ion-icon name="ios-copy-outline"></ion-icon>
                 </button>
               </ion-col>
               <ion-col col-6>
                 <button gradient-button medium color-5 ion-button icon-end no-margin (click)="share()">
-                  Share
+                    {{"WALLETS.BUTTON.EXPORT" | translate}}
                   <ion-icon name="ios-share-outline"></ion-icon>
                 </button>
               </ion-col>

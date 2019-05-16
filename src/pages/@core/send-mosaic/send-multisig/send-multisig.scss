@@ -48,6 +48,10 @@ page-send-multisig {
         font-size: 1.6rem !important;
     }
 
+    [padding] h2:first-child {
+        margin-top:0 !important;
+      }
+
     section[title] {
         h2 {
             // margin-top: -2.3rem !important;

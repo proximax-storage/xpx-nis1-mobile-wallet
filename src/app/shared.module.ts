@@ -10,6 +10,7 @@ import { MultisigAggregateModificationTransactionComponent } from '../pages/@cor
 import { PipesModule } from '../pipes/pipes.module';
 import { IonicModule } from 'ionic-angular';
 import { TransferTransactionFilterComponent } from '../pages/@core/transactions/transaction-list-partials/transfer-transaction-filter/transfer-transaction-filter';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { TransferTransactionFilterComponent } from '../pages/@core/transactions/
     ProvisionNamespaceTransactionComponent,
     TransferTransactionComponent,
     TransferTransactionFilterComponent,
-    MultisigAggregateModificationTransactionComponent
+    MultisigAggregateModificationTransactionComponent,
+    TranslateModule
   ]
 })
 

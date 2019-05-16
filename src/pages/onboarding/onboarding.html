@@ -37,8 +37,8 @@
                   <img  [src]="App.SLIDES.SLIDE6" class="small-image" />
                 </ion-col>
                 <ion-col col-12 align-self-start>
-                  <h2 ion-text color="black" class="slide-title">Congratulations for taking full control of your digital assets!</h2>
-                  <p text-justify ion-text color="black"><br>&nbsp;<br>Thank you for reading through our {{this.isPreview? 'guide' : 'introduction' }}. You are now ready to dive in! Should you wish to know more, contact us through Telegram here: <a href="https://t.me/@ProximaXio">@ProximaXio</a>.</p>
+                  <h2 ion-text color="black" class="slide-title">{{"SETTINGS.WALLET_GUIDE.PAGE5.TITLE" | translate}}</h2>
+                  <p text-justify ion-text color="black"><br>&nbsp;<br>{{"SETTINGS.WALLET_GUIDE.PAGE5.CONTENT1" | translate}} <a href="https://t.me/@ProximaXio">@ProximaXio</a>.</p>
                 </ion-col>
                 
               </ion-row>
@@ -46,7 +46,7 @@
               <ion-row>
                 <ion-col align-self-center>
                     <button gradient-button color-5 (click)="gotoWelcome()">
-                        {{this.isPreview? 'Done' : 'Get started' }}  
+                        {{"WALLETS.BUTTON.DONE" | translate}}  
                        </button>
                 </ion-col>
               </ion-row>
