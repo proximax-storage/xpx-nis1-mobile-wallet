@@ -20,20 +20,17 @@
 
       <ion-col col-12 text-center>
         <h3 ion-text color="black">
-          Delete
-          <u>{{ contact?.name }}</u>
+          {{"SERVICES.ADDRESS_BOOK.DELETE.CONFIRM" | translate: {contactName: contact?.name} }}
         </h3>
         <p ion-text color="black">
-          Are you sure to delete this contact?
-          <br>
-          Warning: This is cannot be undone.
+            {{"SERVICES.ADDRESS_BOOK.DELETE.WARNING" | translate}}
         </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <button gradient-button color-5 type="submit" color="black">
-            Yes, delete forever
+            {{"WALLETS.BUTTON.CONTINUE" | translate}}
           </button>
         </form>
       </ion-col>

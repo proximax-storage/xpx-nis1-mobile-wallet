@@ -8,6 +8,7 @@ import { NemProvider } from '../nem/nem';
 import { AuthProvider } from '../auth/auth';
 import { ToastProvider } from '../toast/toast';
 import { AlertProvider } from '../alert/alert';
+import { TranslateService } from '@ngx-translate/core';
 
 /*
   Generated class for the WalletBackupProvider provider.
@@ -24,7 +25,8 @@ export class WalletBackupProvider {
     private authProvider: AuthProvider,
     private nemProvider: NemProvider,
     private toastProvider: ToastProvider,
-    private alertProvider: AlertProvider
+    private alertProvider: AlertProvider,
+    private translateService: TranslateService
   ) {
     console.log('Hello WalletBackupProvider Provider');
   }
@@ -74,7 +76,12 @@ export class WalletBackupProvider {
   }
 
   copyToClipboard(wallet: SimpleWallet) {
-    return this.authProvider
+    this.translateService.get('WALLETS.EXPORT.COPY_PRIVATE_KEY.RESPONSE').subscribe(
+      value => {
+        // value is our translated string
+        let alertTitle = value;
+
+        return this.authProvider
       .getPassword()
       .then(password => {
         const PASSWORD = new Password(password);
@@ -83,11 +90,13 @@ export class WalletBackupProvider {
         return this.clipboard.copy(PRIVATE_KEY);
       })
       .then(_ => {
-        return this.toastProvider.show(
-          'Copied private key successfully',
+        return this.toastProvider.show(alertTitle,
           3,
           true
         );
       });
+      }
+    )
+    
   }
 }

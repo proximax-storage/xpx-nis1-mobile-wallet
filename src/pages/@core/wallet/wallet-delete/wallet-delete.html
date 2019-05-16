@@ -7,7 +7,7 @@
 <ion-header no-border>
 
   <ion-navbar transparent>
-    <ion-title>Delete Wallet</ion-title>
+    <ion-title>{{"WALLETS.DELETE" | translate}}</ion-title>
 
 
     <ion-buttons end>
@@ -25,19 +25,17 @@
 
       <ion-col col-12 text-center>
         <h3 ion-text color="danger">
-          You are about to delete
-          <strong><u>{{ selectedWallet.name }}</u></strong>
-          wallet!
+            {{"WALLETS.DELETE.WARNING" | translate: {walletName: selectedWallet.name } }}
         </h3>
         <p ion-text color="black">
-          Continuing this action will delete the wallet from your account and it cannot be undone. Please make sure you backup your wallet first so that you can recover it anytime.
+            {{"WALLETS.DELETE.DESC" | translate}}
         </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <button gradient-button color-5 type="submit" color="black">
-            Continue
+            {{"WALLETS.BUTTON.CONTINUE" | translate}}
           </button>
         </form>
       </ion-col>

@@ -14,20 +14,20 @@
 
       <ion-col col-12 text-center>
         <img logo src="assets/imgs/xpx-logo.png">
-        <h3 ion-text color="black">Login</h3>
-        <p ion-text color="black">Login to your account to access your wallet.</p>
+        <h3 ion-text color="black">{{"APP.LOGIN" | translate}}</h3>
+        <p ion-text color="black">{{"APP.LOGIN.DESC" | translate}}</p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" (keyup.enter)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
-            <ion-label stacked>Username</ion-label>
-            <ion-input type="text" formControlName="email" placeholder="Enter your username"></ion-input>
+            <ion-label stacked>{{"APP.COMMON.USERNAME" | translate}}</ion-label>
+            <ion-input type="text" formControlName="email" placeholder="{{'APP.COMMON.USERNAME.PLACEHOLDER' | translate}}"></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
-            <ion-label stacked>Password</ion-label>
-            <ion-input formControlName="password" [type]="passwordType" placeholder="Enter your password"></ion-input>
+            <ion-label stacked>{{"APP.COMMON.PASSWROD" | translate}}</ion-label>
+            <ion-input formControlName="password" [type]="passwordType" placeholder="{{'APP.COMMON.PASSWROD.PLACEHOLDER' | translate}}"></ion-input>
 
             <button type="button" (click)="showHidePassword($event)" clear item-right ion-button icon-only>
               <ion-icon item-right color="black" [name]="passwordIcon">
@@ -48,7 +48,7 @@
           </button> -->
           <br><br>
           <button gradient-button color-5 ion-button icon-end no-margin [disabled]="formGroup.invalid" type="submit" color="black">
-            Login
+              {{"APP.LOGIN" | translate}}
           </button>
         </form>
       </ion-col>

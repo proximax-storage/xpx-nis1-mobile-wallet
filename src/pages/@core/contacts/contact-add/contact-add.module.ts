@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ContactAddPage } from './contact-add';
 import { DirectivesModule } from '../../../../directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { DirectivesModule } from '../../../../directives/directives.module';
   ],
   imports: [
     IonicPageModule.forChild(ContactAddPage),
-    DirectivesModule
+    DirectivesModule,
+    TranslateModule.forChild() 
   ],
 })
 export class ContactAddPageModule {}

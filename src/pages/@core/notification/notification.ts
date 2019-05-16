@@ -89,7 +89,6 @@ export class NotificationPage {
     } else {
       return ''
     }
-		console.log("LOG: NotificationPage -> isNew -> this.articles.isNew(postId)", this.articles.isNew(postId));
   }
 
 }

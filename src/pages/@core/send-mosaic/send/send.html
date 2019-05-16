@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <span ion-text color="black">Send</span>
+      <span ion-text color="black">{{"WALLETS.SEND" | translate}}</span>
     </ion-title>
 
     <ion-buttons end>
@@ -29,7 +29,7 @@
       <!-- Price -->
       <section title text-center>
         <h2 price ion-text color="black" *ngIf="selectedCoin">
-          Amount</h2>
+            {{'WALLETS.SEND.AMOUNT' | translate}}</h2>
       </section>
 
 
@@ -91,9 +91,9 @@
     title: 'Address input options',
     subTitle: ''        
   }" [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
-          <ion-option value="manual">Enter manually</ion-option>
+          <ion-option value="manual">{{"WALLETS.SEND.ADDRESS.OPTION1" | translate}}</ion-option>
           <!-- <ion-option value="qrcode">Scan QR code</ion-option> -->
-          <ion-option value="contact">Select from address book</ion-option>
+          <ion-option value="contact">{{"WALLETS.SEND.ADDRESS.OPTION2" | translate}}</ion-option>
         </ion-select>
       </ion-item>
 
@@ -101,16 +101,16 @@
       <ion-card *ngIf="addressSourceType.to === 'contact'" (click)="selectContact('to')">
         <ion-item>
           <img item-left logo-small [src]="App.USER">
-          <h2 ion-text color="black">{{ form.get('recipientName').value || 'Select a contact' }}</h2>
+          <h2 ion-text color="black">{{ form.get('recipientName').value || "WALLETS.SEND.ADDRESS.OPTION2" | translate }}</h2>
           <p small ion-text color="black">
-            {{ form.get('recipientAddress').value || 'Tap here to select from address book' }}</p>
+            {{ form.get('recipientAddress').value || '' }}</p>
         </ion-item>
       </ion-card>
 
       <ion-card no-margin-bottom *ngIf="addressSourceType.to === 'manual'">
         <ion-item>
           <ion-input formControlName="recipientAddress" type="text" value=""
-            placeholder="Address"></ion-input>
+            placeholder="{{'WALLETS.SEND.ADDRESS' | translate}}"></ion-input>
           <button clear item-right ion-button icon-only (click)="scan()">
             <ion-icon color="white" name="ios-barcode-outline"></ion-icon>
           </button>
@@ -121,7 +121,7 @@
       <ion-card>
         <ion-item no-border>
           <ion-textarea ion-text color="black" autosize rows="2" ion-text color="black" formControlName="message"
-            placeholder="Notes(Optional)"></ion-textarea>
+            placeholder="{{'WALLETS.SEND.NOTES' | translate}}"></ion-textarea>
         </ion-item>
       </ion-card>
 
@@ -131,7 +131,7 @@
 
   <section text-center>
     <button gradient-button half color-5 ion-button icon-end no-margin (click)="onSubmit()">
-      Send
+        {{"WALLETS.SEND" | translate}}
       <ion-icon name="arrow-round-up"></ion-icon>
     </button>
   </section>

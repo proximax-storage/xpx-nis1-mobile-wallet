@@ -22,33 +22,33 @@
       <ion-col col-12></ion-col>
 
       <ion-col col-12 text-center>
-        <h3 ion-text color="black">Update contact</h3>
+        <h3 ion-text color="black">{{"SERVICES.ADDRESS_BOOK.UPDATE.TITLE" | translate}}</h3>
         <p ion-text color="black">
-          To update a contact change the form below.
+            {{"SERVICES.ADDRESS_BOOK.UPDATE.SUBTITLE" | translate}}
         </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <ion-item transparent padding>
-            <ion-label stacked>Contact name</ion-label>
-            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder="Enter the name of the contact"></ion-input>
+            <ion-label stacked>{{"SERVICES.ADDRESS_BOOK.FIELDS.NAME" | translate}}</ion-label>
+            <ion-input formControlName="name" type="text" autocapitalize="none" placeholder=""></ion-input>
           </ion-item>
 
           <ion-item transparent padding>
-            <ion-label stacked>Wallet Address</ion-label>
-            <ion-textarea row="1" autosize formControlName="address" type="text" autocapitalize="none" placeholder="Enter the address of the contact"></ion-textarea>
+            <ion-label stacked>{{"SERVICES.ADDRESS_BOOK.FIELDS.WALLET_ADDRESS" | translate}}</ion-label>
+            <ion-textarea row="1" autosize formControlName="address" type="text" autocapitalize="none" placeholder=""></ion-textarea>
           </ion-item>
 
           <ion-item transparent padding>
             <ion-label stacked>
-              Telegram username (Optional)
+              {{"SERVICES.ADDRESS_BOOK.FIELDS.TELEGRAM_OPTIONAL" | translate}}
             </ion-label>
-            <ion-input formControlName="telegram" type="text" autocapitalize="none" placeholder="Enter the telegram username of your contact"></ion-input>
+            <ion-input formControlName="telegram" type="text" autocapitalize="none" placeholder=""></ion-input>
           </ion-item>
 
           <button gradient-button  color-5 [disabled]="formGroup.invalid" type="submit" color="black">
-            Save
+              {{"WALLETS.BUTTON.SAVE" | translate}}
           </button>
         </form>
       </ion-col>

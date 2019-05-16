@@ -46,6 +46,11 @@ page-send {
 
   ion-item h2 {
     font-size: 1.6rem !important;
+
+  }
+
+  [padding] h2:first-child {
+    margin-top:0 !important;
   }
 
   section[title] {

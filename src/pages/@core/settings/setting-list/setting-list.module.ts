@@ -4,6 +4,7 @@ import { NgxKjuaModule } from 'ngx-kjua';
 
 import { SettingListPage } from './setting-list';
 import { PipesModule } from '../../../../pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PipesModule } from '../../../../pipes/pipes.module';
   imports: [
     IonicPageModule.forChild(SettingListPage),
     NgxKjuaModule,
-    PipesModule
+    PipesModule,
+    TranslateModule.forChild() 
   ],
 })
 export class SettingListPageModule {}

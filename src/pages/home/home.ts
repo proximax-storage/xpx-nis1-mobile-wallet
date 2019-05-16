@@ -16,6 +16,7 @@ import { HapticProvider } from '../../providers/haptic/haptic';
 import find from 'lodash/find';
 import filter from 'lodash/filter';
 import { GetMarketPricePipe } from '../../pipes/get-market-price/get-market-price';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -86,7 +87,8 @@ export class HomePage {
     private modalCtrl: ModalController,
     private nemProvider: NemProvider,
     private haptic: HapticProvider,
-    private marketPrice: GetMarketPricePipe
+    private marketPrice: GetMarketPricePipe,
+    private translateService: TranslateService
   ) {
     this.totalWalletBalance = 0;
     this.menu = "mosaics";
@@ -274,19 +276,23 @@ export class HomePage {
 
     this.selectedWallet = wallet;
 
+    let editButton = this.translateService.instant("WALLETS.EDIT");
+    let deleteButton = this.translateService.instant("WALLETS.DELETE");
+    let cancelButton = this.translateService.instant("WALLETS.BUTTON.CANCEL");
+
     const actionSheet = this.actionSheetCtrl.create({
-      title: `Modify ${wallet.name}`,
+      title: ``,
       cssClass: 'wallet-on-press',
       buttons: [
         {
-          text: 'Edit',
+          text: editButton,
           icon: this.platform.is('ios') ? null : 'create',
           handler: () => {
             this.navCtrl.push('WalletUpdatePage', { wallet: wallet });
           }
         },
         {
-          text: 'Delete',
+          text: deleteButton,
           role: 'destructive',
           icon: this.platform.is('ios') ? null : 'trash',
           handler: () => {
@@ -295,7 +301,7 @@ export class HomePage {
           }
         },
         {
-          text: 'Cancel',
+          text: cancelButton,
           role: 'cancel',
           icon: this.platform.is('ios') ? null : 'close',
           handler: () => {
@@ -314,16 +320,19 @@ export class HomePage {
     alert.setTitle('Add wallet');
     alert.setSubTitle('');
 
+    let newWalletButton = this.translateService.instant("WALLETS.CREATE.NEW");
+    let importWalletButton = this.translateService.instant("WALLETS.CREATE.IMPORT");
+
     alert.addInput({
       type: 'radio',
-      label: 'New wallet',
+      label: newWalletButton,
       value: WalletCreationType.NEW.toString(),
       checked: true
     });
 
     alert.addInput({
       type: 'radio',
-      label: 'Import wallet',
+      label: importWalletButton,
       value: WalletCreationType.IMPORT.toString(),
       checked: false
     });

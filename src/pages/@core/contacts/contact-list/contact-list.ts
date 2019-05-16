@@ -14,6 +14,7 @@ import { ContactsProvider } from '../../../../providers/contacts/contacts';
 import { BarcodeScannerProvider } from './../../../../providers/barcode-scanner/barcode-scanner';
 import { App } from './../../../../providers/app/app';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the ContactListPage page.
@@ -53,7 +54,8 @@ export class ContactListPage {
     private barcodeScannerProvider: BarcodeScannerProvider,
     private utils: UtilitiesProvider,
     private viewCtrl: ViewController,
-    private modalCtrl:ModalController
+    private modalCtrl:ModalController,
+    private translateService: TranslateService
     
   ) {}
 
@@ -81,12 +83,16 @@ export class ContactListPage {
   }
 
   onPress(contact) {
+    const editButton = this.translateService.instant("WALLETS.BUTTON.EDIT");
+    const deleteButton = this.translateService.instant("WALLETS.BUTTON.DELETE");
+    const cancelButton = this.translateService.instant("WALLETS.BUTTON.CANCEL");
+
     const actionSheet = this.actionSheetCtrl.create({
-      title: `Modify ${contact.name}`,
+      title: ``,
       cssClass: 'wallet-on-press',
       buttons: [
         {
-          text: 'Change details',
+          text: editButton,
           icon: this.platform.is('ios') ? null : 'create',
           handler: () => {
             let page = "ContactUpdatePage"
@@ -94,7 +100,7 @@ export class ContactListPage {
           }
         },
         {
-          text: 'Delete',
+          text: deleteButton,
           role: 'destructive',
           icon: this.platform.is('ios') ? null : 'trash',
           handler: () => {
@@ -104,7 +110,7 @@ export class ContactListPage {
           }
         },
         {
-          text: 'Cancel',
+          text: cancelButton,
           role: 'cancel',
           icon: this.platform.is('ios') ? null : 'close',
           handler: () => {
@@ -118,26 +124,31 @@ export class ContactListPage {
 
   showAddContactPrompt() {
     let alert = this.alertCtrl.create();
-    alert.setTitle('Add new contact');
-    alert.setSubTitle('Select adding type below');
+    const alertTitle = this.translateService.instant("SERVICES.ADDRESS_BOOK.ADD_CONTACT");
+    const manualInput = this.translateService.instant("WALLETS.SEND.ADDRESS.OPTION1");
+    const qrScan = this.translateService.instant("WALLETS.CREATE.IMPORT.QR_SCAN");
+    const continueButton = this.translateService.instant("WALLETS.BUTTON.CONTINUE");
+    const cancelButton = this.translateService.instant("WALLETS.BUTTON.CANCEL");
+
+    alert.setTitle(alertTitle);
 
     alert.addInput({
       type: 'radio',
-      label: 'Manual input',
+      label: manualInput,
       value: ContactCreationType.MANUAL.toString(),
       checked: true
     });
 
     alert.addInput({
       type: 'radio',
-      label: 'QR scan',
+      label: qrScan,
       value: ContactCreationType.QR_SCAN.toString(),
       checked: false
     });
 
-    alert.addButton('Cancel');
+    alert.addButton(cancelButton);
     alert.addButton({
-      text: 'Proceed',
+      text: continueButton,
       handler: data => {
         if (data === ContactCreationType.MANUAL.toString()) {
           let page = "ContactAddPage";
@@ -172,23 +183,6 @@ export class ContactListPage {
     this.showModal(page, contact);
   }
 
-  delete(contact) {
-    this.alertCtrl
-      .create({
-        title: 'Remove contact',
-        subTitle: `Are you sure to remove ${contact.name}?`,
-        buttons: [
-          {
-            text: 'Cancel'
-          },
-          {
-            text: 'Yes',
-            handler: () => {}
-          }
-        ]
-      })
-      .present();
-  }
 
   dismiss() {
     this.viewCtrl.dismiss();

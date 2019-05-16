@@ -5,6 +5,7 @@ import { SendPage } from './send';
 import { NgxCurrencyModule } from "ngx-currency";
 import { DirectivesModule } from '../../../../directives/directives.module';
 import { PipesModule } from '../../../../pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PipesModule } from '../../../../pipes/pipes.module';
     IonicPageModule.forChild(SendPage),
     NgxCurrencyModule,
     DirectivesModule,
-    PipesModule
+    PipesModule,
+    TranslateModule.forChild() 
   ],
 })
 export class SendPageModule {}

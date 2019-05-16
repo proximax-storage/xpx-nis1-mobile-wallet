@@ -3,6 +3,7 @@ import { DecimalPipe } from '@angular/common';
 import { IonicPageModule } from 'ionic-angular';
 import { SendMosaicConfirmationPage } from './send-mosaic-confirmation';
 import { PipesModule } from '../../../../../pipes/pipes.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { PipesModule } from '../../../../../pipes/pipes.module';
   ],
   imports: [
     IonicPageModule.forChild(SendMosaicConfirmationPage),
-    PipesModule
+    PipesModule,
+    TranslateModule.forChild() 
   ],
   providers: [DecimalPipe]
 })

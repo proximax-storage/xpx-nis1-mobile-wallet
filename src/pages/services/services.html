@@ -10,7 +10,7 @@
     <ion-item transparent>
       <h2 padding-left title color="dark">
         <strong>
-          Services
+          {{"SERVICES" | translate}}
         </strong>
       </h2>
     </ion-item>
@@ -24,8 +24,8 @@
   <ion-card (click)="goto('ContactListPage')">
     <ion-item>
       <ion-icon item-left name="fi-contact"></ion-icon>
-      <h2>Address Book</h2>
-      <p text-wrap>Allows easy access to your contacts by maintaining their account details.</p>
+      <h2>{{"SERVICES.ADDRESS_BOOK.TITLE" | translate}}</h2>
+      <p text-wrap>{{"SERVICES.ADDRESS_BOOK.DESC" | translate}}</p>
     </ion-item>
   </ion-card>
 
@@ -33,8 +33,8 @@
   <ion-card (click)="showModal('MultisigSupportPage')">
     <ion-item>
       <ion-icon item-left name="git-network"></ion-icon>
-      <h2>Multisign Support</h2>
-      <p text-wrap>A quick info on how multisig is currently supported by the app.</p>
+      <h2>{{"SERVICES.MULTISIGN_SUPPORT.TITLE" | translate}}</h2>
+      <p text-wrap>{{"SERVICES.MULTISIGN_SUPPORT.DESC" | translate}}</p>
     </ion-item>
   </ion-card>
 

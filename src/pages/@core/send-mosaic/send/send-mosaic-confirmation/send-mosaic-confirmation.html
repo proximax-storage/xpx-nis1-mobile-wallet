@@ -14,7 +14,7 @@
 
   <ion-navbar transparent>
       <ion-title>
-          <span ion-text color="black">Confirm Transaction</span>
+          <span ion-text color="black">{{"WALLETS.CONFIRM.TITLE" | translate}}</span>
         </ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="dismiss()" color="black">
@@ -57,13 +57,13 @@
           <!-- Note -->
           <ion-card>
             <ion-item>
-              <h2 ion-text color="black">Note</h2>
+              <h2 ion-text color="black">{{"WALLETS.SEND.LABEL.NOTES" | translate}}</h2>
               <p ion-text text-wrap color="black">
                 <span *ngIf="data.message">
                   {{ data.message }}
                 </span>
                 <span *ngIf="!data.message">
-                  None
+                  
                 </span>
               </p>
             </ion-item>
@@ -72,7 +72,7 @@
           <!-- Note -->
           <ion-card>
             <ion-item>
-              <h2 ion-text color="black">Fee</h2>
+              <h2 ion-text color="black">{{"WALLETS.SEND.LABEL.FEE" | translate}}</h2>
               <p ion-text text-wrap color="black">
                 {{ data.sendTx.fee | formatXEM }} XEM
               </p>
@@ -81,7 +81,7 @@
 
           <!-- From -->
           <h6 margin-left text-left ion-text color="black">
-            From
+              {{"WALLETS.SEND.LABEL.FROM" | translate}}
           </h6>
           <ion-card>
             <ion-item>
@@ -93,7 +93,7 @@
 
           <!-- To -->
           <h6 margin-left text-left ion-text color="black">
-            To
+              {{"WALLETS.SEND.LABEL.TO" | translate}}
           </h6>
           <ion-card>
             <ion-item>
@@ -109,7 +109,7 @@
       <ion-col buttons col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
           <button gradient-button color-5 type="submit" color="black">
-            Confirm
+              {{"WALLETS.BUTTON.CONFIRM" | translate}}
           </button>
         </form>
       </ion-col>

@@ -11,11 +11,11 @@
         <img quarter-width [src]="App.STICKERS.INVALID">
 
         <p text-wrap text-center ion-text color="black">
-          The username or password you entered is incorrect.
+          {{"APP.INVALID.USERNAME_OR_PASSWORD" | translate}}
         </p>
 
         <button gradient-button color-5 (click)="viewCtrl.dismiss()">
-          Try again
+          {{"APP.BUTTON.TRY_AGAIN" | translate}}
         </button>
       </ion-col>
     </ion-row>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { SimpleWallet } from 'nem-library';
 
 import { App } from './../../../../providers/app/app';
@@ -8,7 +8,6 @@ import { SocialSharing } from '../../../../../node_modules/@ionic-native/social-
 import { AuthProvider } from '../../../../providers/auth/auth';
 import { NemProvider } from '../../../../providers/nem/nem';
 import { UtilitiesProvider } from '../../../../providers/utilities/utilities';
-import { of } from 'rxjs/observable/of';
 /**
  * Generated class for the WalletBackupPage page.
  *
@@ -16,12 +15,6 @@ import { of } from 'rxjs/observable/of';
  * Ionic pages and navigation.
  */
 
-export enum WalletBackupType {
-  EXPORT_AS_FILE = 0,
-  SHARE = 1,
-  COPY_TO_CLIPBOARD = 2,
-  QR_CODE = 3
-}
 
 @IonicPage()
 @Component({
@@ -50,13 +43,9 @@ export class WalletBackupPage {
     private nemProvider: NemProvider,
     private socialSharing: SocialSharing,
     private utils: UtilitiesProvider,
-    private platform: Platform,
     private modalCtrl: ModalController,
-    private viewCtrl: ViewController
   ) {
 
-
-    this.init();
   }
 
   ionViewWillEnter() {
@@ -87,28 +76,6 @@ export class WalletBackupPage {
     this.navCtrl.popToRoot();
   }
 
-  init() {
-      this.options = [
-        {
-          name: 'Export via QR Code', // TODO
-          value: WalletBackupType.QR_CODE,
-          icon: 'ios-barcode-outline'
-        },
-        
-        {
-          name: 'Copy Private Key',
-          value: WalletBackupType.COPY_TO_CLIPBOARD,
-          icon: 'ios-copy-outline'
-        },
-        {
-          name: 'Export Private Key',
-          value: WalletBackupType.SHARE,
-          icon: 'ios-share-outline'
-        }
-      ];
-  }
-
-
 
   goHome() {
     this.navCtrl.setRoot(
@@ -119,29 +86,19 @@ export class WalletBackupPage {
     );
   }
 
-  onSelect(option) {
-    this.selectedOption = option.value;
-
-    this.onSubmit();
+  copy() {
+    this.walletBackupProvider.copyToClipboard(<SimpleWallet>this.navParams.data);
+    this.goHome();
   }
 
-  onSubmit() {
+  share() {
     const WALLET: SimpleWallet = <SimpleWallet>this.navParams.data;
-    if (this.selectedOption === WalletBackupType.SHARE) {
-      this.authProvider.getPassword().then(async password => {
-        const privateKey = await this.nemProvider.passwordToPrivateKey(password, WALLET);
-        await this.socialSharing.share(
-          privateKey, null, null);
-        this.goHome();
-      });
-    }
-    else if (this.selectedOption === WalletBackupType.COPY_TO_CLIPBOARD) {
-      this.walletBackupProvider.copyToClipboard(WALLET).then(_ => {
-        this.goHome();
-      });
-    } else if (this.selectedOption === WalletBackupType.QR_CODE) {
-      this.gotoQRCodePage();
-    }
+    this.authProvider.getPassword().then(async password => {
+      const privateKey = await this.nemProvider.passwordToPrivateKey(password, WALLET);
+      await this.socialSharing.share(
+        privateKey, null, null);
+      this.goHome();
+    });
   }
 
   gotoQRCodePage() {
@@ -155,6 +112,6 @@ export class WalletBackupPage {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.goHome();
   }
 }

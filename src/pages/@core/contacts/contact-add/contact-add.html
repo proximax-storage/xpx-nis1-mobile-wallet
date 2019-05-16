@@ -25,30 +25,29 @@
       <ion-col col-12></ion-col>
 
       <ion-col col-12 text-center>
-        <h3 ion-text color="black">Add new contact</h3>
+        <h3 ion-text color="black">{{"SERVICES.ADDRESS_BOOK.ADD_CONTACT" | translate}}</h3>
         <p ion-text color="black">
-          To create new contact fill up the form below.
+          {{"SERVICES.ADDRESS_BOOK.ADD.SUBTITLE" | translate}}
         </p>
       </ion-col>
 
       <ion-col buttons padding col-12 text-center>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
           <ion-item transparent padding>
-            <ion-label stacked>Contact name</ion-label>
+            <ion-label stacked>{{"SERVICES.ADDRESS_BOOK.FIELDS.NAME" | translate}}</ion-label>
             <ion-input formControlName="name" type="text" autocapitalize="none" placeholder=""></ion-input>
-            <span>Hqwe</span>
           </ion-item>
           <!-- <p description>Example: <strong>John</strong></p> -->
 
           <ion-item transparent padding>
-            <ion-label stacked>Wallet address</ion-label>
+            <ion-label stacked>{{"SERVICES.ADDRESS_BOOK.FIELDS.WALLET_ADDRESS" | translate}}</ion-label>
             <ion-textarea autosize row="1" formControlName="address" type="text" autocapitalize="none" placeholder=""></ion-textarea>
           </ion-item>
           <!-- <p description>Example: <strong>TDDG3UDZBGZUIOCDCOPT45N...</strong></p> -->
 
           <ion-item transparent padding>
             <ion-label stacked>
-              Telegram username (Optional)
+                {{"SERVICES.ADDRESS_BOOK.FIELDS.TELEGRAM_OPTIONAL" | translate}}
             </ion-label>
             <ion-input formControlName="telegram" type="text" autocapitalize="none" placeholder=""></ion-input>
           </ion-item>

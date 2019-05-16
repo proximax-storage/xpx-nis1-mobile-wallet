@@ -35,7 +35,7 @@
                 </ion-item>
               </ion-list>
               <button gradient-button quarter-width color-5 medium (click)="moreDetails()">
-                More Details
+                  {{"WALLETS.MORE_DETAILS" | translate}}
               </button>
         </ion-card-content>
       </ion-card>
@@ -50,7 +50,7 @@
 <ion-content background>
   <!-- Skeleton loader -->
   <ion-list transparent-items *ngIf="isLoading">
-    <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
+    <h2 padding *ngIf="!showEmptyMessage">{{"WALLETS.TRANSACTIONS" | translate}}</h2>
 
     <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
       <skeleton-loader></skeleton-loader>
@@ -65,7 +65,7 @@
 
   <!-- Transactions -->
   <ion-list transparent-items *ngIf="!isLoading">
-    <h2 padding *ngIf="!showEmptyMessage">Transactions</h2>
+    <h2 padding *ngIf="!showEmptyMessage">{{"WALLETS.TRANSACTIONS" | translate}}</h2>
 
     <ion-card no-margin-bottom *ngFor="let transaction of unconfirmedTransactions; trackBy: trackByHash;"
       (click)="gotoTransactionDetail(transaction)">
@@ -151,7 +151,7 @@
             </h4> -->
 
         <h6 ion-text color="grey" text-wrap>
-          <strong>Your transactions will appear here. There are none at the moment.</strong>
+          <strong>{{"APP.EMPTY.TRANSACTIONS" | translate}}</strong>
         </h6>
 
         <!-- <p text-wrap>
@@ -178,12 +178,12 @@
         <ion-col>
           <button (click)="showReceiveModal()" gradient-button full color-5 ion-button icon-start no-margin>
             <ion-icon name="arrow-round-down"></ion-icon>
-            Receive
+            {{"WALLETS.RECEIVE" | translate}}
           </button>
         </ion-col>
         <ion-col>
           <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
-            Send
+              {{"WALLETS.SEND" | translate}}
             <ion-icon name="arrow-round-up"></ion-icon>
           </button>
         </ion-col>

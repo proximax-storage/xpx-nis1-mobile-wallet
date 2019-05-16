@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 
 import { App } from '../../providers/app/app';
 import { MockDataProvider } from '../../providers/mock-data/mock-data';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the OnboardingPage page.
@@ -34,7 +35,8 @@ export class OnboardingPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public storage: Storage,
-    private mockData: MockDataProvider
+    private mockData: MockDataProvider,
+    private translateService: TranslateService
   ) {
 
     this.isPreview = this.navParams.get('preview');
@@ -43,52 +45,83 @@ export class OnboardingPage {
   }
 
   init() {
+    const page1title = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE1.TITLE");
+    const page1Content1 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE1.CONTENT1");
+    const page1Content2 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE1.CONTENT2");
+    const page2title = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE2.TITLE");
+    const page2Content1 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE2.CONTENT1");
+    const page2Content2 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE2.CONTENT2");
+    const page2Content3 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE2.CONTENT3");
+    const page2Content4 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE2.CONTENT4");
+    const page3title = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.TITLE");
+    const page3Content1 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.CONTENT1");
+    const page3Content2 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.CONTENT2");
+    const page3Content3 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.CONTENT3");
+    const page3Content4 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.CONTENT4");
+    const page3Content5 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.CONTENT5");
+    const page3Content6 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE3.CONTENT6");
+    const page4title = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE4.TITLE");
+    const page4Content1 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE4.CONTENT1");
+    const page4Content2 = this.translateService.instant("SETTINGS.WALLET_GUIDE.PAGE4.CONTENT2");
+    // const content1 = this.translateService.instant("");
+    // const content2 = this.translateService.instant("");
+    // const content3 = this.translateService.instant("");
+    // const content4 = this.translateService.instant("");
+    // const content5 = this.translateService.instant("");
+    // const content6 = this.translateService.instant("");
+    // const content7 = this.translateService.instant("");
+    // const content8 = this.translateService.instant("");
+    // const content9 = this.translateService.instant("");
+    // const content10 = this.translateService.instant("");
+    // const content11 = this.translateService.instant("");
+
+
     this.slides = [
       {
-        title: 'What is ProximaX Wallet?',
+        title: page1title,
         description:
-          `<br>The ProximaX Wallet app is a free, client-side interface which allows you to interact directly with the blockchain while you remain in full control of your keys and funds. <br><br>
-          At ProximaX, we are committed to helping you secure your digital assets. All our wallet updates undergo rigorous testing in order to ensure that everything you hold in your wallet is safe. However, a large part of keeping your wallet  and its contents safe depends on YOU.`,
+          `<br>${page1Content1}<br><br>
+          ${page1Content2}`,
         isSmall: true,
         image: App.SLIDES.SLIDE1
       },
       {
-        title: 'Securing Your Private Keys and Password',
+        title: page2title,
         description:
-          `When your private key is generated, it is known to only you. We have absolutely no access to it. We can’t access accounts, recover keys, reset passwords or reverse transactions for you. <br><br><strong>We strongly recommend you to:</strong>
+          `${page2Content1} <br><br><strong>${page2Content2}</strong>
           <br>
           
           <ul>
-            <li>Write down your private keys and password and store them in a safe place.</li><br>
-            <li>Do not store your keys and password on your computer or phone especially if they are assessible by other parties.</li>
+            <li>${page2Content3}</li><br>
+            <li>${page2Content4}</li>
           </ul>
           `,
         isSmall: true,
         image: App.SLIDES.SLIDE3
       },
       {
-        title: 'Where are my digital tokens stored?',
+        title: page3title,
         description:
-          `Contrary to popular belief, your digital assets are never stored in a crypto wallet. All digital assets reside on the blockchain itself and ProximaX does not control your digital assets in any way.
+          `${page3Content1}
           <br><br>
-          <strong "padding-left: 10px;">IMPORTANT!</strong>
+          <strong "padding-left: 10px;">${page3Content2}</strong>
           <br>
           <ul>
-            <li>Never reveal your private keys to anyone. </li><br>
-            <li>We will never ask you for your private keys (and neither should anyone).
+            <li>${page3Content3}</li><br>
+            <li>${page3Content4}
             </li><br>
-            <li>We don’t give away free XPX.</li><br>
-            <li>We will never ask you to send us XPX.</li>
+            <li>${page3Content5}</li><br>
+            <li>${page3Content6}</li>
           </ul>`,
         isSmall: true,
         image: App.SLIDES.SLIDE2
       },
       {
-        title: 'Why use cryptocurrency and blockchain?',
+        title: page4title,
         description:
-          `The purpose of cryptocurrency is to allow you to take full control and manage your digital tokens in an anonymous and secure way, from any location without relying on third parties.
+          `${page4Content1}
           <br><br>
-          The only information needed to do this is to have your public address and private keys. 
+          ${page4Content2} 
           `,
         isSmall: true,
         image: App.SLIDES.SLIDE4
