@@ -106,19 +106,11 @@ export class NemProvider{
 
       console.log("LOG: NemProvider -> constructor -> serverConfig", serverConfig);
 
-      const SERVER_CONFIG: ServerConfig[] = [
-        // { protocol: "http", domain: "35.229.200.77", port: 7890 },
-        // { protocol: "http", domain: "104.128.226.60", port: 7890 },
-        { protocol: "http", domain: "23.228.67.85", port: 7890 },
-        // { protocol: "http", domain: "192.3.61.243", port: 7890 },
-        // { protocol: "http", domain: "50.3.87.123", port: 7890 },
-      
-      
-      ];
+      const SERVER_CONFIG: ServerConfig[] = serverConfig
       console.log("LOG: NemProvider -> constructor -> SERVER_CONFIG", SERVER_CONFIG);
 
 
-      NEMLibrary.bootstrap(NetworkTypes.TEST_NET); // TEST_NET Note: Change to MAIN_NET for production
+      NEMLibrary.bootstrap(NetworkTypes.MAIN_NET); // TEST_NET Note: Change to MAIN_NET for production
 
       if (NEMLibrary.getNetworkType() === NetworkTypes.MAIN_NET) {
         this.accountHttp = new AccountHttp(SERVER_CONFIG);

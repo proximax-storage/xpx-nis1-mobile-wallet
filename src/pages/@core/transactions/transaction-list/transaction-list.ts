@@ -16,6 +16,7 @@ import { GetBalanceProvider } from "../../../../providers/get-balance/get-balanc
 import { GetMarketPricePipe } from "../../../../pipes/get-market-price/get-market-price";
 import { HapticProvider } from '../../../../providers/haptic/haptic';
 import filter from 'lodash/filter';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the TransactionListPage page.
@@ -76,7 +77,8 @@ export class TransactionListPage {
     private getBalanceProvider: GetBalanceProvider,
     private marketPrice: GetMarketPricePipe,
     private actionSheetCtrl: ActionSheetController,
-    private haptic: HapticProvider
+    private haptic: HapticProvider,
+    private translateService: TranslateService
   ) {
     // this.getTotalBalance(currentWallet);
     console.log("Wallet from home", this.navParams.data);
@@ -200,25 +202,30 @@ export class TransactionListPage {
       this.haptic.selection();
       let page = 'SendMultisigPage';
 
+      const title = this.translateService.instant("WALLETS.SEND.PROMPT");
+      const normalTX = this.translateService.instant("WALLETS.SEND.NORMAL");
+      const multisigTX = this.translateService.instant("WALLETS.SEND.MULTISIG");
+      const cancelButton = this.translateService.instant("WALLETS.BUTTON.CANCEL");
+
       const actionSheet = this.actionSheetCtrl.create({
-        title: `Selecte transaction type`,
+        title: title,
         cssClass: 'wallet-on-press',
         buttons: [
           {
-            text: 'Normal Transaction',
+            text: normalTX,
             handler: () => {
               let page = 'SendPage';
               this.showModal(page, { mosaicSelectedName: 'xpx' })
             }
           },
           {
-            text: 'Multisig Transaction',
+            text: multisigTX,
             handler: () => {
               this.showModal(page, { mosaicSelectedName: 'xpx' })
             }
           },
           {
-            text: 'Cancel',
+            text: cancelButton,
             role: 'cancel',
             handler: () => {
               // this.showModal(page,{ mosaicSelectedName: 'xpx'})
