@@ -22,6 +22,7 @@ export class LanguagePage {
     {value: 'es', name: 'Spanish', icon:'en'},
     {value: 'fr', name: 'French', icon:'en'},
     {value: 'jp', name: 'Japanese', icon:'en'},
+    {value: 'kr', name: 'Korean', icon:'kr'},
     {value: 'nl', name: 'Dutch', icon:'en'},
     {value: 'ru', name: 'Russian', icon:'en'},
   ]

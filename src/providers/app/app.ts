@@ -39,6 +39,7 @@ export class App {
     ES: `assets/imgs/flags/es.png`,
     FR: `assets/imgs/flags/fr.png`,
     JP: `assets/imgs/flags/jp.png`,
+    KR: `assets/imgs/flags/kr.png`,
     NL: `assets/imgs/flags/nl.png`,
     RU: `assets/imgs/flags/ru.png`,
   };

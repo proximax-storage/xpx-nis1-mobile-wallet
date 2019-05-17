@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { AlertProvider } from '../../../providers/alert/alert';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the NodeListPage page.
@@ -58,7 +59,8 @@ export class NodeListPage {
     private formBuilder: FormBuilder,
     private alertProvider: AlertProvider,
     private http: HttpClient,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private translateService: TranslateService
     ) {
      
       this.getInfo();
@@ -118,7 +120,8 @@ export class NodeListPage {
 
     this.storage.set("node", JSON.stringify(serverConfig)).then( _=>{
       console.log(_);
-      this.alertProvider.showMessage("You are successfully connected to " + host + "." )
+      const alertTitle = this.translateService.instant("SETTINGS.NODES.SWITCH", {'host' : host} );
+      this.alertProvider.showMessage(alertTitle)
       setTimeout(()=> {
         
         window.location.reload();

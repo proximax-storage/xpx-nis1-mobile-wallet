@@ -135,7 +135,10 @@ export class UtilitiesProvider {
       return AppConfig.FLAGS.FR;
     } else if (lang.value == "jp") {
       return AppConfig.FLAGS.JP;
-    } else if (lang.value == "nl") {
+    } else if (lang.value == "kr") {
+      return AppConfig.FLAGS.KR;
+    }
+     else if (lang.value == "nl") {
       return AppConfig.FLAGS.NL;
     } else if (lang.value == "ru") {
       return AppConfig.FLAGS.RU;
