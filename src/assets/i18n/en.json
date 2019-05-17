@@ -153,6 +153,6 @@
     "SETTINGS.CHANGELOG": "Changelog",
     "SETTINGS.LANGUAGE": "Language",
     "SETTINGS.LANGUAGE.DESC":"You can change the display language to your preferred language at any time.",
-    "SETTINGS.LANGUAGE.SWITCH": "The app language will switch to {{lang}}.",
+    "SETTINGS.LANGUAGE.SWITCH": "The app's language will switch to {{lang}}.",
     "SETTINGS.LOGOUT" : "Logout"
 }
