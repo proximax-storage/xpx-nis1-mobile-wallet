@@ -1,5 +1,5 @@
 import { Component, ViewChild, trigger, transition, style, animate } from '@angular/core';
-import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController, Slides, Haptic } from 'ionic-angular';
+import { App, NavController, NavParams, ViewController, ActionSheetController, AlertController, Platform, InfiniteScroll, ModalController, Slides, Haptic, DateTime } from 'ionic-angular';
 import { SimpleWallet, MosaicTransferable, TransactionTypes, Pageable, Transaction } from 'nem-library';
 
 import { App as AppConfig } from '../../providers/app/app';
@@ -180,18 +180,21 @@ export class HomePage {
         { mosaicId: 'xar' },
       ]
       const filteredTransactions = filter(mosaicTransactions, (tx) => find(supportedMosaics, { mosaicId: tx._mosaics[0].mosaicId.name }));
+      
       setTimeout(() => {
         this.nemProvider.getXEMTransactions(selectedWallet.address).subscribe(XEMTransactions => {
-          this.confirmedTransactions = [].concat(filteredTransactions, XEMTransactions);
-
+          const TRANSACTIONS = [].concat(filteredTransactions, XEMTransactions);
           // Check transaction is empty
-					console.log("LOG: HomePage -> getTransactions -> this.confirmedTransactions.length", this.confirmedTransactions.length);
-          if (this.confirmedTransactions.length == 0) {
-            this.isLoading = false;
+          if (TRANSACTIONS.length == 0) {
             this.confirmedTransactions = null;
             this.showEmptyTransaction = true;
+          } else {
+            this.confirmedTransactions = TRANSACTIONS.sort((a,b) => {
+              return new Date(b.timeWindow.timeStamp).getTime() - new Date(a.timeWindow.timeStamp).getTime()
+            });
+            this.showEmptyTransaction = false;
           }
-
+          this.isLoading = false;
         })
       }, 1000);
 

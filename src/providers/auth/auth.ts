@@ -141,6 +141,7 @@ export class AuthProvider {
         console.log("LOG: register -> accounts", accounts);
         
         let foundAccount = accounts.filter( account => {
+					console.log("LOG: register -> foundAccount", foundAccount);
           return account.email.includes(email)
        });
 

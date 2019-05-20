@@ -154,21 +154,19 @@ export class TransactionListPage {
         ]
 
         const filteredTransactions = filter(mosaicTransactions, (tx) => find(supportedMosaics, { mosaicId: tx._mosaics[0].mosaicId.name }));
-
+      
         setTimeout(() => {
           this.nemProvider.getXEMTransactions(this.currentWallet.address).subscribe(XEMTransactions => {
-            this.confirmedTransactions = [].concat(filteredTransactions, XEMTransactions);
-
-            this.isLoading = false;
-            this.showEmptyMessage = false;
-
+            const TRANSACTIONS = [].concat(filteredTransactions, XEMTransactions);
             // Check transaction is empty
-            if (this.confirmedTransactions.length == 0) {
-              this.isLoading = false;
-              this.showEmptyMessage = true;
-              this.unconfirmedTransactions = null;
+            if (TRANSACTIONS.length == 0) {
+              this.confirmedTransactions = null;
+            } else {
+              this.confirmedTransactions = TRANSACTIONS.sort((a,b) => {
+                return new Date(b.timeWindow.timeStamp).getTime() - new Date(a.timeWindow.timeStamp).getTime()
+              });
             }
-
+            this.isLoading = false;
           })
         }, 1000);
 
