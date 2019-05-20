@@ -8,6 +8,7 @@ import { CoinPriceChartPage } from './coin-price-chart';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { SharedModule } from '../../../app/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ComponentsModule } from '../../../components/components.module';
     TooltipsModule,
     PipesModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
+    TranslateModule.forChild()
   ],
 })
 export class CoinPriceChartPageModule {}

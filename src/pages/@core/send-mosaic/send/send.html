@@ -88,7 +88,7 @@
       <ion-item select-contact no-lines>
         <ion-label ion-text color="black"></ion-label>
         <ion-select [selectOptions]="{
-    title: 'Address input options',
+    title: 'WALLETS.SEND.ADDRESS.OPTION.TITLE' | translate,
     subTitle: ''        
   }" [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
           <ion-option value="manual">{{"WALLETS.SEND.ADDRESS.OPTION1" | translate}}</ion-option>

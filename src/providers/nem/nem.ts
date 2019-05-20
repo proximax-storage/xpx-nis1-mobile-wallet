@@ -106,7 +106,7 @@ export class NemProvider{
 
       console.log("LOG: NemProvider -> constructor -> serverConfig", serverConfig);
 
-      const SERVER_CONFIG: ServerConfig[] = serverConfig;
+      const SERVER_CONFIG: ServerConfig[] = serverConfig
       console.log("LOG: NemProvider -> constructor -> SERVER_CONFIG", SERVER_CONFIG);
 
 

@@ -23,13 +23,13 @@
   <ion-toolbar mode='md' transparent no-margin no-border-top>
     <ion-segment mode='md' [(ngModel)]="selectedSegment" color="dark">
       <ion-segment-button value='transactions' checked>
-        Transactions
+        {{"WALLETS.TRANSACTIONS" | translate}}
       </ion-segment-button>
       <ion-segment-button value='priceChart' (ionSelect)="select('24H');content.resize()">
-        Price Chart
+        {{"WALLETS.DETAIL.PRICE_CHART" | translate}}
       </ion-segment-button>
       <ion-segment-button value='info' (ionSelect)="content.resize()">
-        Info
+        {{"WALLETS.DETAIL.INFO" | translate}}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -185,7 +185,7 @@
         <ion-col>
           <img quarter-width [src]="App.STICKERS.SORRY">
           <h6 ion-text color="grey" text-wrap>
-            <strong>Your transactions will appear here. There are none at the moment.</strong>
+            <strong>{{"APP.EMPTY.TRANSACTIONS" | translate}}</strong>
           </h6>
         </ion-col>
       </ion-row>
@@ -250,10 +250,10 @@
       </ion-grid>
   
       <ion-list transparent-items>
-        <h2 margin-left ion-text color="dark">Stats</h2>
+        <h2 margin-left ion-text color="dark">{{"WALLETS.DETAIL.STATS" | translate}}</h2>
         <ion-card>
           <ion-item>
-            <p item-left ion-text color="dark">Market Rank</p>
+            <p item-left ion-text color="dark">{{"WALLETS.DETAIL.MARKET_RANK" | translate}}</p>
             <ion-badge item-end *ngIf="selectedCoin.market_data; else loading">
               #{{ selectedCoin.market_cap_rank }}
             </ion-badge>
@@ -262,7 +262,7 @@
   
         <ion-card>
           <ion-item>
-            <p item-left ion-text color="dark">Market Cap</p>
+            <p item-left ion-text color="dark">{{"WALLETS.DETAIL.MARKET_CAP" | translate}}</p>
             <h3 item-right *ngIf="selectedCoin.market_data; else loading">
               ${{ selectedCoin.market_data.market_cap.usd | shortNum }}
             </h3>
@@ -272,7 +272,7 @@
   
         <ion-card>
           <ion-item>
-            <p item-left ion-text color="dark">Trading Volume</p>
+            <p item-left ion-text color="dark">{{"WALLETS.DETAIL.TRADING_VOLUME" | translate}}</p>
             <h3 item-right *ngIf="selectedCoin.market_data; else loading">
               ${{ selectedCoin.market_data.total_volume.usd | shortNum }}
             </h3>
@@ -282,7 +282,7 @@
   
         <ion-card>
           <ion-item>
-            <p item-left ion-text color="dark">24H High</p>
+            <p item-left ion-text color="dark">{{"WALLETS.DETAIL.24H_HIGH" | translate}}</p>
             <ion-badge item-end *ngIf="selectedCoin.market_data; else loading">
               {{ selectedCoin.market_data.high_24h.usd | currency: 'USD': 'symbol': '1.2-4' }}
             </ion-badge>
@@ -291,7 +291,7 @@
   
         <ion-card>
           <ion-item>
-            <p item-left ion-text color="dark">24H Low</p>
+            <p item-left ion-text color="dark">{{"WALLETS.DETAIL.24H_LOW" | translate}}</p>
             <ion-badge item-end *ngIf="selectedCoin.market_data; else loading">
               {{ selectedCoin.market_data.low_24h.usd | currency: 'USD': 'symbol': '1.2-4' }}
             </ion-badge>
@@ -302,7 +302,7 @@
   
         <ion-card>
           <ion-item tooltip="Total supply is the number of coins in existence." positionV="top" arrow>
-            <p ion-text color="dark">Circulating</p>
+            <p ion-text color="dark">{{"WALLETS.DETAIL.CIRCULATING" | translate}}</p>
             <h3 item-right *ngIf="selectedCoin.market_data; else loading">
               {{ selectedCoin.market_data.circulating_supply | shortNum }}
               <span text-uppercase>
@@ -314,7 +314,7 @@
   
         <ion-card>
           <ion-item tooltip="Total supply is the number of coins in existence." positionV="top" arrow>
-            <p ion-text color="dark">Total Supply</p>
+            <p ion-text color="dark">{{"WALLETS.DETAIL.TOTAL_SUPPLY" | translate}}</p>
             <h3 item-right *ngIf="selectedCoin.market_data; else loading">
               {{ selectedCoin.market_data.total_supply | shortNum }}
               <span text-uppercase>
@@ -331,10 +331,10 @@
   <div class="" *ngIf="selectedSegment=='info'">
 
     <ion-list transparent-items>
-      <h2 margin-left ion-text color="dark">Info</h2>
+      <h2 margin-left ion-text color="dark">{{"WALLETS.DETAIL.INFO" | translate}}</h2>
       <ion-card>
         <ion-item>
-          <p item-left ion-text color="dark">Home Page</p>
+          <p item-left ion-text color="dark">{{"WALLETS.DETAIL.HOME_PAGE" | translate}}</p>
           <h3 text-wrap (click)="openLink(selectedCoin.links.homepage[0])" item-end *ngIf="selectedCoin; else loading">
             {{ selectedCoin.links.homepage[0] }}
           </h3>
@@ -343,7 +343,7 @@
 
       <ion-card>
         <ion-item>
-          <p item-left ion-text color="dark">Announcement</p>
+          <p item-left ion-text color="dark">{{"WALLETS.DETAIL.ANNOUNCEMENT" | translate}}</p>
           <h3 text-wrap (click)="openLink(selectedCoin.links.announcement_url[0])" item-end
             *ngIf="selectedCoin; else loading">
             {{ selectedCoin.links.announcement_url[0] | ngXtruncate: 20 : '...'}}
@@ -353,7 +353,7 @@
 
       <ion-card>
         <ion-item>
-          <p item-left ion-text color="dark">Explorer</p>
+          <p item-left ion-text color="dark">{{"WALLETS.DETAIL.EXPLORER" | translate}}</p>
           <h3 (click)="openLink(selectedCoin.links.blockchain_site[0])" item-end *ngIf="selectedCoin; else loading">
             {{ selectedCoin.links.blockchain_site[0] | ngXtruncate: 20 : '...'}}
           </h3>
@@ -362,7 +362,7 @@
 
       <ion-card>
         <ion-item>
-          <p item-left ion-text color="dark">Genesis Date</p>
+          <p item-left ion-text color="dark">{{"WALLETS.DETAIL.GENESIS_DATE" | translate}}</p>
           <h3 item-end *ngIf="selectedCoin; else loading">
             {{ selectedCoin.genesis_date | date:'MMM dd, yyyy'}}
           </h3>
@@ -372,7 +372,7 @@
       <ion-card>
         <ion-item (click)="openLink('https:facebook.com/'+selectedCoin.links.facebook_username)">
           <ion-icon item-start item-left name="logo-facebook"></ion-icon>
-          <p item-left ion-text color="dark">Facebook</p>
+          <p item-left ion-text color="dark">{{"WALLETS.DETAIL.FACEBOOK" | translate}}</p>
           <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
         </ion-item>
       </ion-card>
@@ -380,7 +380,7 @@
       <ion-card>
         <ion-item (click)="openLink('https:twitter.com/'+ selectedCoin.links.twitter_screen_name)">
           <ion-icon item-start item-left name="logo-twitter"></ion-icon>
-          <p item-left ion-text color="dark">Twitter</p>
+          <p item-left ion-text color="dark">{{"WALLETS.DETAIL.TWITTER" | translate}}</p>
           <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
 
         </ion-item>
@@ -389,7 +389,7 @@
       <ion-card>
         <ion-item (click)="openLink('https:t.me/'+selectedCoin.links.telegram_channel_identifier)">
           <ion-icon item-start item-left name="paper-plane"></ion-icon>
-          <p item-left ion-text color="dark">Telegram</p>
+          <p item-left ion-text color="dark">{{"SERVICES.ADDRESS_BOOK.FIELDS.TELEGRAM" | translate}}</p>
           <ion-icon item-right ion-text color="black" name="ios-arrow-forward"></ion-icon>
         </ion-item>
       </ion-card>
@@ -417,12 +417,12 @@
         <ion-col>
           <button (click)="showReceiveModal()" gradient-button full color-5 ion-button icon-start no-margin>
             <ion-icon name="arrow-round-down"></ion-icon>
-            Receive
+            {{"WALLETS.RECEIVE" | translate}}
           </button>
         </ion-col>
         <ion-col>
           <button (click)="showSendModal()" gradient-button full color-5 ion-button icon-end no-margin>
-            Send
+            {{"WALLETS.SEND" | translate}}
             <ion-icon name="arrow-round-up"></ion-icon>
           </button>
         </ion-col>

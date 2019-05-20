@@ -113,7 +113,7 @@
       <ion-item select-contact no-lines>
           <ion-label ion-text color="black"></ion-label>
           <ion-select [selectOptions]="{
-    title: 'Address input options',
+    title: 'WALLETS.SEND.ADDRESS.OPTION.TITLE' | translate,
     subTitle: ''        
   }" [(ngModel)]="addressSourceType.to" [ngModelOptions]="{standalone: true}" (ionChange)="onChangeTo($event)">
             <ion-option value="manual">{{"WALLETS.SEND.ADDRESS.OPTION1" | translate}}</ion-option>
@@ -156,7 +156,7 @@
 
   <section text-center>
     <button gradient-button half color-5 ion-button icon-end no-margin (click)="onSubmit()">
-        Sen{{"WALLETS.SEND" | translate}}d
+        {{"WALLETS.SEND" | translate}}
       <ion-icon name="arrow-round-up"></ion-icon>
     </button>
   </section>
