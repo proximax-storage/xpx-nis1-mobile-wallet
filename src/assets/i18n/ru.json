@@ -169,5 +169,13 @@
     "SETTINGS.LANGUAGE": "язык",
     "SETTINGS.LANGUAGE.DESC":"Вы можете в любое время изменить язык отображения на предпочитаемый вами.",
     "SETTINGS.LANGUAGE.SWITCH": "Язык приложения переключится на {{lang}}.",
+    "SETTINGS.LANGUAGE.ENGLISH": "английский",
+    "SETTINGS.LANGUAGE.CHINESE": "китайский язык",
+    "SETTINGS.LANGUAGE.SPANISH": "испанский",
+    "SETTINGS.LANGUAGE.FRENCH": "Французский",
+    "SETTINGS.LANGUAGE.JAPANESE": "японский язык",
+    "SETTINGS.LANGUAGE.KOREAN": "корейский язык",
+    "SETTINGS.LANGUAGE.DUTCH": "Голландский",
+    "SETTINGS.LANGUAGE.RUSSIAN": "русский",
     "SETTINGS.LOGOUT" : "Выйти"
 }

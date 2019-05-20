@@ -164,5 +164,13 @@
     "SETTINGS.LANGUAGE": "언어",
     "SETTINGS.LANGUAGE.DESC":"언제든지 원하는 언어로 표시 언어를 변경할 수 있습니다.",
     "SETTINGS.LANGUAGE.SWITCH": "앱의 언어가 {{lang}} (으)로 변경됩니다.",
+    "SETTINGS.LANGUAGE.ENGLISH": "영어",
+    "SETTINGS.LANGUAGE.CHINESE": "중국말",
+    "SETTINGS.LANGUAGE.SPANISH": "스페인 사람",
+    "SETTINGS.LANGUAGE.FRENCH": "프랑스 국민",
+    "SETTINGS.LANGUAGE.JAPANESE": "일본어",
+    "SETTINGS.LANGUAGE.KOREAN": "한국어",
+    "SETTINGS.LANGUAGE.DUTCH": "네덜란드 사람",
+    "SETTINGS.LANGUAGE.RUSSIAN": "러시아인",
     "SETTINGS.LOGOUT" : "로그 아웃"
 }

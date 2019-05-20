@@ -169,5 +169,13 @@
     "SETTINGS.LANGUAGE": "Taal",
     "SETTINGS.LANGUAGE.DESC":"U kunt op elk gewenst moment de weergavetaal wijzigen in de taal van uw voorkeur.",
     "SETTINGS.LANGUAGE.SWITCH": "De taal van de app schakelt over naar {{lang}}.",
+    "SETTINGS.LANGUAGE.ENGLISH": "Engels",
+    "SETTINGS.LANGUAGE.CHINESE": "Chinese",
+    "SETTINGS.LANGUAGE.SPANISH": "Spaans",
+    "SETTINGS.LANGUAGE.FRENCH": "Frans",
+    "SETTINGS.LANGUAGE.JAPANESE": "Japans",
+    "SETTINGS.LANGUAGE.KOREAN": "Koreaans",
+    "SETTINGS.LANGUAGE.DUTCH": "Nederlands",
+    "SETTINGS.LANGUAGE.RUSSIAN": "Russisch",
     "SETTINGS.LOGOUT" : "Afmelden"
 }

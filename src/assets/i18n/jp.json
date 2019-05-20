@@ -169,5 +169,13 @@
     "SETTINGS.LANGUAGE": "言語",
     "SETTINGS.LANGUAGE.DESC":"表示言語はいつでも好きな言語に変更できます。",
     "SETTINGS.LANGUAGE.SWITCH": "アプリの言語は{{lang}}に切り替わります。",
+    "SETTINGS.LANGUAGE.ENGLISH": "英語",
+    "SETTINGS.LANGUAGE.CHINESE": "中国語",
+    "SETTINGS.LANGUAGE.SPANISH": "スペイン語",
+    "SETTINGS.LANGUAGE.FRENCH": "フランス語",
+    "SETTINGS.LANGUAGE.JAPANESE": "日本人",
+    "SETTINGS.LANGUAGE.KOREAN": "韓国語",
+    "SETTINGS.LANGUAGE.DUTCH": "オランダの",
+    "SETTINGS.LANGUAGE.RUSSIAN": "ロシア",
     "SETTINGS.LOGOUT" : "ログアウト"
 }

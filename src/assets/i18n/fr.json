@@ -169,5 +169,13 @@
     "SETTINGS.LANGUAGE": "La langue",
     "SETTINGS.LANGUAGE.DESC":"Vous pouvez changer la langue d'affichage en votre langue préférée à tout moment.",
     "SETTINGS.LANGUAGE.SWITCH": "La langue de l'application passera à {{lang}}.",
+    "SETTINGS.LANGUAGE.ENGLISH": "Anglais",
+    "SETTINGS.LANGUAGE.CHINESE": "chinois",
+    "SETTINGS.LANGUAGE.SPANISH": "Espanol",
+    "SETTINGS.LANGUAGE.FRENCH": "français",
+    "SETTINGS.LANGUAGE.JAPANESE": "Japonais",
+    "SETTINGS.LANGUAGE.KOREAN": "coréen",
+    "SETTINGS.LANGUAGE.DUTCH": "néerlandais",
+    "SETTINGS.LANGUAGE.RUSSIAN": "russe",
     "SETTINGS.LOGOUT" : "Déconnexion"
 }

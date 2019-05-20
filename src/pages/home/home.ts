@@ -98,6 +98,10 @@ export class HomePage {
     }
    
   }
+  ionViewDidEnter() {
+	console.log("LOG: HomePage -> ionViewDidEnter -> ionViewDidEnter");
+  }
+
   ionViewWillEnter() {
     console.log("1 ionViewWillEnter");
     this.utils.setHardwareBack();
@@ -109,13 +113,15 @@ export class HomePage {
         // Show loader
         this.fakeList = [{}, {}];
         /** Transaction list business logic */
-        this.unconfirmedTransactions = null;
-        this.confirmedTransactions = null;
+
         this.isLoading = true;
         this.showEmptyTransaction = false;
         this.showEmptyMosaic = false;
 
         this.computeTotalWalletBalance(this.wallets);
+
+        // this.unconfirmedTransactions = null;
+        // this.confirmedTransactions = null;
 
         this.walletProvider.getSelectedWallet().then(selectedWallet => {
           console.log("Selected wallet:", selectedWallet);
@@ -152,8 +158,8 @@ export class HomePage {
   getTransactions(selectedWallet: SimpleWallet) {
     console.log("3 getTransactions");
     console.log("getTransactions", selectedWallet);
-    this.confirmedTransactions = null;
-    this.unconfirmedTransactions = null;
+    // this.confirmedTransactions = null;
+    // this.unconfirmedTransactions = null;
     this.isLoading = true;
 
     this.nemProvider
@@ -166,10 +172,6 @@ export class HomePage {
 
 
     this.nemProvider.getMosaicTransactions(selectedWallet.address).subscribe(mosaicTransactions => {
-
-      console.clear();
-      // console.log("LOG: HomePage -> getTransactions -> mosaicTransactions", mosaicTransactions);
-
       let supportedMosaics = [
         { mosaicId: 'xpx' },
         { mosaicId: 'xem' },
@@ -177,23 +179,17 @@ export class HomePage {
         { mosaicId: 'sft' },
         { mosaicId: 'xar' },
       ]
-
       const filteredTransactions = filter(mosaicTransactions, (tx) => find(supportedMosaics, { mosaicId: tx._mosaics[0].mosaicId.name }));
-      // console.log("LOG: HomePage -> getTransactions -> filteredTransactions", filteredTransactions);
-
       setTimeout(() => {
         this.nemProvider.getXEMTransactions(selectedWallet.address).subscribe(XEMTransactions => {
-          // console.log("LOG: HomePage -> getTransactions -> XEMTransactions", XEMTransactions);
           this.confirmedTransactions = [].concat(filteredTransactions, XEMTransactions);
 
-          this.isLoading = false;
-          this.showEmptyTransaction = false;
-
           // Check transaction is empty
+					console.log("LOG: HomePage -> getTransactions -> this.confirmedTransactions.length", this.confirmedTransactions.length);
           if (this.confirmedTransactions.length == 0) {
             this.isLoading = false;
+            this.confirmedTransactions = null;
             this.showEmptyTransaction = true;
-            this.unconfirmedTransactions = null;
           }
 
         })
@@ -216,9 +212,10 @@ export class HomePage {
     this.getBalanceProvider
       .mosaics(selectedWallet.address)
       .subscribe(mosaics => {
-        this.isLoading = false;
+        
         this.mosaics = mosaics;
         if (this.mosaics.length > 0) {
+          this.isLoading = false;
           this.showEmptyMosaic = false;
           this.selectedMosaic =
             this.navParams.get('selectedMosaic') || this.mosaics[0];
