@@ -74,31 +74,34 @@ export class RegisterPage implements OnInit {
 
 
   onSubmit(form) {
-    if(form.password === form.confirmPassword) {
-      this.authProvider
-        .register(form.email, form.password)
-        .then(status => {
-          if(status === "duplicate") {
-            this.alertProvider.showMessage("Account already exist. Please try again.");
-            this.haptic.notification({ type: 'error' });
-          } else {
-            this.haptic.notification({ type: 'success' });
-            this.navCtrl.setRoot(
-              'TabsPage',
-              {},
-              {
-                animate: true,
-                direction: 'forward'
-              }
-            );
-            return this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
-          }
-        })
-        .then(_ => {
-          this.authProvider.setSelectedAccount(form.email, form.password);
-        })
-    } else {
-      alert("Please make sure you confirm your password.");
+    if(this.formGroup.status == "VALID") {
+      if(form.password === form.confirmPassword) {
+        this.authProvider
+          .register(form.email, form.password)
+          .then(status => {
+						console.log("LOG: RegisterPage -> onSubmit -> status", status);
+            if(status === "duplicate") {
+              this.alertProvider.showMessage("Account already exist. Please try again.");
+              this.haptic.notification({ type: 'error' });
+            } else {
+              this.haptic.notification({ type: 'success' });
+              this.navCtrl.setRoot(
+                'TabsPage',
+                {},
+                {
+                  animate: true,
+                  direction: 'forward'
+                }
+              );
+              return this.utils.showModal('VerificationCodePage', { status: 'setup', destination: 'TabsPage' });
+            }
+          })
+          .then(_ => {
+            this.authProvider.setSelectedAccount(form.email, form.password);
+          })
+      } else {
+        alert("Please make sure you confirm your password.");
+      }
     }
    
   }

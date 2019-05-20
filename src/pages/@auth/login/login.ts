@@ -85,7 +85,9 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit(form) {
-    this.authProvider
+    if(this.formGroup.status == "VALID") {
+
+      this.authProvider
       .login(form.email, form.password)
       .then(res => {
         if (res.status === 'success') {
@@ -106,6 +108,9 @@ export class LoginPage implements OnInit {
         this.utils.showInsetModal('TryAgainPage', {}, 'small');
         this.haptic.notification({ type: 'error' });
       });
+
+    }
+    
   }
 
   showHidePassword(e: Event) {

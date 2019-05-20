@@ -132,7 +132,7 @@
   <div *ngIf="menu=='transactions'">
 
     <!-- Skeleton loader -->
-    <ion-list transparent-items *ngIf="!showEmptyTransaction">
+    <ion-list transparent-items *ngIf="isLoading">
       <ion-card no-margin-bottom fake-card *ngFor="let fakeCard of fakeList">
         <skeleton-loader></skeleton-loader>
       </ion-card>
