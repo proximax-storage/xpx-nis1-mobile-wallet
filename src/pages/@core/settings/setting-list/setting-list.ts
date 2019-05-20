@@ -149,6 +149,7 @@ export class SettingListPage {
 
   showLanguage(){
     this.storage.get("lang").then(lang=>{
+    this.storage.set("isQrActive", true);
 
       this.utils
       .showInsetModal('LanguagePage', {

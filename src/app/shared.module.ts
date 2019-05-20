@@ -11,6 +11,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { IonicModule } from 'ionic-angular';
 import { TransferTransactionFilterComponent } from '../pages/@core/transactions/transaction-list-partials/transfer-transaction-filter/transfer-transaction-filter';
 import { TranslateModule } from '@ngx-translate/core';
+import { MultisigTransactionFilterComponent } from '../pages/@core/transactions/transaction-list-partials/multisig-transaction-filter/multisig-transaction-filter';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MosaicDefinitionTransactionComponent,
     MosaicSupplyChangeTransactionComponent,
     MultisigTransactionComponent,
+    MultisigTransactionFilterComponent,
     ProvisionNamespaceTransactionComponent,
     TransferTransactionComponent,
     TransferTransactionFilterComponent,
@@ -32,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MosaicDefinitionTransactionComponent,
     MosaicSupplyChangeTransactionComponent,
     MultisigTransactionComponent,
+    MultisigTransactionFilterComponent,
     ProvisionNamespaceTransactionComponent,
     TransferTransactionComponent,
     TransferTransactionFilterComponent,

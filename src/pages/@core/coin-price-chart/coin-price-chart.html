@@ -108,8 +108,11 @@
           [tx]="transaction"></mosaic-supply-change-transaction>
 
         <!-- if multisig transaction  -->
-        <multisig-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
+        <multisig-transaction *ngIf="mosaicId != 'xem' && transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
         </multisig-transaction>
+
+        <multisig-transaction-filter *ngIf="mosaicId == 'xem' &&  transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
+          </multisig-transaction-filter>
 
         <!-- if multisig aggregate modification  -->
         <multisig-aggregate-modification-transaction
@@ -140,8 +143,12 @@
           [tx]="transaction"></mosaic-supply-change-transaction>
 
         <!-- if multisig transaction  -->
-        <multisig-transaction *ngIf="transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
-        </multisig-transaction>
+        <multisig-transaction *ngIf="mosaicId != 'xem' && transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
+          </multisig-transaction>
+  
+        <!-- if multisig transaction && xem is selected -->
+        <multisig-transaction-filter *ngIf="mosaicId == 'xem' &&  transaction.type == TransactionTypes.MULTISIG" [tx]="transaction">
+        </multisig-transaction-filter>
 
         <!-- if multisig aggregate modification  -->
         <multisig-aggregate-modification-transaction
