@@ -57,9 +57,10 @@ export class VerificationCodePage {
       !this.navParams.data.destination &&
       this.navParams.data.status === "verify"
     ) {
-      this.utils.setHardwareBack();
+      this.utils.disableHardwareBack();
     } else {
-      this.utils.setHardwareBackModal(this.viewCtrl);
+      this.utils.disableHardwareBack();
+      // this.utils.setHardwareBackModal(this.viewCtrl);
     }
   }
 

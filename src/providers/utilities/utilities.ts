@@ -42,6 +42,12 @@ export class UtilitiesProvider {
     }, 0);
   }
 
+  disableHardwareBack() {
+      this.platform.registerBackButtonAction((event)=>{
+          console.log('Prevent Back Button Page Change');
+      }, 101); // Priority 101 will override back button handling (we set in app.component.ts) as it is bigger then priority 100 configured in app.component.ts file */
+  }   
+
   setHardwareBackToPage(page: string) {
     return this.platform.registerBackButtonAction(() => {
       this.setRoot(page);
