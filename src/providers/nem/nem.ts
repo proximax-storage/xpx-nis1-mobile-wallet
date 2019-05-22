@@ -85,7 +85,7 @@ export class NemProvider{
       } else {
         // serverConfig = { protocol: "http", domain: "23.228.67.85", port: 7890 } as ServerConfig; // Test net
         serverConfig = [
-          {protocol: "http", domain:"176.9.20.180", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"104.238.161.61", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"199.217.118.114", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"62.75.171.41", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"167.86.96.227", port: 7890 } as ServerConfig,
@@ -98,7 +98,7 @@ export class NemProvider{
           {protocol: "http", domain:"209.126.98.204", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"108.61.182.27", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"108.61.168.86", port: 7890 } as ServerConfig,
-          {protocol: "http", domain:"104.238.161.61", port: 7890 } as ServerConfig,
+          {protocol: "http", domain:"176.9.20.180", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"88.99.192.82", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"76.9.68.110", port: 7890 } as ServerConfig,
          ]; // Main net - Hi I am Huge Alice 3
