@@ -70,7 +70,7 @@
 <ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Date</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.DATE" | translate}}</h2>
 
       <p text-wrap ion-text color="black">
         {{ tx.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
@@ -89,7 +89,7 @@
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
-        Sender
+        {{"WALLETS.TRANSACTION.DETAIL.SENDER" | translate}}
       </h2>
 
       <p text-wrap> {{ tx?.signer.address.value | nemAddressPretty | searchContact: tx?.signer.address.value | async }}</p>
@@ -103,7 +103,7 @@
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
-        Receiver
+          {{"WALLETS.TRANSACTION.DETAIL.RECEIVER" | translate}}
       </h2>
 
       <p text-wrap> {{ tx?.recipient.value | nemAddressPretty | searchContact: tx?.recipient.value | async }}</p>
@@ -116,7 +116,7 @@
 <ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Fee</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.FEE" | translate}}</h2>
 
       <p text-wrap ion-text color="black">
         {{ tx.fee | formatXEM }} XEM
@@ -130,7 +130,7 @@
 <ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Block</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.BLOCK" | translate}}</h2>
 
       <p text-wrap ion-text color="black">
         {{ tx?.transactionInfo?.height | number }}
@@ -144,7 +144,7 @@
 <ion-card no-margin-bottom (click)="utils.copy(tx?.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Hash</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.HASH" | translate}}</h2>
 
       <p text-wrap>
         {{ tx?.transactionInfo?.hash?.data }}
@@ -158,18 +158,18 @@
 <ion-card no-margin-bottom (click)="utils.copy(tx.message.plain(), 'message')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Message</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.MESSAGE" | translate}}</h2>
 
       <p text-wrap ion-text color="black" *ngIf="tx.message.isPlain()">
         {{ tx.message.plain() }}
       </p>
 
       <p text-wrap ion-text color="black" color="black" *ngIf="tx.message.isEncrypted()">
-        Encypted
+        {{"WALLETS.TRANSACTION.DETAIL.ENCRYPTED_MESSAGE" | translate}}
       </p>
 
       <p ion-text color="black" *ngIf="!tx.message.payload">
-        No message
+          {{"WALLETS.TRANSACTION.DETAIL.EMPTY_MESSAGE" | translate}}
       </p>
     </ion-item>
   </ion-card-content>
