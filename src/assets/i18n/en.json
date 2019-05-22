@@ -140,7 +140,7 @@
     "SERVICES.MULTISIGN_SUPPORT.TITLE" : "Multisign Support",
     "SERVICES.MULTISIGN_SUPPORT.DESC" : "A quick info on how multisig is currently supported by the app.",
     "SERVICES.MULTISIGN_SUPPORT.TITLE1" : "Right now, the following are supported by the app:",
-    "SERVICES.MULTISIGN_SUPPORT.CONTENT1" : "Sending mulitisig transactions",
+    "SERVICES.MULTISIGN_SUPPORT.CONTENT1" : "Sending multisig transactions",
     "SERVICES.MULTISIGN_SUPPORT.CONTENT2" : "Signing multisig transactions",
     "SERVICES.MULTISIGN_SUPPORT.CONTENT3" : "Viewing the history of multisig transactions ",
     "SERVICES.MULTISIGN_SUPPORT.TITLE2" : "The following will be supported in a future release of the app:",
