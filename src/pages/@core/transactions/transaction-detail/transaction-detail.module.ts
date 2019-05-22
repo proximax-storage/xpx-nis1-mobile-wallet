@@ -10,6 +10,7 @@ import { MultisigDetailComponent } from '../transaction-detail-partials/multisig
 import { ProvisionNamespaceDetailComponent } from '../transaction-detail-partials/provision-namespace-detail/provision-namespace-detail';
 import { TransferDetailComponent } from '../transaction-detail-partials/transfer-detail/transfer-detail';
 import { ImportanceTransferDetailComponent } from '../transaction-detail-partials/importance-transfer-detail/importance-transfer-detail';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ImportanceTransferDetailComponent } from '../transaction-detail-partial
   ],
   imports: [
     IonicPageModule.forChild(TransactionDetailPage),
-    PipesModule
+    PipesModule,
+    TranslateModule.forChild()
   ],
   exports: [
     ImportanceTransferDetailComponent,

@@ -76,7 +76,7 @@
 <ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Date</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.DATE" | translate}}</h2>
 
       <p text-wrap ion-text color="black">
         {{ tx.otherTransaction.timeWindow.timeStamp.toString() | date:'EEEE, MMMM d, y, h:mm:ss a' }}
@@ -95,7 +95,7 @@
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
-        From multisig
+          {{"WALLETS.MULTISIGTRANSACTION.DETAIL.FROM" | translate}}"}}
       </h2>
 
       <p text-wrap> {{ tx?.otherTransaction.signer.address.value | nemAddressPretty | searchContact: tx?.otherTransaction.signer.address.value
@@ -110,11 +110,11 @@
     <ion-card-content no-padding>
       <ion-item>
         <h2 ion-text color="black">
-            Issuer
+            {{"WALLETS.MULTISIGTRANSACTION.DETAIL.ISSUER" | translate}}"}}
         </h2>
   
-        <p text-wrap>{{ tx?.signer.address.value | nemAddressPretty }} - ({{ tx?.signer.address.value | nemAddressPretty | searchContact: tx?.signer.address.value
-            | async }})</p>
+        <p text-wrap>{{ tx?.signer.address.value | nemAddressPretty | searchContact: tx?.signer.address.value
+            | async }}</p>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -125,7 +125,7 @@
   <ion-card-content no-padding>
     <ion-item>
       <h2 ion-text color="black">
-        Receiver
+        {{"WALLETS.TRANSACTION.DETAIL.RECEIVER" | translate}}
       </h2>
 
       <p text-wrap> {{ tx?.otherTransaction.recipient.value | nemAddressPretty | searchContact: tx?.otherTransaction.recipient.value |
@@ -140,7 +140,7 @@
 <ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Fee</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.FEE" | translate}}</h2>
 
       <p text-wrap ion-text color="black">
         {{ tx.otherTransaction.fee | formatXEM | currency }} XEM
@@ -154,7 +154,7 @@
 <ion-card no-margin-bottom>
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Block</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.BLOCK" | translate}}</h2>
 
       <p text-wrap ion-text color="black">
         {{ (tx?.otherTransaction?.transactionInfo?.height != undefined) ? (tx?.otherTransaction.transactionInfo?.height | number) :  'Transaction waiting to be included - Needs cosignatories signatures'}}
@@ -169,7 +169,7 @@
 <ion-card no-margin-bottom (click)="utils.copy(tx?.otherTransaction.transactionInfo?.hash?.data, 'hash')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Hash</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.HASH" | translate}}</h2>
 
       <p text-wrap>
         {{ tx?.otherTransaction.transactionInfo?.hash?.data }}
@@ -183,14 +183,14 @@
 <ion-card no-margin-bottom (click)="utils.copy(tx.otherTransaction.message.payload, 'message')">
   <ion-card-content no-padding>
     <ion-item>
-      <h2 ion-text color="black">Message</h2>
+      <h2 ion-text color="black">{{"WALLETS.TRANSACTION.DETAIL.MESSAGE" | translate}}</h2>
 
       <p text-wrap ion-text color="black" *ngIf="tx.otherTransaction.message.payload; else noMessage">
         {{ tx.otherTransaction.message.payload }}
       </p>
       <ng-template #noMessage>
         <p ion-text color="black">
-          No message
+          {{"WALLETS.TRANSACTION.DETAIL.EMPTY_MESSAGE" | translate}}
         </p>
       </ng-template>
     </ion-item>
@@ -201,7 +201,7 @@
  &nbsp;
 <section padding text-center>
     <button *ngIf="showSignButton" gradient-button full color-5 ion-button icon-end no-margin (click)="sign()">
-        Cosign transaction
+        {{"WALLETS.MULTISIGTRANSACTION.DETAIL.COSIGN" | translate}}
     </button>
 </section>
 
