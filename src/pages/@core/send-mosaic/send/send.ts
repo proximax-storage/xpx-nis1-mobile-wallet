@@ -63,13 +63,13 @@ export class SendPage {
     private storage: Storage,
     public platform: Platform
   ) {
-    console.log("Nav params",this.navParams.data);
-    
+    console.log("Nav params", this.navParams.data);
+
     this.mosaicSelectedName = this.navParams.get('mosaicSelectedName');
     console.log(this.mosaicSelectedName);
 
     // If no mosaic selected, fallback to xpx
-    if(!this.mosaicSelectedName) {
+    if (!this.mosaicSelectedName) {
       this.mosaicSelectedName = 'xpx';
     }
 
@@ -96,9 +96,9 @@ export class SendPage {
         this.getBalanceProvider
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
-            if(!this.selectedMosaic) {
-                this.selectedMosaic = mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0];
-                console.log("this.selectedMosaic", this.selectedMosaic);
+            if (!this.selectedMosaic) {
+              this.selectedMosaic = mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0];
+              console.log("this.selectedMosaic", this.selectedMosaic);
 
               if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
                 console.log('this.selectedMosaic.mosaicId', this.selectedMosaic.mosaicId);
@@ -116,10 +116,10 @@ export class SendPage {
               coinId = 'proximax';
             } else if (mosaic === 'npxs') {
               coinId = 'pundi-x';
-            } 
+            }
 
             // Get coin price
-            if(coinId) {
+            if (coinId) {
               this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
                 this.selectedCoin = coin;
               });
@@ -367,21 +367,22 @@ export class SendPage {
   }
 
   scan() {
-      this.barcodeScanner.scan().then(barcodeData => {
-        console.log('Barcode data', barcodeData);
-        barcodeData.format = "QR_CODE";
-        let payload = JSON.parse(barcodeData.text);
-        this.form.patchValue({ recipientName: payload.data.name})
-        this.form.patchValue({ recipientAddress: payload.data.addr })
+    this.storage.set("isQrActive", true);
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      barcodeData.format = "QR_CODE";
+      let payload = JSON.parse(barcodeData.text);
+      this.form.patchValue({ recipientName: payload.data.name })
+      this.form.patchValue({ recipientAddress: payload.data.addr })
+      // this.storage.set('isModalShown', false);
+    }).catch(err => {
+      console.log('Error', err);
+      if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
+        let message = "Camera access is disabled. Please enable it in the Settings app."
+        this.alertProvider.showMessage(message);
         // this.storage.set('isModalShown', false);
-       }).catch(err => {
-           console.log('Error', err);
-         if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
-          let message = "Camera access is disabled. Please enable it in the Settings app."
-          this.alertProvider.showMessage(message);
-          // this.storage.set('isModalShown', false);
-        }
-       });  
+      }
+    });
   }
 
   clearPlaceholder() {
@@ -395,12 +396,12 @@ export class SendPage {
   }
 
   validateAmount(e) {
-    if(this.amount && this.amount.toString().indexOf('.') !== -1) {
-    let decimalCount = this.countDecimals(this.amount);
-    // Limit to 6 decimal points only
-    if(decimalCount == 6 && e.key !== "Backspace" ) {
-      e.preventDefault();
+    if (this.amount && this.amount.toString().indexOf('.') !== -1) {
+      let decimalCount = this.countDecimals(this.amount);
+      // Limit to 6 decimal points only
+      if (decimalCount == 6 && e.key !== "Backspace") {
+        e.preventDefault();
+      }
     }
-   }
   }
 }

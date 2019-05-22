@@ -408,7 +408,7 @@ export class SendMultisigPage {
   }
 
   scan() {
-
+    this.storage.set("isQrActive", true);
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
       barcodeData.format = "QR_CODE";
