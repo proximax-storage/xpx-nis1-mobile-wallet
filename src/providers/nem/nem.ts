@@ -583,7 +583,7 @@ export class NemProvider{
         this.accountHttp.allTransactions(address, {
           pageSize: 100
         }).subscribe(transactions=> {
-            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics !== undefined);
+            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics !== undefined &&  (tx as any)._mosaics[0].mosaicId.name != 'xem');
             observer.next(mosaicTransactions);
             //call complete if you want to close this stream (like a promise)
             observer.complete();
@@ -596,7 +596,8 @@ export class NemProvider{
         this.accountHttp.allTransactions(address, {
           pageSize: 100
         }).subscribe(transactions=> {
-            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics === undefined);
+						console.log("LOG: NemProvider -> transactions", transactions);
+            let mosaicTransactions =  transactions.filter(tx=> (tx as any)._mosaics === undefined || (tx as any)._mosaics[0].mosaicId.name == 'xem');
             observer.next(mosaicTransactions);
             //call complete if you want to close this stream (like a promise)
             observer.complete();
