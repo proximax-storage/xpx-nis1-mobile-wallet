@@ -30,7 +30,7 @@ export class MyApp {
       statusBar.styleDefault();
 
       this.initTranslate();
-
+      
       // Add class when keyboard is on
       this.keyboard.onKeyboardShow().subscribe(() => {
         document.body.classList.add('keyboard-is-open');
@@ -186,17 +186,19 @@ export class MyApp {
         //   ",pin:" + !!pin +
         //   ",isLoggedIn:" + isLoggedIn +
         //   ",isQrActive:" + !isQrActive);
-
-        const confirmPinTitle = this.translateService.instant("APP.PIN.CONFIRM.TITLE");
-        const confirmPinSubtitle = this.translateService.instant("APP.PIN.CONFIRM")
-
-        return this.utils.showModal("VerificationCodePage", {
-          status: "confirm",
-          title: confirmPinTitle,
-          subtitle: confirmPinSubtitle,
-          invalidPinMessage: "Incorrect pin. Please try again",
-          pin: pin
-        });
+        this.translateService.get('APP.PIN.CONFIRM.TITLE').subscribe(title=> {
+          const confirmPinTitle = title;
+          this.translateService.get('APP.PIN.CONFIRM').subscribe(subtitle=> {
+            const confirmPinSubtitle = subtitle;
+            return this.utils.showModal("VerificationCodePage", {
+              status: "confirm",
+              title: confirmPinTitle,
+              subtitle: confirmPinSubtitle,
+              invalidPinMessage: "Incorrect pin. Please try again",
+              pin: pin
+            });
+          })
+        })       
       }
     });
   }

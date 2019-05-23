@@ -46,6 +46,8 @@ export class SendPage {
   mosaicSelectedName: string;
 
   amountPlaceholder: string = "0";
+  periodCount = 0;
+  decimalCount: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -63,13 +65,13 @@ export class SendPage {
     private storage: Storage,
     public platform: Platform
   ) {
-    console.log("Nav params",this.navParams.data);
-    
+    console.log("Nav params", this.navParams.data);
+
     this.mosaicSelectedName = this.navParams.get('mosaicSelectedName');
     console.log(this.mosaicSelectedName);
 
     // If no mosaic selected, fallback to xpx
-    if(!this.mosaicSelectedName) {
+    if (!this.mosaicSelectedName) {
       this.mosaicSelectedName = 'xpx';
     }
 
@@ -96,9 +98,9 @@ export class SendPage {
         this.getBalanceProvider
           .mosaics(this.currentWallet.address)
           .subscribe(mosaics => {
-            if(!this.selectedMosaic) {
-                this.selectedMosaic = mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0];
-                console.log("this.selectedMosaic", this.selectedMosaic);
+            if (!this.selectedMosaic) {
+              this.selectedMosaic = mosaics.filter(m => m.mosaicId.name == this.mosaicSelectedName)[0];
+              console.log("this.selectedMosaic", this.selectedMosaic);
 
               if (!XEM.MOSAICID.equals(this.selectedMosaic.mosaicId)) {
                 console.log('this.selectedMosaic.mosaicId', this.selectedMosaic.mosaicId);
@@ -116,10 +118,10 @@ export class SendPage {
               coinId = 'proximax';
             } else if (mosaic === 'npxs') {
               coinId = 'pundi-x';
-            } 
+            }
 
             // Get coin price
-            if(coinId) {
+            if (coinId) {
               this.coingeckoProvider.getDetails(coinId).subscribe(coin => {
                 this.selectedCoin = coin;
               });
@@ -367,21 +369,22 @@ export class SendPage {
   }
 
   scan() {
-      this.barcodeScanner.scan().then(barcodeData => {
-        console.log('Barcode data', barcodeData);
-        barcodeData.format = "QR_CODE";
-        let payload = JSON.parse(barcodeData.text);
-        this.form.patchValue({ recipientName: payload.data.name})
-        this.form.patchValue({ recipientAddress: payload.data.addr })
+    this.storage.set("isQrActive", true);
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      barcodeData.format = "QR_CODE";
+      let payload = JSON.parse(barcodeData.text);
+      this.form.patchValue({ recipientName: payload.data.name })
+      this.form.patchValue({ recipientAddress: payload.data.addr })
+      // this.storage.set('isModalShown', false);
+    }).catch(err => {
+      console.log('Error', err);
+      if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
+        let message = "Camera access is disabled. Please enable it in the Settings app."
+        this.alertProvider.showMessage(message);
         // this.storage.set('isModalShown', false);
-       }).catch(err => {
-           console.log('Error', err);
-         if (err.toString().indexOf('Access to the camera has been prohibited; please enable it in the Settings app to continue.') >= 0) {
-          let message = "Camera access is disabled. Please enable it in the Settings app."
-          this.alertProvider.showMessage(message);
-          // this.storage.set('isModalShown', false);
-        }
-       });  
+      }
+    });
   }
 
   clearPlaceholder() {
@@ -394,13 +397,50 @@ export class SendPage {
     return 0;
   }
 
-  validateAmount(e) {
-    if(this.amount && this.amount.toString().indexOf('.') !== -1) {
-    let decimalCount = this.countDecimals(this.amount);
-    // Limit to 6 decimal points only
-    if(decimalCount == 6 && e.key !== "Backspace" ) {
+  checkAllowedInput(e) {
+    const AMOUNT = this.form.get('amount').value;
+    console.log("LOG: SendPage -> checkAllowedInput -> AMOUNT", AMOUNT);
+
+    // Prevent "+" and "-"
+    if (e.key === "-" || e.key === "+" || e.charCode === 43 || e.charCode === 45 || e.keyCode === 	189 || e.keyCode === 187 || e.key === "Unindentified" || e.keyCode === 229 ) {
+      e.preventDefault();
+      if(AMOUNT==null) {
+        this.form.get('amount').setValue("")
+        this.form.get('amount').reset();
+        this.periodCount = 0
+      }
+    }
+
+    if(AMOUNT==null) {
+      this.periodCount = 0;
+    }
+
+    if (this.decimalCount >= 6 && e.key !== "Backspace") {
       e.preventDefault();
     }
-   }
+
+    if ((e.charCode >= 48 && e.charCode <= 57) || (e.key == "." || e.charCode == 46 || e.keyCode == 8 || e.key == "Backspace")) {
+
+      // Check for "." or char code "46"
+      if (e.key == "." || e.charCode == 46) {
+        ++this.periodCount;
+      }
+
+      if (this.periodCount > 1) {
+        e.preventDefault();
+        --this.periodCount;
+      }
+      console.log("LOG: SendPage -> checkAllowedInput -> this.periodCount", this.periodCount);    
+    }
   }
+
+  validateInput() {
+    const AMOUNT = this.form.get('amount').value;
+    if (AMOUNT) {
+      this.decimalCount = this.countDecimals(AMOUNT);
+    }
+  }
+
+
+
 }

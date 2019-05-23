@@ -33,24 +33,23 @@
         </section>
 
 
-       <!-- Amount -->
-       <ion-card amount *ngIf="platform.is('ios')">
-          <ion-item>
-            <ion-label>
-              <input type="text" pattern="[0-9]*" decimal="true"  button-char="." decimal-char="." formControlName="amount" [(ngModel)]="amount"
-                [placeholder]="amountPlaceholder" (click)="clearPlaceholder()"(keydown)="validateAmount($event)">
-            </ion-label>
-          </ion-item>
-        </ion-card>
-  
-        <ion-card amount *ngIf="platform.is('android')">
-            <ion-item>
-              <ion-label>
-                <input type="number" pattern="[0-9]*" formControlName="amount" [(ngModel)]="amount"
-                  [placeholder]="amountPlaceholder" (click)="clearPlaceholder()"(keydown)="validateAmount($event)">
-              </ion-label>
-            </ion-item>
-          </ion-card>
+     <!-- Amount -->
+     <ion-card amount *ngIf="platform.is('ios')">
+      <ion-item>
+        <ion-label>
+          <input type="text" pattern="[0-9]*" decimal="true"  button-char="." decimal-char="." formControlName="amount" [(ngModel)]="amount"  [placeholder]="amountPlaceholder" (click)="clearPlaceholder()" (keypress)="checkAllowedInput($event)" (input)="validateInput()">
+        </ion-label>
+      </ion-item>
+    </ion-card>
+
+    <ion-card amount *ngIf="platform.is('android')">
+        <ion-item>
+          <ion-label>
+            <input type="number" pattern="\\d*" formControlName="amount" [(ngModel)]="amount"
+              [placeholder]="amountPlaceholder" (click)="clearPlaceholder()" (keypress)="checkAllowedInput($event)" (input)="validateInput()">
+          </ion-label>
+        </ion-item>
+      </ion-card>
 
 
       <section total text-center>
