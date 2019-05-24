@@ -65,6 +65,7 @@
     "WALLETS.COMMON.CHOOSE_COLOR" : "ウォレットの色を選択",
     "WALLETS.COMMON.LABEL.WALLET_NAME" : "ウォレット名",
     "WALLETS.COMMON.PLACEHOLDER.WALLET_NAME" : "ウォレット名を入力して下さい",
+    "WALLETS.BUTTON.SAVE" : "セーブ",
     "WALLETS.BUTTON.EDIT" : "編集する",
     "WALLETS.BUTTON.DELETE" : "削除する",
     "WALLETS.BUTTON.DONE" : "完了",

@@ -57,7 +57,7 @@
     "WALLETS.CREATE.IMPORT.PRIVATE_KEY.LABEL" : "Private key",
     "WALLETS.CREATE.IMPORT.PRIVATE_KEY.PLACEHOLDER" : "Enter your private key",
     "WALLETS.EDIT" : "Edit Wallet",
-    "WALLETS.EDIT.PROMPT" : "Update {{walletName}} wallet.",
+    "WALLETS.EDIT.PROMPT" : "Update {{walletName}} wallet",
     "WALLETS.EDIT.DESC" : "To save your changes, update the info below and press Save.",
     "WALLETS.DELETE" : "Delete Wallet",
     "WALLETS.DELETE.WARNING" : "You are about to delete {{walletName}} wallet!",

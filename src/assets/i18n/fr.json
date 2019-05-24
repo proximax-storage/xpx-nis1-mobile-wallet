@@ -65,6 +65,7 @@
     "WALLETS.COMMON.CHOOSE_COLOR" : "Choisissez la couleur du portefeuille",
     "WALLETS.COMMON.LABEL.WALLET_NAME" : "Nom du portefeuille",
     "WALLETS.COMMON.PLACEHOLDER.WALLET_NAME" : "Entrez votre nom de portefeuille",
+    "WALLETS.BUTTON.SAVE" : "sauvegarder",
     "WALLETS.BUTTON.EDIT" : "modifier",
     "WALLETS.BUTTON.DELETE" : "Effacer",
     "WALLETS.BUTTON.DONE" : "Terminer",
