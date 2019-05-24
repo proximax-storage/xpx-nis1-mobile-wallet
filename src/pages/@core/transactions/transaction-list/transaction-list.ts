@@ -161,10 +161,12 @@ export class TransactionListPage {
             // Check transaction is empty
             if (TRANSACTIONS.length == 0) {
               this.confirmedTransactions = null;
+              this.showEmptyMessage = true;
             } else {
               this.confirmedTransactions = TRANSACTIONS.sort((a,b) => {
                 return new Date(b.timeWindow.timeStamp).getTime() - new Date(a.timeWindow.timeStamp).getTime()
               });
+              this.showEmptyMessage = false;
             }
             this.isLoading = false;
           })
