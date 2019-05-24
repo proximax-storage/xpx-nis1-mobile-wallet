@@ -158,13 +158,17 @@ export class TransactionListPage {
         setTimeout(() => {
           this.nemProvider.getXEMTransactions(this.currentWallet.address).subscribe(XEMTransactions => {
             const TRANSACTIONS = [].concat(filteredTransactions, XEMTransactions);
+            console.log("LOG: TransactionListPage -> ionViewWillEnter -> TRANSACTIONS.length", TRANSACTIONS.length);
+            
             // Check transaction is empty
             if (TRANSACTIONS.length == 0) {
               this.confirmedTransactions = null;
+              this.showEmptyMessage = true;
             } else {
               this.confirmedTransactions = TRANSACTIONS.sort((a,b) => {
                 return new Date(b.timeWindow.timeStamp).getTime() - new Date(a.timeWindow.timeStamp).getTime()
               });
+              this.showEmptyMessage = false;
             }
             this.isLoading = false;
           })

@@ -65,6 +65,7 @@
     "WALLETS.COMMON.CHOOSE_COLOR" : "Выберите цвет кошелька",
     "WALLETS.COMMON.LABEL.WALLET_NAME" : "Имя  кошелька",
     "WALLETS.COMMON.PLACEHOLDER.WALLET_NAME" : "Введите имя своего кошелька",
+    "WALLETS.BUTTON.SAVE" : "Сохранить",
     "WALLETS.BUTTON.EDIT" : "редактировать",
     "WALLETS.BUTTON.DELETE" : "удалять",
     "WALLETS.BUTTON.DONE" : "Готово",

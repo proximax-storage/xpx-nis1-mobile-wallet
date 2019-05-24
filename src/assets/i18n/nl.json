@@ -65,6 +65,7 @@
     "WALLETS.COMMON.CHOOSE_COLOR" : "Kies de kleur van de portemonnee",
     "WALLETS.COMMON.LABEL.WALLET_NAME" : "Portemonnee-naam",
     "WALLETS.COMMON.PLACEHOLDER.WALLET_NAME" : "Voer de naam van je portemonnee in",
+    "WALLETS.BUTTON.SAVE" : "Opslaan",
     "WALLETS.BUTTON.EDIT" : "Bewerk",
     "WALLETS.BUTTON.DELETE" : "Verwijder",
     "WALLETS.BUTTON.DONE" : "Klaar",

@@ -95,11 +95,8 @@ export class NemProvider{
           {protocol: "http", domain:"108.61.168.86", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"176.9.20.180", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"88.99.192.82", port: 7890 } as ServerConfig,
-          {protocol: "http", domain:"76.9.68.110", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"167.86.96.227", port: 7890 } as ServerConfig,
-          {protocol: "http", domain:"167.86.95.114", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"167.86.95.115", port: 7890 } as ServerConfig,
-          {protocol: "http", domain:"167.86.96.228", port: 7890 } as ServerConfig,
           {protocol: "http", domain:"167.86.96.231", port: 7890 } as ServerConfig,
          ]; // Main net - Hi I am Huge Alice 3
       }
