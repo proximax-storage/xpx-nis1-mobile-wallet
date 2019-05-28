@@ -181,6 +181,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "Custom node or IP",
     "SETTINGS.NODES.SWITCH" : "You are successfully connected to {{host}}",
     "SETTINGS.RESET_PIN" : "Reset PIN",
+    "SETTINGS.RESET_PIN.SUBTITLE": "Are you sure you want to reset your PIN?",
     "SETTINGS.CHANGELOG": "Changelog",
     "SETTINGS.LANGUAGE": "Language",
     "SETTINGS.LANGUAGE.DESC":"You can change the display language to your preferred language at any time.",

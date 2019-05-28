@@ -179,6 +179,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "Aangepast knooppunt of IP",
     "SETTINGS.NODES.SWITCH": "Je bent succesvol verbonden met {{host}}",
     "SETTINGS.RESET_PIN" : "Pincode opnieuw instellen",
+    "SETTINGS.RESET_PIN.SUBTITLE": "Weet je zeker dat je je pincode wilt resetten?",
     "SETTINGS.CHANGELOG": "Wijzigingen",
     "SETTINGS.LANGUAGE": "Taal",
     "SETTINGS.LANGUAGE.DESC": "Je kan op elk moment de taal wijzigen.",

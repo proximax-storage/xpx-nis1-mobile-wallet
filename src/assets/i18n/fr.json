@@ -179,6 +179,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "Noeud personnalisé ou IP",
     "SETTINGS.NODES.SWITCH" : "Vous êtes connecté avec succès à {{host}}",
     "SETTINGS.RESET_PIN" : "Réinitialiser le PIN",
+    "SETTINGS.RESET_PIN.SUBTITLE": "Êtes-vous sûr de vouloir réinitialiser votre code PIN?",
     "SETTINGS.CHANGELOG": "Changelog",
     "SETTINGS.LANGUAGE": "La langue",
     "SETTINGS.LANGUAGE.DESC":"Vous pouvez changer la langue d'affichage en votre langue préférée à tout moment.",

@@ -179,6 +179,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "Пользовательский узел или IP",
     "SETTINGS.NODES.SWITCH" : "Вы успешно подключились к {{host}}",
     "SETTINGS.RESET_PIN" : "Сбросить ПИН-код",
+    "SETTINGS.RESET_PIN.SUBTITLE": "Вы уверены, что хотите сбросить свой PIN-код?",
     "SETTINGS.CHANGELOG": "Изменения",
     "SETTINGS.LANGUAGE": "язык",
     "SETTINGS.LANGUAGE.DESC":"Вы можете в любое время изменить язык отображения на предпочитаемый вами.",

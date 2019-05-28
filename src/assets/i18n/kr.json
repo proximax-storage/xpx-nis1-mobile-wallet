@@ -176,6 +176,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "사용자 정의 노드 또는 IP",
     "SETTINGS.NODES.SWITCH" : "{{host}}에 성공적으로 연결되었습니다.",
     "SETTINGS.RESET_PIN" : "핀 재설정 ",
+    "SETTINGS.RESET_PIN.SUBTITLE": "PIN을 재설정 하시겠습니까?",
     "SETTINGS.CHANGELOG": "변경 로그",
     "SETTINGS.LANGUAGE": "언어",
     "SETTINGS.LANGUAGE.DESC":"언제든지 원하는 언어로 표시 언어를 변경할 수 있습니다.",

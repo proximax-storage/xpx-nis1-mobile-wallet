@@ -179,6 +179,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "自定义节点或IP",
     "SETTINGS.NODES.SWITCH" : "您已成功连接到{{host}}",
     "SETTINGS.RESET_PIN" : "重置PIN",
+    "SETTINGS.RESET_PIN.SUBTITLE": "您确定要重置PIN码吗",
     "SETTINGS.CHANGELOG": "更新日志",
     "SETTINGS.LANGUAGE": "语言",
     "SETTINGS.LANGUAGE.DESC":"您可以随时将显示语言更改为首选语言。",
