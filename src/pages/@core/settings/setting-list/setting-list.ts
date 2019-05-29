@@ -107,12 +107,16 @@ export class SettingListPage {
   }
 
   showResetPINPrompt() {
+    const continueButton = this.translateService.instant("WALLETS.BUTTON.CONTINUE");
+    const cancelButton = this.translateService.instant("WALLETS.BUTTON.CANCEL");
+    const resetPINTitle = this.translateService.instant("SETTINGS.RESET_PIN");
+    const resetPINSubtitle = this.translateService.instant("SETTINGS.RESET_PIN.SUBTITLE");
     let alert = this.alertCtrl.create();
-    alert.setTitle('Reset PIN');
-    alert.setSubTitle('Are you sure you want to reset your PIN?');
-    alert.addButton('Cancel');
+    alert.setTitle(resetPINTitle);
+    alert.setSubTitle(resetPINSubtitle);
+    alert.addButton(cancelButton);
     alert.addButton({
-      text: 'Yes',
+      text: continueButton,
       handler: data => {
         this.resetPIN();
       }

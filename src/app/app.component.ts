@@ -237,6 +237,47 @@ export class MyApp {
        }
        else {
         if (this.translateService.getBrowserLang() !== undefined) {
+        
+          const languageCode = this.translateService.getBrowserLang();
+
+          switch(languageCode) {
+            case "zh": {
+              this.translateService.use('cn');
+              break;
+            }
+            case "zh-Hans": {
+              this.translateService.use('cn');
+              break;
+            }
+            case "es": {
+              this.translateService.use('es');
+              break;
+            }
+            case "fr": {
+              this.translateService.use('fr');
+              break;
+            }
+            case "ja": {
+              this.translateService.use('jp');
+              break;
+            }
+            case "ko": {
+              this.translateService.use('kr');
+              break;
+            }
+            case "nl": {
+              this.translateService.use('nl');
+              break;
+            }
+            case "ru": {
+              this.translateService.use('ru');
+              break;
+            }
+            default: { 
+              this.translateService.use('en');
+            }
+          }
+
             this.translateService.use(this.translateService.getBrowserLang());
         }
         else {

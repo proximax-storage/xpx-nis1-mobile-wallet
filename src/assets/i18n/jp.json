@@ -179,6 +179,7 @@
     "SETTINGS.NODES.CUSTOM_IP" : "カスタムノードまたはIP",
     "SETTINGS.NODES.SWITCH" : "あなたは{{host}}に接続しました",
     "SETTINGS.RESET_PIN" : "PINをリセット",
+    "SETTINGS.RESET_PIN.SUBTITLE": "PINをリセットしてよろしいですか？",
     "SETTINGS.CHANGELOG": "変更履歴",
     "SETTINGS.LANGUAGE": "言語",
     "SETTINGS.LANGUAGE.DESC":"表示言語はいつでも好きな言語に変更できます。",
